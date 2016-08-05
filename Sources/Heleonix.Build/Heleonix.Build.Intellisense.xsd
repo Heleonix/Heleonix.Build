@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!--
+Example custom itemtype with particular meta-data required
+<xs:element name="MyItem" substitutionGroup="msb:Item">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:SimpleItemType">
+        <xs:sequence maxOccurs="1">
+          <xs:choice>
+            <xs:element name="MyMetaData" type="xs:string"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+Example custom itemtype with NO meta-data
+<xs:element name="MySimpleItem" type="msb:SimpleItemType" substitutionGroup="msb:Item"/>
+
+Example custom itemtype with ANY meta-data
+<xs:element name="MyFlexibleItem" type="msb:GenericItemType" substitutionGroup="msb:Item"/>
+
+Example custom property that allows string content only
+<xs:element name="MySimpleProperty" type="msb:StringPropertyType" substitutionGroup="msb:Property"/>
+
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" type="xs:boolean" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd" />
+
+  <!--Tasks-->
+
+  <!--In-->
+  <xs:element name="Hx-In-Flow" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A name of a flow to run.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-In-Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A configuration, i.e. "Release", "Debug".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-In-Overrides" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A file to override everything up to solution-specific definitions.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <!--System-->
+  <xs:element name="Hx-System-CI" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Type of continuous integration system. Possible values: "Jenkins", "TeamCity".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx-System-SCM" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to a SCM executable.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:SimpleItemType">
+          <xs:sequence maxOccurs="1">
+            <xs:choice>
+              <xs:element name="Type" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>Type of SCM. Possible values: "Git", "Svn".</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Hx-System-Workspace" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-System-FxCopCmd" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the FxCop cmd.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-System-NUnitConsole" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the NUnit console executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-System-ReportUnit" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportUnit executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-System-OpenCoverConsole" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the OpenCover console executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-System-ReportGenerator" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportGenerator executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-System-Nuget" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the Nuget executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <!--Build-->
+  <xs:element name="Hx-Build-Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A version of the build, in format: [major.minor.build.revision].</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-Build-Version-Informational" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>An informational version of the build, in a free format, i.e. [major.minor Beta].</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx-Build-Sln-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the directory of the solution to proceed with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-Build-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the solution to proceed with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx-Build-Reports-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the reports directory of the solution to put tests reports, coverage reports etc.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <!--Targets-->
+
+  <!--Flows-->
+</xs:schema>

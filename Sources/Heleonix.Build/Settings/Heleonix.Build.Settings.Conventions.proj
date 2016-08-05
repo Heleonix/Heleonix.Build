@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <Import Project="..\Heleonix.Build.Intellisense.proj" />
+
+  <!--Target Inputs-->
+  <!--<Target Name="Hx-<TargetName>-Before-DefaultInputs" BeforeTargets="<TargetName>">
+  </Target>-->
+
+  <PropertyGroup Condition="$(Hx-System-CI) == 'Jenkins'">
+    <!--If a branch name ends with [major.minor] version.-->
+    <Hx-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(BRANCH_NAME)'))</Hx-Build-Version>
+    <!--Otherwise, set the default version in case of a free-named branch.-->
+    <Hx-Build-Version Condition="'$(Hx-Build-Version)' == ''">1.0</Hx-Build-Version>
+    <!--Append a build number.-->
+    <Hx-Build-Version>$(Hx-Build-Version).$(BUILD_NUMBER)</Hx-Build-Version>
+    <!--Set informational version for git.-->
+    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).$(GIT_COMMIT.Substring(0, 7))</Hx-Build-Version-Informational>
+    <!--Set revision to "0", because git commit id contains letters.-->
+    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).0</Hx-Build-Version>
+    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version).$(SVN_REVISION)</Hx-Build-Version>
+    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version)</Hx-Build-Version-Informational>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Hx-System-CI) == 'TeamCity'">
+    <!--If a branch name ends with [major.minor] version.-->
+    <Hx-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(teamcity_build_branch)'))</Hx-Build-Version>
+    <!--Otherwise, set the default version in case of a free-named branch.-->
+    <Hx-Build-Version Condition="'$(Hx-Build-Version)' == ''">1.0</Hx-Build-Version>
+    <!--Append a build number.-->
+    <Hx-Build-Version>$(Hx-Build-Version).$(BUILD_NUMBER)</Hx-Build-Version>
+    <!--Set informational version for git.-->
+    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).$(GIT_COMMIT.Substring(0, 7))</Hx-Build-Version-Informational>
+    <!--Set revision to "0", because git commit hash contains letters.-->
+    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).0</Hx-Build-Version>
+    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version).$(SVN_REVISION)</Hx-Build-Version>
+    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version)</Hx-Build-Version-Informational>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Hx-Build-Sln-Dir Include="@(Hx-System-Workspace)" />
+    <Hx-Build-Sln Include="%(Hx-Build-Sln-Dir)\*.sln" />
+    <Hx-Build-Reports-Dir Include="%(Hx-Build-Sln-Dir)\Reports\$(Hx-In-Configuration)" />
+  </ItemGroup>
+
+  <Target Name="FxCop-Before-DefaultInputs" BeforeTargets="FxCop">
+    <PropertyGroup>
+      <FxCop-In-Errors-Max>0</FxCop-In-Errors-Max>
+      <FxCop-In-Errors-Result>Error</FxCop-In-Errors-Result>
+      <FxCop-In-CriticalErrors-Max>0</FxCop-In-CriticalErrors-Max>
+      <FxCop-In-CriticalErrors-Result>Error</FxCop-In-CriticalErrors-Result>
+      <FxCop-In-Warnings-Max>0</FxCop-In-Warnings-Max>
+      <FxCop-In-Warnings-Result>Error</FxCop-In-Warnings-Result>
+      <FxCop-In-CriticalWarnings-Max>0</FxCop-In-CriticalWarnings-Max>
+      <FxCop-In-CriticalWarnings-Result>Error</FxCop-In-CriticalWarnings-Result>
+      <FxCop-In-Ruleset-Path>$(DEV)\Tools\FxCop\AllManaged.ruleset</FxCop-In-Ruleset-Path>
+      <FxCop-In-Dictionary-Path>$(DEV)\Tools\FxCop\CustomDictionary.xml</FxCop-In-Dictionary-Path>
+    </PropertyGroup>
+    <ItemGroup>
+      <FxCop-In-Files-Path
+        Include="$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.dll;$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.exe" />
+    </ItemGroup>
+  </Target>
+  <Target Name="_NUnit-Base-Before-DefaultInputs" BeforeTargets="_NUnit-Base">
+    <PropertyGroup>
+      <NUnit-In-Failed-Result>Error</NUnit-In-Failed-Result>
+    </PropertyGroup>
+    <ItemGroup>
+      <NUnit-In-Tests-Path Include="$(In-Sln-Dir)\Tests\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.Tests.dll" />
+    </ItemGroup>
+  </Target>
+  <Target Name="OpenCover-Before-DefaultInputs" BeforeTargets="OpenCover">
+    <PropertyGroup>
+      <OpenCover-In-Target>NUnit</OpenCover-In-Target>
+      <OpenCover-In-Exclude-Attributes-Filter>*.ExcludeFromCodeCoverage*</OpenCover-In-Exclude-Attributes-Filter>
+      <OpenCover-In-Filter>+[$(System-Sln-Name)*]* -[$(System-Sln-Name)*]*.RuntimeContractsAttribute* -[$(System-Sln-Name)*.Tests]*</OpenCover-In-Filter>
+      <OpenCover-In-Classes-Min>100</OpenCover-In-Classes-Min>
+      <OpenCover-In-Classes-Result>Error</OpenCover-In-Classes-Result>
+      <OpenCover-In-Methods-Min>100</OpenCover-In-Methods-Min>
+      <OpenCover-In-Methods-Result>Error</OpenCover-In-Methods-Result>
+      <OpenCover-In-Branches-Min>100</OpenCover-In-Branches-Min>
+      <OpenCover-In-Branches-Result>Error</OpenCover-In-Branches-Result>
+      <OpenCover-In-Lines-Min>100</OpenCover-In-Lines-Min>
+      <OpenCover-In-Lines-Result>Error</OpenCover-In-Lines-Result>
+    </PropertyGroup>
+    <ItemGroup>
+      <OpenCover-In-Tests-Path Include="@(NUnit-In-Tests-Path)" />
+    </ItemGroup>
+  </Target>
+  <Target Name="Nuget-Pack-Before-DefaultInputs" BeforeTargets="Nuget-Pack">
+    <ItemGroup>
+      <Nuget-Pack-In-Nuspec-Path Include="$(In-Sln-Dir)\..\*.nuspec" />
+    </ItemGroup>
+  </Target>
+</Project>
