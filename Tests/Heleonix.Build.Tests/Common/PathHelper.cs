@@ -92,6 +92,16 @@ namespace Heleonix.Build.Tests.Common
         /// </summary>
         public static string GitExePath => "git.exe";
 
+        /// <summary>
+        /// Gets the Svn executable path.
+        /// </summary>
+        public static string SvnExePath => "svn.exe";
+
+        /// <summary>
+        /// Gets the SvnAdmin executable path.
+        /// </summary>
+        public static string SvnAdminExePath => "svnadmin.exe";
+
         #endregion
     }
 }

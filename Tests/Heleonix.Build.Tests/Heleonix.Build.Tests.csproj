@@ -85,6 +85,7 @@
     <Compile Include="Tasks\NUnitTests.cs" />
     <Compile Include="Tasks\OpenCoverTests.cs" />
     <Compile Include="Tasks\ReportUnitTests.cs" />
+    <Compile Include="Tasks\SvnLogTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Heleonix.licenseheader">

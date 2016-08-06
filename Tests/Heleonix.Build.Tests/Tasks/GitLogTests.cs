@@ -46,13 +46,24 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 BuildEngine = new FakeBuildEngine(),
                 GitExePath = new TaskItem(PathHelper.GitExePath),
-                MaxCount = 2
+                RepositoryPath = new TaskItem(LibSimulatorHelper.SolutionDirectoryPath),
+                MaxCount = 1
             };
 
             var succeeded = task.Execute();
 
             Assert.That(succeeded, Is.True);
-            Assert.That(task.Commits, Has.Count.EqualTo(2));
+            Assert.That(task.Commits, Has.Length.EqualTo(task.MaxCount));
+            Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
+            Assert.That(task.Commits[0].ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision")), Is.True);
+            Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
+            Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.Not.Empty);
+            Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.Not.Empty);
+            Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
+            Assert.That(task.Commits[0].GetMetadata("CommitterName"), Is.Not.Empty);
+            Assert.That(task.Commits[0].GetMetadata("CommitterEmail"), Is.Not.Empty);
+            Assert.That(task.Commits[0].GetMetadata("CommitterDate"), Is.Not.Empty);
+            Assert.That(task.Commits[0].GetMetadata("Message"), Is.Not.Empty);
         }
 
         #endregion

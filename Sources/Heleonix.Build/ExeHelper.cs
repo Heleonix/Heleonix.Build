@@ -38,16 +38,51 @@ namespace Heleonix.Build
         /// </summary>
         /// <param name="exePath">The execute path.</param>
         /// <param name="arguments">The arguments.</param>
-        /// <returns>An exit code</returns>
-        public static int Execute(string exePath, string arguments)
+        /// <param name="workingDirectory">The working directory.</param>
+        /// <returns>An exit code.</returns>
+        public static int Execute(string exePath, string arguments, string workingDirectory = "")
         {
             var process = Process.Start(new ProcessStartInfo
             {
                 Arguments = arguments,
                 FileName = exePath,
                 CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden
+                WindowStyle = ProcessWindowStyle.Hidden,
+                WorkingDirectory = workingDirectory
             });
+
+            var exited = process.WaitForExit(int.MaxValue);
+
+            if (!exited)
+            {
+                process.Kill();
+            }
+
+            return process.ExitCode;
+        }
+
+        /// <summary>
+        /// Executes an executable by the specified <paramref name="exePath"/>.
+        /// </summary>
+        /// <param name="exePath">The execute path.</param>
+        /// <param name="arguments">The arguments.</param>
+        /// <param name="output">Output string for the <see cref="Process.StandardOutput"/>.</param>
+        /// <param name="workingDirectory">The working directory.</param>
+        /// <returns>An exit code.</returns>
+        public static int Execute(string exePath, string arguments, out string output, string workingDirectory = "")
+        {
+            var process = Process.Start(new ProcessStartInfo
+            {
+                Arguments = arguments,
+                FileName = exePath,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                WorkingDirectory = workingDirectory,
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            });
+
+            output = process.StandardOutput.ReadToEnd();
 
             var exited = process.WaitForExit(int.MaxValue);
 

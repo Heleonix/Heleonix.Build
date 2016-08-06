@@ -45,14 +45,15 @@ namespace Heleonix.Build.Tasks
         public ITaskItem GitExePath { get; set; }
 
         /// <summary>
+        /// Gets or sets the file or directory path to retrieve log for.
+        /// </summary>
+        [Required]
+        public ITaskItem RepositoryPath { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum count of commits to retrieve from the log.
         /// </summary>
         public long MaxCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets the count of commits to skip before starting retrieval from the log.
-        /// </summary>
-        public long SkipCount { get; set; }
 
         /// <summary>
         /// Gets or sets the date to start retrieval of commits from.
@@ -79,94 +80,92 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var outputFilePath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-
-            // Commit output format:
+            // Git commit output format:
+            //
             // <Heleonix.Build.Tasks.GitLog.Commit>
             // sha1
-            // hash
-            // author name
-            // author email
-            // author date (strict ISO 8601 format)
-            // committer name
-            // committer email
-            // committer date (strict ISO 8601 format)
-            // raw body (unwrapped subject and body)
+            // Revision (sha1 hash)
+            // AuthorName
+            // AuthorEmail
+            // AuthorDate (strict ISO-8601 format)
+            // CommitterName
+            // CommitterEmail
+            // CommitterDate (strict ISO-8601 format)
+            // Message
             // <Heleonix.Build.Tasks.GitLog.Commit>
+
             var args = ArgsBuilder.By(' ', '=')
-                .Add("git")
                 .Add("log")
                 .Add("--format",
                     "<Heleonix.Build.Tasks.GitLog.Commit>%n%H%n%h%n%an%n%ae%n%aI%n%cn%n%ce%n%cI%n%B%n</Heleonix.Build.Tasks.GitLog.Commit>",
                     true)
                 .Add("--since", SinceDate, true)
                 .Add("--until", UntilDate, true)
-                .Add("--skip", SkipCount, false, SkipCount > 0)
                 .Add("--max-count", MaxCount == 0 ? 1 : MaxCount)
-                .Add(">")
-                .Add(outputFilePath, true);
+                .Add("--")
+                .Add(RepositoryPath.ItemSpec, true);
 
-            try
+            var workingDirectoryPath = File.Exists(RepositoryPath.ItemSpec)
+                ? Path.GetDirectoryName(RepositoryPath.ItemSpec)
+                : RepositoryPath.ItemSpec;
+
+            string output;
+
+            var exitCode = ExeHelper.Execute(GitExePath.ItemSpec, args, out output, workingDirectoryPath);
+
+            if (exitCode != 0)
             {
-                var exitCode = ExeHelper.Execute(GitExePath.ItemSpec, args);
+                Log.LogError($"{nameof(GitLog)} failed. Exit code: {exitCode}.");
 
-                if (exitCode != 0)
+                return;
+            }
+
+            var commits = new List<ITaskItem>();
+
+            using (var outputReader = new StringReader(output))
+            {
+                var line = string.Empty;
+
+                while (line != null)
                 {
-                    Log.LogError($"{nameof(GitLog)} failed. Exit code: {exitCode}.");
+                    line = outputReader.ReadLine();
 
-                    return;
-                }
+                    if (line != "<Heleonix.Build.Tasks.GitLog.Commit>") continue;
 
-                var commits = new List<ITaskItem>();
+                    var commit = new TaskItem { ItemSpec = outputReader.ReadLine() };
 
-                using (var outputStream = new StreamReader(File.OpenRead(outputFilePath)))
-                {
-                    while (!outputStream.EndOfStream)
+                    commit.SetMetadata("Revision", outputReader.ReadLine());
+                    commit.SetMetadata("AuthorName", outputReader.ReadLine());
+                    commit.SetMetadata("AuthorEmail", outputReader.ReadLine());
+                    commit.SetMetadata("AuthorDate", outputReader.ReadLine());
+                    commit.SetMetadata("CommitterName", outputReader.ReadLine());
+                    commit.SetMetadata("CommitterEmail", outputReader.ReadLine());
+                    commit.SetMetadata("CommitterDate", outputReader.ReadLine());
+
+                    var textBuilder = new StringBuilder();
+
+                    line = outputReader.ReadLine();
+
+                    while (line != "</Heleonix.Build.Tasks.GitLog.Commit>")
                     {
-                        var line = outputStream.ReadLine();
+                        textBuilder.AppendLine(line);
 
-                        if (line != "<Heleonix.Build.Tasks.GitLog.Commit>") continue;
-
-                        var commit = new TaskItem { ItemSpec = outputStream.ReadLine() };
-
-                        commit.SetMetadata("Hash", outputStream.ReadLine());
-                        commit.SetMetadata("AuthorName", outputStream.ReadLine());
-                        commit.SetMetadata("AuthorEmail", outputStream.ReadLine());
-                        commit.SetMetadata("AuthorDate", outputStream.ReadLine());
-                        commit.SetMetadata("CommitterName", outputStream.ReadLine());
-                        commit.SetMetadata("CommitterEmail", outputStream.ReadLine());
-                        commit.SetMetadata("CommitterDate", outputStream.ReadLine());
-
-                        var textBuilder = new StringBuilder();
-
-                        line = outputStream.ReadLine();
-
-                        while (line != "</Heleonix.Build.Tasks.GitLog.Commit>")
-                        {
-                            textBuilder.AppendLine(line);
-
-                            line = outputStream.ReadLine();
-                        }
-
-                        if (textBuilder.ToString().EndsWith(Environment.NewLine))
-                        {
-                            textBuilder.Remove(textBuilder.Length - Environment.NewLine.Length,
-                                Environment.NewLine.Length);
-                        }
-
-                        commit.SetMetadata("Text", textBuilder.ToString());
-
-                        commits.Add(commit);
+                        line = outputReader.ReadLine();
                     }
+
+                    if (textBuilder.ToString().EndsWith(Environment.NewLine))
+                    {
+                        textBuilder.Remove(textBuilder.Length - Environment.NewLine.Length,
+                            Environment.NewLine.Length);
+                    }
+
+                    commit.SetMetadata("Message", textBuilder.ToString());
+
+                    commits.Add(commit);
                 }
             }
-            finally
-            {
-                if (File.Exists(outputFilePath))
-                {
-                    File.Delete(outputFilePath);
-                }
-            }
+
+            Commits = commits.ToArray();
         }
 
         #endregion

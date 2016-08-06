@@ -94,6 +94,7 @@
     <Compile Include="Tasks\OpenCover.cs" />
     <Compile Include="Tasks\ReportUnit.cs" />
     <Compile Include="Tasks\NUnit.cs" />
+    <Compile Include="Tasks\SvnLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build" />
