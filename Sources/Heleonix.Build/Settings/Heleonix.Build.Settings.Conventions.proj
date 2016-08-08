@@ -24,48 +24,43 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj" />
+  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
 
-  <!--Target Inputs-->
-  <!--<Target Name="Hx-<TargetName>-Before-DefaultInputs" BeforeTargets="<TargetName>">
-  </Target>-->
+  <!--Conventions for target-specific properties and items which appear at runtime-->
+  <!--<Target Name="Hxb-[TargetName]-Before-Conventions" BeforeTargets="[TargetName]"></Target>-->
 
-  <PropertyGroup Condition="$(Hx-System-CI) == 'Jenkins'">
-    <!--If a branch name ends with [major.minor] version.-->
-    <Hx-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(BRANCH_NAME)'))</Hx-Build-Version>
-    <!--Otherwise, set the default version in case of a free-named branch.-->
-    <Hx-Build-Version Condition="'$(Hx-Build-Version)' == ''">1.0</Hx-Build-Version>
-    <!--Append a build number.-->
-    <Hx-Build-Version>$(Hx-Build-Version).$(BUILD_NUMBER)</Hx-Build-Version>
-    <!--Set informational version for git.-->
-    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).$(GIT_COMMIT.Substring(0, 7))</Hx-Build-Version-Informational>
-    <!--Set revision to "0", because git commit id contains letters.-->
-    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).0</Hx-Build-Version>
-    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version).$(SVN_REVISION)</Hx-Build-Version>
-    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version)</Hx-Build-Version-Informational>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Hx-System-CI) == 'TeamCity'">
-    <!--If a branch name ends with [major.minor] version.-->
-    <Hx-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(teamcity_build_branch)'))</Hx-Build-Version>
-    <!--Otherwise, set the default version in case of a free-named branch.-->
-    <Hx-Build-Version Condition="'$(Hx-Build-Version)' == ''">1.0</Hx-Build-Version>
-    <!--Append a build number.-->
-    <Hx-Build-Version>$(Hx-Build-Version).$(BUILD_NUMBER)</Hx-Build-Version>
-    <!--Set informational version for git.-->
-    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).$(GIT_COMMIT.Substring(0, 7))</Hx-Build-Version-Informational>
-    <!--Set revision to "0", because git commit hash contains letters.-->
-    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Git'">$(Hx-Build-Version).0</Hx-Build-Version>
-    <Hx-Build-Version Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version).$(SVN_REVISION)</Hx-Build-Version>
-    <Hx-Build-Version-Informational Condition="%(Hx-System-SCM.Type) == 'Svn'">$(Hx-Build-Version)</Hx-Build-Version-Informational>
+  <PropertyGroup>
+    <Hxb-In-Configuration>CI</Hxb-In-Configuration>
   </PropertyGroup>
 
   <ItemGroup>
-    <Hx-Build-Sln-Dir Include="@(Hx-System-Workspace)" />
-    <Hx-Build-Sln Include="%(Hx-Build-Sln-Dir)\*.sln" />
-    <Hx-Build-Reports-Dir Include="%(Hx-Build-Sln-Dir)\Reports\$(Hx-In-Configuration)" />
+    <Hxb-Build-Sln-Dir Include="@(Hxb-System-Workspace)"/>
+    <Hxb-Build-Sln Include="%(Hxb-Build-Sln-Dir)\*.sln"/>
+    <Hxb-Build-Reports-Dir Include="@(Hxb-Build-Sln-Dir)\Reports\$(Hxb-In-Configuration)"/>
   </ItemGroup>
 
-  <Target Name="FxCop-Before-DefaultInputs" BeforeTargets="FxCop">
+  <Target Name="Hxb-Setup-Before-Conventions" BeforeTargets="Hxb-Setup">
+    <Heleonix.Build.Tasks.GitLog RepositoryPath="@(Hxb-System-Workspace)" GitExePath="@(Hxb-System-Git)"
+                                 MaxCount="1" Condition="'$(Hxb-System-SCM)' == 'Git'">
+      <Output TaskParameter="Commits" ItemName="_Hxb-System-Before-Conventions-Commit"/>
+    </Heleonix.Build.Tasks.GitLog>
+    <Heleonix.Build.Tasks.SvnLog RepositoryPath="@(Hxb-System-Workspace)" SvnExePath="@(Hxb-System-Svn)"
+                                 MaxCount="1" Condition="'$(Hxb-System-SCM)' == 'Svn'">
+      <Output TaskParameter="Commits" ItemName="_Hxb-System-Before-Conventions-Commit"/>
+    </Heleonix.Build.Tasks.SvnLog>
+
+    <PropertyGroup>
+      <Hxb-Build-Version Condition="$(Hxb-System-CI) == 'Jenkins'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="$(Hxb-System-CI) == 'TeamCity'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' == ''">1.0</Hxb-Build-Version>
+      <Hxb-Build-Version>$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(Hxb-System-SCM)' == 'Git'">$(Hxb-Build-Version).0</Hxb-Build-Version>
+      <Hxb-Build-Version-Informational>$(Hxb-Build-Version).%(_Hxb-System-Before-Conventions-Commit.Revision)</Hxb-Build-Version-Informational>
+      <Hxb-Build-Version Condition="'$(Hxb-System-SCM)' == 'Svn'">$(Hxb-Build-Version-Informational)</Hxb-Build-Version>
+    </PropertyGroup>
+  </Target>
+
+  <!--<Target Name="FxCop-Before-DefaultInputs" BeforeTargets="FxCop">
     <PropertyGroup>
       <FxCop-In-Errors-Max>0</FxCop-In-Errors-Max>
       <FxCop-In-Errors-Result>Error</FxCop-In-Errors-Result>
@@ -80,7 +75,7 @@ SOFTWARE.
     </PropertyGroup>
     <ItemGroup>
       <FxCop-In-Files-Path
-        Include="$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.dll;$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.exe" />
+        Include="$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.dll;$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.exe"/>
     </ItemGroup>
   </Target>
   <Target Name="_NUnit-Base-Before-DefaultInputs" BeforeTargets="_NUnit-Base">
@@ -88,7 +83,7 @@ SOFTWARE.
       <NUnit-In-Failed-Result>Error</NUnit-In-Failed-Result>
     </PropertyGroup>
     <ItemGroup>
-      <NUnit-In-Tests-Path Include="$(In-Sln-Dir)\Tests\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.Tests.dll" />
+      <NUnit-In-Tests-Path Include="$(In-Sln-Dir)\Tests\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.Tests.dll"/>
     </ItemGroup>
   </Target>
   <Target Name="OpenCover-Before-DefaultInputs" BeforeTargets="OpenCover">
@@ -106,12 +101,12 @@ SOFTWARE.
       <OpenCover-In-Lines-Result>Error</OpenCover-In-Lines-Result>
     </PropertyGroup>
     <ItemGroup>
-      <OpenCover-In-Tests-Path Include="@(NUnit-In-Tests-Path)" />
+      <OpenCover-In-Tests-Path Include="@(NUnit-In-Tests-Path)"/>
     </ItemGroup>
   </Target>
   <Target Name="Nuget-Pack-Before-DefaultInputs" BeforeTargets="Nuget-Pack">
     <ItemGroup>
-      <Nuget-Pack-In-Nuspec-Path Include="$(In-Sln-Dir)\..\*.nuspec" />
+      <Nuget-Pack-In-Nuspec-Path Include="$(In-Sln-Dir)\..\*.nuspec"/>
     </ItemGroup>
-  </Target>
+  </Target>-->
 </Project>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+
+  <Target Name="Hxb-Setup">
+    <RemoveDir Directories="%(Hxb-Build-Reports-Dir.Identity)"/>
+    <MakeDir Directories="%(Hxb-Build-Reports-Dir.Identity)"/>
+
+    <!--In-->
+    <Error Condition="'$(Hxb-In-Flow)' == ''" Text="'$Hxb-In-Flow' is not defined."/>
+    <Error Condition="'$(Hxb-In-Configuration)' == ''" Text="'$Hxb-In-Configuration' is not defined."/>
+
+    <!--System-->
+    <Error Condition="'$(Hxb-System-CI)' == ''" Text="'$Hxb-System-CI' is not defined."/>
+    <Error Condition="'$(Hxb-System-SCM)' == ''" Text="'$Hxb-System-SCM' is not defined."/>
+
+    <Error Condition="!Exists('@(Hxb-System-Workspace)')" Text="'@Hxb-System-Workspace' is not found."/>
+    <Error Condition="'@(Hxb-System-FxCopCmd)' != '' AND !Exists('@(Hxb-System-FxCopCmd)')" Text="'@Hxb-System-FxCopCmd' is not found."/>
+    <Error Condition="'$(Hxb-System-SCM)' == 'Git' AND !Exists('@(Hxb-System-Git)')" Text="'@Hxb-System-Git' is not found."/>
+    <Error Condition="'@(Hxb-System-NUnitConsole)' != '' AND !Exists('@(Hxb-System-NUnitConsole)')" Text="'@Hxb-System-NUnitConsole' is not found."/>
+    <Error Condition="'@(Hxb-System-Nuget)' != '' AND !Exists('@(Hxb-System-Nuget)')" Text="'@Hxb-System-Nuget' is not found."/>
+    <Error Condition="'@(Hxb-System-OpenCoverConsole)' != '' AND !Exists('@(Hxb-System-OpenCoverConsole)')" Text="'@Hxb-System-OpenCoverConsole' is not found."/>
+    <Error Condition="'@(Hxb-System-ReportGenerator)' != '' AND !Exists('@(Hxb-System-ReportGenerator)')" Text="'@Hxb-System-ReportGenerator' is not found."/>
+    <Error Condition="'@(Hxb-System-ReportUnit)' != '' AND !Exists('@(Hxb-System-ReportUnit)')" Text="'@Hxb-System-ReportUnit' is not found."/>
+    <Error Condition="'$(Hxb-System-SCM)' == 'Svn' AND !Exists('@(Hxb-System-Svn)')" Text="'@Hxb-System-Svn' is not found."/>
+
+    <!--Build-->
+    <Error Condition="'$(Hxb-Build-Version)' == ''" Text="'$Hxb-Build-Version' is not defined."/>
+    <Error Condition="'$(Hxb-Build-Version-Informational)' == ''" Text="'$Hxb-Build-Version-Informational' is not defined."/>
+
+    <Error Condition="!Exists('@(Hxb-Build-Sln-Dir)')" Text="'@Hxb-Build-Sln-Dir' is not found."/>
+    <Error Condition="!Exists('@(Hxb-Build-Sln)')" Text="'@Hxb-Build-Sln' is not found."/>
+    <Error Condition="!Exists('@(Hxb-Build-Reports-Dir)')" Text="'@Hxb-Build-Reports-Dir' is not found."/>
+  </Target>
+</Project>

@@ -40,157 +40,157 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// Gets or sets the OpenCover executable path.
+        /// The OpenCover executable path.
         /// </summary>
         [Required]
         public ITaskItem OpenCoverExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the target. Currently only "NUnit" is supported.
+        /// The type of the target. Currently only "NUnit" is supported.
         /// </summary>
         [Required]
         public string TargetType { get; set; }
 
         /// <summary>
-        /// Gets or sets the target executable path with command line arguments in metadata.
+        /// The target executable path with command line arguments in metadata.
         /// </summary>
         [Required]
         public ITaskItem TargetExe { get; set; }
 
         /// <summary>
-        /// Gets or sets the output file path.
+        /// The output file path.
         /// </summary>
         [Required]
         public ITaskItem CoverageResultsFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum class coverage, in range: 0% - 100%.
+        /// The minimum class coverage, in range: 0% - 100%.
         /// </summary>
         public float MinClassCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum method coverage, in range: 0% - 100%.
+        /// The minimum method coverage, in range: 0% - 100%.
         /// </summary>
         public float MinMethodCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum branch coverage, in range: 0% - 100%.
+        /// The minimum branch coverage, in range: 0% - 100%.
         /// </summary>
         public float MinBranchCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum line coverage, in range: 0% - 100%.
+        /// The minimum line coverage, in range: 0% - 100%.
         /// </summary>
         public float MinLineCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the filters to exclude code from coverage by attribute.
+        /// The filters to exclude code from coverage by attribute.
         /// </summary>
         /// <remarks>Format: Name*;*Attribute</remarks>
         public string ExcludeByAttributeFilters { get; set; }
 
         /// <summary>
-        /// Gets or sets the filters of binaries to cover.
+        /// The filters of binaries to cover.
         /// </summary>
         /// <remarks>Format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName</remarks>
         public string Filters { get; set; }
 
         /// <summary>
-        /// Gets or sets the PDB search directories path.
+        /// The PDB search directories path.
         /// </summary>
         public ITaskItem[] PdbSearchDirectoriesPath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether show unvisited methods and classes
+        /// A value indicating whether show unvisited methods and classes
         /// after the coverage run is finished and the results are presented.
         /// </summary>
         public bool ShowUnvisited { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum visits count.
+        /// The maximum visits count.
         /// </summary>
         public int MaxVisitCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the total lines count.
+        /// The total lines count.
         /// </summary>
         [Output]
         public long TotalLines { get; set; }
 
         /// <summary>
-        /// Gets or sets the visited lines count.
+        /// The visited lines count.
         /// </summary>
         [Output]
         public long VisitedLines { get; set; }
 
         /// <summary>
-        /// Gets or sets the total branches count.
+        /// The total branches count.
         /// </summary>
         [Output]
         public long TotalBranches { get; set; }
 
         /// <summary>
-        /// Gets or sets the visited branches count.
+        /// The visited branches count.
         /// </summary>
         [Output]
         public long VisitedBranches { get; set; }
 
         /// <summary>
-        /// Gets or sets the total classes count.
+        /// The total classes count.
         /// </summary>
         [Output]
         public long TotalClasses { get; set; }
 
         /// <summary>
-        /// Gets or sets the visited classes count.
+        /// The visited classes count.
         /// </summary>
         [Output]
         public long VisitedClasses { get; set; }
 
         /// <summary>
-        /// Gets or sets the total methods count.
+        /// The total methods count.
         /// </summary>
         [Output]
         public long TotalMethods { get; set; }
 
         /// <summary>
-        /// Gets or sets the visited methods count.
+        /// The visited methods count.
         /// </summary>
         [Output]
         public long VisitedMethods { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum cyclomatic complexity.
+        /// The minimum cyclomatic complexity.
         /// </summary>
         [Output]
         public int MinCyclomaticComplexity { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum cyclomatic complexity.
+        /// The maximum cyclomatic complexity.
         /// </summary>
         [Output]
         public int MaxCyclomaticComplexity { get; set; }
 
         /// <summary>
-        /// Gets or sets the class coverage, in range: 0% - 100%..
+        /// The class coverage, in range: 0% - 100%..
         /// </summary>
         [Output]
         public float ClassCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the method coverage, in range: 0% - 100%..
+        /// The method coverage, in range: 0% - 100%..
         /// </summary>
         [Output]
         public float MethodCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the line coverage, in range: 0% - 100%..
+        /// The line coverage, in range: 0% - 100%..
         /// </summary>
         [Output]
         public float LineCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the branch coverage, in range: 0% - 100%..
+        /// The branch coverage, in range: 0% - 100%..
         /// </summary>
         [Output]
         public float BranchCoverage { get; set; }
@@ -204,7 +204,7 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            string targetArgs = null;
+            string targetArgs;
 
             if (string.Compare(TargetType, "NUnit", StringComparison.InvariantCultureIgnoreCase) == 0)
             {
@@ -247,7 +247,16 @@ namespace Heleonix.Build.Tasks
                 Log.LogWarning($"Target failed. Target's exit code: {exitCode}.");
             }
 
-            var summary = XDocument.Load(CoverageResultsFilePath.ItemSpec).Element("CoverageSession").Element("Summary");
+            var summary = XDocument.Load(CoverageResultsFilePath.ItemSpec)
+                .Element("CoverageSession")?
+                .Element("Summary");
+
+            if (summary == null)
+            {
+                Log.LogMessage("Summary was not found.");
+
+                return;
+            }
 
             TotalLines = Convert.ToInt64(summary.Attribute("numSequencePoints").Value);
             VisitedLines = Convert.ToInt64(summary.Attribute("visitedSequencePoints").Value);

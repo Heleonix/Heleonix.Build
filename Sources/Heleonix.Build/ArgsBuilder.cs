@@ -124,7 +124,7 @@ namespace Heleonix.Build
 
             foreach (var value in values)
             {
-                Add(value, isPath, condition);
+                Add(value, isPath);
             }
 
             return this;
@@ -147,7 +147,7 @@ namespace Heleonix.Build
 
             foreach (var value in values)
             {
-                Add(key, value, isPath, condition);
+                Add(key, value, isPath);
             }
 
             return this;

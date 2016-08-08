@@ -34,19 +34,19 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// Gets or sets the ReportUnit executable path.
+        /// The ReportUnit executable path.
         /// </summary>
         [Required]
         public ITaskItem ReportUnitExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the report file path.
+        /// The report file path.
         /// </summary>
         [Required]
         public ITaskItem ReportFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the tests results file path.
+        /// The tests results file path.
         /// </summary>
         [Required]
         public ITaskItem TestsResultsFilePath { get; set; }
@@ -56,7 +56,7 @@ namespace Heleonix.Build.Tasks
         #region BaseTask Members
 
         /// <summary>
-        /// When overridden in a derived class, executes the task.
+        /// Executes the ReportUnit.
         /// </summary>
         protected override void ExecuteInternal()
         {

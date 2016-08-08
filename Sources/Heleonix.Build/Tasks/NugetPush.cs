@@ -34,41 +34,41 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// Gets or sets the Nuget executable path.
+        /// The Nuget executable path.
         /// </summary>
         [Required]
         public ITaskItem NugetExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the package file path.
+        /// The package file path.
         /// </summary>
         [Required]
         public ITaskItem PackageFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets an API key.
+        /// An API key.
         /// </summary>
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// Gets or sets a source path.
+        /// A source path.
         /// </summary>
         public string SourcePath { get; set; }
 
         /// <summary>
-        /// Gets or sets a configuration file path.
+        /// A configuration file path.
         /// </summary>
         public ITaskItem ConfigFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the verbosity.
+        /// The verbosity.
         /// </summary>
         /// <remarks>
         /// Possible values:
         /// <list type="bullet">
-        /// <item><description>normal</description></item>
-        /// <item><description>quiet</description></item>
-        /// <item><description>detailed</description></item>
+        /// <item><term>normal</term></item>
+        /// <item><term>quiet</term></item>
+        /// <item><term>detailed</term></item>
         /// </list>
         /// </remarks>
         public string Verbosity { get; set; }

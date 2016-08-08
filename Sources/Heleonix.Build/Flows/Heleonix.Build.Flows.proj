@@ -25,9 +25,9 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj" />
-  
+  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+
   <PropertyGroup>
-    <Hx-In-Flow></Hx-In-Flow>
+    <Hxb-In-Flow></Hxb-In-Flow>
   </PropertyGroup>
 </Project>

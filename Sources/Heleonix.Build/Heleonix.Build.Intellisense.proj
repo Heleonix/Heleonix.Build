@@ -25,46 +25,66 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <!--Tasks-->
+  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+
   <!--In-->
   <PropertyGroup Condition="1 == 0">
-    <Hx-In-Flow></Hx-In-Flow>
-    <Hx-In-Configuration></Hx-In-Configuration>
-    <Hx-In-Overrides></Hx-In-Overrides>
+    <Hxb-In-Flow></Hxb-In-Flow>
+    <Hxb-In-Configuration></Hxb-In-Configuration>
+    <Hxb-In-Overrides></Hxb-In-Overrides>
   </PropertyGroup>
 
   <!--System-->
   <PropertyGroup Condition="1 == 0">
-    <Hx-System-CI></Hx-System-CI>
+    <Hxb-System-CI></Hxb-System-CI>
+    <Hxb-System-SCM></Hxb-System-SCM>
   </PropertyGroup>
 
   <ItemGroup Condition="1 == 0">
-    <Hx-System-SCM>
-      <Type></Type>
-    </Hx-System-SCM>
-    <Hx-System-Workspace></Hx-System-Workspace>
-    <Hx-System-FxCopCmd></Hx-System-FxCopCmd>
-    <Hx-System-NUnitConsole></Hx-System-NUnitConsole>
-    <Hx-System-ReportUnit></Hx-System-ReportUnit>
-    <Hx-System-OpenCoverConsole></Hx-System-OpenCoverConsole>
-    <Hx-System-ReportGenerator></Hx-System-ReportGenerator>
-    <Hx-System-Nuget></Hx-System-Nuget>
+    <Hxb-System-Workspace></Hxb-System-Workspace>
+    <Hxb-System-FxCopCmd></Hxb-System-FxCopCmd>
+    <Hxb-System-NUnitConsole></Hxb-System-NUnitConsole>
+    <Hxb-System-ReportUnit></Hxb-System-ReportUnit>
+    <Hxb-System-OpenCoverConsole></Hxb-System-OpenCoverConsole>
+    <Hxb-System-ReportGenerator></Hxb-System-ReportGenerator>
+    <Hxb-System-Nuget></Hxb-System-Nuget>
+    <Hxb-System-Git></Hxb-System-Git>
+    <Hxb-System-Svn></Hxb-System-Svn>
   </ItemGroup>
 
   <!--Build-->
   <PropertyGroup Condition="1 == 0">
-    <Hx-Build-Version></Hx-Build-Version>
-    <Hx-Build-Version-Informational></Hx-Build-Version-Informational>
+    <Hxb-Build-Version></Hxb-Build-Version>
+    <Hxb-Build-Version-Informational></Hxb-Build-Version-Informational>
   </PropertyGroup>
 
   <ItemGroup Condition="1 == 0">
-    <Hx-Build-Sln-Dir></Hx-Build-Sln-Dir>
-    <Hx-Build-Sln></Hx-Build-Sln>
-    <Hx-Build-Reports-Dir></Hx-Build-Reports-Dir>
+    <Hxb-Build-Sln-Dir></Hxb-Build-Sln-Dir>
+    <Hxb-Build-Sln></Hxb-Build-Sln>
+    <Hxb-Build-Reports-Dir></Hxb-Build-Reports-Dir>
   </ItemGroup>
 
   <!--Targets-->
-  <Target Name="Hx-Main" Condition="1 == 0" />
-  <Target Name="Hx-System" Condition="1 == 0" />
+  <Target Name="Hxb-Main" Condition="1 == 0"/>
+  <Target Name="Hxb-Setup" Condition="1 == 0"/>
 
   <!--Flows-->
 </Project>

@@ -37,24 +37,24 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// Gets or sets the file path.
+        /// The file path.
         /// </summary>
         [Required]
         public ITaskItem FilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the .NET regular expression to find content to replace.
+        /// The .NET regular expression to find content to replace.
         /// </summary>
         [Required]
         public string RegEx { get; set; }
 
         /// <summary>
-        /// Gets or sets the .NET regular expression options.
+        /// The .NET regular expression options.
         /// </summary>
         public string RegExOptions { get; set; }
 
         /// <summary>
-        /// Gets or sets content to replace with.
+        /// Content to replace with.
         /// </summary>
         public string Replacement { get; set; }
 

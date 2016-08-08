@@ -64,24 +64,24 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// Gets or sets the NUnit console executable path.
+        /// The NUnit console executable path.
         /// </summary>
         [Required]
         public ITaskItem NUnitConsoleExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the NUnit project or tests files path.
+        /// The NUnit project or tests files path.
         /// </summary>
         [Required]
         public ITaskItem[] NUnitProjectOrTestsFilesPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the NUnit tests results file path.
+        /// The NUnit tests results file path.
         /// </summary>
         public ITaskItem TestsResultsFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the tests list file path.
+        /// The tests list file path.
         /// </summary>
         /// <remarks>
         /// File is containing a list of tests to run or explore, one per line.
@@ -89,7 +89,7 @@ namespace Heleonix.Build.Tasks
         public ITaskItem TestsListFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the tests parameters, specified in the form name=value.
+        /// The tests parameters, specified in the form name=value.
         /// </summary>
         /// <remarks>
         /// Multiple parameters may be specified, separated by semicolons.
@@ -97,7 +97,7 @@ namespace Heleonix.Build.Tasks
         public string TestsParameters { get; set; }
 
         /// <summary>
-        /// Gets or sets a tests filter to filter tests to run.
+        /// A tests filter to filter tests to run.
         /// </summary>
         /// <remarks>
         /// For more details, see NUnit Test Selection Language.
@@ -105,106 +105,106 @@ namespace Heleonix.Build.Tasks
         public string TestsFilter { get; set; }
 
         /// <summary>
-        /// Gets or sets the tests output file path.
+        /// The tests output file path.
         /// </summary>
         public ITaskItem TestsOutputFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the errors file path.
+        /// The errors file path.
         /// </summary>
         public ITaskItem ErrorsFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the agents number.
+        /// The agents number.
         /// </summary>
         public int AgentsNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether stop on first first error or first failed test.
+        /// A value indicating whether stop on first first error or first failed test.
         /// </summary>
         public bool StopOnErrorOrFailedTest { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use TeamCity service messages.
+        /// A value indicating whether to use TeamCity service messages.
         /// </summary>
         public bool UseTeamCityServiceMessages { get; set; }
 
         /// <summary>
-        /// Gets or sets the framework to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0.
+        /// The framework to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0.
         /// </summary>
         public string Framework { get; set; }
 
         /// <summary>
-        /// Gets or sets the trace level.
+        /// The trace level.
         /// </summary>
         /// <remarks>
         /// Possible values:
         /// <list type="bullet">
-        /// <item><description>Off</description></item>
-        /// <item><description>Error</description></item>
-        /// <item><description>Warning</description></item>
-        /// <item><description>Info</description></item>
-        /// <item><description>Verbose</description></item>
+        /// <item><term>Off</term></item>
+        /// <item><term>Error</term></item>
+        /// <item><term>Warning</term></item>
+        /// <item><term>Info</term></item>
+        /// <item><term>Verbose</term></item>
         /// </list>
         /// </remarks>
         public string TraceLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets the count of test cases.
+        /// The count of test cases.
         /// </summary>
         [Output]
         public int TestCases { get; set; }
 
         /// <summary>
-        /// Gets or sets the total count of tests.
+        /// The total count of tests.
         /// </summary>
         [Output]
         public int Total { get; set; }
 
         /// <summary>
-        /// Gets or sets the count of passed tests.
+        /// The count of passed tests.
         /// </summary>
         [Output]
         public int Passed { get; set; }
 
         /// <summary>
-        /// Gets or sets the count of failed tests.
+        /// The count of failed tests.
         /// </summary>
         [Output]
         public int Failed { get; set; }
 
         /// <summary>
-        /// Gets or sets the inconclusive.
+        /// The inconclusive.
         /// </summary>
         [Output]
         public int Inconclusive { get; set; }
 
         /// <summary>
-        /// Gets or sets the skipped.
+        /// The skipped.
         /// </summary>
         [Output]
         public int Skipped { get; set; }
 
         /// <summary>
-        /// Gets or sets the asserts.
+        /// The asserts.
         /// </summary>
         [Output]
         public int Asserts { get; set; }
 
         /// <summary>
-        /// Gets or sets the start time.
+        /// The start time.
         /// </summary>
         [Output]
         public string StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the end time.
+        /// The end time.
         /// </summary>
         [Output]
         public string EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the duration.
+        /// The duration.
         /// </summary>
         [Output]
         public float Duration { get; set; }
@@ -254,6 +254,13 @@ namespace Heleonix.Build.Tasks
             }
 
             var testRun = XDocument.Load(TestsResultsFilePath.ItemSpec).Element("test-run");
+
+            if (testRun == null)
+            {
+                Log.LogMessage("No tests were run.");
+
+                return;
+            }
 
             TestCases = Convert.ToInt32(testRun.Attribute("testcasecount").Value);
             Total = Convert.ToInt32(testRun.Attribute("total").Value);

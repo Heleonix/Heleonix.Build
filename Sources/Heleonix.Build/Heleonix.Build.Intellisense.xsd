@@ -68,111 +68,191 @@ Example custom task with single required parameter
   <xs:include
     schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd" />
 
+  <!--
+  -->
+
   <!--Tasks-->
+  <xs:element name="Heleonix.Build.Tasks.GitLog" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Retrieves the Git log.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="GitExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The Git executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RepositoryPath" use="required">
+            <xs:annotation>
+              <xs:documentation>The file or directory path to retrieve log for.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MaxCount" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>The maximum count of commits to retrieve from the log.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SinceDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>The date to start retrieval of commits from.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="UntilDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>The date to stop retrieval of commits on.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Commits">
+            <xs:annotation>
+              <xs:documentation>[Output] The commits.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.SvnLog" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Retrieves the Svn log.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="SvnExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The Svn executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RepositoryPath" use="required">
+            <xs:annotation>
+              <xs:documentation>The file or directory path to retrieve log for.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MaxCount" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>The maximum count of commits to retrieve from the log.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SinceDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>The date to start retrieval of commits from.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="UntilDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>The date to stop retrieval of commits on.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Commits">
+            <xs:annotation>
+              <xs:documentation>[Output] The commits.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
 
   <!--In-->
-  <xs:element name="Hx-In-Flow" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-In-Flow" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A name of a flow to run.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-In-Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-In-Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A configuration, i.e. "Release", "Debug".</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-In-Overrides" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-In-Overrides" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A file to override everything up to solution-specific definitions.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
   <!--System-->
-  <xs:element name="Hx-System-CI" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-System-CI" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>Type of continuous integration system. Possible values: "Jenkins", "TeamCity".</xs:documentation>
+      <xs:documentation>A type of continuous integration system. Possible values: "Jenkins", "TeamCity".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-System-SCM" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A type of SCM. Possible values: "Git", "Svn".</xs:documentation>
     </xs:annotation>
   </xs:element>
 
-  <xs:element name="Hx-System-SCM" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-Git" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
-      <xs:documentation>A path to a SCM executable.</xs:documentation>
+      <xs:documentation>The Git executable.</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:complexContent>
-        <xs:extension base="msb:SimpleItemType">
-          <xs:sequence maxOccurs="1">
-            <xs:choice>
-              <xs:element name="Type" type="xs:string">
-                <xs:annotation>
-                  <xs:documentation>Type of SCM. Possible values: "Git", "Svn".</xs:documentation>
-                </xs:annotation>
-              </xs:element>
-            </xs:choice>
-          </xs:sequence>
-        </xs:extension>
-      </xs:complexContent>
-    </xs:complexType>
   </xs:element>
-  <xs:element name="Hx-System-Workspace" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-Svn" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The Svn executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-System-Workspace" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-System-FxCopCmd" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-FxCopCmd" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the FxCop cmd.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-System-NUnitConsole" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-NUnitConsole" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the NUnit console executable.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-System-ReportUnit" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-ReportUnit" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the ReportUnit executable.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-System-OpenCoverConsole" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-OpenCoverConsole" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the OpenCover console executable.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-System-ReportGenerator" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-ReportGenerator" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the ReportGenerator executable.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-System-Nuget" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-System-Nuget" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the Nuget executable.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
   <!--Build-->
-  <xs:element name="Hx-Build-Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-Build-Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A version of the build, in format: [major.minor.build.revision].</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-Build-Version-Informational" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-Build-Version-Informational" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>An informational version of the build, in a free format, i.e. [major.minor Beta].</xs:documentation>
     </xs:annotation>
   </xs:element>
 
-  <xs:element name="Hx-Build-Sln-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-Build-Sln-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the directory of the solution to proceed with.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-Build-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-Build-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the solution to proceed with.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx-Build-Reports-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-Build-Reports-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the reports directory of the solution to put tests reports, coverage reports etc.</xs:documentation>
     </xs:annotation>

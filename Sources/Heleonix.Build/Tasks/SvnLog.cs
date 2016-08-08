@@ -31,42 +31,52 @@ using Microsoft.Build.Utilities;
 namespace Heleonix.Build.Tasks
 {
     /// <summary>
-    /// Gets the Svn log.
+    /// Retrieves the Svn log.
     /// </summary>
     public class SvnLog : BaseTask
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets the Svn executable path.
+        /// The Svn executable path.
         /// </summary>
         [Required]
         public ITaskItem SvnExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the file or directory path to retrieve log for.
+        /// The file or directory path to retrieve log for.
         /// </summary>
         [Required]
         public ITaskItem RepositoryPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum count of commits to retrieve from the log.
+        /// The maximum count of commits to retrieve from the log.
         /// </summary>
         public long MaxCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the date to start retrieval of commits from.
+        /// The date to start retrieval of commits from.
         /// </summary>
         public string SinceDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the date to stop retrieval of commits on.
+        /// The date to stop retrieval of commits on.
         /// </summary>
         public string UntilDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the commits.
+        /// The commits.
         /// </summary>
+        /// <remarks>
+        /// <see cref="ITaskItem.ItemSpec"/> is a revision number.
+        /// Metadata:
+        /// <list type="bullet">
+        /// <item><term>Revision</term></item>
+        /// <item><term>AuthorName</term></item>
+        /// <item><term>AuthorDate</term></item>
+        /// <item><term>Message</term></item>
+        /// </list>
+        /// </remarks>
         [Output]
         public ITaskItem[] Commits { get; set; }
 
@@ -79,25 +89,6 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            // Svn commit output format:
-            //
-            // <?xml version="1.0" encoding="UTF-8"?>
-            // <log>
-            // <logentry
-            //    revision="Revision">
-            // <author>AuthorName</author>
-            // <date>AuthorDate (ISO-8601 format)</date>
-            // <paths>
-            // <path
-            //    prop-mods="false"
-            //    text-mods="true"
-            //    kind="file"
-            //    action="A">/item</path>
-            // </paths>
-            // <msg>Message</msg>
-            // </logentry>
-            // </log>
-
             var args = ArgsBuilder.By(' ', ' ')
                 .Add("log")
                 .Add("--limit", MaxCount)
@@ -130,9 +121,9 @@ namespace Heleonix.Build.Tasks
                 var commit = new TaskItem { ItemSpec = logEntryNode.Attribute("revision").Value };
 
                 commit.SetMetadata("Revision", commit.ItemSpec);
-                commit.SetMetadata("AuthorName", logEntryNode.Element("author").Value);
-                commit.SetMetadata("AuthorDate", logEntryNode.Element("date").Value);
-                commit.SetMetadata("Message", logEntryNode.Element("msg").Value);
+                commit.SetMetadata("AuthorName", logEntryNode.Element("author")?.Value);
+                commit.SetMetadata("AuthorDate", logEntryNode.Element("date")?.Value);
+                commit.SetMetadata("Message", logEntryNode.Element("msg")?.Value);
 
                 commits.Add(commit);
             }

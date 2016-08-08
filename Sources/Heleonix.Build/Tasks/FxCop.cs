@@ -40,24 +40,24 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// Gets or sets the FxCop executable path.
+        /// The FxCop executable path.
         /// </summary>
         [Required]
         public ITaskItem FxCopExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the analysis results file path.
+        /// The analysis results file path.
         /// </summary>
         [Required]
         public ITaskItem AnalysisResultsFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the FxCop is verbose.
+        /// A value indicating whether the FxCop is verbose.
         /// </summary>
         public bool IsVerbose { get; set; }
 
         /// <summary>
-        /// Gets or sets the comma-separated types to analyze.
+        /// The comma-separated types to analyze.
         /// </summary>
         /// <remarks>
         /// This option disables analysis of assemblies, namespaces, and resources;
@@ -67,69 +67,69 @@ namespace Heleonix.Build.Tasks
         public string TargetsTypes { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of rule libraries to load. If you specify a directory,
+        /// The location of rule libraries to load. If you specify a directory,
         /// FxCop tries to load all files that have the .dll extension.
         /// </summary>
         public ITaskItem[] RulesPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the file path of an FxCop project file.
+        /// The file path of an FxCop project file.
         /// </summary>
         public ITaskItem ProjectFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the files to analyze. If you specify a directory, FxCop tries to analyze all files
+        /// The files to analyze. If you specify a directory, FxCop tries to analyze all files
         /// that have the .exe or .dll extension.
         /// </summary>
         public ITaskItem[] TargetsPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the analysis results XSL file that is referenced in the processing instruction.
+        /// The analysis results XSL file that is referenced in the processing instruction.
         /// </summary>
         public ITaskItem AnalysisResultsXslFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the dependencies directories paths to search for target assembly dependencies.
+        /// The dependencies directories paths to search for target assembly dependencies.
         /// </summary>
         public ITaskItem[] DependenciesDirectoriesPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the ruleset file path to be used for the analysis.
+        /// The ruleset file path to be used for the analysis.
         /// It can be a file path to the rule set file or the file name of a built-in rule set.
         /// </summary>
         public ITaskItem RulesetFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the dictionary file path to be used by spelling rules.
+        /// The dictionary file path to be used by spelling rules.
         /// </summary>
         public ITaskItem DictionaryFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the critical errors count.
+        /// The critical errors count.
         /// </summary>
         [Output]
         public int CriticalErrors { get; set; }
 
         /// <summary>
-        /// Gets or sets the errors count.
+        /// The errors count.
         /// </summary>
         [Output]
         public int Errors { get; set; }
 
         /// <summary>
-        /// Gets or sets the critical warnings count.
+        /// The critical warnings count.
         /// </summary>
         [Output]
         public int CriticalWarnings { get; set; }
 
         /// <summary>
-        /// Gets or sets the warnings count.
+        /// The warnings count.
         /// </summary>
         [Output]
         public int Warnings { get; set; }
 
         /// <summary>
-        /// Gets or sets the informational messages count.
+        /// The informational messages count.
         /// </summary>
         [Output]
         public int Informational { get; set; }
@@ -143,8 +143,8 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var tempAnalysisResultsFilePath = Path.Combine(Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec),
-                Path.GetRandomFileName());
+            var tempAnalysisResultsFilePath = Path.Combine(
+                Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec) ?? string.Empty, Path.GetRandomFileName());
 
             var args = ArgsBuilder.By(' ', ':')
                 .Add("/verbose", false, IsVerbose)
@@ -161,9 +161,9 @@ namespace Heleonix.Build.Tasks
                 .Add("/summary");
 
             // FxCopCmd does not create a directory for analysis results file.
-            if (!Directory.Exists(Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec)))
+            if (!Directory.Exists(Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec) ?? string.Empty))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec));
+                Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec) ?? string.Empty);
             }
 
             var exitCode = ExeHelper.Execute(FxCopExePath.ItemSpec, args);
@@ -187,7 +187,7 @@ namespace Heleonix.Build.Tasks
 
                 results = XDocument.Load(tempAnalysisResultsFilePath);
 
-                var issues = results.Descendants("Issue");
+                var issues = results.Descendants("Issue").ToArray();
 
                 CriticalErrors = issues.Count(i => string.Equals(i.Attribute("Level").Value, "CriticalError",
                     StringComparison.InvariantCultureIgnoreCase));

@@ -38,53 +38,53 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// Gets or sets the Nuget executable path.
+        /// The Nuget executable path.
         /// </summary>
         [Required]
         public ITaskItem NugetExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the nuspec file path.
+        /// The nuspec file path.
         /// </summary>
         [Required]
         public ITaskItem NuspecFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the project file path.
+        /// The project file path.
         /// </summary>
         [Required]
         public ITaskItem ProjectFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the output package directory path.
+        /// The output package directory path.
         /// </summary>
         public ITaskItem PackageDirectoryPath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to include referenced projects.
+        /// A value indicating whether to include referenced projects.
         /// </summary>
         public bool IncludeReferencedProjects { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to exclude empty directories.
+        /// A value indicating whether to exclude empty directories.
         /// </summary>
         public bool ExcludeEmptyDirectories { get; set; }
 
         /// <summary>
-        /// Gets or sets the verbosity.
+        /// The verbosity.
         /// </summary>
         /// <remarks>
         /// Possible values:
         /// <list type="bullet">
-        /// <item><description>normal</description></item>
-        /// <item><description>quiet</description></item>
-        /// <item><description>detailed</description></item>
+        /// <item><term>normal</term></item>
+        /// <item><term>quiet</term></item>
+        /// <item><term>detailed</term></item>
         /// </list>
         /// </remarks>
         public string Verbosity { get; set; }
 
         /// <summary>
-        /// Gets or sets the package file path.
+        /// The package file path.
         /// </summary>
         [Output]
         public ITaskItem PackageFilePath { get; set; }
@@ -112,7 +112,7 @@ namespace Heleonix.Build.Tasks
 
             Log.LogMessage($"Packing '{ProjectFilePath.ItemSpec}' via '{NuspecFilePath.ItemSpec}'.");
 
-            var projectDirectoryPath = Path.GetDirectoryName(ProjectFilePath.ItemSpec);
+            var projectDirectoryPath = Path.GetDirectoryName(ProjectFilePath.ItemSpec) ?? string.Empty;
 
             var destNuspecFilePath = Path.Combine(projectDirectoryPath,
                 Path.ChangeExtension(Path.GetFileName(ProjectFilePath.ItemSpec), ".nuspec"));
@@ -131,7 +131,7 @@ namespace Heleonix.Build.Tasks
             var srcPackageFilePath = Directory.GetFiles(tempOutputDirectoryPath).First();
 
             var destPackageFilePath = Path.Combine(PackageDirectoryPath?.ItemSpec ?? projectDirectoryPath,
-                Path.GetFileName(srcPackageFilePath));
+                Path.GetFileName(srcPackageFilePath) ?? string.Empty);
 
             File.Copy(srcPackageFilePath, destPackageFilePath);
 

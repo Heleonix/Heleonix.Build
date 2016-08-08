@@ -32,42 +32,56 @@ using Microsoft.Build.Utilities;
 namespace Heleonix.Build.Tasks
 {
     /// <summary>
-    /// Gets the Git log.
+    /// Retrieves the Git log.
     /// </summary>
     public class GitLog : BaseTask
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets the Git executable path.
+        /// The Git executable path.
         /// </summary>
         [Required]
         public ITaskItem GitExePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the file or directory path to retrieve log for.
+        /// The file or directory path to retrieve log for.
         /// </summary>
         [Required]
         public ITaskItem RepositoryPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum count of commits to retrieve from the log.
+        /// The maximum count of commits to retrieve from the log.
         /// </summary>
         public long MaxCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the date to start retrieval of commits from.
+        /// The date to start retrieval of commits from.
         /// </summary>
         public string SinceDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the date to stop retrieval of commits on.
+        /// The date to stop retrieval of commits on.
         /// </summary>
         public string UntilDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the commits.
+        /// The commits.
         /// </summary>
+        /// <remarks>
+        /// <see cref="ITaskItem.ItemSpec"/> is a commit hash.
+        /// Metadata:
+        /// <list type="bullet">
+        /// <item><term>Revision</term></item>
+        /// <item><term>AuthorName</term></item>
+        /// <item><term>AuthorEmail</term></item>
+        /// <item><term>AuthorDate</term></item>
+        /// <item><term>CommitterName</term></item>
+        /// <item><term>CommitterEmail</term></item>
+        /// <item><term>CommitterDate</term></item>
+        /// <item><term>Message</term></item>
+        /// </list>
+        /// </remarks>
         [Output]
         public ITaskItem[] Commits { get; set; }
 
@@ -80,20 +94,6 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            // Git commit output format:
-            //
-            // <Heleonix.Build.Tasks.GitLog.Commit>
-            // sha1
-            // Revision (sha1 hash)
-            // AuthorName
-            // AuthorEmail
-            // AuthorDate (strict ISO-8601 format)
-            // CommitterName
-            // CommitterEmail
-            // CommitterDate (strict ISO-8601 format)
-            // Message
-            // <Heleonix.Build.Tasks.GitLog.Commit>
-
             var args = ArgsBuilder.By(' ', '=')
                 .Add("log")
                 .Add("--format",

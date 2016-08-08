@@ -69,7 +69,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Targets\Heleonix.Build.Targets.System.targets">
+    <None Include="Targets\Heleonix.Build.Targets.Setup.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>

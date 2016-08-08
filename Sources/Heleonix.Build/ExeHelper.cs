@@ -51,6 +51,11 @@ namespace Heleonix.Build
                 WorkingDirectory = workingDirectory
             });
 
+            if (process == null)
+            {
+                return int.MaxValue;
+            }
+
             var exited = process.WaitForExit(int.MaxValue);
 
             if (!exited)
@@ -81,6 +86,13 @@ namespace Heleonix.Build
                 UseShellExecute = false,
                 RedirectStandardOutput = true
             });
+
+            if (process == null)
+            {
+                output = null;
+
+                return int.MaxValue;
+            }
 
             output = process.StandardOutput.ReadToEnd();
 
