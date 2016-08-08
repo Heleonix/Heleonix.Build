@@ -27,7 +27,7 @@ using Microsoft.Build.Framework;
 namespace Heleonix.Build.Tasks
 {
     /// <summary>
-    /// Runs the Nuget "push" command.
+    /// Runs the Nuget push command.
     /// </summary>
     public class NugetPush : BaseTask
     {
@@ -46,22 +46,22 @@ namespace Heleonix.Build.Tasks
         public ITaskItem PackageFilePath { get; set; }
 
         /// <summary>
-        /// An API key.
+        /// The API key.
         /// </summary>
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// A source path.
+        /// The source path.
         /// </summary>
         public string SourcePath { get; set; }
 
         /// <summary>
-        /// A configuration file path.
+        /// The configuration file path.
         /// </summary>
         public ITaskItem ConfigFilePath { get; set; }
 
         /// <summary>
-        /// The verbosity.
+        /// The verbosity of the command.
         /// </summary>
         /// <remarks>
         /// Possible values:

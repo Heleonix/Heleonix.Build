@@ -130,7 +130,7 @@ namespace Heleonix.Build.Tasks
         public bool UseTeamCityServiceMessages { get; set; }
 
         /// <summary>
-        /// The framework to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0.
+        /// The framework to use for tests. Examples: "mono", "net-4.5", "v4.0", "2.0", "mono-4.0".
         /// </summary>
         public string Framework { get; set; }
 
@@ -174,19 +174,19 @@ namespace Heleonix.Build.Tasks
         public int Failed { get; set; }
 
         /// <summary>
-        /// The inconclusive.
+        /// The count of inconclusive tests.
         /// </summary>
         [Output]
         public int Inconclusive { get; set; }
 
         /// <summary>
-        /// The skipped.
+        /// The count of skipped tests.
         /// </summary>
         [Output]
         public int Skipped { get; set; }
 
         /// <summary>
-        /// The asserts.
+        /// The count of asserts.
         /// </summary>
         [Output]
         public int Asserts { get; set; }
@@ -204,7 +204,7 @@ namespace Heleonix.Build.Tasks
         public string EndTime { get; set; }
 
         /// <summary>
-        /// The duration.
+        /// The duration of tests running.
         /// </summary>
         [Output]
         public float Duration { get; set; }

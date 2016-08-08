@@ -26,10 +26,10 @@ SOFTWARE.
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <!--Tasks-->
-  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>

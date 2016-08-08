@@ -40,16 +40,16 @@ namespace Heleonix.Build.Tasks
         public ITaskItem ReportUnitExePath { get; set; }
 
         /// <summary>
-        /// The report file path.
-        /// </summary>
-        [Required]
-        public ITaskItem ReportFilePath { get; set; }
-
-        /// <summary>
         /// The tests results file path.
         /// </summary>
         [Required]
         public ITaskItem TestsResultsFilePath { get; set; }
+
+        /// <summary>
+        /// The report file path.
+        /// </summary>
+        [Required]
+        public ITaskItem ReportFilePath { get; set; }
 
         #endregion
 

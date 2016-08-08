@@ -31,7 +31,7 @@ using Microsoft.Build.Utilities;
 namespace Heleonix.Build.Tasks
 {
     /// <summary>
-    /// Runs the Nuget "pack" command.
+    /// Runs the Nuget pack command.
     /// </summary>
     public class NugetPack : BaseTask
     {
@@ -71,7 +71,7 @@ namespace Heleonix.Build.Tasks
         public bool ExcludeEmptyDirectories { get; set; }
 
         /// <summary>
-        /// The verbosity.
+        /// The verbosity of the command.
         /// </summary>
         /// <remarks>
         /// Possible values:
@@ -84,7 +84,7 @@ namespace Heleonix.Build.Tasks
         public string Verbosity { get; set; }
 
         /// <summary>
-        /// The package file path.
+        /// The output package file path.
         /// </summary>
         [Output]
         public ITaskItem PackageFilePath { get; set; }

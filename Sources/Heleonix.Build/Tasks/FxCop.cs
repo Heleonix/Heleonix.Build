@@ -67,9 +67,11 @@ namespace Heleonix.Build.Tasks
         public string TargetsTypes { get; set; }
 
         /// <summary>
-        /// The location of rule libraries to load. If you specify a directory,
-        /// FxCop tries to load all files that have the .dll extension.
+        /// The location of rule libraries to load.
         /// </summary>
+        /// <remarks>
+        /// If you specify a directory, FxCop tries to load all files that have the .dll extension.
+        /// </remarks>
         public ITaskItem[] RulesPath { get; set; }
 
         /// <summary>
@@ -78,9 +80,11 @@ namespace Heleonix.Build.Tasks
         public ITaskItem ProjectFilePath { get; set; }
 
         /// <summary>
-        /// The files to analyze. If you specify a directory, FxCop tries to analyze all files
-        /// that have the .exe or .dll extension.
+        /// The files to analyze.
         /// </summary>
+        /// <remarks>
+        /// If you specify a directory, FxCop tries to analyze all files that have the .exe or .dll extension.
+        /// </remarks>
         public ITaskItem[] TargetsPath { get; set; }
 
         /// <summary>
@@ -95,8 +99,10 @@ namespace Heleonix.Build.Tasks
 
         /// <summary>
         /// The ruleset file path to be used for the analysis.
-        /// It can be a file path to the rule set file or the file name of a built-in rule set.
         /// </summary>
+        /// <remarks>
+        /// It can be a file path to the rule set file or the file name of a built-in rule set.
+        /// </remarks>
         public ITaskItem RulesetFilePath { get; set; }
 
         /// <summary>

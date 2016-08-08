@@ -66,12 +66,131 @@ Example custom task with single required parameter
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:include
-    schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd" />
-
-  <!--
-  -->
+    schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd"/>
 
   <!--Tasks-->
+  <xs:element name="Heleonix.Build.Tasks.FileUpdate" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Updates a file with specified regular expression and content.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="FilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegEx" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression to find content to replace.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegExOptions" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Replacement" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Content to replace with.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.FxCop" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the FxCop.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="FxCopExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The FxCop executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AnalysisResultsFilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The analysis results file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="IsVerbose" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether the FxCop is verbose.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TargetsTypes" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The comma-separated types to analyze.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RulesPath">
+            <xs:annotation>
+              <xs:documentation>The location of rule libraries to load.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ProjectFilePath">
+            <xs:annotation>
+              <xs:documentation>The file path of an FxCop project file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TargetsPath">
+            <xs:annotation>
+              <xs:documentation>The files to analyze.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AnalysisResultsXslFilePath">
+            <xs:annotation>
+              <xs:documentation>The analysis results XSL file that is referenced in the processing instruction.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="DependenciesDirectoriesPath">
+            <xs:annotation>
+              <xs:documentation>The dependencies directories paths to search for target assembly dependencies.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RulesetFilePath">
+            <xs:annotation>
+              <xs:documentation>The ruleset file path to be used for the analysis.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="DictionaryFilePath">
+            <xs:annotation>
+              <xs:documentation>The dictionary file path to be used by spelling rules.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CriticalErrors" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The critical errors count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Errors" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The errors count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CriticalWarnings" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The critical warnings count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Warnings" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The warnings count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Informational" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The informational messages count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Heleonix.Build.Tasks.GitLog" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Retrieves the Git log.</xs:documentation>
@@ -107,6 +226,251 @@ Example custom task with single required parameter
           <xs:attribute name="Commits">
             <xs:annotation>
               <xs:documentation>[Output] The commits.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.NugetPack" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the Nuget pack command.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="NugetExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The Nuget executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="NuspecFilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The nuspec file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ProjectFilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The project file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PackageDirectoryPath">
+            <xs:annotation>
+              <xs:documentation>The output package directory path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="IncludeReferencedProjects" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether to include referenced projects.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ExcludeEmptyDirectories" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether to exclude empty directories.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Verbosity" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The verbosity of the command.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PackageFilePath">
+            <xs:annotation>
+              <xs:documentation>[Output] The output package file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.NugetPush" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the Nuget push command.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="NugetExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The Nuget executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PackageFilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The package file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ApiKey" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The API key.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SourcePath" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The source path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ConfigFilePath">
+            <xs:annotation>
+              <xs:documentation>The configuration file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Verbosity" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The verbosity of the command.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!--TODO: Add OpenCover-->
+  <xs:element name="Heleonix.Build.Tasks.NUnit" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the NUnit.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="NUnitConsoleExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The NUnit console executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="NUnitProjectOrTestsFilesPath" use="required">
+            <xs:annotation>
+              <xs:documentation>The NUnit project or tests files path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestsResultsFilePath">
+            <xs:annotation>
+              <xs:documentation>The NUnit tests results file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestsListFilePath">
+            <xs:annotation>
+              <xs:documentation>The tests list file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestsParameters" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The tests parameters, specified in the form name=value.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestsFilter" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>A tests filter to filter tests to run.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestsOutputFilePath">
+            <xs:annotation>
+              <xs:documentation>The tests output file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ErrorsFilePath">
+            <xs:annotation>
+              <xs:documentation>The errors file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AgentsNumber" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>The agents number.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="StopOnErrorOrFailedTest" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether stop on first first error or first failed test.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="UseTeamCityServiceMessages" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether to use TeamCity service messages.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Framework" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The framework to use for tests. Examples: "mono", "net-4.5", "v4.0", "2.0", "mono-4.0".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TraceLevel" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The trace level.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestCases" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of test cases.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Total" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The total count of tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Passed" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of passed tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Failed" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of failed tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Inconclusive" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of inconclusive tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Skipped" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of skipped tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Asserts" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of asserts.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="StartTime" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>[Output] The start time.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="EndTime" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>[Output] The end time.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Duration" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>[Output] The duration of tests running.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.ReportUnit" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Generates HTML report using the ReportUnit tool.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="ReportUnitExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The ReportUnit executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestsResultsFilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The tests results file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ReportFilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The report file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>

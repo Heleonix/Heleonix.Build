@@ -73,11 +73,11 @@ namespace Heleonix.Build.Tasks
 
             if (string.IsNullOrEmpty(RegExOptions))
             {
-                output = Regex.Replace(input, RegEx, Replacement);
+                output = Regex.Replace(input, RegEx, Replacement ?? string.Empty);
             }
             else
             {
-                output = Regex.Replace(input, RegEx, Replacement,
+                output = Regex.Replace(input, RegEx, Replacement ?? string.Empty,
                     (RegexOptions) Enum.Parse(typeof (RegexOptions), RegExOptions, true));
             }
 
