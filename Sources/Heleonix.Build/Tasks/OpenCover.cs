@@ -46,19 +46,13 @@ namespace Heleonix.Build.Tasks
         public ITaskItem OpenCoverExePath { get; set; }
 
         /// <summary>
-        /// The type of the target. Currently only "NUnit" is supported.
+        /// The target executable path with command line arguments and its type in metadata.
         /// </summary>
         [Required]
-        public string TargetType { get; set; }
+        public ITaskItem Target { get; set; }
 
         /// <summary>
-        /// The target executable path with command line arguments in metadata.
-        /// </summary>
-        [Required]
-        public ITaskItem TargetExe { get; set; }
-
-        /// <summary>
-        /// The output file path.
+        /// The coverage results output file path.
         /// </summary>
         [Required]
         public ITaskItem CoverageResultsFilePath { get; set; }
@@ -84,15 +78,13 @@ namespace Heleonix.Build.Tasks
         public float MinLineCoverage { get; set; }
 
         /// <summary>
-        /// The filters to exclude code from coverage by attribute.
+        /// The filters to exclude code from coverage by attribute in format: Name*;*Attribute.
         /// </summary>
-        /// <remarks>Format: Name*;*Attribute</remarks>
         public string ExcludeByAttributeFilters { get; set; }
 
         /// <summary>
-        /// The filters of binaries to cover.
+        /// The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.
         /// </summary>
-        /// <remarks>Format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName</remarks>
         public string Filters { get; set; }
 
         /// <summary>
@@ -101,13 +93,12 @@ namespace Heleonix.Build.Tasks
         public ITaskItem[] PdbSearchDirectoriesPath { get; set; }
 
         /// <summary>
-        /// A value indicating whether show unvisited methods and classes
-        /// after the coverage run is finished and the results are presented.
+        /// Show unvisited methods and classes after coverage finishes and results are presented.
         /// </summary>
         public bool ShowUnvisited { get; set; }
 
         /// <summary>
-        /// The maximum visits count.
+        /// The maximum visits count. Limiting can improve performance.
         /// </summary>
         public int MaxVisitCount { get; set; }
 
@@ -172,25 +163,25 @@ namespace Heleonix.Build.Tasks
         public int MaxCyclomaticComplexity { get; set; }
 
         /// <summary>
-        /// The class coverage, in range: 0% - 100%..
+        /// The class coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float ClassCoverage { get; set; }
 
         /// <summary>
-        /// The method coverage, in range: 0% - 100%..
+        /// The method coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float MethodCoverage { get; set; }
 
         /// <summary>
-        /// The line coverage, in range: 0% - 100%..
+        /// The line coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float LineCoverage { get; set; }
 
         /// <summary>
-        /// The branch coverage, in range: 0% - 100%..
+        /// The branch coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float BranchCoverage { get; set; }
@@ -206,19 +197,19 @@ namespace Heleonix.Build.Tasks
         {
             string targetArgs;
 
-            if (string.Compare(TargetType, "NUnit", StringComparison.InvariantCultureIgnoreCase) == 0)
+            if (string.Compare(Target.GetMetadata("Type"), "NUnit", StringComparison.InvariantCultureIgnoreCase) == 0)
             {
-                targetArgs = NUnit.BuildArgs(TargetExe);
+                targetArgs = NUnit.BuildArgs(Target);
             }
             else
             {
-                Log.LogError($"The target type is not supported: '{TargetType}'.");
+                Log.LogError($"The target type is not supported: '{Target.GetMetadata("Type")}'.");
 
                 return;
             }
 
             var args = ArgsBuilder.By(' ', ':')
-                .Add("-target", TargetExe.ItemSpec, true)
+                .Add("-target", Target.ItemSpec, true)
                 .Add("-targetargs", targetArgs.Replace("\"", "\\\""), true)
                 .Add("-excludebyattribute", ExcludeByAttributeFilters, true)
                 .Add("-filter", Filters, true)

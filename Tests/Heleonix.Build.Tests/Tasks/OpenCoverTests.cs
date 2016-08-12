@@ -51,7 +51,7 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 BuildEngine = new FakeBuildEngine(),
                 OpenCoverExePath = new TaskItem(PathHelper.OpenCoverExePath),
-                TargetExe = new TaskItem(PathHelper.NUnitConsoleExePath, new Dictionary<string, string>
+                Target = new TaskItem(PathHelper.NUnitConsoleExePath, new Dictionary<string, string>
                 {
                     {"NUnitProjectOrTestsFilesPath", LibSimulatorHelper.TestsOutFilePath}
                 }),

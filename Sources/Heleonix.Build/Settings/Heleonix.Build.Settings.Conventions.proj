@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj"/>
 
-  <!--Conventions for target-specific properties and items which appear at runtime-->
+  <!--Convention for target-specific properties and items which appear at runtime-->
   <!--<Target Name="Hxb-[TargetName]-Before-Conventions" BeforeTargets="[TargetName]"></Target>-->
 
   <PropertyGroup>

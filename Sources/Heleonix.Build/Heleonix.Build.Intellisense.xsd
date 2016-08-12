@@ -324,7 +324,6 @@ Example custom task with single required parameter
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
-  <!--TODO: Add OpenCover-->
   <xs:element name="Heleonix.Build.Tasks.NUnit" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Runs the NUnit.</xs:documentation>
@@ -445,6 +444,147 @@ Example custom task with single required parameter
           <xs:attribute name="Duration" type="xs:float">
             <xs:annotation>
               <xs:documentation>[Output] The duration of tests running.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.OpenCover" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the OpenCover.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="OpenCoverExePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The OpenCover executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Target" use="required">
+            <xs:annotation>
+              <xs:documentation>The target executable path with command line arguments and its "Type" in metadata.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CoverageResultsFilePath" use="required">
+            <xs:annotation>
+              <xs:documentation>The coverage results output file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinClassCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinMethodCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>The minimum method coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinBranchCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>The minimum branch coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinLineCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>The minimum line coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ExcludeByAttributeFilters" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The filters to exclude code from coverage by attribute in format: Name*;*Attribute.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Filters" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PdbSearchDirectoriesPath">
+            <xs:annotation>
+              <xs:documentation>The PDB search directories path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ShowUnvisited" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Show unvisited methods and classes after coverage finishes and results are presented.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MaxVisitCount" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalLines" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The total lines count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedLines" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited lines count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalBranches" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The total branches count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedBranches" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited branches count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalClasses" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The total classes count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedClasses" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited classes count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalMethods" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The total methods count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedMethods" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited methods count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinCyclomaticComplexity" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The minimum cyclomatic complexity.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MaxCyclomaticComplexity" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Output] The maximum cyclomatic complexity.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ClassCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>[Output] The class coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MethodCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>[Output] The method coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="LineCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>[Output] The line coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="BranchCoverage" type="xs:float">
+            <xs:annotation>
+              <xs:documentation>[Output] The branch coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>
