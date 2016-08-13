@@ -55,5 +55,5 @@ SOFTWARE.
 
   <Import Project="@(_Hxb-Main-Sln-Flows)" Condition="Exists('@(_Hxb-Main-Sln-Flows)')"/>
 
-  <Target Name="Hxb-Main" DependsOnTargets="Hxb-Setup;$(Hxb-In-Flow)"/>
+  <Target Name="Hxb-Main" DependsOnTargets="$(Hxb-In-Flow)"/>
 </Project>

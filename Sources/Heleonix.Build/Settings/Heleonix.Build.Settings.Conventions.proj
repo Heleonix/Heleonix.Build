@@ -30,7 +30,7 @@ SOFTWARE.
   <!--<Target Name="Hxb-[TargetName]-Before-Conventions" BeforeTargets="[TargetName]"></Target>-->
 
   <PropertyGroup>
-    <Hxb-In-Configuration>CI</Hxb-In-Configuration>
+    <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">CI</Hxb-In-Configuration>
   </PropertyGroup>
 
   <ItemGroup>

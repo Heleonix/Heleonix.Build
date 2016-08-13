@@ -83,8 +83,8 @@ SOFTWARE.
   </ItemGroup>
 
   <!--Targets-->
-  <Target Name="Hxb-Main" Condition="1 == 0"/>
   <Target Name="Hxb-Setup" Condition="1 == 0"/>
+  <Target Name="Hxb-Main" Condition="1 == 0"/>
 
   <!--Flows-->
 </Project>
