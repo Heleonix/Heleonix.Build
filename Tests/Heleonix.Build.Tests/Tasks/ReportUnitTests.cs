@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="ReportUnit"/>.
     /// </summary>
-    public class ReportUnitTests
+    public class ReportUnitTests : TaskTests
     {
         #region Tests
 
@@ -92,6 +92,15 @@ namespace Heleonix.Build.Tests.Tasks
                 }
             }
         }
+
+        #endregion
+
+        #region TaskTests Members
+
+        /// <summary>
+        /// Gets the type of the simulator.
+        /// </summary>
+        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

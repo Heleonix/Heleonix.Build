@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-<Project DefaultTargets="Hxb-Main" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+<Project DefaultTargets="$(Hxb-In-Flow)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="Heleonix.Build.Intellisense.proj"/>
 
   <!--Tasks-->
@@ -35,25 +35,22 @@ SOFTWARE.
   <Import Project="Settings\Heleonix.Build.Settings.Conventions.proj"/>
 
   <!--Targets-->
+  <Import Project="Targets\Heleonix.Build.Targets.FxCop.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.NugetPush.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.NUnit.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.OpenCover.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.ReportUnit.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.Setup.targets"/>
-  <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets" Condition="Exists('Targets\Heleonix.Build.Targets.Rebuild.targets')"/>
-  <Import Project="Targets\Heleonix.Build.Targets.FxCop.targets" Condition="Exists('Targets\Heleonix.Build.Targets.FxCop.targets')"/>
-  <Import Project="Targets\Heleonix.Build.Targets.NugetPack.targets" Condition="Exists('Targets\Heleonix.Build.Targets.NugetPack.targets')"/>
-  <Import Project="Targets\Heleonix.Build.Targets.NugetPush.targets" Condition="Exists('Targets\Heleonix.Build.Targets.NugetPush.targets')"/>
-  <Import Project="Targets\Heleonix.Build.Targets.NUnit.targets" Condition="Exists('Targets\Heleonix.Build.Targets.NUnit.targets')"/>
-  <Import Project="Targets\Heleonix.Build.Targets.OpenCover.targets" Condition="Exists('Targets\Heleonix.Build.Targets.OpenCover.targets')"/>
-  <Import Project="Targets\Heleonix.Build.Targets.ReportUnit.targets" Condition="Exists('Targets\Heleonix.Build.Targets.ReportUnit.targets')"/>
 
   <!--Flows-->
-  <Import Project="Flows\Heleonix.Build.Flows.flows"/>
+  <Import Project="Flows\Heleonix.Build.Flows.proj"/>
 
   <Import Project="$(Hxb-In-Overrides)" Condition="Exists('$(Hxb-In-Overrides)')"/>
 
-  <ItemGroup>
-    <_Hxb-Main-Sln-Flows Include="%(Hxb-Build-Sln.RootDir)\%(Hxb-Build-Sln.Directory)\%(Hxb-Build-Sln.Filename).flows"/>
-  </ItemGroup>
+  <PropertyGroup>
+    <_Hxb-Main-Sln-Flows-File-Path>$(Hxb-Build-Sln-Dir-Path)\$([System.IO.Path]::GetFileNameWithoutExtension('$(Hxb-Build-Sln-Path)')).Flows.proj</_Hxb-Main-Sln-Flows-File-Path>
+  </PropertyGroup>
 
-  <Import Project="@(_Hxb-Main-Sln-Flows)" Condition="Exists('@(_Hxb-Main-Sln-Flows)')"/>
-
-  <Target Name="Hxb-Main" DependsOnTargets="$(Hxb-In-Flow)"/>
+  <Import Project="$(_Hxb-Main-Sln-Flows-File-Path)" Condition="Exists('$(_Hxb-Main-Sln-Flows-File-Path)')"/>
 </Project>

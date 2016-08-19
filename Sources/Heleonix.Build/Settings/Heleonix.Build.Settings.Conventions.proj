@@ -26,27 +26,24 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj"/>
 
-  <!--Convention for target-specific properties and items which appear at runtime-->
+  <!--Convention for target-specific properties and items which can be defined at runtime-->
   <!--<Target Name="Hxb-[TargetName]-Before-Conventions" BeforeTargets="[TargetName]"></Target>-->
 
   <PropertyGroup>
-    <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">CI</Hxb-In-Configuration>
+    <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">Release</Hxb-In-Configuration>
+    <Hxb-Build-Sln-Dir-Path>$(Hxb-System-Workspace-Dir-Path)</Hxb-Build-Sln-Dir-Path>
+    <Hxb-Build-Sln-Path>$([System.IO.Directory]::GetFiles('$(Hxb-Build-Sln-Dir-Path)', '*.sln'))</Hxb-Build-Sln-Path>
+    <Hxb-Build-Reports-Dir-Path>$(Hxb-Build-Sln-Dir-Path)\Reports\$(Hxb-In-Configuration)</Hxb-Build-Reports-Dir-Path>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Hxb-Build-Sln-Dir Include="@(Hxb-System-Workspace)"/>
-    <Hxb-Build-Sln Include="%(Hxb-Build-Sln-Dir)\*.sln"/>
-    <Hxb-Build-Reports-Dir Include="@(Hxb-Build-Sln-Dir)\Reports\$(Hxb-In-Configuration)"/>
-  </ItemGroup>
-
   <Target Name="Hxb-Setup-Before-Conventions" BeforeTargets="Hxb-Setup">
-    <Heleonix.Build.Tasks.GitLog RepositoryPath="@(Hxb-System-Workspace)" GitExePath="@(Hxb-System-Git)"
-                                 MaxCount="1" Condition="'$(Hxb-System-SCM)' == 'Git'">
-      <Output TaskParameter="Commits" ItemName="_Hxb-System-Before-Conventions-Commit"/>
+    <Heleonix.Build.Tasks.GitLog GitExePath="@(Hxb-System-Git)" RepositoryPath="@(Hxb-System-Workspace)" MaxCount="1"
+                                 Condition="'$(Hxb-System-SCM)' == 'Git'">
+      <Output TaskParameter="Commits" ItemName="_Hxb-Setup-Before-Conventions-Commit"/>
     </Heleonix.Build.Tasks.GitLog>
-    <Heleonix.Build.Tasks.SvnLog RepositoryPath="@(Hxb-System-Workspace)" SvnExePath="@(Hxb-System-Svn)"
-                                 MaxCount="1" Condition="'$(Hxb-System-SCM)' == 'Svn'">
-      <Output TaskParameter="Commits" ItemName="_Hxb-System-Before-Conventions-Commit"/>
+    <Heleonix.Build.Tasks.SvnLog SvnExePath="@(Hxb-System-Svn)" RepositoryPath="@(Hxb-System-Workspace)" MaxCount="1"
+                                 Condition="'$(Hxb-System-SCM)' == 'Svn'">
+      <Output TaskParameter="Commits" ItemName="_Hxb-Setup-Before-Conventions-Commit"/>
     </Heleonix.Build.Tasks.SvnLog>
 
     <PropertyGroup>
@@ -54,9 +51,16 @@ SOFTWARE.
       <Hxb-Build-Version Condition="$(Hxb-System-CI) == 'TeamCity'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
       <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' == ''">1.0</Hxb-Build-Version>
       <Hxb-Build-Version>$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+      <Hxb-Build-Version-Informational>$(Hxb-Build-Version).%(_Hxb-Setup-Before-Conventions-Commit.Revision)</Hxb-Build-Version-Informational>
       <Hxb-Build-Version Condition="'$(Hxb-System-SCM)' == 'Git'">$(Hxb-Build-Version).0</Hxb-Build-Version>
-      <Hxb-Build-Version-Informational>$(Hxb-Build-Version).%(_Hxb-System-Before-Conventions-Commit.Revision)</Hxb-Build-Version-Informational>
       <Hxb-Build-Version Condition="'$(Hxb-System-SCM)' == 'Svn'">$(Hxb-Build-Version-Informational)</Hxb-Build-Version>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="Hxb-Rebuild-Before-Conventions" BeforeTargets="Hxb-Rebuild">
+    <PropertyGroup>
+      <Hxb-Rebuild-In-Output-RegEx>^((?!\.Tests\.dll).)*$</Hxb-Rebuild-In-Output-RegEx>
+      <Hxb-Rebuild-In-Output-Tests-RegEx>^.+\.Tests\.dll$</Hxb-Rebuild-In-Output-Tests-RegEx>
     </PropertyGroup>
   </Target>
 

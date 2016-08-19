@@ -46,7 +46,7 @@ namespace Heleonix.Build.Tests.Tasks
         {
             var nugetPackageFilePath = Directory.GetFiles(Path.Combine(PathHelper.NugetExePath, "..", "..")).First();
 
-            var tempSourcePath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            var tempSourcePath = Path.Combine(PathHelper.CurrentDirectoryPath, Path.GetRandomFileName());
 
             Directory.CreateDirectory(tempSourcePath);
 
@@ -69,7 +69,8 @@ namespace Heleonix.Build.Tests.Tasks
 
                 Assert.That(succeeded, Is.True);
 
-                Assert.That(File.Exists(Path.Combine(tempSourcePath, Path.GetFileName(nugetPackageFilePath))), Is.True);
+                Assert.That(File.Exists(Path.Combine(tempSourcePath,
+                    Path.GetFileName(nugetPackageFilePath) ?? string.Empty)), Is.True);
             }
             finally
             {

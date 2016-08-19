@@ -37,7 +37,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="NUnit"/>.
     /// </summary>
-    public class NUnitTests
+    public class NUnitTests : TaskTests
     {
         #region Tests
 
@@ -110,6 +110,15 @@ namespace Heleonix.Build.Tests.Tasks
                 }
             }
         }
+
+        #endregion
+
+        #region TaskTests Members
+
+        /// <summary>
+        /// Gets the type of the simulator.
+        /// </summary>
+        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

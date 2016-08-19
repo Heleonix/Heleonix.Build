@@ -110,8 +110,9 @@ namespace Heleonix.Build.Tasks
                 : RepositoryPath.ItemSpec;
 
             string output;
+            string error;
 
-            var exitCode = ExeHelper.Execute(GitExePath.ItemSpec, args, out output, workingDirectoryPath);
+            var exitCode = ExeHelper.Execute(GitExePath.ItemSpec, args, out output, out error, workingDirectoryPath);
 
             if (exitCode != 0)
             {

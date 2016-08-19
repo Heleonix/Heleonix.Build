@@ -28,21 +28,18 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj"/>
 
   <PropertyGroup Condition="'$(JENKINS_URL)' != ''">
-    <Hxb-System-CI >Jenkins</Hxb-System-CI>
+    <Hxb-System-CI>Jenkins</Hxb-System-CI>
     <Hxb-System-SCM Condition="Exists('$(WORKSPACE)\.git')">Git</Hxb-System-SCM>
     <Hxb-System-SCM Condition="Exists('$(WORKSPACE)\.svn')">Svn</Hxb-System-SCM>
+    <Hxb-System-Workspace-Dir-Path>$(WORKSPACE)</Hxb-System-Workspace-Dir-Path>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TEAMCITY_VERSION)' != ''">
     <Hxb-System-CI>TeamCity</Hxb-System-CI>
     <Hxb-System-SCM Condition="Exists('$(system_agent_work_dir)\.git')">Git</Hxb-System-SCM>
     <Hxb-System-SCM Condition="Exists('$(system_agent_work_dir)\.svn')">Svn</Hxb-System-SCM>
+    <Hxb-System-Workspace-Dir-Path>$(system_agent_work_dir)</Hxb-System-Workspace-Dir-Path>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Hxb-System-Workspace Condition="'$(Hxb-System-CI)' == 'Jenkins'" Include="$(WORKSPACE)"/>
-    <Hxb-System-Workspace Condition="'$(Hxb-System-CI)' == 'TeamCity'" Include="$(system_agent_work_dir)"/>
-  </ItemGroup>
 
   <ItemGroup>
     <Hxb-System-FxCopCmd
@@ -52,7 +49,7 @@ SOFTWARE.
     <Hxb-System-OpenCoverConsole Include="\..\..\OpenCover.*\tools\OpenCover.Console.exe"/>
     <Hxb-System-ReportGenerator Include="..\..\ReportGenerator.*\tools\ReportGenerator.exe"/>
     <Hxb-System-Nuget Include="\..\..\NuGet.CommandLine.*\tools\NuGet.exe"/>
-    <Hxb-System-Git Include="git.exe"/>
-    <Hxb-System-Svn Include="svn.exe"/>
+    <Hxb-System-Git Include="C:\Program Files\Git\cmd\git.exe"/>
+    <Hxb-System-Svn Include="C:\Program Files\TortoiseSVN\bin\svn.exe"/>
   </ItemGroup>
 </Project>

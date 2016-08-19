@@ -72,9 +72,11 @@ namespace Heleonix.Build
         /// <param name="exePath">The execute path.</param>
         /// <param name="arguments">The arguments.</param>
         /// <param name="output">Output string for the <see cref="Process.StandardOutput"/>.</param>
+        /// <param name="error">Error string for the <see cref="Process.StandardError"/>.</param>
         /// <param name="workingDirectory">The working directory.</param>
         /// <returns>An exit code.</returns>
-        public static int Execute(string exePath, string arguments, out string output, string workingDirectory = "")
+        public static int Execute(string exePath, string arguments, out string output,
+            out string error, string workingDirectory = "")
         {
             var process = Process.Start(new ProcessStartInfo
             {
@@ -84,17 +86,21 @@ namespace Heleonix.Build
                 WindowStyle = ProcessWindowStyle.Hidden,
                 WorkingDirectory = workingDirectory,
                 UseShellExecute = false,
-                RedirectStandardOutput = true
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
             });
 
             if (process == null)
             {
                 output = null;
+                error = null;
 
                 return int.MaxValue;
             }
 
             output = process.StandardOutput.ReadToEnd();
+
+            error = process.StandardError.ReadToEnd();
 
             var exited = process.WaitForExit(int.MaxValue);
 

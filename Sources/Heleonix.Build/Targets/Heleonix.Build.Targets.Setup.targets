@@ -27,9 +27,9 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj"/>
 
-  <Target Name="Hxb-Setup">
-    <RemoveDir Directories="%(Hxb-Build-Reports-Dir.Identity)"/>
-    <MakeDir Directories="%(Hxb-Build-Reports-Dir.Identity)"/>
+  <Target Name="Hxb-Setup" DependsOnTargets="_Hxb-Setup-Conventions">
+    <RemoveDir Directories="@(Hxb-Build-Reports-Dir)"/>
+    <MakeDir Directories="@(Hxb-Build-Reports-Dir)"/>
 
     <!--In-->
     <Error Condition="'$(Hxb-In-Flow)' == ''" Text="'$Hxb-In-Flow' is not defined."/>
@@ -38,23 +38,36 @@ SOFTWARE.
     <!--System-->
     <Error Condition="'$(Hxb-System-CI)' == ''" Text="'$Hxb-System-CI' is not defined."/>
     <Error Condition="'$(Hxb-System-SCM)' == ''" Text="'$Hxb-System-SCM' is not defined."/>
+    <Error Condition="!Exists('$(Hxb-System-Workspace-Dir-Path)')" Text="'$Hxb-System-Workspace-Dir-Path' is not found."/>
 
     <Error Condition="!Exists('@(Hxb-System-Workspace)')" Text="'@Hxb-System-Workspace' is not found."/>
-    <Error Condition="'@(Hxb-System-FxCopCmd)' != '' AND !Exists('@(Hxb-System-FxCopCmd)')" Text="'@Hxb-System-FxCopCmd' is not found."/>
-    <Error Condition="'$(Hxb-System-SCM)' == 'Git' AND !Exists('@(Hxb-System-Git)')" Text="'@Hxb-System-Git' is not found."/>
-    <Error Condition="'@(Hxb-System-NUnitConsole)' != '' AND !Exists('@(Hxb-System-NUnitConsole)')" Text="'@Hxb-System-NUnitConsole' is not found."/>
-    <Error Condition="'@(Hxb-System-Nuget)' != '' AND !Exists('@(Hxb-System-Nuget)')" Text="'@Hxb-System-Nuget' is not found."/>
-    <Error Condition="'@(Hxb-System-OpenCoverConsole)' != '' AND !Exists('@(Hxb-System-OpenCoverConsole)')" Text="'@Hxb-System-OpenCoverConsole' is not found."/>
-    <Error Condition="'@(Hxb-System-ReportGenerator)' != '' AND !Exists('@(Hxb-System-ReportGenerator)')" Text="'@Hxb-System-ReportGenerator' is not found."/>
-    <Error Condition="'@(Hxb-System-ReportUnit)' != '' AND !Exists('@(Hxb-System-ReportUnit)')" Text="'@Hxb-System-ReportUnit' is not found."/>
-    <Error Condition="'$(Hxb-System-SCM)' == 'Svn' AND !Exists('@(Hxb-System-Svn)')" Text="'@Hxb-System-Svn' is not found."/>
+    <Error Condition="'@(Hxb-System-FxCopCmd)' != '' And !Exists('@(Hxb-System-FxCopCmd)')" Text="'@Hxb-System-FxCopCmd' is not found."/>
+    <Error Condition="'@(Hxb-System-NUnitConsole)' != '' And !Exists('@(Hxb-System-NUnitConsole)')" Text="'@Hxb-System-NUnitConsole' is not found."/>
+    <Error Condition="'@(Hxb-System-Nuget)' != '' And !Exists('@(Hxb-System-Nuget)')" Text="'@Hxb-System-Nuget' is not found."/>
+    <Error Condition="'@(Hxb-System-OpenCoverConsole)' != '' And !Exists('@(Hxb-System-OpenCoverConsole)')" Text="'@Hxb-System-OpenCoverConsole' is not found."/>
+    <Error Condition="'@(Hxb-System-ReportGenerator)' != '' And !Exists('@(Hxb-System-ReportGenerator)')" Text="'@Hxb-System-ReportGenerator' is not found."/>
+    <Error Condition="'@(Hxb-System-ReportUnit)' != '' And !Exists('@(Hxb-System-ReportUnit)')" Text="'@Hxb-System-ReportUnit' is not found."/>
+    <Error Condition="'$(Hxb-System-SCM)' == 'Git' And !Exists('@(Hxb-System-Git)')" Text="'@Hxb-System-Git' is not found."/>
+    <Error Condition="'$(Hxb-System-SCM)' == 'Svn' And !Exists('@(Hxb-System-Svn)')" Text="'@Hxb-System-Svn' is not found."/>
 
     <!--Build-->
+    <Error Condition="!Exists('$(Hxb-Build-Sln-Path)')" Text="'$Hxb-Build-Sln-Path' is not found."/>
+    <Error Condition="!Exists('$(Hxb-Build-Sln-Dir-Path)')" Text="'$Hxb-Build-Sln-Dir-Path' is not found."/>
+    <Error Condition="!Exists('$(Hxb-Build-Reports-Dir-Path)')" Text="'$Hxb-Build-Reports-Dir-Path' is not found."/>
     <Error Condition="'$(Hxb-Build-Version)' == ''" Text="'$Hxb-Build-Version' is not defined."/>
     <Error Condition="'$(Hxb-Build-Version-Informational)' == ''" Text="'$Hxb-Build-Version-Informational' is not defined."/>
 
     <Error Condition="!Exists('@(Hxb-Build-Sln-Dir)')" Text="'@Hxb-Build-Sln-Dir' is not found."/>
     <Error Condition="!Exists('@(Hxb-Build-Sln)')" Text="'@Hxb-Build-Sln' is not found."/>
     <Error Condition="!Exists('@(Hxb-Build-Reports-Dir)')" Text="'@Hxb-Build-Reports-Dir' is not found."/>
+  </Target>
+
+  <Target Name="_Hxb-Setup-Conventions">
+    <ItemGroup>
+      <Hxb-System-Workspace Include="$(Hxb-System-Workspace-Dir-Path)" Condition="'@(Hxb-System-Workspace)' == ''"/>
+      <Hxb-Build-Sln-Dir Include="$(Hxb-Build-Sln-Dir-Path)"  Condition="'@(Hxb-Build-Sln-Dir)' == ''"/>
+      <Hxb-Build-Sln Include="$(Hxb-Build-Sln-Path)"  Condition="'@(Hxb-Build-Sln)' == ''"/>
+      <Hxb-Build-Reports-Dir Include="$(Hxb-Build-Reports-Dir-Path)"  Condition="'@(Hxb-Build-Reports-Dir)' == ''"/>
+    </ItemGroup>
   </Target>
 </Project>

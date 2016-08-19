@@ -44,7 +44,7 @@ namespace Heleonix.Build.Tests.Tasks
         [Test]
         public void Execute()
         {
-            var inputFilePath = Path.Combine(LibSimulatorHelper.OutDirectoryPath, Path.GetRandomFileName());
+            var inputFilePath = Path.Combine(PathHelper.CurrentDirectoryPath, Path.GetRandomFileName());
 
             File.WriteAllText(inputFilePath,
                 "[assembly: System.Reflection.AssemblyVersion(\"1.0.0.0\")]\n[assembly: System.Reflection.AssemblyFileVersion(\"1.0.0.0\")]\n[assembly: System.Reflection.AssemblyInformationalVersion(\"1.0.0.0\")]");

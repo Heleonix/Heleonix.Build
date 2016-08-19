@@ -104,8 +104,9 @@ namespace Heleonix.Build.Tasks
                 : RepositoryPath.ItemSpec;
 
             string output;
+            string error;
 
-            var exitCode = ExeHelper.Execute(SvnExePath.ItemSpec, args, out output, workingDirectoryPath);
+            var exitCode = ExeHelper.Execute(SvnExePath.ItemSpec, args, out output, out error, workingDirectoryPath);
 
             if (exitCode != 0)
             {

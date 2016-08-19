@@ -22,9 +22,58 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Collections.Generic;
+using Heleonix.Build.Tests.Common;
+using NUnit.Framework;
+
 namespace Heleonix.Build.Tests.Targets
 {
-    public class SetupTests
+    /// <summary>
+    /// Tests the Hxb-Setup target.
+    /// </summary>
+    public class SetupTests : TargetTests
     {
+        #region Methods
+
+        /// <summary>
+        /// The test case source.
+        /// </summary>
+        /// <returns>Test cases.</returns>
+        public static IEnumerable<TargetTestCase> TestCaseSource()
+        {
+            yield return new TargetTestCase { Properties = null, Items = null, Result = true };
+        }
+
+        #endregion
+
+        #region Tests
+
+        /// <summary>
+        /// Tests the Hxb-Setup target.
+        /// </summary>
+        /// <param name="ciType">The continuous integration system type.</param>
+        /// <param name="testCases">The test cases.</param>
+        [Test]
+        public void Execute([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType,
+            [ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+        {
+            ExecuteTest(ciType, testCases);
+        }
+
+        #endregion
+
+        #region TargetTests Members
+
+        /// <summary>
+        /// Gets the type of the simulator.
+        /// </summary>
+        protected override SimulatorType SimulatorType => SimulatorType.Library;
+
+        /// <summary>
+        /// Gets or sets the name of the target.
+        /// </summary>
+        protected override string TargetName => "Hxb-Setup";
+
+        #endregion
     }
 }

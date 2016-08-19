@@ -22,56 +22,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.IO;
+using System.Text.RegularExpressions;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Tasks
 {
     /// <summary>
-    /// Tests the <see cref="NugetPack"/>.
+    /// Tests the <see cref="ItemFilter"/>.
     /// </summary>
-    public class NugetPackTests : TaskTests
+    public class ItemFilterTests
     {
         #region Tests
 
         /// <summary>
-        /// Tests the <see cref="NugetPack.Execute"/>.
+        /// Tests the <see cref="ItemFilter.Execute"/>.
         /// </summary>
-        [Test]
-        public void Execute()
+        [TestCase(@"^.+\.Tests\.dll$", false)]
+        [TestCase(@"^.+\.Tests\.dll$", true)]
+        public void Execute(string regex, bool negative)
         {
-            var task = new NugetPack
+            var task = new ItemFilter
             {
                 BuildEngine = new FakeBuildEngine(),
-                NugetExePath = new TaskItem(PathHelper.NugetExePath),
-                NuspecFilePath = new TaskItem(Path.Combine(LibSimulatorHelper.SolutionDirectoryPath,
-                    LibSimulatorHelper.SolutionName + ".nuspec")),
-                ProjectFilePath = new TaskItem(LibSimulatorHelper.ProjectFilePath),
-                Verbosity = "detailed"
+                Inputs = new[] { new TaskItem("Product.Tests.dll"), new TaskItem("Product.dll") as ITaskItem },
+                RegEx = regex,
+                MetadataName = "FullPath",
+                Negative = negative,
+                RegExOptions = RegexOptions.IgnoreCase.ToString()
             };
 
             var succeeded = task.Execute();
 
             Assert.That(succeeded, Is.True);
-
-            var packageExists = File.Exists(task.PackageFilePath.ItemSpec);
-
-            File.Delete(task.PackageFilePath.ItemSpec);
-
-            Assert.That(packageExists, Is.True);
+            Assert.That(task.Outputs, Has.Length.EqualTo(1));
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

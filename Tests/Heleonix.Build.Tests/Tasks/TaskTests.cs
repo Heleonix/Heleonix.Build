@@ -22,56 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.IO;
-using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
-using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Tasks
 {
     /// <summary>
-    /// Tests the <see cref="NugetPack"/>.
+    /// The base class for tasks testing.
     /// </summary>
-    public class NugetPackTests : TaskTests
+    public abstract class TaskTests
     {
-        #region Tests
+        #region Methods
 
         /// <summary>
-        /// Tests the <see cref="NugetPack.Execute"/>.
+        /// Setups tests.
         /// </summary>
-        [Test]
-        public void Execute()
+        [SetUp]
+        public void Setup()
         {
-            var task = new NugetPack
+            switch (SimulatorType)
             {
-                BuildEngine = new FakeBuildEngine(),
-                NugetExePath = new TaskItem(PathHelper.NugetExePath),
-                NuspecFilePath = new TaskItem(Path.Combine(LibSimulatorHelper.SolutionDirectoryPath,
-                    LibSimulatorHelper.SolutionName + ".nuspec")),
-                ProjectFilePath = new TaskItem(LibSimulatorHelper.ProjectFilePath),
-                Verbosity = "detailed"
-            };
-
-            var succeeded = task.Execute();
-
-            Assert.That(succeeded, Is.True);
-
-            var packageExists = File.Exists(task.PackageFilePath.ItemSpec);
-
-            File.Delete(task.PackageFilePath.ItemSpec);
-
-            Assert.That(packageExists, Is.True);
+                case SimulatorType.Library:
+                    MsBuildHelper.ExecuteMsBuild(LibSimulatorHelper.SolutionFilePath, "Build");
+                    break;
+            }
         }
 
         #endregion
 
-        #region TaskTests Members
+        #region Properties
 
         /// <summary>
         /// Gets the type of the simulator.
         /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
+        protected abstract SimulatorType SimulatorType { get; }
 
         #endregion
     }

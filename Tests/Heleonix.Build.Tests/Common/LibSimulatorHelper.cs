@@ -43,7 +43,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the tests out file path.
         /// </summary>
         public static string TestsOutFilePath => Path.Combine(
-            Path.GetDirectoryName(TestsProjectFilePath), "bin", MsBuildHelper.CurrentConfiguration,
+            Path.GetDirectoryName(TestsProjectFilePath) ?? string.Empty, "bin", MsBuildHelper.CurrentConfiguration,
             Path.ChangeExtension(Path.GetFileName(TestsProjectFilePath), ".dll"));
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the project file path.
         /// </summary>
         public static string ProjectFilePath => Path.Combine(SolutionDirectoryPath,
-            "Sources", Path.GetFileName(SolutionDirectoryPath),
+            "Sources", Path.GetFileName(SolutionDirectoryPath) ?? string.Empty,
             Path.GetFileName(SolutionDirectoryPath) + ".csproj");
 
         /// <summary>

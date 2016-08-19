@@ -22,56 +22,68 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.IO;
-using Heleonix.Build.Tasks;
+using System.Collections.Generic;
 using Heleonix.Build.Tests.Common;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
-namespace Heleonix.Build.Tests.Tasks
+namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
-    /// Tests the <see cref="NugetPack"/>.
+    /// Tests the Hxb-Rebuild target.
     /// </summary>
-    public class NugetPackTests : TaskTests
+    public class RebuildTests : TargetTests
     {
-        #region Tests
+        #region Methods
 
         /// <summary>
-        /// Tests the <see cref="NugetPack.Execute"/>.
+        /// The test case source.
         /// </summary>
-        [Test]
-        public void Execute()
+        /// <returns>Test cases.</returns>
+        public static IEnumerable<TargetTestCase> TestCaseSource()
         {
-            var task = new NugetPack
+            yield return new TargetTestCase { Properties = null, Items = null, Result = true };
+            yield return new TargetTestCase
             {
-                BuildEngine = new FakeBuildEngine(),
-                NugetExePath = new TaskItem(PathHelper.NugetExePath),
-                NuspecFilePath = new TaskItem(Path.Combine(LibSimulatorHelper.SolutionDirectoryPath,
-                    LibSimulatorHelper.SolutionName + ".nuspec")),
-                ProjectFilePath = new TaskItem(LibSimulatorHelper.ProjectFilePath),
-                Verbosity = "detailed"
+                Properties = null,
+                Items = new Dictionary<string, ITaskItem[]>
+                {
+                    { "Hxb-Rebuild-In-SnkPair", new[] { new TaskItem(PathHelper.SnkPairFilePath) as ITaskItem } }
+                },
+                Result = true
             };
-
-            var succeeded = task.Execute();
-
-            Assert.That(succeeded, Is.True);
-
-            var packageExists = File.Exists(task.PackageFilePath.ItemSpec);
-
-            File.Delete(task.PackageFilePath.ItemSpec);
-
-            Assert.That(packageExists, Is.True);
         }
 
         #endregion
 
-        #region TaskTests Members
+        #region Tests
+
+        /// <summary>
+        /// Tests the Hxb-Rebuild target.
+        /// </summary>
+        /// <param name="ciType">The continuous integration system type.</param>
+        /// <param name="testCases">The test cases.</param>
+        [Test]
+        public void Execute([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType,
+            [ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+        {
+            ExecuteTest(ciType, testCases);
+        }
+
+        #endregion
+
+        #region TargetTests Members
 
         /// <summary>
         /// Gets the type of the simulator.
         /// </summary>
         protected override SimulatorType SimulatorType => SimulatorType.Library;
+
+        /// <summary>
+        /// Gets or sets the name of the target.
+        /// </summary>
+        protected override string TargetName => "Hxb-Rebuild";
 
         #endregion
     }

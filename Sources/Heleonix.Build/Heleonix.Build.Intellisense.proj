@@ -26,12 +26,16 @@ SOFTWARE.
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <!--Tasks-->
+  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemFilter" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemFilter" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
@@ -54,37 +58,74 @@ SOFTWARE.
 
   <!--System-->
   <PropertyGroup Condition="1 == 0">
-    <Hxb-System-CI></Hxb-System-CI>
-    <Hxb-System-SCM></Hxb-System-SCM>
+    <Hxb-System-CI>Jenkins</Hxb-System-CI>
+    <Hxb-System-SCM>Git</Hxb-System-SCM>
+    <Hxb-System-Workspace-Dir-Path></Hxb-System-Workspace-Dir-Path>
   </PropertyGroup>
 
   <ItemGroup Condition="1 == 0">
-    <Hxb-System-Workspace></Hxb-System-Workspace>
-    <Hxb-System-FxCopCmd></Hxb-System-FxCopCmd>
-    <Hxb-System-NUnitConsole></Hxb-System-NUnitConsole>
-    <Hxb-System-ReportUnit></Hxb-System-ReportUnit>
-    <Hxb-System-OpenCoverConsole></Hxb-System-OpenCoverConsole>
-    <Hxb-System-ReportGenerator></Hxb-System-ReportGenerator>
-    <Hxb-System-Nuget></Hxb-System-Nuget>
-    <Hxb-System-Git></Hxb-System-Git>
-    <Hxb-System-Svn></Hxb-System-Svn>
+    <Hxb-System-Workspace Include="0"></Hxb-System-Workspace>
+    <Hxb-System-FxCopCmd Include="0"></Hxb-System-FxCopCmd>
+    <Hxb-System-NUnitConsole Include="0"></Hxb-System-NUnitConsole>
+    <Hxb-System-ReportUnit Include="0"></Hxb-System-ReportUnit>
+    <Hxb-System-OpenCoverConsole Include="0"></Hxb-System-OpenCoverConsole>
+    <Hxb-System-ReportGenerator Include="0"></Hxb-System-ReportGenerator>
+    <Hxb-System-Nuget Include="0"></Hxb-System-Nuget>
+    <Hxb-System-Git Include="0"></Hxb-System-Git>
+    <Hxb-System-Svn Include="0"></Hxb-System-Svn>
   </ItemGroup>
 
   <!--Build-->
   <PropertyGroup Condition="1 == 0">
+    <Hxb-Build-Sln-Path></Hxb-Build-Sln-Path>
+    <Hxb-Build-Sln-Dir-Path></Hxb-Build-Sln-Dir-Path>
+    <Hxb-Build-Reports-Dir-Path></Hxb-Build-Reports-Dir-Path>
     <Hxb-Build-Version></Hxb-Build-Version>
     <Hxb-Build-Version-Informational></Hxb-Build-Version-Informational>
   </PropertyGroup>
 
   <ItemGroup Condition="1 == 0">
-    <Hxb-Build-Sln-Dir></Hxb-Build-Sln-Dir>
-    <Hxb-Build-Sln></Hxb-Build-Sln>
-    <Hxb-Build-Reports-Dir></Hxb-Build-Reports-Dir>
+    <Hxb-Build-Sln Include="0"></Hxb-Build-Sln>
+    <Hxb-Build-Sln-Dir Include="0"></Hxb-Build-Sln-Dir>
+    <Hxb-Build-Reports-Dir Include="0"></Hxb-Build-Reports-Dir>
   </ItemGroup>
 
   <!--Targets-->
-  <Target Name="Hxb-Setup" Condition="1 == 0"/>
-  <Target Name="Hxb-Main" Condition="1 == 0"/>
+  <Target Name="Hxb-FxCop" Condition="1 == 0">
+  </Target>
+
+  <Target Name="Hxb-NugetPush" Condition="1 == 0">
+  </Target>
+
+  <Target Name="Hxb-NUnit" Condition="1 == 0">
+  </Target>
+
+  <Target Name="Hxb-OpenCover" Condition="1 == 0">
+  </Target>
+
+  <Target Name="Hxb-Rebuild" Condition="1 == 0">
+    <PropertyGroup>
+      <Hxb-Rebuild-In-Output-RegEx></Hxb-Rebuild-In-Output-RegEx>
+      <Hxb-Rebuild-In-Output-Tests-RegEx></Hxb-Rebuild-In-Output-Tests-RegEx>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-Rebuild-In-Delete Include="0"/>
+      <Hxb-Rebuild-In-Clean-Dir Include="0"/>
+      <Hxb-Rebuild-In-Delete-Dir Include="0"/>
+      <Hxb-Rebuild-In-Snk Include="0"/>
+      <Hxb-Rebuild-Out-Output Include="0"/>
+      <Hxb-Rebuild-Out-Output-Tests Include="0"/>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="Hxb-ReportUnit" Condition="1 == 0">
+  </Target>
+
+  <Target Name="Hxb-Setup" Condition="1 == 0">
+  </Target>
 
   <!--Flows-->
+  <Target Name="Hxb-CI-DotNet" Condition="1 == 0"/>
+  <Target Name="Hxb-CD-Nuget" Condition="1 == 0"/>
 </Project>

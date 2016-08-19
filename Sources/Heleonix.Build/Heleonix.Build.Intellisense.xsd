@@ -68,7 +68,47 @@ Example custom task with single required parameter
   <xs:include
     schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd"/>
 
+  <!--Custom types-->
+  <xs:simpleType name="Hxb-CIType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Jenkins"/>
+      <xs:enumeration value="TeamCity"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Hxb-SCMType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Git"/>
+      <xs:enumeration value="Svn"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <!--Tasks-->
+  <xs:element name="Heleonix.Build.Tasks.DirectoryClean" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Deletes contents of a directory, but not the directory itself.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="DirectoriesPath" use="required">
+            <xs:annotation>
+              <xs:documentation>Directories to clean.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CleanedDirectoriesPath">
+            <xs:annotation>
+              <xs:documentation>[Output] Gets or sets the cleaned directories paths.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FailedDirectoriesPath">
+            <xs:annotation>
+              <xs:documentation>[Output] Gets or sets the failed to clean directories paths.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Heleonix.Build.Tasks.FileUpdate" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Updates a file with specified regular expression and content.</xs:documentation>
@@ -226,6 +266,47 @@ Example custom task with single required parameter
           <xs:attribute name="Commits">
             <xs:annotation>
               <xs:documentation>[Output] The commits.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.ItemFilter" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Filters items using regular expressions.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="Inputs" use="required">
+            <xs:annotation>
+              <xs:documentation>Items to check.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegEx" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression to filter items by.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegExOptions" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options. Default is "IgnoreCase".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MetadataName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The name of the metadata to apply filter to. Default is "FullPath".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Negative" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Determines whether the regular expression is applied as negative expression.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Outputs">
+            <xs:annotation>
+              <xs:documentation>[Output] The filtered items.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>
@@ -677,14 +758,19 @@ Example custom task with single required parameter
   </xs:element>
 
   <!--System-->
-  <xs:element name="Hxb-System-CI" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-System-CI" type="msb:Hxb-CIType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A type of continuous integration system. Possible values: "Jenkins", "TeamCity".</xs:documentation>
+      <xs:documentation>A type of continuous integration system.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-System-SCM" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-System-SCM" type="msb:Hxb-SCMType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A type of SCM. Possible values: "Git", "Svn".</xs:documentation>
+      <xs:documentation>A type of SCM.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-System-Workspace-Dir-Path" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
@@ -745,15 +831,30 @@ Example custom task with single required parameter
       <xs:documentation>An informational version of the build, in a free format, i.e. [major.minor Beta].</xs:documentation>
     </xs:annotation>
   </xs:element>
-
-  <xs:element name="Hxb-Build-Sln-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hxb-Build-Sln-Dir-Path" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the directory of the solution to proceed with.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hxb-Build-Reports-Dir-Path" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the reports directory of the solution to put tests reports, coverage reports etc.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Build-Sln-Path" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hxb-Build-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
-      <xs:documentation>A path to the solution to proceed with.</xs:documentation>
+      <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Build-Sln-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the directory of the solution to proceed with.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hxb-Build-Reports-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
@@ -763,6 +864,48 @@ Example custom task with single required parameter
   </xs:element>
 
   <!--Targets-->
+  <!--Hxb-Rebuild-->
+  <xs:element name="Hxb-Rebuild-In-Output-RegEx" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A regular expression to filter outputs.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Rebuild-In-Output-Tests-RegEx" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A regular expression to filter outputs tests.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hxb-Rebuild-In-Delete" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Files to delete during cleaning.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Rebuild-In-Clean-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Directories to clean but not delete during cleaning.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Rebuild-In-Delete-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Directories to delete during cleaning.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Rebuild-In-Snk" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The file with public/private keys pair to sign assemblies.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Rebuild-Out-Output" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Outputs of the target.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Rebuild-Out-Output-Tests" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Tests outputs of the target.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 
   <!--Flows-->
 </xs:schema>

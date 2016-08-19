@@ -72,25 +72,35 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Common\CIType.cs" />
     <Compile Include="Common\FakeBuildEngine.cs" />
     <Compile Include="Common\LibSimulatorHelper.cs" />
     <Compile Include="Common\MsBuildHelper.cs" />
     <Compile Include="Common\PathHelper.cs" />
+    <Compile Include="Common\SimulatorType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Targets\RebuildTests.cs" />
     <Compile Include="Targets\SetupTests.cs" />
+    <Compile Include="Targets\TargetTests.cs" />
+    <Compile Include="Tasks\DirectoryCleanTests.cs" />
     <Compile Include="Tasks\FileUpdateTests.cs" />
     <Compile Include="Tasks\FxCopTests.cs" />
     <Compile Include="Tasks\GitLogTests.cs" />
+    <Compile Include="Tasks\ItemFilterTests.cs" />
     <Compile Include="Tasks\NugetPackTests.cs" />
     <Compile Include="Tasks\NugetPushTests.cs" />
     <Compile Include="Tasks\NUnitTests.cs" />
     <Compile Include="Tasks\OpenCoverTests.cs" />
     <Compile Include="Tasks\ReportUnitTests.cs" />
     <Compile Include="Tasks\SvnLogTests.cs" />
+    <Compile Include="Tasks\TaskTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Heleonix.licenseheader">
       <Link>Heleonix.licenseheader</Link>
+    </None>
+    <None Include="Common\SnkPair.snk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

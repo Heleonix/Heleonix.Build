@@ -35,6 +35,16 @@ namespace Heleonix.Build.Tests.Common
         #region Properties
 
         /// <summary>
+        /// Gets the current directory path.
+        /// </summary>
+        public static string CurrentDirectoryPath => AppDomain.CurrentDomain.BaseDirectory;
+
+        /// <summary>
+        /// Gets the SNK pair file path.
+        /// </summary>
+        public static string SnkPairFilePath => Path.Combine(CurrentDirectoryPath, "SnkPair.snk");
+
+        /// <summary>
         /// Gets the Nuget executable path.
         /// </summary>
         public static string NugetExePath => Path.Combine(CurrentDirectoryPath, "..", "..", "..", "..",
@@ -47,9 +57,9 @@ namespace Heleonix.Build.Tests.Common
             "packages", "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
 
         /// <summary>
-        /// Gets the current directory path.
+        /// Gets the main project path.
         /// </summary>
-        public static string CurrentDirectoryPath => AppDomain.CurrentDomain.BaseDirectory;
+        public static string MainProjectPath => Path.Combine(CurrentDirectoryPath, "Heleonix.Build.Projects.Main.proj");
 
         /// <summary>
         /// Gets the NUnit console executable path.
