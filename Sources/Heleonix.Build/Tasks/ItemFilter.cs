@@ -64,7 +64,7 @@ namespace Heleonix.Build.Tasks
         public bool Negative { get; set; }
 
         /// <summary>
-        /// The filtered items.
+        /// [Output] The filtered items.
         /// </summary>
         [Output]
         public ITaskItem[] Outputs { get; set; }

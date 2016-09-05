@@ -40,16 +40,16 @@ namespace Heleonix.Build.Tasks
         #region Properties
 
         /// <summary>
-        /// The FxCop executable path.
+        /// The FxCop command file path.
         /// </summary>
         [Required]
-        public ITaskItem FxCopExePath { get; set; }
+        public ITaskItem FxCopCmdFile { get; set; }
 
         /// <summary>
-        /// The analysis results file path.
+        /// The analysis result file path.
         /// </summary>
         [Required]
-        public ITaskItem AnalysisResultsFilePath { get; set; }
+        public ITaskItem AnalysisResultFile { get; set; }
 
         /// <summary>
         /// A value indicating whether the FxCop is verbose.
@@ -67,17 +67,17 @@ namespace Heleonix.Build.Tasks
         public string TargetsTypes { get; set; }
 
         /// <summary>
-        /// The location of rule libraries to load.
+        /// Locations of rule libraries to load.
         /// </summary>
         /// <remarks>
         /// If you specify a directory, FxCop tries to load all files that have the .dll extension.
         /// </remarks>
-        public ITaskItem[] RulesPath { get; set; }
+        public ITaskItem[] RulesFilesDirs { get; set; }
 
         /// <summary>
         /// The file path of an FxCop project file.
         /// </summary>
-        public ITaskItem ProjectFilePath { get; set; }
+        public ITaskItem ProjectFile { get; set; }
 
         /// <summary>
         /// The files to analyze.
@@ -85,17 +85,17 @@ namespace Heleonix.Build.Tasks
         /// <remarks>
         /// If you specify a directory, FxCop tries to analyze all files that have the .exe or .dll extension.
         /// </remarks>
-        public ITaskItem[] TargetsPath { get; set; }
+        public ITaskItem[] TargetsFilesDirs { get; set; }
 
         /// <summary>
         /// The analysis results XSL file that is referenced in the processing instruction.
         /// </summary>
-        public ITaskItem AnalysisResultsXslFilePath { get; set; }
+        public ITaskItem AnalysisResultsXslFile { get; set; }
 
         /// <summary>
         /// The dependencies directories paths to search for target assembly dependencies.
         /// </summary>
-        public ITaskItem[] DependenciesDirectoriesPath { get; set; }
+        public ITaskItem[] DependenciesDirs { get; set; }
 
         /// <summary>
         /// The ruleset file path to be used for the analysis.
@@ -103,42 +103,106 @@ namespace Heleonix.Build.Tasks
         /// <remarks>
         /// It can be a file path to the rule set file or the file name of a built-in rule set.
         /// </remarks>
-        public ITaskItem RulesetFilePath { get; set; }
+        public ITaskItem RulesetFile { get; set; }
 
         /// <summary>
         /// The dictionary file path to be used by spelling rules.
         /// </summary>
-        public ITaskItem DictionaryFilePath { get; set; }
+        public ITaskItem DictionaryFile { get; set; }
 
         /// <summary>
-        /// The critical errors count.
+        /// Types of issues to fail the task.
+        /// </summary>
+        /// <remarks>
+        /// Possible values:
+        /// <list type="bullet">
+        /// <item><term>None</term></item>
+        /// <item><term>Any</term></item>
+        /// <item><term>CriticalErrors</term></item>
+        /// <item><term>Errors</term></item>
+        /// <item><term>CriticalWarnings</term></item>
+        /// <item><term>Warnings</term></item>
+        /// <item><term>Informational</term></item>
+        /// </list>
+        /// Default is "Any".
+        /// </remarks>
+        public string FailOn { get; set; }
+
+        /// <summary>
+        /// [Output] The critical errors count.
         /// </summary>
         [Output]
         public int CriticalErrors { get; set; }
 
         /// <summary>
-        /// The errors count.
+        /// [Output] The errors count.
         /// </summary>
         [Output]
         public int Errors { get; set; }
 
         /// <summary>
-        /// The critical warnings count.
+        /// [Output] The critical warnings count.
         /// </summary>
         [Output]
         public int CriticalWarnings { get; set; }
 
         /// <summary>
-        /// The warnings count.
+        /// [Output] The warnings count.
         /// </summary>
         [Output]
         public int Warnings { get; set; }
 
         /// <summary>
-        /// The informational messages count.
+        /// [Output] The informational messages count.
         /// </summary>
         [Output]
         public int Informational { get; set; }
+
+        #endregion
+
+        #region Enums
+
+        /// <summary>
+        /// Defines types of issues.
+        /// </summary>
+        [Flags]
+        public enum IssueTypes
+        {
+            /// <summary>
+            /// No issues.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// The critical errors.
+            /// </summary>
+            CriticalErrors = 1,
+
+            /// <summary>
+            /// The errors.
+            /// </summary>
+            Errors = 2,
+
+            /// <summary>
+            /// The critical warnings.
+            /// </summary>
+            CriticalWarnings = 4,
+
+            /// <summary>
+            /// The warnings.
+            /// </summary>
+            Warnings = 8,
+
+            /// <summary>
+            /// The informational.
+            /// </summary>
+            Informational = 16,
+
+            /// <summary>
+            /// Any type of the issue.
+            /// </summary>
+            Any = CriticalErrors | Errors | CriticalWarnings | Warnings | Informational
+        }
 
         #endregion
 
@@ -149,30 +213,40 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var tempAnalysisResultsFilePath = Path.Combine(
-                Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec) ?? string.Empty, Path.GetRandomFileName());
+            var tempAnalysisResults = Path.Combine(
+                Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty, Path.GetRandomFileName());
 
             var args = ArgsBuilder.By(' ', ':')
                 .Add("/verbose", false, IsVerbose)
                 .Add("/types", TargetsTypes)
-                .Add("/project", ProjectFilePath?.ItemSpec, true)
-                .Add("/rule", RulesPath?.Select(i => i.ItemSpec), true, ProjectFilePath == null)
-                .Add("/file", TargetsPath?.Select(i => i.ItemSpec), true, ProjectFilePath == null)
-                .Add("/out", tempAnalysisResultsFilePath, true)
-                .Add("/directory", DependenciesDirectoriesPath?.Select(i => i.ItemSpec), true)
+                .Add("/project", ProjectFile?.ItemSpec, true)
+                .Add("/rule", RulesFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
+                .Add("/file", TargetsFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
+                .Add("/out", tempAnalysisResults, true)
+                .Add("/directory", DependenciesDirs?.Select(i => i.ItemSpec), true)
                 .Add("/ignoregeneratedcode")
-                .Add("/ruleSet", RulesetFilePath?.ItemSpec, true)
+                .Add("/ruleSet", RulesetFile?.ItemSpec, true)
                 .Add("/searchgac")
-                .Add("/dictionary", DictionaryFilePath?.ItemSpec, true)
+                .Add("/dictionary", DictionaryFile?.ItemSpec, true)
                 .Add("/summary");
 
-            // FxCopCmd does not create a directory for analysis results file.
-            if (!Directory.Exists(Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec) ?? string.Empty))
+            // FxCopCmd does not create a directory for analysis result file.
+            if (!Directory.Exists(Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultsFilePath.ItemSpec) ?? string.Empty);
+                Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty);
             }
 
-            var exitCode = ExeHelper.Execute(FxCopExePath.ItemSpec, args);
+            string output;
+            string error;
+
+            var exitCode = ExeHelper.Execute(FxCopCmdFile.ItemSpec, args, out output, out error);
+
+            Log.LogMessage(output);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Log.LogError(error);
+            }
 
             XDocument results = null;
 
@@ -186,12 +260,12 @@ namespace Heleonix.Build.Tasks
                 }
 
                 //Treat absence of results as success.
-                if (!File.Exists(tempAnalysisResultsFilePath))
+                if (!File.Exists(tempAnalysisResults))
                 {
                     return;
                 }
 
-                results = XDocument.Load(tempAnalysisResultsFilePath);
+                results = XDocument.Load(tempAnalysisResults);
 
                 var issues = results.Descendants("Issue").ToArray();
 
@@ -206,49 +280,70 @@ namespace Heleonix.Build.Tasks
                 Informational = issues.Count(i => string.Equals(i.Attribute("Level").Value, "Informational",
                     StringComparison.InvariantCultureIgnoreCase));
 
-                if (CriticalErrors > 0 || Errors > 0)
+                Log.LogMessage($"Critical errors: {CriticalErrors}.");
+                Log.LogMessage($"Errors: {Errors}.");
+                Log.LogMessage($"Critical warnings: {CriticalWarnings}.");
+                Log.LogMessage($"Warnings: {Warnings}.");
+                Log.LogMessage($"Informational: {Informational}.");
+
+                var failOn = string.IsNullOrEmpty(FailOn)
+                    ? IssueTypes.Any
+                    : (IssueTypes) Enum.Parse(typeof (IssueTypes), FailOn);
+
+                if (failOn.HasFlag(IssueTypes.None))
                 {
-                    Log.LogError($"Critical errors: {CriticalErrors}; Errors:{Errors}.");
+                    return;
                 }
 
-                if (CriticalWarnings > 0 || Warnings > 0)
+                if (failOn.HasFlag(IssueTypes.CriticalErrors) && CriticalErrors > 0)
                 {
-                    Log.LogWarning($"Critical warnings: {CriticalWarnings}; Warnings:{Warnings}.");
+                    Log.LogError("The task failed due to critical errors.");
                 }
-
-                if (Informational > 0)
+                if (failOn.HasFlag(IssueTypes.Errors) && Errors > 0)
                 {
-                    Log.LogMessage($"Informational: {Informational}.");
+                    Log.LogError("The task failed due to errors.");
+                }
+                if (failOn.HasFlag(IssueTypes.CriticalWarnings) && CriticalWarnings > 0)
+                {
+                    Log.LogError("The task failed due to critical warnings.");
+                }
+                if (failOn.HasFlag(IssueTypes.Warnings) && Warnings > 0)
+                {
+                    Log.LogError("The task failed due to warnings.");
+                }
+                if (failOn.HasFlag(IssueTypes.Informational) && Informational > 0)
+                {
+                    Log.LogError("The task failed due to informational.");
                 }
             }
             finally
             {
-                if (File.Exists(tempAnalysisResultsFilePath))
+                if (File.Exists(tempAnalysisResults))
                 {
-                    //Overwrite existing report.
-                    if (File.Exists(AnalysisResultsFilePath.ItemSpec))
+                    // Overwrite existing report.
+                    if (File.Exists(AnalysisResultFile.ItemSpec))
                     {
-                        File.Delete(AnalysisResultsFilePath.ItemSpec);
+                        File.Delete(AnalysisResultFile.ItemSpec);
                     }
 
-                    if (AnalysisResultsXslFilePath != null && File.Exists(AnalysisResultsXslFilePath.ItemSpec))
+                    if (AnalysisResultsXslFile != null && File.Exists(AnalysisResultsXslFile.ItemSpec))
                     {
-                        results = results ?? XDocument.Load(tempAnalysisResultsFilePath);
+                        results = results ?? XDocument.Load(tempAnalysisResults);
 
-                        using (var outputStream = File.Create(AnalysisResultsFilePath.ItemSpec))
+                        using (var outputStream = File.Create(AnalysisResultFile.ItemSpec))
                         {
                             var transform = new XslCompiledTransform();
 
-                            transform.Load(AnalysisResultsXslFilePath.ItemSpec);
+                            transform.Load(AnalysisResultsXslFile.ItemSpec);
 
                             transform.Transform(results.CreateNavigator(), null, outputStream);
                         }
 
-                        File.Delete(tempAnalysisResultsFilePath);
+                        File.Delete(tempAnalysisResults);
                     }
                     else
                     {
-                        File.Move(tempAnalysisResultsFilePath, AnalysisResultsFilePath.ItemSpec);
+                        File.Move(tempAnalysisResults, AnalysisResultFile.ItemSpec);
                     }
                 }
             }

@@ -44,51 +44,49 @@ namespace Heleonix.Build.Tests.Tasks
         [Test]
         public void Execute()
         {
-            var nunitResultFilePath = Path.Combine(LibSimulatorHelper.ReportsDirectoryPath,
-                Path.GetRandomFileName() + ".xml");
-            var reportFilePath = Path.Combine(LibSimulatorHelper.ReportsDirectoryPath,
-                Path.GetRandomFileName() + ".html");
+            var nunitResult = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName() + ".xml");
+            var report = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName() + ".html");
 
             var nunitTask = new Build.Tasks.NUnit
             {
                 BuildEngine = new FakeBuildEngine(),
-                NUnitConsoleExePath = new TaskItem(PathHelper.NUnitConsoleExePath),
-                NUnitProjectOrTestsFilesPath = new ITaskItem[]
+                NUnitConsoleExeFile = new TaskItem(PathHelper.NUnitConsoleExe),
+                NUnitProjectOrTestsFiles = new ITaskItem[]
                 {
-                    new TaskItem(LibSimulatorHelper.TestsOutFilePath)
+                    new TaskItem(LibSimulatorHelper.TestsOut)
                 },
-                TestsResultsFilePath = new TaskItem(nunitResultFilePath)
+                TestsResultFile = new TaskItem(nunitResult)
             };
 
             var succeeded = nunitTask.Execute();
 
             try
             {
-                Assert.That(succeeded, Is.False);
+                Assert.That(succeeded, Is.True);
 
                 var task = new ReportUnit
                 {
                     BuildEngine = new FakeBuildEngine(),
-                    ReportUnitExePath = new TaskItem(PathHelper.ReportUnitExePath),
-                    TestsResultsFilePath = new TaskItem(nunitResultFilePath),
-                    ReportFilePath = new TaskItem(reportFilePath)
+                    ReportUnitExeFile = new TaskItem(PathHelper.ReportUnitExe),
+                    TestsResultFile = new TaskItem(nunitResult),
+                    ReportFile = new TaskItem(report)
                 };
 
                 succeeded = task.Execute();
 
                 Assert.That(succeeded, Is.True);
-                Assert.That(File.Exists(reportFilePath), Is.True);
+                Assert.That(File.Exists(report), Is.True);
             }
             finally
             {
-                if (File.Exists(nunitResultFilePath))
+                if (File.Exists(nunitResult))
                 {
-                    File.Delete(nunitResultFilePath);
+                    File.Delete(nunitResult);
                 }
 
-                if (File.Exists(reportFilePath))
+                if (File.Exists(report))
                 {
-                    File.Delete(reportFilePath);
+                    File.Delete(report);
                 }
             }
         }

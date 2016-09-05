@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <!--
 The MIT License (MIT)
@@ -25,31 +25,27 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <PropertyGroup Condition="'$(JENKINS_URL)' != ''">
     <Hxb-System-CI>Jenkins</Hxb-System-CI>
-    <Hxb-System-SCM Condition="Exists('$(WORKSPACE)\.git')">Git</Hxb-System-SCM>
-    <Hxb-System-SCM Condition="Exists('$(WORKSPACE)\.svn')">Svn</Hxb-System-SCM>
-    <Hxb-System-Workspace-Dir-Path>$(WORKSPACE)</Hxb-System-Workspace-Dir-Path>
+    <Hxb-System-Workspace-Dir>$(WORKSPACE)</Hxb-System-Workspace-Dir>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TEAMCITY_VERSION)' != ''">
     <Hxb-System-CI>TeamCity</Hxb-System-CI>
-    <Hxb-System-SCM Condition="Exists('$(system_agent_work_dir)\.git')">Git</Hxb-System-SCM>
-    <Hxb-System-SCM Condition="Exists('$(system_agent_work_dir)\.svn')">Svn</Hxb-System-SCM>
-    <Hxb-System-Workspace-Dir-Path>$(system_agent_work_dir)</Hxb-System-Workspace-Dir-Path>
+    <Hxb-System-Workspace-Dir>$(system_agent_work_dir)</Hxb-System-Workspace-Dir>
   </PropertyGroup>
 
   <ItemGroup>
     <Hxb-System-FxCopCmd
       Include="$(MSBuildProgramFiles32)\Microsoft Visual Studio $(MSBuildToolsVersion)\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"/>
-    <Hxb-System-NUnitConsole Include="..\..\NUnit.Console.*\tools\nunit3-console.exe"/>
-    <Hxb-System-ReportUnit Include="..\..\ReportUnit.*\tools\ReportUnit.exe'))"/>
-    <Hxb-System-OpenCoverConsole Include="\..\..\OpenCover.*\tools\OpenCover.Console.exe"/>
-    <Hxb-System-ReportGenerator Include="..\..\ReportGenerator.*\tools\ReportGenerator.exe"/>
-    <Hxb-System-Nuget Include="\..\..\NuGet.CommandLine.*\tools\NuGet.exe"/>
-    <Hxb-System-Git Include="C:\Program Files\Git\cmd\git.exe"/>
-    <Hxb-System-Svn Include="C:\Program Files\TortoiseSVN\bin\svn.exe"/>
+    <Hxb-System-NUnitConsoleExe Include="..\..\NUnit.ConsoleRunner.*\tools\nunit3-console.exe"/>
+    <Hxb-System-ReportUnitExe Include="..\..\ReportUnit.*\tools\ReportUnit.exe'))"/>
+    <Hxb-System-OpenCoverConsoleExe Include="\..\..\OpenCover.*\tools\OpenCover.Console.exe"/>
+    <Hxb-System-ReportGeneratorExe Include="..\..\ReportGenerator.*\tools\ReportGenerator.exe"/>
+    <Hxb-System-NugetExe Include="\..\..\NuGet.CommandLine.*\tools\NuGet.exe"/>
+    <Hxb-System-GitExe Include="C:\Program Files\Git\cmd\git.exe"/>
+    <Hxb-System-SvnExe Include="C:\Program Files\TortoiseSVN\bin\svn.exe"/>
   </ItemGroup>
 </Project>

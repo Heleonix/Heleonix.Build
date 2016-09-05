@@ -69,6 +69,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+    <None Include="Targets\Heleonix.Build.Targets.Finalize.targets">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Targets\Heleonix.Build.Targets.OnError.targets">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Targets\Heleonix.Build.Targets.ReportUnit.targets">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -81,7 +89,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Targets\Heleonix.Build.Targets.NugetPush.targets">
+    <None Include="Targets\Heleonix.Build.Targets.NugetDeploy.targets">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -93,7 +101,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Targets\Heleonix.Build.Targets.Setup.targets">
+    <None Include="Targets\Heleonix.Build.Targets.Initialize.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
@@ -110,7 +118,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExeHelper.cs" />
     <Compile Include="Tasks\BaseTask.cs" />
+    <Compile Include="Tasks\FileSystemSearch.cs" />
     <Compile Include="Tasks\DirectoryClean.cs" />
+    <Compile Include="Tasks\ItemCombine.cs" />
+    <Compile Include="Tasks\ItemSet.cs" />
     <Compile Include="Tasks\ItemFilter.cs" />
     <Compile Include="Tasks\FileUpdate.cs" />
     <Compile Include="Tasks\FxCop.cs" />

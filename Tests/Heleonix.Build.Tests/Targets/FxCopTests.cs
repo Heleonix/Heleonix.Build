@@ -23,15 +23,16 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using System.IO;
 using Heleonix.Build.Tests.Common;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
-    /// Tests the Hxb-Setup target.
+    /// Tests the Hxb-FxCop target.
     /// </summary>
-    public class SetupTests : TargetTests
+    public class FxCopTests : TargetTests
     {
         #region Methods
 
@@ -41,7 +42,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> TestCaseSource()
         {
-            yield return new TargetTestCase { Properties = null, Items = null, Result = true };
+            yield return new TargetTestCase { Result = true };
         }
 
         #endregion
@@ -49,15 +50,20 @@ namespace Heleonix.Build.Tests.Targets
         #region Tests
 
         /// <summary>
-        /// Tests the Hxb-Setup target.
+        /// Tests the Hxb-FxCop target.
         /// </summary>
-        /// <param name="ciType">The continuous integration system type.</param>
         /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType,
-            [ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+        public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
         {
-            ExecuteTest(ciType, testCases);
+            try
+            {
+                ExecuteTest(CIType.Jenkins, testCases);
+            }
+            finally
+            {
+                Directory.Delete(LibSimulatorHelper.ReportsDir, true);
+            }
         }
 
         #endregion
@@ -72,7 +78,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <summary>
         /// Gets or sets the name of the target.
         /// </summary>
-        protected override string TargetName => "Hxb-Setup";
+        protected override string TargetName => "Hxb-FxCop";
 
         #endregion
     }

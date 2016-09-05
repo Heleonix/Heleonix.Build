@@ -25,8 +25,39 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-NUnit" DependsOnTargets="Hxb-Rebuild">
+    <Heleonix.Build.Tasks.NUnit NUnitConsoleExeFile="@(Hxb-System-NUnitConsoleExe)"
+                                NUnitProjectOrTestsFiles="@(Hxb-Rebuild-Out-Outputs-Tests)"
+                                AgentsNumber="$(Hxb-NUnit-In-AgentsNumber)"
+                                Configuration="$(Hxb-In-Configuration)"
+                                DomainIsolation="$(Hxb-NUnit-In-DomainIsolation)"
+                                ShadowCopy="$(Hxb-NUnit-In-ShadowCopy)"
+                                FailOnFailedTests="$(Hxb-NUnit-In-FailOnFailedTests)"
+                                ErrorsOutputFile="@(Hxb-NUnit-In-ErrorsOutput)"
+                                Framework="$(Hxb-NUnit-In-Framework)"
+                                TestsResultFile="@(Hxb-NUnit-In-TestsResult)"
+                                StopOnErrorOrFailedTest="$(Hxb-NUnit-In-StopOnErrorOrFailedTest)"
+                                TestsFilter="$(Hxb-NUnit-In-TestsFilter)"
+                                TraceLevel="$(Hxb-NUnit-In-TraceLevel)"
+                                TestsListFile="@(Hxb-NUnit-In-TestsList)"
+                                TestsOutputFile="@(Hxb-NUnit-In-TestsOutput)"
+                                TestsParameters="$(Hxb-NUnit-In-TestsParameters)"
+                                UseTeamCityServiceMessages="$(Hxb-NUnit-In-UseTeamCityServiceMessages)"
+                                ProcessIsolation="$(Hxb-NUnit-In-ProcessIsolation)">
+      <Output TaskParameter="Total" PropertyName="Hxb-NUnit-Out-Total"/>
+      <Output TaskParameter="TestCases" PropertyName="Hxb-NUnit-Out-TestCases"/>
+      <Output TaskParameter="Asserts" PropertyName="Hxb-NUnit-Out-Asserts"/>
+      <Output TaskParameter="Failed" PropertyName="Hxb-NUnit-Out-Failed"/>
+      <Output TaskParameter="Inconclusive" PropertyName="Hxb-NUnit-Out-Inconclusive"/>
+      <Output TaskParameter="Passed" PropertyName="Hxb-NUnit-Out-Passed"/>
+      <Output TaskParameter="Skipped" PropertyName="Hxb-NUnit-Out-Skipped"/>
+      <Output TaskParameter="StartTime" PropertyName="Hxb-NUnit-Out-StartTime"/>
+      <Output TaskParameter="EndTime" PropertyName="Hxb-NUnit-Out-EndTime"/>
+      <Output TaskParameter="Duration" PropertyName="Hxb-NUnit-Out-Duration"/>
+    </Heleonix.Build.Tasks.NUnit>
+
+    <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

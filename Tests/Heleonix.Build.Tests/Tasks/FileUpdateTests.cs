@@ -44,9 +44,9 @@ namespace Heleonix.Build.Tests.Tasks
         [Test]
         public void Execute()
         {
-            var inputFilePath = Path.Combine(PathHelper.CurrentDirectoryPath, Path.GetRandomFileName());
+            var input = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
 
-            File.WriteAllText(inputFilePath,
+            File.WriteAllText(input,
                 "[assembly: System.Reflection.AssemblyVersion(\"1.0.0.0\")]\n[assembly: System.Reflection.AssemblyFileVersion(\"1.0.0.0\")]\n[assembly: System.Reflection.AssemblyInformationalVersion(\"1.0.0.0\")]");
 
             try
@@ -54,21 +54,21 @@ namespace Heleonix.Build.Tests.Tasks
                 var task = new FileUpdate
                 {
                     BuildEngine = new FakeBuildEngine(),
-                    FilePath = new TaskItem(inputFilePath),
+                    File = new TaskItem(input),
                     RegEx = "\\(.*\\)",
                     Replacement = "(1.2.3.4)"
                 };
 
                 var succeeded = task.Execute();
 
-                var result = File.ReadAllText(inputFilePath);
+                var result = File.ReadAllText(input);
 
                 Assert.That(succeeded, Is.True);
                 Assert.That(Regex.Matches(result, "\\(.*\\)"), Has.Count.EqualTo(3));
             }
             finally
             {
-                File.Delete(inputFilePath);
+                File.Delete(input);
             }
         }
 

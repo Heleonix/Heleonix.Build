@@ -43,7 +43,7 @@ namespace Heleonix.Build.Tasks
         /// The OpenCover executable path.
         /// </summary>
         [Required]
-        public ITaskItem OpenCoverExePath { get; set; }
+        public ITaskItem OpenCoverExeFile { get; set; }
 
         /// <summary>
         /// The target executable path with command line arguments and its type in metadata.
@@ -52,10 +52,10 @@ namespace Heleonix.Build.Tasks
         public ITaskItem Target { get; set; }
 
         /// <summary>
-        /// The coverage results output file path.
+        /// The coverage result output file path.
         /// </summary>
         [Required]
-        public ITaskItem CoverageResultsFilePath { get; set; }
+        public ITaskItem CoverageResultFile { get; set; }
 
         /// <summary>
         /// The minimum class coverage, in range: 0% - 100%.
@@ -90,7 +90,7 @@ namespace Heleonix.Build.Tasks
         /// <summary>
         /// The PDB search directories path.
         /// </summary>
-        public ITaskItem[] PdbSearchDirectoriesPath { get; set; }
+        public ITaskItem[] PdbSearchDirs { get; set; }
 
         /// <summary>
         /// Show unvisited methods and classes after coverage finishes and results are presented.
@@ -103,85 +103,85 @@ namespace Heleonix.Build.Tasks
         public int MaxVisitCount { get; set; }
 
         /// <summary>
-        /// The total lines count.
+        /// [Output] The total lines count.
         /// </summary>
         [Output]
         public long TotalLines { get; set; }
 
         /// <summary>
-        /// The visited lines count.
+        /// [Output] The visited lines count.
         /// </summary>
         [Output]
         public long VisitedLines { get; set; }
 
         /// <summary>
-        /// The total branches count.
+        /// [Output] The total branches count.
         /// </summary>
         [Output]
         public long TotalBranches { get; set; }
 
         /// <summary>
-        /// The visited branches count.
+        /// [Output] The visited branches count.
         /// </summary>
         [Output]
         public long VisitedBranches { get; set; }
 
         /// <summary>
-        /// The total classes count.
+        /// [Output] The total classes count.
         /// </summary>
         [Output]
         public long TotalClasses { get; set; }
 
         /// <summary>
-        /// The visited classes count.
+        /// [Output] The visited classes count.
         /// </summary>
         [Output]
         public long VisitedClasses { get; set; }
 
         /// <summary>
-        /// The total methods count.
+        /// [Output] The total methods count.
         /// </summary>
         [Output]
         public long TotalMethods { get; set; }
 
         /// <summary>
-        /// The visited methods count.
+        /// [Output] The visited methods count.
         /// </summary>
         [Output]
         public long VisitedMethods { get; set; }
 
         /// <summary>
-        /// The minimum cyclomatic complexity.
+        /// [Output] The minimum cyclomatic complexity.
         /// </summary>
         [Output]
         public int MinCyclomaticComplexity { get; set; }
 
         /// <summary>
-        /// The maximum cyclomatic complexity.
+        /// [Output] The maximum cyclomatic complexity.
         /// </summary>
         [Output]
         public int MaxCyclomaticComplexity { get; set; }
 
         /// <summary>
-        /// The class coverage, in range: 0% - 100%.
+        /// [Output] The class coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float ClassCoverage { get; set; }
 
         /// <summary>
-        /// The method coverage, in range: 0% - 100%.
+        /// [Output] The method coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float MethodCoverage { get; set; }
 
         /// <summary>
-        /// The line coverage, in range: 0% - 100%.
+        /// [Output] The line coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float LineCoverage { get; set; }
 
         /// <summary>
-        /// The branch coverage, in range: 0% - 100%.
+        /// [Output] The branch coverage, in range: 0% - 100%.
         /// </summary>
         [Output]
         public float BranchCoverage { get; set; }
@@ -197,9 +197,11 @@ namespace Heleonix.Build.Tasks
         {
             string targetArgs;
 
-            if (string.Compare(Target.GetMetadata("Type"), "NUnit", StringComparison.InvariantCultureIgnoreCase) == 0)
+            if (Target.GetMetadata("Type") == "NUnit")
             {
                 targetArgs = NUnit.BuildArgs(Target);
+
+                NUnit.Prepare(Target);
             }
             else
             {
@@ -214,19 +216,35 @@ namespace Heleonix.Build.Tasks
                 .Add("-excludebyattribute", ExcludeByAttributeFilters, true)
                 .Add("-filter", Filters, true)
                 .Add("-mergebyhash")
-                .Add("-output", CoverageResultsFilePath, true)
+                .Add("-output", CoverageResultFile.ItemSpec, true)
                 .Add("-register", "user")
                 .Add("-skipautoprops")
-                .Add("-searchdirs", "\\\"" + string.Join("\\\";", PdbSearchDirectoriesPath?.Select(i => i.ItemSpec)
+                .Add("-searchdirs", "\\\"" + string.Join("\\\";", PdbSearchDirs?.Select(i => i.ItemSpec)
                                                                   ?? Enumerable.Empty<string>()) + "\\\"", true,
-                    PdbSearchDirectoriesPath != null)
+                    PdbSearchDirs != null)
                 .Add("-showunvisited", false, ShowUnvisited)
                 .Add("-returntargetcode")
                 .Add("-threshold", MaxVisitCount, false, MaxVisitCount > 0);
 
-            var exitCode = ExeHelper.Execute(OpenCoverExePath.ItemSpec, args);
+            // OpenCover does not create a directory for coverage result file.
+            if (!Directory.Exists(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty);
+            }
 
-            if (!File.Exists(CoverageResultsFilePath.ItemSpec))
+            string output;
+            string error;
+
+            var exitCode = ExeHelper.Execute(OpenCoverExeFile.ItemSpec, args, out output, out error);
+
+            Log.LogMessage(output);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Log.LogError(error);
+            }
+
+            if (!File.Exists(CoverageResultFile.ItemSpec))
             {
                 Log.LogError($"{nameof(OpenCover)} failed. Exit code: {exitCode}.");
 
@@ -238,7 +256,7 @@ namespace Heleonix.Build.Tasks
                 Log.LogWarning($"Target failed. Target's exit code: {exitCode}.");
             }
 
-            var summary = XDocument.Load(CoverageResultsFilePath.ItemSpec)
+            var summary = XDocument.Load(CoverageResultFile.ItemSpec)
                 .Element("CoverageSession")?
                 .Element("Summary");
 

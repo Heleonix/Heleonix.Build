@@ -37,46 +37,46 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the current directory path.
         /// </summary>
-        public static string CurrentDirectoryPath => AppDomain.CurrentDomain.BaseDirectory;
+        public static string CurrentDir => AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
         /// Gets the SNK pair file path.
         /// </summary>
-        public static string SnkPairFilePath => Path.Combine(CurrentDirectoryPath, "SnkPair.snk");
+        public static string SnkPair => Path.Combine(CurrentDir, "SnkPair.snk");
 
         /// <summary>
         /// Gets the Nuget executable path.
         /// </summary>
-        public static string NugetExePath => Path.Combine(CurrentDirectoryPath, "..", "..", "..", "..",
+        public static string NugetExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
             "packages", "NuGet.CommandLine.3.4.3", "tools", "NuGet.exe");
 
         /// <summary>
         /// Gets the ReportUnit executable path.
         /// </summary>
-        public static string ReportUnitExePath => Path.Combine(CurrentDirectoryPath, "..", "..", "..", "..",
+        public static string ReportUnitExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
             "packages", "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
 
         /// <summary>
         /// Gets the main project path.
         /// </summary>
-        public static string MainProjectPath => Path.Combine(CurrentDirectoryPath, "Heleonix.Build.Projects.Main.proj");
+        public static string MainProject => Path.Combine(CurrentDir, "Heleonix.Build.Projects.Main.proj");
 
         /// <summary>
         /// Gets the NUnit console executable path.
         /// </summary>
-        public static string NUnitConsoleExePath => Path.Combine(CurrentDirectoryPath, "..", "..", "..", "..",
+        public static string NUnitConsoleExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
             "packages", "NUnit.ConsoleRunner.3.4.0", "tools", "nunit3-console.exe");
 
         /// <summary>
         /// Gets the OpenCover executable path.
         /// </summary>
-        public static string OpenCoverExePath => Path.Combine(CurrentDirectoryPath, "..", "..", "..", "..",
+        public static string OpenCoverExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
             "packages", "OpenCover.4.6.519", "tools", "OpenCover.Console.exe");
 
         /// <summary>
         /// Gets the FxCop executable path.
         /// </summary>
-        public static string FxCopExePath
+        public static string FxCopExe
         {
             get
             {
@@ -100,17 +100,17 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the Git executable path.
         /// </summary>
-        public static string GitExePath => "git.exe";
+        public static string GitExe => "git.exe";
 
         /// <summary>
         /// Gets the Svn executable path.
         /// </summary>
-        public static string SvnExePath => "svn.exe";
+        public static string SvnExe => "svn.exe";
 
         /// <summary>
         /// Gets the SvnAdmin executable path.
         /// </summary>
-        public static string SvnAdminExePath => "svnadmin.exe";
+        public static string SvnAdminExe => "svnadmin.exe";
 
         #endregion
     }

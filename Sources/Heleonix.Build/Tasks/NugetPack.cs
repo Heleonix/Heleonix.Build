@@ -41,32 +41,32 @@ namespace Heleonix.Build.Tasks
         /// The Nuget executable path.
         /// </summary>
         [Required]
-        public ITaskItem NugetExePath { get; set; }
+        public ITaskItem NugetExeFile { get; set; }
 
         /// <summary>
         /// The nuspec file path.
         /// </summary>
         [Required]
-        public ITaskItem NuspecFilePath { get; set; }
+        public ITaskItem NuspecFile { get; set; }
 
         /// <summary>
         /// The project file path.
         /// </summary>
         [Required]
-        public ITaskItem ProjectFilePath { get; set; }
+        public ITaskItem ProjectFile { get; set; }
 
         /// <summary>
         /// The output package directory path.
         /// </summary>
-        public ITaskItem PackageDirectoryPath { get; set; }
+        public ITaskItem PackageDir { get; set; }
 
         /// <summary>
-        /// A value indicating whether to include referenced projects.
+        /// Indicates whether to include referenced projects.
         /// </summary>
         public bool IncludeReferencedProjects { get; set; }
 
         /// <summary>
-        /// A value indicating whether to exclude empty directories.
+        /// Indicates whether to exclude empty directories.
         /// </summary>
         public bool ExcludeEmptyDirectories { get; set; }
 
@@ -84,10 +84,10 @@ namespace Heleonix.Build.Tasks
         public string Verbosity { get; set; }
 
         /// <summary>
-        /// The output package file path.
+        /// [Output] The output package file path.
         /// </summary>
         [Output]
-        public ITaskItem PackageFilePath { get; set; }
+        public ITaskItem PackageFile { get; set; }
 
         #endregion
 
@@ -98,46 +98,61 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var tempOutputDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            var projectDir = Path.GetDirectoryName(ProjectFile.ItemSpec) ?? string.Empty;
 
-            Directory.CreateDirectory(tempOutputDirectoryPath);
+            var tempOutputDir = Path.Combine(projectDir, Path.GetRandomFileName());
+
+            Directory.CreateDirectory(tempOutputDir);
 
             var args = ArgsBuilder.By(' ', ' ')
-                .Add("pack", ProjectFilePath.ItemSpec, true)
-                .Add("-OutputDirectory", tempOutputDirectoryPath, true)
+                .Add("pack", ProjectFile.ItemSpec, true)
+                .Add("-OutputDirectory", tempOutputDir, true)
                 .Add("-NonInteractive")
                 .Add("-IncludeReferencedProjects", false, IncludeReferencedProjects)
                 .Add("-ExcludeEmptyDirectories", false, ExcludeEmptyDirectories)
                 .Add("-Verbosity", Verbosity);
 
-            Log.LogMessage($"Packing '{ProjectFilePath.ItemSpec}' via '{NuspecFilePath.ItemSpec}'.");
+            Log.LogMessage($"Packing '{ProjectFile.ItemSpec}' using '{NuspecFile.ItemSpec}'.");
 
-            var projectDirectoryPath = Path.GetDirectoryName(ProjectFilePath.ItemSpec) ?? string.Empty;
+            var destNuspecFilePath = Path.Combine(projectDir, Path.GetFileName(NuspecFile.ItemSpec) ?? string.Empty);
 
-            var destNuspecFilePath = Path.Combine(projectDirectoryPath,
-                Path.ChangeExtension(Path.GetFileName(ProjectFilePath.ItemSpec), ".nuspec"));
+            File.Copy(NuspecFile.ItemSpec, destNuspecFilePath, true);
 
-            File.Copy(NuspecFilePath.ItemSpec, destNuspecFilePath, true);
+            string output;
+            string error;
 
-            var exitCode = ExeHelper.Execute(NugetExePath.ItemSpec, args);
+            var exitCode = ExeHelper.Execute(NugetExeFile.ItemSpec, args, out output, out error);
+
+            Log.LogMessage(output);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Log.LogError(error);
+            }
 
             if (exitCode != 0)
             {
-                Log.LogError($"Failed packing '{ProjectFilePath.ItemSpec}'. Exit code: {exitCode}.");
+                Log.LogError($"Failed packing '{ProjectFile.ItemSpec}'. Exit code: {exitCode}.");
 
                 return;
             }
 
-            var srcPackageFilePath = Directory.GetFiles(tempOutputDirectoryPath).First();
+            var srcPackage = Directory.GetFiles(tempOutputDir).First();
 
-            var destPackageFilePath = Path.Combine(PackageDirectoryPath?.ItemSpec ?? projectDirectoryPath,
-                Path.GetFileName(srcPackageFilePath) ?? string.Empty);
+            var destPackageDir = PackageDir?.ItemSpec ?? projectDir;
 
-            File.Copy(srcPackageFilePath, destPackageFilePath);
+            var destPackage = Path.Combine(destPackageDir, Path.GetFileName(srcPackage) ?? string.Empty);
+
+            if (!Directory.Exists(destPackageDir))
+            {
+                Directory.CreateDirectory(destPackageDir);
+            }
+
+            File.Copy(srcPackage, destPackage);
 
             try
             {
-                Directory.Delete(tempOutputDirectoryPath, true);
+                Directory.Delete(tempOutputDir, true);
             }
             catch (Exception ex)
             {
@@ -153,7 +168,7 @@ namespace Heleonix.Build.Tasks
                 Log.LogWarningFromException(ex);
             }
 
-            PackageFilePath = new TaskItem(destPackageFilePath);
+            PackageFile = new TaskItem(destPackage);
         }
 
         #endregion

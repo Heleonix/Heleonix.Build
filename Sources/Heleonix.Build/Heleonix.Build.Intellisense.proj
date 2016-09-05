@@ -25,107 +25,271 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <!--Tasks-->
-  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.ItemFilter" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.ItemFilter" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="Heleonix.Build.dll" Condition="1 == 0"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="bin\Debug\Heleonix.Build.dll" Condition="1 == 0"/>
 
-  <!--In-->
-  <PropertyGroup Condition="1 == 0">
+  <!--Region External-->
+  <PropertyGroup>
+    <JENKINS_URL></JENKINS_URL>
+    <WORKSPACE></WORKSPACE>
+    <BRANCH_NAME></BRANCH_NAME>
+
+    <TEAMCITY_VERSION></TEAMCITY_VERSION>
+    <system_agent_work_dir></system_agent_work_dir>
+    <teamcity_build_branch></teamcity_build_branch>
+
+    <BUILD_NUMBER></BUILD_NUMBER>
+
+    <MSBuildProgramFiles32></MSBuildProgramFiles32>
+    <MSBuildToolsVersion></MSBuildToolsVersion>
+  </PropertyGroup>
+  <!--Endregion-->
+
+  <!--Region Tasks-->
+  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemCombine" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemCombine" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemFilter" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemFilter" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemSet" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemSet" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <!--Endregion-->
+
+  <!--Region In-->
+  <PropertyGroup>
     <Hxb-In-Flow></Hxb-In-Flow>
     <Hxb-In-Configuration></Hxb-In-Configuration>
+    <Hxb-In-Platform></Hxb-In-Platform>
     <Hxb-In-Overrides></Hxb-In-Overrides>
   </PropertyGroup>
+  <!--Endregion-->
 
-  <!--System-->
-  <PropertyGroup Condition="1 == 0">
+  <!--Region System-->
+  <PropertyGroup>
     <Hxb-System-CI>Jenkins</Hxb-System-CI>
-    <Hxb-System-SCM>Git</Hxb-System-SCM>
-    <Hxb-System-Workspace-Dir-Path></Hxb-System-Workspace-Dir-Path>
+    <Hxb-System-Workspace-Dir></Hxb-System-Workspace-Dir>
   </PropertyGroup>
 
-  <ItemGroup Condition="1 == 0">
-    <Hxb-System-Workspace Include="0"></Hxb-System-Workspace>
-    <Hxb-System-FxCopCmd Include="0"></Hxb-System-FxCopCmd>
-    <Hxb-System-NUnitConsole Include="0"></Hxb-System-NUnitConsole>
-    <Hxb-System-ReportUnit Include="0"></Hxb-System-ReportUnit>
-    <Hxb-System-OpenCoverConsole Include="0"></Hxb-System-OpenCoverConsole>
-    <Hxb-System-ReportGenerator Include="0"></Hxb-System-ReportGenerator>
-    <Hxb-System-Nuget Include="0"></Hxb-System-Nuget>
-    <Hxb-System-Git Include="0"></Hxb-System-Git>
-    <Hxb-System-Svn Include="0"></Hxb-System-Svn>
+  <ItemGroup>
+    <Hxb-System-FxCopCmd Include="0"/>
+    <Hxb-System-NUnitConsoleExe Include="0"/>
+    <Hxb-System-ReportUnitExe Include="0"/>
+    <Hxb-System-OpenCoverConsoleExe Include="0"/>
+    <Hxb-System-ReportGeneratorExe Include="0"/>
+    <Hxb-System-NugetExe Include="0"/>
+    <Hxb-System-GitExe Include="0"/>
+    <Hxb-System-SvnExe Include="0"/>
   </ItemGroup>
+  <!--Endregion-->
 
-  <!--Build-->
-  <PropertyGroup Condition="1 == 0">
-    <Hxb-Build-Sln-Path></Hxb-Build-Sln-Path>
-    <Hxb-Build-Sln-Dir-Path></Hxb-Build-Sln-Dir-Path>
-    <Hxb-Build-Reports-Dir-Path></Hxb-Build-Reports-Dir-Path>
+  <!--Region Setup-->
+  <PropertyGroup>
+    <Hxb-Setup-Sln-Flows></Hxb-Setup-Sln-Flows>
+  </PropertyGroup>
+  <!--Endregion-->
+
+  <!--Region Build-->
+  <PropertyGroup>
+    <Hxb-Build-VCS>Git</Hxb-Build-VCS>
     <Hxb-Build-Version></Hxb-Build-Version>
     <Hxb-Build-Version-Informational></Hxb-Build-Version-Informational>
+    <Hxb-Build-Reports-Dir></Hxb-Build-Reports-Dir>
+    <Hxb-Build-Deployments-Dir></Hxb-Build-Deployments-Dir>
+    <Hxb-Build-Sln-Dir></Hxb-Build-Sln-Dir>
+    <Hxb-Build-Sln-File></Hxb-Build-Sln-File>
   </PropertyGroup>
 
-  <ItemGroup Condition="1 == 0">
-    <Hxb-Build-Sln Include="0"></Hxb-Build-Sln>
-    <Hxb-Build-Sln-Dir Include="0"></Hxb-Build-Sln-Dir>
-    <Hxb-Build-Reports-Dir Include="0"></Hxb-Build-Reports-Dir>
+  <ItemGroup>
+    <Hxb-Build-Sln Include="0"/>
   </ItemGroup>
+  <!--Endregion-->
 
-  <!--Targets-->
-  <Target Name="Hxb-FxCop" Condition="1 == 0">
-  </Target>
+  <!--Region Target: Hxb-Main-->
+  <Target Name="Hxb-Main"/>
+  <!--Endregion-->
 
-  <Target Name="Hxb-NugetPush" Condition="1 == 0">
-  </Target>
+  <!--Region Target: $(Hxb-In-Flow)-->
+  <Target Name="$(Hxb-In-Flow)"/>
+  <!--Endregion-->
 
-  <Target Name="Hxb-NUnit" Condition="1 == 0">
-  </Target>
+  <!--Region Target: Hxb-Initialize-->
+  <Target Name="Hxb-Initialize"/>
+  <!--Endregion-->
 
-  <Target Name="Hxb-OpenCover" Condition="1 == 0">
-  </Target>
+  <!--Region Target: Hxb-Finalize-->
+  <Target Name="Hxb-Finalize"/>
+  <!--Endregion-->
 
-  <Target Name="Hxb-Rebuild" Condition="1 == 0">
+  <!--Region Target: Hxb-OnError-->
+  <Target Name="Hxb-OnError"/>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-Rebuild-->
+  <Target Name="Hxb-Rebuild">
     <PropertyGroup>
-      <Hxb-Rebuild-In-Output-RegEx></Hxb-Rebuild-In-Output-RegEx>
-      <Hxb-Rebuild-In-Output-Tests-RegEx></Hxb-Rebuild-In-Output-Tests-RegEx>
+      <Hxb-Rebuild-In-Outputs-RegEx></Hxb-Rebuild-In-Outputs-RegEx>
+      <Hxb-Rebuild-In-Outputs-Tests-RegEx></Hxb-Rebuild-In-Outputs-Tests-RegEx>
     </PropertyGroup>
 
     <ItemGroup>
       <Hxb-Rebuild-In-Delete Include="0"/>
-      <Hxb-Rebuild-In-Clean-Dir Include="0"/>
-      <Hxb-Rebuild-In-Delete-Dir Include="0"/>
+      <Hxb-Rebuild-In-Clean-Dirs Include="0"/>
+      <Hxb-Rebuild-In-Delete-Dirs Include="0"/>
       <Hxb-Rebuild-In-Snk Include="0"/>
-      <Hxb-Rebuild-Out-Output Include="0"/>
-      <Hxb-Rebuild-Out-Output-Tests Include="0"/>
+      <Hxb-Rebuild-Out-Outputs Include="0"/>
+      <Hxb-Rebuild-Out-Outputs-Tests Include="0"/>
     </ItemGroup>
   </Target>
+  <!--Endregion-->
 
-  <Target Name="Hxb-ReportUnit" Condition="1 == 0">
+  <!--Region Target: Hxb-FxCop-->
+  <Target Name="Hxb-FxCop">
+    <PropertyGroup>
+      <Hxb-FxCop-In-IsVerbose></Hxb-FxCop-In-IsVerbose>
+      <Hxb-FxCop-In-TargetsTypes></Hxb-FxCop-In-TargetsTypes>
+      <Hxb-FxCop-In-FailOn>CriticalErrors</Hxb-FxCop-In-FailOn>
+      <Hxb-FxCop-Out-CriticalErrors></Hxb-FxCop-Out-CriticalErrors>
+      <Hxb-FxCop-Out-Errors></Hxb-FxCop-Out-Errors>
+      <Hxb-FxCop-Out-CriticalWarnings></Hxb-FxCop-Out-CriticalWarnings>
+      <Hxb-FxCop-Out-Warnings></Hxb-FxCop-Out-Warnings>
+      <Hxb-FxCop-Out-Informational></Hxb-FxCop-Out-Informational>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-FxCop-In-AnalysisResult Include="0"/>
+      <Hxb-FxCop-In-Rules-FilesDirs Include="0"/>
+      <Hxb-FxCop-In-Project Include="0"/>
+      <Hxb-FxCop-In-Targets-FilesDirs Include="0"/>
+      <Hxb-FxCop-In-AnalysisResultsXsl Include="0"/>
+      <Hxb-FxCop-In-Dependencies-Dirs Include="0"/>
+      <Hxb-FxCop-In-Ruleset Include="0"/>
+      <Hxb-FxCop-In-Dictionary Include="0"/>
+    </ItemGroup>
   </Target>
+  <!--Endregion-->
 
-  <Target Name="Hxb-Setup" Condition="1 == 0">
+  <!--Region Target: Hxb-NugetDeploy-->
+  <Target Name="Hxb-NugetDeploy">
+    <PropertyGroup>
+      <Hxb-NugetDeploy-In-ApiKey></Hxb-NugetDeploy-In-ApiKey>
+      <Hxb-NugetDeploy-In-Source></Hxb-NugetDeploy-In-Source>
+      <Hxb-NugetDeploy-In-IncludeReferencedProjects>true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
+      <Hxb-NugetDeploy-In-ExcludeEmptyDirectories>true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
+      <Hxb-NugetDeploy-In-Verbosity>Normal</Hxb-NugetDeploy-In-Verbosity>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-NugetDeploy-In-Nuspecs Include="0"/>
+      <Hxb-NugetDeploy-In-Projects Include="0"/>
+      <Hxb-NugetDeploy-In-PackagesDir Include="0"/>
+      <Hxb-NugetDeploy-In-Config Include="0"/>
+      <Hxb-NugetDeploy-Out-Packages Include="0"/>
+    </ItemGroup>
   </Target>
+  <!--Endregion-->
 
-  <!--Flows-->
-  <Target Name="Hxb-CI-DotNet" Condition="1 == 0"/>
-  <Target Name="Hxb-CD-Nuget" Condition="1 == 0"/>
+  <!--Region Target: Hxb-NUnit-->
+  <Target Name="Hxb-NUnit">
+    <PropertyGroup>
+      <Hxb-NUnit-In-TestsParameters></Hxb-NUnit-In-TestsParameters>
+      <Hxb-NUnit-In-TestsFilter></Hxb-NUnit-In-TestsFilter>
+      <Hxb-NUnit-In-AgentsNumber>1</Hxb-NUnit-In-AgentsNumber>
+      <Hxb-NUnit-In-StopOnErrorOrFailedTest>false</Hxb-NUnit-In-StopOnErrorOrFailedTest>
+      <Hxb-NUnit-In-UseTeamCityServiceMessages>false</Hxb-NUnit-In-UseTeamCityServiceMessages>
+      <Hxb-NUnit-In-Framework></Hxb-NUnit-In-Framework>
+      <Hxb-NUnit-In-TraceLevel>Error</Hxb-NUnit-In-TraceLevel>
+      <Hxb-NUnit-In-ProcessIsolation>Separate</Hxb-NUnit-In-ProcessIsolation>
+      <Hxb-NUnit-In-DomainIsolation>Multiple</Hxb-NUnit-In-DomainIsolation>
+      <Hxb-NUnit-In-ShadowCopy>false</Hxb-NUnit-In-ShadowCopy>
+      <Hxb-NUnit-In-FailOnFailedTests>false</Hxb-NUnit-In-FailOnFailedTests>
+      <Hxb-NUnit-Out-TestCases>0</Hxb-NUnit-Out-TestCases>
+      <Hxb-NUnit-Out-Total>0</Hxb-NUnit-Out-Total>
+      <Hxb-NUnit-Out-Passed>0</Hxb-NUnit-Out-Passed>
+      <Hxb-NUnit-Out-Failed>0</Hxb-NUnit-Out-Failed>
+      <Hxb-NUnit-Out-Inconclusive>0</Hxb-NUnit-Out-Inconclusive>
+      <Hxb-NUnit-Out-Skipped>0</Hxb-NUnit-Out-Skipped>
+      <Hxb-NUnit-Out-Asserts>0</Hxb-NUnit-Out-Asserts>
+      <Hxb-NUnit-Out-StartTime>2015-01-30T21:32:52</Hxb-NUnit-Out-StartTime>
+      <Hxb-NUnit-Out-EndTime>2015-01-30T21:32:52</Hxb-NUnit-Out-EndTime>
+      <Hxb-NUnit-Out-Duration>0</Hxb-NUnit-Out-Duration>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-NUnit-In-NUnitProjectOrTests Include="0"/>
+      <Hxb-NUnit-In-TestsResult Include="0"/>
+      <Hxb-NUnit-In-TestsList Include="0"/>
+      <Hxb-NUnit-In-TestsOutput Include="0"/>
+      <Hxb-NUnit-In-ErrorsOutput Include="0"/>
+    </ItemGroup>
+  </Target>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-OpenCover-->
+  <Target Name="Hxb-OpenCover">
+    <PropertyGroup>
+      <Hxb-OpenCover-In-MinClassCoverage>0</Hxb-OpenCover-In-MinClassCoverage>
+      <Hxb-OpenCover-In-MinMethodCoverage>0</Hxb-OpenCover-In-MinMethodCoverage>
+      <Hxb-OpenCover-In-MinBranchCoverage>0</Hxb-OpenCover-In-MinBranchCoverage>
+      <Hxb-OpenCover-In-MinLineCoverage>0</Hxb-OpenCover-In-MinLineCoverage>
+      <Hxb-OpenCover-In-ExcludeByAttributeFilters></Hxb-OpenCover-In-ExcludeByAttributeFilters>
+      <Hxb-OpenCover-In-Filters></Hxb-OpenCover-In-Filters>
+      <Hxb-OpenCover-In-ShowUnvisited>true</Hxb-OpenCover-In-ShowUnvisited>
+      <Hxb-OpenCover-In-MaxVisitCount>0</Hxb-OpenCover-In-MaxVisitCount>
+      <Hxb-OpenCover-Out-TotalLines>0</Hxb-OpenCover-Out-TotalLines>
+      <Hxb-OpenCover-Out-VisitedLines>0</Hxb-OpenCover-Out-VisitedLines>
+      <Hxb-OpenCover-Out-TotalBranches>0</Hxb-OpenCover-Out-TotalBranches>
+      <Hxb-OpenCover-Out-VisitedBranches>0</Hxb-OpenCover-Out-VisitedBranches>
+      <Hxb-OpenCover-Out-TotalClasses>0</Hxb-OpenCover-Out-TotalClasses>
+      <Hxb-OpenCover-Out-VisitedClasses>0</Hxb-OpenCover-Out-VisitedClasses>
+      <Hxb-OpenCover-Out-TotalMethods>0</Hxb-OpenCover-Out-TotalMethods>
+      <Hxb-OpenCover-Out-VisitedMethods>0</Hxb-OpenCover-Out-VisitedMethods>
+      <Hxb-OpenCover-Out-MinCyclomaticComplexity>0</Hxb-OpenCover-Out-MinCyclomaticComplexity>
+      <Hxb-OpenCover-Out-MaxCyclomaticComplexity>0</Hxb-OpenCover-Out-MaxCyclomaticComplexity>
+      <Hxb-OpenCover-Out-ClassCoverage>0</Hxb-OpenCover-Out-ClassCoverage>
+      <Hxb-OpenCover-Out-MethodCoverage>0</Hxb-OpenCover-Out-MethodCoverage>
+      <Hxb-OpenCover-Out-LineCoverage>0</Hxb-OpenCover-Out-LineCoverage>
+      <Hxb-OpenCover-Out-BranchCoverage>0</Hxb-OpenCover-Out-BranchCoverage>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-OpenCover-In-Target Include="0"/>
+      <Hxb-OpenCover-In-CoverageResult Include="0"/>
+      <Hxb-OpenCover-In-PdbSearchDirs Include="0"/>
+    </ItemGroup>
+  </Target>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-ReportUnit-->
+  <Target Name="Hxb-ReportUnit">
+    <ItemGroup>
+      <Hxb-ReportUnit-In-TestsResult Include="0"/>
+      <Hxb-ReportUnit-In-Report Include="0"/>
+    </ItemGroup>
+  </Target>
+  <!--Endregion-->
+
+  <!--Region Flows-->
+  <Target Name="Hxb-CI-DotNet"/>
+  <Target Name="Hxb-CD-Nuget"/>
+  <!--Endregion-->
+
 </Project>

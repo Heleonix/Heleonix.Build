@@ -25,8 +25,37 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-OpenCover" DependsOnTargets="Hxb-Rebuild">
+    <Heleonix.Build.Tasks.OpenCover OpenCoverExeFile="@(Hxb-System-OpenCoverConsoleExe)"
+                                    CoverageResultFile="@(Hxb-OpenCover-In-CoverageResult)"
+                                    ExcludeByAttributeFilters="$(Hxb-OpenCover-In-ExcludeByAttributeFilters)"
+                                    Filters="$(Hxb-OpenCover-In-Filters)"
+                                    Target="@(Hxb-OpenCover-In-Target)"
+                                    PdbSearchDirs="@(Hxb-OpenCover-In-PdbSearchDirs)"
+                                    MinClassCoverage="$(Hxb-OpenCover-In-MinClassCoverage)"
+                                    MinMethodCoverage="$(Hxb-OpenCover-In-MinMethodCoverage)"
+                                    MinBranchCoverage="$(Hxb-OpenCover-In-MinBranchCoverage)"
+                                    MinLineCoverage="$(Hxb-OpenCover-In-MinLineCoverage)"
+                                    MaxVisitCount="$(Hxb-OpenCover-In-MaxVisitCount)"
+                                    ShowUnvisited="$(Hxb-OpenCover-In-ShowUnvisited)">
+      <Output TaskParameter="ClassCoverage" PropertyName="Hxb-OpenCover-Out-ClassCoverage"/>
+      <Output TaskParameter="BranchCoverage" PropertyName="Hxb-OpenCover-Out-BranchCoverage"/>
+      <Output TaskParameter="LineCoverage" PropertyName="Hxb-OpenCover-Out-LineCoverage"/>
+      <Output TaskParameter="MethodCoverage" PropertyName="Hxb-OpenCover-Out-MethodCoverage"/>
+      <Output TaskParameter="MaxCyclomaticComplexity" PropertyName="Hxb-OpenCover-Out-MaxCyclomaticComplexity"/>
+      <Output TaskParameter="MinCyclomaticComplexity" PropertyName="Hxb-OpenCover-Out-MinCyclomaticComplexity"/>
+      <Output TaskParameter="TotalBranches" PropertyName="Hxb-OpenCover-Out-TotalBranches"/>
+      <Output TaskParameter="TotalClasses" PropertyName="Hxb-OpenCover-Out-TotalClasses"/>
+      <Output TaskParameter="TotalLines" PropertyName="Hxb-OpenCover-Out-TotalLines"/>
+      <Output TaskParameter="TotalMethods" PropertyName="Hxb-OpenCover-Out-TotalMethods"/>
+      <Output TaskParameter="VisitedClasses" PropertyName="Hxb-OpenCover-Out-VisitedClasses"/>
+      <Output TaskParameter="VisitedMethods" PropertyName="Hxb-OpenCover-Out-VisitedMethods"/>
+      <Output TaskParameter="VisitedLines" PropertyName="Hxb-OpenCover-Out-VisitedLines"/>
+      <Output TaskParameter="VisitedBranches" PropertyName="Hxb-OpenCover-Out-VisitedBranches"/>
+    </Heleonix.Build.Tasks.OpenCover>
+
+    <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

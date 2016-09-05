@@ -47,8 +47,8 @@ namespace Heleonix.Build.Tests.Tasks
         {
             var directoriesToClean = new[]
             {
-                Path.Combine(PathHelper.CurrentDirectoryPath, Path.GetRandomFileName()),
-                Path.Combine(PathHelper.CurrentDirectoryPath, Path.GetRandomFileName())
+                Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName()),
+                Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName())
             };
 
             foreach (var directoryToClean in directoriesToClean)
@@ -62,22 +62,32 @@ namespace Heleonix.Build.Tests.Tasks
                     Path.GetRandomFileName())).FullName, Path.GetRandomFileName())).Close();
             }
 
-            var task = new DirectoryClean
+            try
             {
-                BuildEngine = new FakeBuildEngine(),
-                DirectoriesPath = directoriesToClean.Select(d => new TaskItem(d) as ITaskItem).ToArray()
-            };
+                var task = new DirectoryClean
+                {
+                    BuildEngine = new FakeBuildEngine(),
+                    Dirs = directoriesToClean.Select(d => new TaskItem(d) as ITaskItem).ToArray()
+                };
 
-            var succeeded = task.Execute();
+                var succeeded = task.Execute();
 
-            Assert.That(succeeded, Is.True);
-            Assert.That(task.CleanedDirectoriesPath, Has.Length.EqualTo(directoriesToClean.Length));
-            Assert.That(task.FailedDirectoriesPath, Has.Length.Zero);
+                Assert.That(succeeded, Is.True);
+                Assert.That(task.CleanedDirs, Has.Length.EqualTo(directoriesToClean.Length));
+                Assert.That(task.FailedDirs, Has.Length.Zero);
 
-            foreach (var directoryToClean in directoriesToClean)
+                foreach (var directoryToClean in directoriesToClean)
+                {
+                    Assert.That(Directory.GetFiles(directoryToClean), Has.Length.Zero);
+                    Assert.That(Directory.GetDirectories(directoryToClean), Has.Length.Zero);
+                }
+            }
+            finally
             {
-                Assert.That(Directory.GetFiles(directoryToClean), Has.Length.Zero);
-                Assert.That(Directory.GetDirectories(directoryToClean), Has.Length.Zero);
+                foreach (var dir in directoriesToClean)
+                {
+                    Directory.Delete(dir, true);
+                }
             }
         }
 

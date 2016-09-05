@@ -56,7 +56,7 @@ namespace Heleonix.Build.Tests.Common
             string output;
             string error;
 
-            return ExeHelper.Execute(MsBuildExePath, args, out output, out error);
+            return ExeHelper.Execute(MsBuildExe, args, out output, out error);
         }
 
         #endregion
@@ -66,13 +66,13 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the current configuration.
         /// </summary>
-        public static string CurrentConfiguration => Path.GetFileName(PathHelper.CurrentDirectoryPath);
+        public static string CurrentConfiguration => Path.GetFileName(PathHelper.CurrentDir);
 
         /// <summary>
         /// Gets the MSBuild executable path.
         /// </summary>
         /// <exception cref="NotSupportedException">Current OS platform is not supported.</exception>
-        private static string MsBuildExePath
+        private static string MsBuildExe
         {
             get
             {

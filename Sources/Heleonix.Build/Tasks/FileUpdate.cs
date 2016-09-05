@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
 
@@ -40,7 +39,7 @@ namespace Heleonix.Build.Tasks
         /// The file path.
         /// </summary>
         [Required]
-        public ITaskItem FilePath { get; set; }
+        public ITaskItem File { get; set; }
 
         /// <summary>
         /// The .NET regular expression to find content to replace.
@@ -67,7 +66,12 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var input = File.ReadAllText(FilePath.ItemSpec);
+            if (!System.IO.File.Exists(File.ItemSpec))
+            {
+                Log.LogMessage($"The file '{File.ItemSpec}' is not found. Stopping.");
+            }
+
+            var input = System.IO.File.ReadAllText(File.ItemSpec);
 
             string output;
 
@@ -81,7 +85,9 @@ namespace Heleonix.Build.Tasks
                     (RegexOptions) Enum.Parse(typeof (RegexOptions), RegExOptions, true));
             }
 
-            File.WriteAllText(FilePath.ItemSpec, output);
+            Log.LogMessage($"Updating file '{File.ItemSpec}'.");
+
+            System.IO.File.WriteAllText(File.ItemSpec, output);
         }
 
         #endregion

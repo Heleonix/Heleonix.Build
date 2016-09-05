@@ -24,25 +24,61 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <!--Convention for target-specific properties and items which can be defined at runtime-->
+  <!--Convention for target-specific properties and items which are defined at runtime-->
   <!--<Target Name="Hxb-[TargetName]-Before-Conventions" BeforeTargets="[TargetName]"></Target>-->
 
   <PropertyGroup>
     <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">Release</Hxb-In-Configuration>
-    <Hxb-Build-Sln-Dir-Path>$(Hxb-System-Workspace-Dir-Path)</Hxb-Build-Sln-Dir-Path>
-    <Hxb-Build-Sln-Path>$([System.IO.Directory]::GetFiles('$(Hxb-Build-Sln-Dir-Path)', '*.sln'))</Hxb-Build-Sln-Path>
-    <Hxb-Build-Reports-Dir-Path>$(Hxb-Build-Sln-Dir-Path)\Reports\$(Hxb-In-Configuration)</Hxb-Build-Reports-Dir-Path>
+    <Hxb-Setup-Sln-Flows>$(Hxb-System-Workspace-Dir)\Build.Flows.proj</Hxb-Setup-Sln-Flows>
   </PropertyGroup>
 
-  <Target Name="Hxb-Setup-Before-Conventions" BeforeTargets="Hxb-Setup">
-    <Heleonix.Build.Tasks.GitLog GitExePath="@(Hxb-System-Git)" RepositoryPath="@(Hxb-System-Workspace)" MaxCount="1"
-                                 Condition="'$(Hxb-System-SCM)' == 'Git'">
+  <Target Name="Hxb-Initialize-Before-Conventions" BeforeTargets="Hxb-Initialize">
+    <PropertyGroup>
+      <Hxb-Build-Sln-Dir>$(Hxb-System-Workspace-Dir)</Hxb-Build-Sln-Dir>
+      <Hxb-Build-Reports-Dir>$(Hxb-Build-Sln-Dir)\Hxb-Reports\$(Hxb-In-Configuration)</Hxb-Build-Reports-Dir>
+      <Hxb-Build-Reports-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Reports-Dir)\$(Hxb-In-Platform)</Hxb-Build-Reports-Dir>
+      <Hxb-Build-Deployments-Dir>$(Hxb-Build-Sln-Dir)\Hxb-Deployments\$(Hxb-In-Configuration)</Hxb-Build-Deployments-Dir>
+      <Hxb-Build-Deployments-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Deployments-Dir)\$(Hxb-In-Platform)</Hxb-Build-Deployments-Dir>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-Build-Sln Include="$(Hxb-Build-Sln-Dir)\*.sln"></Hxb-Build-Sln>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <Hxb-Build-Sln-File>@(Hxb-Build-Sln)</Hxb-Build-Sln-File>
+    </PropertyGroup>
+
+    <Heleonix.Build.Tasks.FileSystemSearch StartDir="$(Hxb-Build-Sln-Dir)"
+                                           Direction="Up"
+                                           Types="Directories"
+                                           PathRegEx="\.git$">
+      <Output TaskParameter="FoundDirs" ItemName="_Hxb-Build-VCS-Git-Dir"/>
+    </Heleonix.Build.Tasks.FileSystemSearch>
+    <Heleonix.Build.Tasks.FileSystemSearch StartDir="$(Hxb-Build-Sln-Dir)"
+                                           Direction="Up"
+                                           Types="Directories"
+                                           PathRegEx="\.svn$">
+      <Output TaskParameter="FoundDirs" ItemName="_Hxb-Build-VCS-Svn-Dir"/>
+    </Heleonix.Build.Tasks.FileSystemSearch>
+
+    <PropertyGroup>
+      <Hxb-Build-VCS Condition="Exists('@(_Hxb-Build-VCS-Git-Dir)')">Git</Hxb-Build-VCS>
+      <Hxb-Build-VCS Condition="Exists('@(_Hxb-Build-VCS-Svn-Dir)')">Svn</Hxb-Build-VCS>
+    </PropertyGroup>
+
+    <Heleonix.Build.Tasks.GitLog GitExeFile="@(Hxb-System-GitExe)"
+                                 RepositoryFileDir="$(Hxb-System-Workspace-Dir)"
+                                 MaxCount="1"
+                                 Condition="'$(Hxb-Build-VCS)' == 'Git'">
       <Output TaskParameter="Commits" ItemName="_Hxb-Setup-Before-Conventions-Commit"/>
     </Heleonix.Build.Tasks.GitLog>
-    <Heleonix.Build.Tasks.SvnLog SvnExePath="@(Hxb-System-Svn)" RepositoryPath="@(Hxb-System-Workspace)" MaxCount="1"
-                                 Condition="'$(Hxb-System-SCM)' == 'Svn'">
+    <Heleonix.Build.Tasks.SvnLog SvnExeFile="@(Hxb-System-SvnExe)"
+                                 RepositoryFileDir="$(Hxb-System-Workspace-Dir)"
+                                 MaxCount="1"
+                                 Condition="'$(Hxb-Build-VCS)' == 'Svn'">
       <Output TaskParameter="Commits" ItemName="_Hxb-Setup-Before-Conventions-Commit"/>
     </Heleonix.Build.Tasks.SvnLog>
 
@@ -52,65 +88,74 @@ SOFTWARE.
       <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' == ''">1.0</Hxb-Build-Version>
       <Hxb-Build-Version>$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
       <Hxb-Build-Version-Informational>$(Hxb-Build-Version).%(_Hxb-Setup-Before-Conventions-Commit.Revision)</Hxb-Build-Version-Informational>
-      <Hxb-Build-Version Condition="'$(Hxb-System-SCM)' == 'Git'">$(Hxb-Build-Version).0</Hxb-Build-Version>
-      <Hxb-Build-Version Condition="'$(Hxb-System-SCM)' == 'Svn'">$(Hxb-Build-Version-Informational)</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(Hxb-Build-VCS)' == 'Git'">$(Hxb-Build-Version).0</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(Hxb-Build-VCS)' == 'Svn'">$(Hxb-Build-Version-Informational)</Hxb-Build-Version>
     </PropertyGroup>
   </Target>
 
   <Target Name="Hxb-Rebuild-Before-Conventions" BeforeTargets="Hxb-Rebuild">
     <PropertyGroup>
-      <Hxb-Rebuild-In-Output-RegEx>^((?!\.Tests\.dll).)*$</Hxb-Rebuild-In-Output-RegEx>
-      <Hxb-Rebuild-In-Output-Tests-RegEx>^.+\.Tests\.dll$</Hxb-Rebuild-In-Output-Tests-RegEx>
+      <Hxb-Rebuild-In-Outputs-RegEx>^((?!\.Tests\.dll).)*$</Hxb-Rebuild-In-Outputs-RegEx>
+      <Hxb-Rebuild-In-Outputs-Tests-RegEx>^.+\.Tests\.dll$</Hxb-Rebuild-In-Outputs-Tests-RegEx>
     </PropertyGroup>
   </Target>
 
-  <!--<Target Name="FxCop-Before-DefaultInputs" BeforeTargets="FxCop">
-    <PropertyGroup>
-      <FxCop-In-Errors-Max>0</FxCop-In-Errors-Max>
-      <FxCop-In-Errors-Result>Error</FxCop-In-Errors-Result>
-      <FxCop-In-CriticalErrors-Max>0</FxCop-In-CriticalErrors-Max>
-      <FxCop-In-CriticalErrors-Result>Error</FxCop-In-CriticalErrors-Result>
-      <FxCop-In-Warnings-Max>0</FxCop-In-Warnings-Max>
-      <FxCop-In-Warnings-Result>Error</FxCop-In-Warnings-Result>
-      <FxCop-In-CriticalWarnings-Max>0</FxCop-In-CriticalWarnings-Max>
-      <FxCop-In-CriticalWarnings-Result>Error</FxCop-In-CriticalWarnings-Result>
-      <FxCop-In-Ruleset-Path>$(DEV)\Tools\FxCop\AllManaged.ruleset</FxCop-In-Ruleset-Path>
-      <FxCop-In-Dictionary-Path>$(DEV)\Tools\FxCop\CustomDictionary.xml</FxCop-In-Dictionary-Path>
-    </PropertyGroup>
+  <Target Name="Hxb-FxCop-Before-Conventions" BeforeTargets="Hxb-FxCop">
     <ItemGroup>
-      <FxCop-In-Files-Path
-        Include="$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.dll;$(In-Sln-Dir)\Sources\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.exe"/>
+      <Hxb-FxCop-In-Targets-FilesDirs Include="@(Hxb-Rebuild-Out-Outputs)"/>
+      <Hxb-FxCop-In-AnalysisResult Include="$(Hxb-Build-Reports-Dir)\FxCop\FxCop.xml"/>
+      <Hxb-FxCop-In-Dependencies-Dirs Include="@(Hxb-Rebuild-Out-Outputs->DirectoryName())"/>
+      <Hxb-FxCop-In-AnalysisResultsXsl Include="%(Hxb-System-FxCopCmd.RootDir)\%(Hxb-System-FxCopCmd.Directory)\Xml\FxCopReport.xsl"/>
     </ItemGroup>
   </Target>
-  <Target Name="_NUnit-Base-Before-DefaultInputs" BeforeTargets="_NUnit-Base">
-    <PropertyGroup>
-      <NUnit-In-Failed-Result>Error</NUnit-In-Failed-Result>
-    </PropertyGroup>
+
+  <Target Name="Hxb-NUnit-Before-Conventions" BeforeTargets="Hxb-NUnit">
     <ItemGroup>
-      <NUnit-In-Tests-Path Include="$(In-Sln-Dir)\Tests\**\bin\$(In-Sln-Configuration)\$(System-Sln-Name)*.Tests.dll"/>
+      <Hxb-NUnit-In-TestsResult Include="$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml"/>
+      <Hxb-NUnit-In-NUnitProjectOrTests Include="@(Hxb-Rebuild-Out-Outputs-Tests)"/>
     </ItemGroup>
   </Target>
-  <Target Name="OpenCover-Before-DefaultInputs" BeforeTargets="OpenCover">
+
+  <Target Name="Hxb-OpenCover-Before-Conventions" BeforeTargets="Hxb-OpenCover">
     <PropertyGroup>
-      <OpenCover-In-Target>NUnit</OpenCover-In-Target>
-      <OpenCover-In-Exclude-Attributes-Filter>*.ExcludeFromCodeCoverage*</OpenCover-In-Exclude-Attributes-Filter>
-      <OpenCover-In-Filter>+[$(System-Sln-Name)*]* -[$(System-Sln-Name)*]*.RuntimeContractsAttribute* -[$(System-Sln-Name)*.Tests]*</OpenCover-In-Filter>
-      <OpenCover-In-Classes-Min>100</OpenCover-In-Classes-Min>
-      <OpenCover-In-Classes-Result>Error</OpenCover-In-Classes-Result>
-      <OpenCover-In-Methods-Min>100</OpenCover-In-Methods-Min>
-      <OpenCover-In-Methods-Result>Error</OpenCover-In-Methods-Result>
-      <OpenCover-In-Branches-Min>100</OpenCover-In-Branches-Min>
-      <OpenCover-In-Branches-Result>Error</OpenCover-In-Branches-Result>
-      <OpenCover-In-Lines-Min>100</OpenCover-In-Lines-Min>
-      <OpenCover-In-Lines-Result>Error</OpenCover-In-Lines-Result>
+      <Hxb-OpenCover-In-MinClassCoverage>100</Hxb-OpenCover-In-MinClassCoverage>
+      <Hxb-OpenCover-In-MinBranchCoverage>100</Hxb-OpenCover-In-MinBranchCoverage>
+      <Hxb-OpenCover-In-MinMethodCoverage>100</Hxb-OpenCover-In-MinMethodCoverage>
+      <Hxb-OpenCover-In-MinLineCoverage>100</Hxb-OpenCover-In-MinLineCoverage>
+      <Hxb-OpenCover-In-ShowUnvisited>true</Hxb-OpenCover-In-ShowUnvisited>
+      <Hxb-OpenCover-In-ExcludeByAttributeFilters>*.ExcludeFromCodeCoverage*</Hxb-OpenCover-In-ExcludeByAttributeFilters>
     </PropertyGroup>
+
     <ItemGroup>
-      <OpenCover-In-Tests-Path Include="@(NUnit-In-Tests-Path)"/>
+      <Hxb-OpenCover-In-Target Include="@(Hxb-System-NUnitConsoleExe)">
+        <Type>NUnit</Type>
+        <TestsResultFile>$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml</TestsResultFile>
+        <NUnitProjectOrTestsFiles>@(Hxb-Rebuild-Out-Outputs-Tests)</NUnitProjectOrTestsFiles>
+      </Hxb-OpenCover-In-Target>
+      <Hxb-OpenCover-In-CoverageResult Include="$(Hxb-Build-Reports-Dir)\OpenCover\OpenCover.xml"/>
     </ItemGroup>
   </Target>
-  <Target Name="Nuget-Pack-Before-DefaultInputs" BeforeTargets="Nuget-Pack">
+
+  <Target Name="Hxb-ReportUnit-Before-Conventions" BeforeTargets="Hxb-ReportUnit">
     <ItemGroup>
-      <Nuget-Pack-In-Nuspec-Path Include="$(In-Sln-Dir)\..\*.nuspec"/>
+      <Hxb-ReportUnit-In-TestsResult Include="@(Hxb-NUnit-In-TestsResult)"/>
+      <Hxb-ReportUnit-In-Report Include="$(Hxb-Build-Reports-Dir)\ReportUnit\ReportUnit.html"/>
     </ItemGroup>
-  </Target>-->
+  </Target>
+
+  <Target Name="Hxb-NugetDeploy-Before-Conventions" BeforeTargets="Hxb-NugetDeploy">
+    <PropertyGroup>
+      <Hxb-NugetDeploy-In-ApiKey></Hxb-NugetDeploy-In-ApiKey>
+      <Hxb-NugetDeploy-In-IncludeReferencedProjects>true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
+      <Hxb-NugetDeploy-In-ExcludeEmptyDirectories>true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-NugetDeploy-In-Nuspecs Include="$(Hxb-Build-Sln-Dir)\%(Hxb-Rebuild-Out-Outputs.Filename).nuspec">
+        <MSBuildSourceProjectFile>%(Hxb-Rebuild-Out-Outputs.MSBuildSourceProjectFile)</MSBuildSourceProjectFile>
+      </Hxb-NugetDeploy-In-Nuspecs>
+      <Hxb-NugetDeploy-In-Projects Include="%(Hxb-NugetDeploy-In-Nuspecs.MSBuildSourceProjectFile)"/>
+      <Hxb-NugetDeploy-In-PackagesDir Include="$(Hxb-Build-Deployments-Dir)\Nuget"/>
+    </ItemGroup>
+  </Target>
 </Project>

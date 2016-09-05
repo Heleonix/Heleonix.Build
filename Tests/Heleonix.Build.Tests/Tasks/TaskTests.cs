@@ -43,7 +43,7 @@ namespace Heleonix.Build.Tests.Tasks
             switch (SimulatorType)
             {
                 case SimulatorType.Library:
-                    MsBuildHelper.ExecuteMsBuild(LibSimulatorHelper.SolutionFilePath, "Build");
+                    MsBuildHelper.ExecuteMsBuild(LibSimulatorHelper.Solution, "Build");
                     break;
             }
         }

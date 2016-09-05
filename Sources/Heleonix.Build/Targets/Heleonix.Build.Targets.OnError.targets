@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!--
 The MIT License (MIT)
@@ -27,6 +27,5 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-CI-DotNet" DependsOnTargets="Hxb-OpenCover;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
+  <Target Name="Hxb-OnError"/>
 </Project>

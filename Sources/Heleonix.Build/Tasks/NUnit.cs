@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Build.Framework;
@@ -45,18 +46,63 @@ namespace Heleonix.Build.Tasks
         internal static string BuildArgs(ITaskItem item)
         {
             return ArgsBuilder.By(' ', '=')
-                .Add(item.GetMetadata(nameof(NUnitProjectOrTestsFilesPath)).Replace(";", " "), true)
-                .Add("--result", item.GetMetadata(nameof(TestsResultsFilePath)), true)
-                .Add("--noresult", false, item.GetMetadata(nameof(TestsResultsFilePath)) == null)
-                .Add("--testlist", item.GetMetadata(nameof(TestsListFilePath)), true)
+                .Add(item.GetMetadata(nameof(NUnitProjectOrTestsFiles)).Replace(";", " "), true)
+                .Add("--result", item.GetMetadata(nameof(TestsResultFile)), true)
+                .Add("--noresult", false, item.GetMetadata(nameof(TestsResultFile)) == null)
+                .Add("--testlist", item.GetMetadata(nameof(TestsListFile)), true)
                 .Add("--where", item.GetMetadata(nameof(TestsFilter)))
                 .Add("--params", item.GetMetadata(nameof(TestsParameters)))
                 .Add("--agents", item.GetMetadata(nameof(AgentsNumber)))
-                .Add("--stoponerror", false, !string.IsNullOrEmpty(item.GetMetadata(nameof(StopOnErrorOrFailedTest))))
-                .Add("--teamcity", false, !string.IsNullOrEmpty(item.GetMetadata(nameof(UseTeamCityServiceMessages))))
+                .Add("--stoponerror", false, item.GetMetadata(nameof(StopOnErrorOrFailedTest)) == "True")
+                .Add("--teamcity", false, item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "True")
                 .Add("--trace", item.GetMetadata(nameof(TraceLevel)))
-                .Add("--output", item.GetMetadata(nameof(TestsOutputFilePath)), true)
-                .Add("--err", item.GetMetadata(nameof(ErrorsFilePath)), true);
+                .Add("--output", item.GetMetadata(nameof(TestsOutputFile)), true)
+                .Add("--err", item.GetMetadata(nameof(ErrorsOutputFile)), true)
+                .Add("--framework", item.GetMetadata(nameof(Framework)))
+                .Add("--config", item.GetMetadata(nameof(Configuration)))
+                .Add("--process", item.GetMetadata(nameof(ProcessIsolation)))
+                .Add("--domain", item.GetMetadata(nameof(DomainIsolation)))
+                .Add("--shadowcopy", false, !string.IsNullOrEmpty(item.GetMetadata(nameof(ShadowCopy))));
+        }
+
+        /// <summary>
+        /// Prepares execution of the task.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        internal static void Prepare(ITaskItem target)
+        {
+            Prepare(target.GetMetadata(nameof(TestsResultFile)), target.GetMetadata(nameof(TestsOutputFile)),
+                target.GetMetadata(nameof(ErrorsOutputFile)));
+        }
+
+        /// <summary>
+        /// Prepares execution of the task.
+        /// </summary>
+        /// <param name="testsResultFile">The NUnit tests result file path.</param>
+        /// <param name="testsOutputFile">The tests output file path.</param>
+        /// <param name="errorsOutputFile">The errors output file path.</param>
+        internal static void Prepare(string testsResultFile, string testsOutputFile, string errorsOutputFile)
+        {
+            // NUnit does not create a directory for tests result file.
+            if (!string.IsNullOrEmpty(testsResultFile) &&
+                !Directory.Exists(Path.GetDirectoryName(testsResultFile) ?? string.Empty))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(testsResultFile) ?? string.Empty);
+            }
+
+            // NUnit does not create a directory for tests output file.
+            if (!string.IsNullOrEmpty(testsOutputFile) &&
+                !Directory.Exists(Path.GetDirectoryName(testsOutputFile) ?? string.Empty))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(testsOutputFile) ?? string.Empty);
+            }
+
+            // NUnit does not create a directory for errors output file.
+            if (!string.IsNullOrEmpty(errorsOutputFile) &&
+                !Directory.Exists(Path.GetDirectoryName(errorsOutputFile) ?? string.Empty))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(errorsOutputFile) ?? string.Empty);
+            }
         }
 
         #endregion
@@ -67,18 +113,18 @@ namespace Heleonix.Build.Tasks
         /// The NUnit console executable path.
         /// </summary>
         [Required]
-        public ITaskItem NUnitConsoleExePath { get; set; }
+        public ITaskItem NUnitConsoleExeFile { get; set; }
 
         /// <summary>
-        /// The NUnit project or tests files path.
+        /// The NUnit project or tests files paths.
         /// </summary>
         [Required]
-        public ITaskItem[] NUnitProjectOrTestsFilesPath { get; set; }
+        public ITaskItem[] NUnitProjectOrTestsFiles { get; set; }
 
         /// <summary>
-        /// The NUnit tests results file path.
+        /// The NUnit tests result file path.
         /// </summary>
-        public ITaskItem TestsResultsFilePath { get; set; }
+        public ITaskItem TestsResultFile { get; set; }
 
         /// <summary>
         /// The tests list file path.
@@ -86,7 +132,7 @@ namespace Heleonix.Build.Tasks
         /// <remarks>
         /// File is containing a list of tests to run or explore, one per line.
         /// </remarks>
-        public ITaskItem TestsListFilePath { get; set; }
+        public ITaskItem TestsListFile { get; set; }
 
         /// <summary>
         /// The tests parameters, specified in the form name=value.
@@ -107,12 +153,12 @@ namespace Heleonix.Build.Tasks
         /// <summary>
         /// The tests output file path.
         /// </summary>
-        public ITaskItem TestsOutputFilePath { get; set; }
+        public ITaskItem TestsOutputFile { get; set; }
 
         /// <summary>
-        /// The errors file path.
+        /// The errors output file path.
         /// </summary>
-        public ITaskItem ErrorsFilePath { get; set; }
+        public ITaskItem ErrorsOutputFile { get; set; }
 
         /// <summary>
         /// The agents number.
@@ -120,12 +166,12 @@ namespace Heleonix.Build.Tasks
         public int AgentsNumber { get; set; }
 
         /// <summary>
-        /// A value indicating whether stop on first first error or first failed test.
+        /// Indicates whether to stop on first error or first failed test.
         /// </summary>
         public bool StopOnErrorOrFailedTest { get; set; }
 
         /// <summary>
-        /// A value indicating whether to use TeamCity service messages.
+        /// Indicates whether to use TeamCity service messages.
         /// </summary>
         public bool UseTeamCityServiceMessages { get; set; }
 
@@ -150,61 +196,105 @@ namespace Heleonix.Build.Tasks
         public string TraceLevel { get; set; }
 
         /// <summary>
-        /// The count of test cases.
+        /// The project configuration to load, i.e. "Debug", "Release".
+        /// </summary>
+        public string Configuration { get; set; }
+
+        /// <summary>
+        /// Process isolation for test assemblies.
+        /// </summary>
+        /// <remarks>
+        /// If not specified, defaults to "Separate" for a single assembly or "Multiple" for more than one.
+        /// By default, processes are run in parallel.
+        /// Possible values:
+        /// <list type="bullet">
+        /// <item><term>Single</term></item>
+        /// <item><term>Separate</term></item>
+        /// <item><term>Multiple</term></item>
+        /// </list>
+        /// </remarks>
+        public string ProcessIsolation { get; set; }
+
+        /// <summary>
+        /// Domain isolation for test assemblies.
+        /// </summary>
+        /// <remarks>
+        /// If not specified, defaults to "Separate" for a single assembly or "Multiple" for more than one.
+        /// Possible values:
+        /// <list type="bullet">
+        /// <item><term>None</term></item>
+        /// <item><term>Single</term></item>
+        /// <item><term>Multiple</term></item>
+        /// </list>
+        /// </remarks>
+        public string DomainIsolation { get; set; }
+
+        /// <summary>
+        /// Tells .NET to copy loaded assemblies to the shadow copy directory.
+        /// </summary>
+        public bool ShadowCopy { get; set; }
+
+        /// <summary>
+        /// Indicates whether to fail the task on failed tests.
+        /// </summary>
+        public bool FailOnFailedTests { get; set; }
+
+        /// <summary>
+        /// [Output] The count of test cases.
         /// </summary>
         [Output]
         public int TestCases { get; set; }
 
         /// <summary>
-        /// The total count of tests.
+        /// [Output] The total count of tests.
         /// </summary>
         [Output]
         public int Total { get; set; }
 
         /// <summary>
-        /// The count of passed tests.
+        /// [Output] The count of passed tests.
         /// </summary>
         [Output]
         public int Passed { get; set; }
 
         /// <summary>
-        /// The count of failed tests.
+        /// [Output] The count of failed tests.
         /// </summary>
         [Output]
         public int Failed { get; set; }
 
         /// <summary>
-        /// The count of inconclusive tests.
+        /// [Output] The count of inconclusive tests.
         /// </summary>
         [Output]
         public int Inconclusive { get; set; }
 
         /// <summary>
-        /// The count of skipped tests.
+        /// [Output] The count of skipped tests.
         /// </summary>
         [Output]
         public int Skipped { get; set; }
 
         /// <summary>
-        /// The count of asserts.
+        /// [Output] The count of asserts.
         /// </summary>
         [Output]
         public int Asserts { get; set; }
 
         /// <summary>
-        /// The start time.
+        /// [Output] The start time.
         /// </summary>
         [Output]
         public string StartTime { get; set; }
 
         /// <summary>
-        /// The end time.
+        /// [Output] The end time.
         /// </summary>
         [Output]
         public string EndTime { get; set; }
 
         /// <summary>
-        /// The duration of tests running.
+        /// [Output] The duration of tests running.
         /// </summary>
         [Output]
         public float Duration { get; set; }
@@ -219,21 +309,37 @@ namespace Heleonix.Build.Tasks
         protected override void ExecuteInternal()
         {
             var args = ArgsBuilder.By(' ', '=')
-                .Add(NUnitProjectOrTestsFilesPath.Select(i => i.ItemSpec), true)
-                .Add("--result", TestsResultsFilePath?.ItemSpec, true)
-                .Add("--noresult", false, TestsResultsFilePath == null)
-                .Add("--testlist", TestsListFilePath?.ItemSpec, true)
+                .Add(NUnitProjectOrTestsFiles.Select(i => i.ItemSpec), true)
+                .Add("--result", TestsResultFile?.ItemSpec, true)
+                .Add("--noresult", false, TestsResultFile == null)
+                .Add("--testlist", TestsListFile?.ItemSpec, true)
                 .Add("--where", TestsFilter)
                 .Add("--params", TestsParameters)
                 .Add("--agents", AgentsNumber, false, AgentsNumber > 0)
                 .Add("--stoponerror", false, StopOnErrorOrFailedTest)
                 .Add("--teamcity", false, UseTeamCityServiceMessages)
                 .Add("--trace", TraceLevel)
-                .Add("--output", TestsOutputFilePath?.ItemSpec, true)
-                .Add("--err", ErrorsFilePath?.ItemSpec, true)
-                .Add("--framework", Framework);
+                .Add("--output", TestsOutputFile?.ItemSpec, true)
+                .Add("--err", ErrorsOutputFile?.ItemSpec, true)
+                .Add("--framework", Framework)
+                .Add("--config", Configuration)
+                .Add("--process", ProcessIsolation)
+                .Add("--domain", DomainIsolation)
+                .Add("--shadowcopy", false, ShadowCopy);
 
-            var exitCode = ExeHelper.Execute(NUnitConsoleExePath.ItemSpec, args);
+            Prepare(TestsResultFile?.ItemSpec, TestsOutputFile?.ItemSpec, ErrorsOutputFile?.ItemSpec);
+
+            string output;
+            string error;
+
+            var exitCode = ExeHelper.Execute(NUnitConsoleExeFile.ItemSpec, args, out output, out error);
+
+            Log.LogMessage(output);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Log.LogError(error);
+            }
 
             if (exitCode < 0)
             {
@@ -244,16 +350,25 @@ namespace Heleonix.Build.Tasks
 
             if (exitCode > 0)
             {
-                Log.LogError($"{nameof(NUnit)} finished with failed tests. Exit code: {exitCode}.");
+                var message = $"{nameof(NUnit)} finished with failed tests. Exit code: {exitCode}.";
+
+                if (FailOnFailedTests)
+                {
+                    Log.LogError(message);
+                }
+                else
+                {
+                    Log.LogWarning(message);
+                }
             }
 
-            // If test results file was not specified, then there is nothing to parse.
-            if (TestsResultsFilePath == null)
+            // If tests result file was not specified, then there is nothing to parse.
+            if (TestsResultFile == null)
             {
                 return;
             }
 
-            var testRun = XDocument.Load(TestsResultsFilePath.ItemSpec).Element("test-run");
+            var testRun = XDocument.Load(TestsResultFile.ItemSpec).Element("test-run");
 
             if (testRun == null)
             {

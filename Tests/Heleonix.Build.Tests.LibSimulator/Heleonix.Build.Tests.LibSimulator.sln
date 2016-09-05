@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heleonix.Build.Tests.LibSim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heleonix.Build.Tests.LibSimulator", "Sources\Heleonix.Build.Tests.LibSimulator\Heleonix.Build.Tests.LibSimulator.csproj", "{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F75A079-B912-4E7A-AD3F-384695B49FCA}"
+	ProjectSection(SolutionItems) = preProject
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CI|Any CPU = CI|Any CPU

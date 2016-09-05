@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using System.IO;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -31,9 +32,9 @@ using NUnit.Framework;
 namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
-    /// Tests the Hxb-Rebuild target.
+    /// Tests the Hxb-OpenCover target.
     /// </summary>
-    public class RebuildTests : TargetTests
+    public class OpenCoverTests : TargetTests
     {
         #region Methods
 
@@ -43,12 +44,31 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> TestCaseSource()
         {
-            yield return new TargetTestCase { Result = true };
             yield return new TargetTestCase
             {
+                Properties = new Dictionary<string, string>
+                {
+                    { "Hxb-OpenCover-In-MinClassCoverage", "40" },
+                    { "Hxb-OpenCover-In-MinMethodCoverage", "40" },
+                    { "Hxb-OpenCover-In-MinBranchCoverage", "40" },
+                    { "Hxb-OpenCover-In-MinLineCoverage", "25" }
+                },
                 Items = new Dictionary<string, ITaskItem[]>
                 {
-                    { "Hxb-Rebuild-In-SnkPair", new[] { new TaskItem(PathHelper.SnkPair) as ITaskItem } }
+                    { "Hxb-System-OpenCoverConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.OpenCoverExe) } },
+                    {
+                        "Hxb-OpenCover-In-Target",
+                        new ITaskItem[]
+                        {
+                            new TaskItem(PathHelper.NUnitConsoleExe,
+                                new Dictionary<string, string>
+                                {
+                                    { "Type", "NUnit" },
+                                    { "TestsResultFile", "$(Hxb-Build-Reports-Dir)\\NUnit\\NUnit.xml" },
+                                    { "NUnitProjectOrTestsFiles", "@(Hxb-Rebuild-Out-Outputs-Tests)" }
+                                })
+                        }
+                    }
                 },
                 Result = true
             };
@@ -59,13 +79,20 @@ namespace Heleonix.Build.Tests.Targets
         #region Tests
 
         /// <summary>
-        /// Tests the Hxb-Rebuild target.
+        /// Tests the Hxb-OpenCover target.
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]
         public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
         {
-            ExecuteTest(CIType.Jenkins, testCases);
+            try
+            {
+                ExecuteTest(CIType.Jenkins, testCases);
+            }
+            finally
+            {
+                Directory.Delete(LibSimulatorHelper.ReportsDir, true);
+            }
         }
 
         #endregion
@@ -80,7 +107,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <summary>
         /// Gets or sets the name of the target.
         /// </summary>
-        protected override string TargetName => "Hxb-Rebuild";
+        protected override string TargetName => "Hxb-OpenCover";
 
         #endregion
     }

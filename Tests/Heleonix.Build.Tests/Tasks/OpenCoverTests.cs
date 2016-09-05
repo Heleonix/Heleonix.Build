@@ -45,34 +45,34 @@ namespace Heleonix.Build.Tests.Tasks
         [TestCase(90, ExpectedResult = false)]
         public bool Execute(int minClassCoverage)
         {
-            var coverageResultsFilePath = Path.Combine(LibSimulatorHelper.ReportsDirectoryPath, Path.GetRandomFileName());
+            var coverageResults = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
 
             var task = new OpenCover
             {
                 BuildEngine = new FakeBuildEngine(),
-                OpenCoverExePath = new TaskItem(PathHelper.OpenCoverExePath),
-                Target = new TaskItem(PathHelper.NUnitConsoleExePath, new Dictionary<string, string>
+                OpenCoverExeFile = new TaskItem(PathHelper.OpenCoverExe),
+                Target = new TaskItem(PathHelper.NUnitConsoleExe, new Dictionary<string, string>
                 {
-                    { "NUnitProjectOrTestsFilesPath", LibSimulatorHelper.TestsOutFilePath },
-                    { "Type", "NUnit" }
+                    { nameof(Build.Tasks.NUnit.NUnitProjectOrTestsFiles), LibSimulatorHelper.TestsOut },
+                    { "Type", nameof(Build.Tasks.NUnit) }
                 }),
-                CoverageResultsFilePath = new TaskItem(coverageResultsFilePath),
+                CoverageResultFile = new TaskItem(coverageResults),
                 MinClassCoverage = minClassCoverage
             };
 
             task.Execute();
 
-            var coverageResultsFileExists = File.Exists(coverageResultsFilePath);
+            var coverageResultsExists = File.Exists(coverageResults);
 
             try
             {
-                Assert.That(coverageResultsFileExists, Is.True);
+                Assert.That(coverageResultsExists, Is.True);
             }
             finally
             {
-                if (coverageResultsFileExists)
+                if (coverageResultsExists)
                 {
-                    File.Delete(coverageResultsFilePath);
+                    File.Delete(coverageResults);
                 }
             }
 

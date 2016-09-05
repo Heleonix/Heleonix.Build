@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using System.IO;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -31,9 +32,9 @@ using NUnit.Framework;
 namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
-    /// Tests the Hxb-Rebuild target.
+    /// Tests the Hxb-ReportUnit target.
     /// </summary>
-    public class RebuildTests : TargetTests
+    public class ReportUnitTests : TargetTests
     {
         #region Methods
 
@@ -43,15 +44,17 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> TestCaseSource()
         {
-            yield return new TargetTestCase { Result = true };
-            yield return new TargetTestCase
-            {
-                Items = new Dictionary<string, ITaskItem[]>
+            yield return
+                new TargetTestCase
                 {
-                    { "Hxb-Rebuild-In-SnkPair", new[] { new TaskItem(PathHelper.SnkPair) as ITaskItem } }
-                },
-                Result = true
-            };
+                    Items = new Dictionary<string, ITaskItem[]>
+                    {
+                        { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.NUnitConsoleExe) } },
+                        { "Hxb-System-ReportUnitExe", new ITaskItem[] { new TaskItem(PathHelper.ReportUnitExe) } }
+                    },
+                    DependsOnTargets = "Hxb-NUnit",
+                    Result = true
+                };
         }
 
         #endregion
@@ -59,13 +62,20 @@ namespace Heleonix.Build.Tests.Targets
         #region Tests
 
         /// <summary>
-        /// Tests the Hxb-Rebuild target.
+        /// Tests the Hxb-NUnit target.
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]
         public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
         {
-            ExecuteTest(CIType.Jenkins, testCases);
+            try
+            {
+                ExecuteTest(CIType.Jenkins, testCases);
+            }
+            finally
+            {
+                Directory.Delete(LibSimulatorHelper.ReportsDir, true);
+            }
         }
 
         #endregion
@@ -80,7 +90,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <summary>
         /// Gets or sets the name of the target.
         /// </summary>
-        protected override string TargetName => "Hxb-Rebuild";
+        protected override string TargetName => "Hxb-ReportUnit";
 
         #endregion
     }

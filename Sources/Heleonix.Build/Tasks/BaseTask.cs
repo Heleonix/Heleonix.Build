@@ -57,6 +57,8 @@ namespace Heleonix.Build.Tasks
             catch (Exception ex)
             {
                 Log.LogErrorFromException(ex);
+
+                Log.LogError($"Task failed: '{GetType().Name}'.");
             }
 
             return !Log.HasLoggedErrors;

@@ -47,38 +47,38 @@ namespace Heleonix.Build.Tests.Tasks
         [Test]
         public void Execute()
         {
-            var errorsFilePath = Path.Combine(LibSimulatorHelper.ReportsDirectoryPath, Path.GetRandomFileName());
-            var testsOutputFilePath = Path.Combine(LibSimulatorHelper.ReportsDirectoryPath, Path.GetRandomFileName());
-            var resultFilePath = Path.Combine(LibSimulatorHelper.ReportsDirectoryPath, Path.GetRandomFileName());
+            var errorsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
+            var testsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
+            var result = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
 
             var task = new Build.Tasks.NUnit
             {
                 BuildEngine = new FakeBuildEngine(),
-                NUnitConsoleExePath = new TaskItem(PathHelper.NUnitConsoleExePath),
-                NUnitProjectOrTestsFilesPath = new ITaskItem[]
+                NUnitConsoleExeFile = new TaskItem(PathHelper.NUnitConsoleExe),
+                NUnitProjectOrTestsFiles = new ITaskItem[]
                 {
-                    new TaskItem(LibSimulatorHelper.TestsOutFilePath)
+                    new TaskItem(LibSimulatorHelper.TestsOut)
                 },
                 AgentsNumber = 3,
-                ErrorsFilePath = new TaskItem(errorsFilePath),
-                TestsOutputFilePath = new TaskItem(testsOutputFilePath),
-                TestsResultsFilePath = new TaskItem(resultFilePath)
+                ErrorsOutputFile = new TaskItem(errorsOutput),
+                TestsOutputFile = new TaskItem(testsOutput),
+                TestsResultFile = new TaskItem(result)
             };
 
             var succeeded = task.Execute();
 
-            var errorsFileExists = File.Exists(errorsFilePath);
-            var testsOutputFileExists = File.Exists(testsOutputFilePath);
-            var resultFileExists = File.Exists(resultFilePath);
+            var errorsExists = File.Exists(errorsOutput);
+            var testsOutputExists = File.Exists(testsOutput);
+            var resultExists = File.Exists(result);
 
             try
             {
-                Assert.That(succeeded, Is.False);
-                Assert.That(errorsFileExists, Is.True);
-                Assert.That(testsOutputFileExists, Is.True);
-                Assert.That(resultFileExists, Is.True);
+                Assert.That(succeeded, Is.True);
+                Assert.That(errorsExists, Is.True);
+                Assert.That(testsOutputExists, Is.True);
+                Assert.That(resultExists, Is.True);
 
-                var testRun = XDocument.Load(resultFilePath).Element("test-run");
+                var testRun = XDocument.Load(result).Element("test-run");
 
                 Assert.That(task.TestCases, Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value)));
                 Assert.That(task.Total, Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value)));
@@ -94,19 +94,19 @@ namespace Heleonix.Build.Tests.Tasks
             }
             finally
             {
-                if (errorsFileExists)
+                if (errorsExists)
                 {
-                    File.Delete(errorsFilePath);
+                    File.Delete(errorsOutput);
                 }
 
-                if (testsOutputFileExists)
+                if (testsOutputExists)
                 {
-                    File.Delete(testsOutputFilePath);
+                    File.Delete(testsOutput);
                 }
 
-                if (resultFileExists)
+                if (resultExists)
                 {
-                    File.Delete(resultFilePath);
+                    File.Delete(result);
                 }
             }
         }

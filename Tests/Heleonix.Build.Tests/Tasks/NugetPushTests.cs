@@ -44,24 +44,24 @@ namespace Heleonix.Build.Tests.Tasks
         [Test]
         public void Execute()
         {
-            var nugetPackageFilePath = Directory.GetFiles(Path.Combine(PathHelper.NugetExePath, "..", "..")).First();
+            var nugetPackage = Directory.GetFiles(Path.Combine(PathHelper.NugetExe, "..", "..")).First();
 
-            var tempSourcePath = Path.Combine(PathHelper.CurrentDirectoryPath, Path.GetRandomFileName());
+            var tempSource = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
 
-            Directory.CreateDirectory(tempSourcePath);
+            Directory.CreateDirectory(tempSource);
 
             try
             {
-                var exitCode = ExeHelper.Execute(PathHelper.NugetExePath, $"init \"{tempSourcePath}\"");
+                var exitCode = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
 
                 Assert.That(exitCode, Is.Zero);
 
                 var task = new NugetPush
                 {
                     BuildEngine = new FakeBuildEngine(),
-                    NugetExePath = new TaskItem(PathHelper.NugetExePath),
-                    SourcePath = tempSourcePath,
-                    PackageFilePath = new TaskItem(nugetPackageFilePath),
+                    NugetExeFile = new TaskItem(PathHelper.NugetExe),
+                    SourcePath = tempSource,
+                    PackageFile = new TaskItem(nugetPackage),
                     Verbosity = "detailed"
                 };
 
@@ -69,12 +69,12 @@ namespace Heleonix.Build.Tests.Tasks
 
                 Assert.That(succeeded, Is.True);
 
-                Assert.That(File.Exists(Path.Combine(tempSourcePath,
-                    Path.GetFileName(nugetPackageFilePath) ?? string.Empty)), Is.True);
+                Assert.That(File.Exists(Path.Combine(tempSource,
+                    Path.GetFileName(nugetPackage) ?? string.Empty)), Is.True);
             }
             finally
             {
-                Directory.Delete(tempSourcePath, true);
+                Directory.Delete(tempSource, true);
             }
         }
 

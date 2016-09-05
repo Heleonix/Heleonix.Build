@@ -1,6 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<!--
+/*
 The MIT License (MIT)
 
 Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
@@ -22,11 +20,21 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
--->
+*/
 
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
+using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
-  <Target Name="Hxb-CI-DotNet" DependsOnTargets="Hxb-OpenCover;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
-</Project>
+[assembly: AssemblyDescription("Build system for .NET Framework applications")]
+[assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
+[assembly: AssemblyProduct("Heleonix.Build")]
+[assembly: AssemblyCopyright("Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: CLSCompliant(true)]
+[assembly: ComVisible(false)]
+[assembly: AssemblyVersion("1.0.123.0")]
+[assembly: AssemblyFileVersion("1.0.123.0")]
+[assembly: AssemblyInformationalVersion("1.0.123.50c0f5a")]

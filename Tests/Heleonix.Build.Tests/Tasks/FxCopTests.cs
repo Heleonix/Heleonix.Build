@@ -41,38 +41,47 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [TestCase(true)]
-        [TestCase(false)]
-        public void Execute(bool useXsl)
+        [TestCase(true, FxCop.IssueTypes.Any)]
+        [TestCase(false, FxCop.IssueTypes.Any)]
+        [TestCase(false, FxCop.IssueTypes.None)]
+        public void Execute(bool useXsl, FxCop.IssueTypes failOn)
         {
-            var analysisResultsFilePath = Path.Combine(LibSimulatorHelper.ReportsDirectoryPath, Path.GetRandomFileName());
+            var analysisResults = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
 
             var task = new FxCop
             {
                 BuildEngine = new FakeBuildEngine(),
-                FxCopExePath = new TaskItem(PathHelper.FxCopExePath),
-                AnalysisResultsFilePath = new TaskItem(analysisResultsFilePath),
-                TargetsPath = new ITaskItem[] { new TaskItem(LibSimulatorHelper.OutFilePath) },
-                AnalysisResultsXslFilePath = useXsl
-                    ? new TaskItem(Path.Combine(Path.GetDirectoryName(PathHelper.FxCopExePath) ?? string.Empty, "Xml",
+                FxCopCmdFile = new TaskItem(PathHelper.FxCopExe),
+                AnalysisResultFile = new TaskItem(analysisResults),
+                TargetsFilesDirs = new ITaskItem[] { new TaskItem(LibSimulatorHelper.Out) },
+                AnalysisResultsXslFile = useXsl
+                    ? new TaskItem(Path.Combine(Path.GetDirectoryName(PathHelper.FxCopExe) ?? string.Empty, "Xml",
                         "CodeAnalysisReport.xsl"))
-                    : null
+                    : null,
+                FailOn = "CriticalErrors"
             };
 
             var succeeded = task.Execute();
 
-            var analysisResultsFileExists = File.Exists(analysisResultsFilePath);
+            var analysisResultsExists = File.Exists(analysisResults);
 
             try
             {
-                Assert.That(succeeded, Is.False);
-                Assert.That(analysisResultsFileExists, Is.True);
+                if (failOn.HasFlag(FxCop.IssueTypes.None))
+                {
+                    Assert.That(succeeded, Is.True);
+                }
+                else
+                {
+                    Assert.That(succeeded, Is.False);
+                }
+                Assert.That(analysisResultsExists, Is.True);
             }
             finally
             {
-                if (analysisResultsFileExists)
+                if (analysisResultsExists)
                 {
-                    File.Delete(analysisResultsFilePath);
+                    File.Delete(analysisResults);
                 }
             }
         }

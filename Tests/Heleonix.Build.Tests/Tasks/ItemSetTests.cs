@@ -22,56 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.IO;
+using System.Linq;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Tasks
 {
     /// <summary>
-    /// Tests the <see cref="NugetPack"/>.
+    /// Tests the <see cref="ItemSet"/>.
     /// </summary>
-    public class NugetPackTests : TaskTests
+    public class ItemSetTests
     {
         #region Tests
 
         /// <summary>
-        /// Tests the <see cref="NugetPack.Execute"/>.
+        /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [Test]
-        public void Execute()
+        [TestCase("Union", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,B,C,D,F,M,N,E")]
+        [TestCase("Intersection", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "B,C,D")]
+        [TestCase("RelativeComplement", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,F")]
+        [TestCase("SymmetricDifference", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,F,M,N,E")]
+        public string Execute(string operation, string left, string right)
         {
-            var task = new NugetPack
+            var task = new ItemSet
             {
                 BuildEngine = new FakeBuildEngine(),
-                NugetExeFile = new TaskItem(PathHelper.NugetExe),
-                NuspecFile = new TaskItem(Path.Combine(LibSimulatorHelper.SolutionDir,
-                    LibSimulatorHelper.SolutionName + ".nuspec")),
-                ProjectFile = new TaskItem(LibSimulatorHelper.Project),
-                Verbosity = "detailed"
+                Operation = operation,
+                Left = left.Split(',').Select(l => new TaskItem(l) as ITaskItem).ToArray(),
+                Right = right.Split(',').Select(r => new TaskItem(r) as ITaskItem).ToArray()
             };
 
             var succeeded = task.Execute();
 
             Assert.That(succeeded, Is.True);
 
-            var packageExists = File.Exists(task.PackageFile.ItemSpec);
-
-            File.Delete(task.PackageFile.ItemSpec);
-
-            Assert.That(packageExists, Is.True);
+            return string.Join(",", task.Result.Select(r => r.ItemSpec));
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

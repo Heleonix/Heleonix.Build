@@ -40,19 +40,19 @@ namespace Heleonix.Build.Tasks
         /// Directories to clean.
         /// </summary>
         [Required]
-        public ITaskItem[] DirectoriesPath { get; set; }
+        public ITaskItem[] Dirs { get; set; }
 
         /// <summary>
-        /// Gets or sets the cleaned directories paths.
+        /// [Output] The cleaned directories paths.
         /// </summary>
         [Output]
-        public ITaskItem[] CleanedDirectoriesPath { get; set; }
+        public ITaskItem[] CleanedDirs { get; set; }
 
         /// <summary>
-        /// Gets or sets the failed to clean directories paths.
+        /// [Output] The failed to clean directories paths.
         /// </summary>
         [Output]
-        public ITaskItem[] FailedDirectoriesPath { get; set; }
+        public ITaskItem[] FailedDirs { get; set; }
 
         #endregion
 
@@ -66,38 +66,40 @@ namespace Heleonix.Build.Tasks
             var cleanedDirectoriesItems = new List<ITaskItem>();
             var failedDirectoriesItems = new List<ITaskItem>();
 
-            foreach (var directoryItem in DirectoriesPath)
+            foreach (var dir in Dirs)
             {
                 try
                 {
-                    if (Directory.Exists(directoryItem.ItemSpec))
+                    if (Directory.Exists(dir.ItemSpec))
                     {
-                        foreach (var filePath in Directory.GetFiles(directoryItem.ItemSpec))
+                        Log.LogMessage($"Cleaning directory '{dir.ItemSpec}' started.");
+
+                        foreach (var file in Directory.GetFiles(dir.ItemSpec))
                         {
-                            File.Delete(filePath);
+                            File.Delete(file);
                         }
 
-                        foreach (var directoryPath in Directory.GetDirectories(directoryItem.ItemSpec))
+                        foreach (var directory in Directory.GetDirectories(dir.ItemSpec))
                         {
-                            Directory.Delete(directoryPath, true);
+                            Directory.Delete(directory, true);
                         }
 
-                        cleanedDirectoriesItems.Add(directoryItem);
+                        cleanedDirectoriesItems.Add(dir);
                     }
                     else
                     {
-                        Log.LogMessage($"The directory '{directoryItem.ItemSpec}' does not exist. Skipping.");
+                        Log.LogMessage($"The directory '{dir.ItemSpec}' is not found. Skipping.");
                     }
                 }
                 catch (Exception ex)
                 {
                     Log.LogErrorFromException(ex);
 
-                    failedDirectoriesItems.Add(directoryItem);
+                    failedDirectoriesItems.Add(dir);
                 }
 
-                CleanedDirectoriesPath = cleanedDirectoriesItems.ToArray();
-                FailedDirectoriesPath = failedDirectoriesItems.ToArray();
+                CleanedDirs = cleanedDirectoriesItems.ToArray();
+                FailedDirs = failedDirectoriesItems.ToArray();
             }
         }
 

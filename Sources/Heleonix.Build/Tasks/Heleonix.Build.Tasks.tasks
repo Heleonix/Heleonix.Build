@@ -26,10 +26,13 @@ SOFTWARE.
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="..\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="..\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemCombine" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.ItemFilter" AssemblyFile="..\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ItemSet" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="..\Heleonix.Build.dll"/>

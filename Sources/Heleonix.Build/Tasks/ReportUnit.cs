@@ -37,19 +37,19 @@ namespace Heleonix.Build.Tasks
         /// The ReportUnit executable path.
         /// </summary>
         [Required]
-        public ITaskItem ReportUnitExePath { get; set; }
+        public ITaskItem ReportUnitExeFile { get; set; }
 
         /// <summary>
-        /// The tests results file path.
+        /// The tests result file path.
         /// </summary>
         [Required]
-        public ITaskItem TestsResultsFilePath { get; set; }
+        public ITaskItem TestsResultFile { get; set; }
 
         /// <summary>
         /// The report file path.
         /// </summary>
         [Required]
-        public ITaskItem ReportFilePath { get; set; }
+        public ITaskItem ReportFile { get; set; }
 
         #endregion
 
@@ -61,15 +61,25 @@ namespace Heleonix.Build.Tasks
         protected override void ExecuteInternal()
         {
             var args = ArgsBuilder.By(' ', ' ')
-                .Add(TestsResultsFilePath.ItemSpec, true)
-                .Add(ReportFilePath.ItemSpec, true);
+                .Add(TestsResultFile.ItemSpec, true)
+                .Add(ReportFile.ItemSpec, true);
 
-            var exitCode = ExeHelper.Execute(ReportUnitExePath.ItemSpec, args);
+            string output;
+            string error;
+
+            var exitCode = ExeHelper.Execute(ReportUnitExeFile.ItemSpec, args, out output, out error);
+
+            Log.LogMessage(output);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Log.LogError(error);
+            }
 
             if (exitCode != 0)
             {
                 Log.LogError(
-                    $"{nameof(ReportUnit)} failed for '{TestsResultsFilePath.ItemSpec}'. Exit code: {exitCode}.");
+                    $"{nameof(ReportUnit)} failed for '{TestsResultFile.ItemSpec}'. Exit code: {exitCode}.");
             }
         }
 

@@ -37,13 +37,13 @@ namespace Heleonix.Build.Tasks
         /// The Nuget executable path.
         /// </summary>
         [Required]
-        public ITaskItem NugetExePath { get; set; }
+        public ITaskItem NugetExeFile { get; set; }
 
         /// <summary>
         /// The package file path.
         /// </summary>
         [Required]
-        public ITaskItem PackageFilePath { get; set; }
+        public ITaskItem PackageFile { get; set; }
 
         /// <summary>
         /// The API key.
@@ -58,7 +58,7 @@ namespace Heleonix.Build.Tasks
         /// <summary>
         /// The configuration file path.
         /// </summary>
-        public ITaskItem ConfigFilePath { get; set; }
+        public ITaskItem ConfigFile { get; set; }
 
         /// <summary>
         /// The verbosity of the command.
@@ -83,20 +83,30 @@ namespace Heleonix.Build.Tasks
         protected override void ExecuteInternal()
         {
             var args = ArgsBuilder.By(' ', ' ')
-                .Add("push", PackageFilePath.ItemSpec, true)
+                .Add("push", PackageFile.ItemSpec, true)
                 .Add(ApiKey)
                 .Add("-NonInteractive")
                 .Add("-source", SourcePath, true)
-                .Add("-ConfigFile", ConfigFilePath?.ItemSpec, true)
+                .Add("-ConfigFile", ConfigFile?.ItemSpec, true)
                 .Add("-Verbosity", Verbosity);
 
-            Log.LogMessage($"Pushing '{PackageFilePath.ItemSpec}'.");
+            Log.LogMessage($"Pushing '{PackageFile.ItemSpec}'.");
 
-            var exitCode = ExeHelper.Execute(NugetExePath.ItemSpec, args);
+            string output;
+            string error;
+
+            var exitCode = ExeHelper.Execute(NugetExeFile.ItemSpec, args, out output, out error);
+
+            Log.LogMessage(output);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Log.LogError(error);
+            }
 
             if (exitCode != 0)
             {
-                Log.LogError($"Failed pushing '{PackageFilePath.ItemSpec}'. Exit code: {exitCode}.");
+                Log.LogError($"Failed pushing '{PackageFile.ItemSpec}'. Exit code: {exitCode}.");
             }
         }
 

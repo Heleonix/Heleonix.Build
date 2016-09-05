@@ -45,8 +45,8 @@ namespace Heleonix.Build.Tests.Tasks
             var task = new GitLog
             {
                 BuildEngine = new FakeBuildEngine(),
-                GitExePath = new TaskItem(PathHelper.GitExePath),
-                RepositoryPath = new TaskItem(LibSimulatorHelper.SolutionDirectoryPath),
+                GitExeFile = new TaskItem(PathHelper.GitExe),
+                RepositoryFileDir = new TaskItem(LibSimulatorHelper.SolutionDir),
                 MaxCount = 1
             };
 

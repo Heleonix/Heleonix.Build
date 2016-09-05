@@ -41,13 +41,13 @@ namespace Heleonix.Build.Tasks
         /// The Svn executable path.
         /// </summary>
         [Required]
-        public ITaskItem SvnExePath { get; set; }
+        public ITaskItem SvnExeFile { get; set; }
 
         /// <summary>
         /// The file or directory path to retrieve log for.
         /// </summary>
         [Required]
-        public ITaskItem RepositoryPath { get; set; }
+        public ITaskItem RepositoryFileDir { get; set; }
 
         /// <summary>
         /// The maximum count of commits to retrieve from the log.
@@ -65,7 +65,7 @@ namespace Heleonix.Build.Tasks
         public string UntilDate { get; set; }
 
         /// <summary>
-        /// The commits.
+        /// [Output] The commits.
         /// </summary>
         /// <remarks>
         /// <see cref="ITaskItem.ItemSpec"/> is a revision number.
@@ -97,16 +97,23 @@ namespace Heleonix.Build.Tasks
                 .Add("--verbose")
                 .Add("--xml")
                 .Add("--with-all-revprops")
-                .Add(RepositoryPath.ItemSpec, true);
+                .Add(RepositoryFileDir.ItemSpec, true);
 
-            var workingDirectoryPath = File.Exists(RepositoryPath.ItemSpec)
-                ? Path.GetDirectoryName(RepositoryPath.ItemSpec)
-                : RepositoryPath.ItemSpec;
+            var workingDir = File.Exists(RepositoryFileDir.ItemSpec)
+                ? Path.GetDirectoryName(RepositoryFileDir.ItemSpec)
+                : RepositoryFileDir.ItemSpec;
 
             string output;
             string error;
 
-            var exitCode = ExeHelper.Execute(SvnExePath.ItemSpec, args, out output, out error, workingDirectoryPath);
+            var exitCode = ExeHelper.Execute(SvnExeFile.ItemSpec, args, out output, out error, workingDir);
+
+            Log.LogMessage(output);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Log.LogError(error);
+            }
 
             if (exitCode != 0)
             {

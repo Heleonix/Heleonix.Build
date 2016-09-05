@@ -24,43 +24,61 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Rebuild" DependsOnTargets="Hxb-Setup">
-    <Error Condition="'$(Hxb-Rebuild-In-Output-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Output-RegEx' is not defined."/>
-    <Message Condition="'$(Hxb-Rebuild-In-Output-Tests-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Output-Tests-RegEx' is not defined."/>
+  <Target Name="Hxb-Rebuild">
+    <!--Validation-->
+    <Error Condition="'$(Hxb-Rebuild-In-Outputs-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-RegEx' is not defined."/>
+    <Message Condition="'$(Hxb-Rebuild-In-Outputs-Tests-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-Tests-RegEx' is not defined."/>
 
-    <MSBuild Targets="Clean" Projects="@(Hxb-Build-Sln)" Properties="Configuration=$(Hxb-In-Configuration)"/>
+    <!--Preparation-->
+    <PropertyGroup>
+      <_Hxb-Rebuild-Common-Props Condition="'$(Hxb-In-Configuration)' != ''">Configuration=$(Hxb-In-Configuration)</_Hxb-Rebuild-Common-Props>
+      <_Hxb-Rebuild-Common-Props Condition="'$(Hxb-In-Platform)' != ''">$(_Hxb-Rebuild-Common-Props);Platform=$(Hxb-In-Platform)</_Hxb-Rebuild-Common-Props>
+    </PropertyGroup>
+
+    <!--Clean-->
+    <MSBuild Targets="Clean" Projects="@(Hxb-Build-Sln)" Properties="$(_Hxb-Rebuild-Common-Props)"/>
+
     <Delete Files="@(Hxb-Rebuild-In-Delete)"/>
 
-    <ItemGroup>
-      <_Hxb-Rebuild-Delete-Dir Include="@(Hxb-Rebuild-In-Delete-Dir);@(Hxb-Build-Reports-Dir)"/>
-      <_Hxb-Rebuild-Delete-Dir Include="%(Hxb-Build-Sln.FullPath)\**\bin\$(Hxb-In-Configuration)"/>
-      <_Hxb-Rebuild-Delete-Dir Include="%(Hxb-Build-Sln.FullPath)\**\obj\$(Hxb-In-Configuration)"/>
-    </ItemGroup>
+    <RemoveDir Directories="@(Hxb-Rebuild-In-Delete-Dirs);$(Hxb-Build-Reports-Dir);$(Hxb-Build-Deployments-Dir);%(Hxb-Build-Sln.FullPath)\**\bin\$(Hxb-In-Configuration);%(Hxb-Build-Sln.FullPath)\**\obj\$(Hxb-In-Configuration)"/>
 
-    <RemoveDir Directories="@(_Hxb-Rebuild-Delete-Dir)"/>
-    <Heleonix.Build.Tasks.DirectoryClean DirectoriesPath="@(Hxb-Rebuild-In-Clean-Dir)"/>
+    <Heleonix.Build.Tasks.DirectoryClean Dirs="@(Hxb-Rebuild-In-Clean-Dirs)"/>
 
+    <!--Build-->
     <PropertyGroup>
       <_Hxb-Rebuild-Sign-Props Condition="Exists('@(Hxb-Rebuild-In-Snk)')">SignAssembly=true;AssemblyOriginatorKeyFile=&quot;@(Hxb-Rebuild-In-Snk)&quot;</_Hxb-Rebuild-Sign-Props>
     </PropertyGroup>
 
-    <MSBuild Targets="Build" Projects="@(Hxb-Build-Sln)" Properties="Configuration=$(Hxb-In-Configuration);$(_Hxb-Rebuild-Sign-Props)">
-      <Output ItemName="_Hxb-Rebuild-Build-Output" TaskParameter="TargetOutputs"/>
+    <ItemGroup>
+      <_Hxb-Rebuild-AssemblyInfo Include="$(Hxb-Build-Sln-Dir)\**\*AssemblyInfo.*"/>
+    </ItemGroup>
+
+    <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
+                                     RegEx="(?&lt;=AssemblyVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     Replacement="(&quot;$(Hxb-Build-Version)&quot;)"/>
+    <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
+                                     RegEx="(?&lt;=AssemblyFileVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     Replacement="(&quot;$(Hxb-Build-Version)&quot;)"/>
+    <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
+                                     RegEx="(?&lt;=AssemblyInformationalVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     Replacement="(&quot;$(Hxb-Build-Version-Informational)&quot;)"/>
+
+    <MSBuild Targets="Build" Projects="@(Hxb-Build-Sln)" Properties="$(_Hxb-Rebuild-Common-Props);$(_Hxb-Rebuild-Sign-Props)">
+      <Output TaskParameter="TargetOutputs" ItemName="_Hxb-Rebuild-Build-Outputs"/>
     </MSBuild>
 
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Output)" RegEx="$(Hxb-Rebuild-In-Output-RegEx)">
-      <Output ItemName="Hxb-Rebuild-Out-Output" TaskParameter="Outputs"/>
+    <MakeDir Directories="$(Hxb-Build-Reports-Dir)"/>
+    <MakeDir Directories="$(Hxb-Build-Deployments-Dir)"/>
+
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegEx="$(Hxb-Rebuild-In-Outputs-RegEx)">
+      <Output TaskParameter="Outputs" ItemName="Hxb-Rebuild-Out-Outputs"/>
     </Heleonix.Build.Tasks.ItemFilter>
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Output)" RegEx="$(Hxb-Rebuild-In-Output-Tests-RegEx)">
-      <Output ItemName="Hxb-Rebuild-Out-Output-Tests" TaskParameter="Outputs"/>
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegEx="$(Hxb-Rebuild-In-Outputs-Tests-RegEx)">
+      <Output TaskParameter="Outputs" ItemName="Hxb-Rebuild-Out-Outputs-Tests"/>
     </Heleonix.Build.Tasks.ItemFilter>
 
-    <Message Text="------------"/>
-    <Message Text="@(Hxb-Rebuild-Out-Output)"/>
-    <Message Text="------------"/>
-    <Message Text="@(Hxb-Rebuild-Out-Output-Tests)"/>
-    <Message Text="------------"/>
+    <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

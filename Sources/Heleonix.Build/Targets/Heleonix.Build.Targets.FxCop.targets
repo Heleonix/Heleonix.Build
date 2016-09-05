@@ -25,8 +25,27 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj"/>
+  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-FxCop" DependsOnTargets="Hxb-Rebuild">
+    <Heleonix.Build.Tasks.FxCop FxCopCmdFile="@(Hxb-System-FxCopCmd)"
+                                AnalysisResultFile="@(Hxb-FxCop-In-AnalysisResult)"
+                                AnalysisResultsXslFile="@(Hxb-FxCop-In-AnalysisResultsXsl)"
+                                IsVerbose="$(Hxb-FxCop-In-IsVerbose)"
+                                DependenciesDirs="@(Hxb-FxCop-In-Dependencies-Dirs)"
+                                DictionaryFile="@(Hxb-FxCop-In-Dictionary)"
+                                ProjectFile="@(Hxb-FxCop-In-Project)"
+                                RulesFilesDirs="@(Hxb-FxCop-In-Rules-FilesDirs)"
+                                RulesetFile="@(Hxb-FxCop-In-Ruleset)"
+                                TargetsFilesDirs="@(Hxb-FxCop-In-Targets-FilesDirs)"
+                                TargetsTypes="$(Hxb-FxCop-In-TargetsTypes)">
+      <Output TaskParameter="CriticalErrors" ItemName="Hxb-FxCop-Out-CriticalErrors"/>
+      <Output TaskParameter="Errors" ItemName="Hxb-FxCop-Out-Errors"/>
+      <Output TaskParameter="CriticalWarnings" ItemName="Hxb-FxCop-Out-CriticalWarnings"/>
+      <Output TaskParameter="Warnings" ItemName="Hxb-FxCop-Out-Warnings"/>
+      <Output TaskParameter="Informational" ItemName="Hxb-FxCop-Out-Informational"/>
+    </Heleonix.Build.Tasks.FxCop>
+
+    <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

@@ -24,8 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-<Project DefaultTargets="$(Hxb-In-Flow)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="Heleonix.Build.Intellisense.proj"/>
+<Project DefaultTargets="Hxb-Main" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <Import Project="Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <!--Tasks-->
   <Import Project="Tasks\Heleonix.Build.Tasks.tasks"/>
@@ -35,22 +35,20 @@ SOFTWARE.
   <Import Project="Settings\Heleonix.Build.Settings.Conventions.proj"/>
 
   <!--Targets-->
+  <Import Project="Targets\Heleonix.Build.Targets.Initialize.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.FxCop.targets"/>
-  <Import Project="Targets\Heleonix.Build.Targets.NugetPush.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.NugetDeploy.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.NUnit.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.OpenCover.targets"/>
-  <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.ReportUnit.targets"/>
-  <Import Project="Targets\Heleonix.Build.Targets.Setup.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.OnError.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.Finalize.targets"/>
 
   <!--Flows-->
   <Import Project="Flows\Heleonix.Build.Flows.proj"/>
-
   <Import Project="$(Hxb-In-Overrides)" Condition="Exists('$(Hxb-In-Overrides)')"/>
+  <Import Project="$(Hxb-Setup-Sln-Flows)" Condition="Exists('$(Hxb-Setup-Sln-Flows)')"/>
 
-  <PropertyGroup>
-    <_Hxb-Main-Sln-Flows-File-Path>$(Hxb-Build-Sln-Dir-Path)\$([System.IO.Path]::GetFileNameWithoutExtension('$(Hxb-Build-Sln-Path)')).Flows.proj</_Hxb-Main-Sln-Flows-File-Path>
-  </PropertyGroup>
-
-  <Import Project="$(_Hxb-Main-Sln-Flows-File-Path)" Condition="Exists('$(_Hxb-Main-Sln-Flows-File-Path)')"/>
+  <Target Name="Hxb-Main" DependsOnTargets="Hxb-Initialize;$(Hxb-In-Flow);Hxb-Finalize"/>
 </Project>

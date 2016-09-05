@@ -36,58 +36,64 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the out file path.
         /// </summary>
-        public static string OutFilePath => Path.Combine(OutDirectoryPath,
-            Path.GetFileName(SolutionDirectoryPath) + ".dll");
+        public static string Out => Path.Combine(OutDir,
+            Path.GetFileName(SolutionDir) + ".dll");
 
         /// <summary>
         /// Gets the tests out file path.
         /// </summary>
-        public static string TestsOutFilePath => Path.Combine(
-            Path.GetDirectoryName(TestsProjectFilePath) ?? string.Empty, "bin", MsBuildHelper.CurrentConfiguration,
-            Path.ChangeExtension(Path.GetFileName(TestsProjectFilePath), ".dll"));
+        public static string TestsOut => Path.Combine(
+            Path.GetDirectoryName(TestsProject) ?? string.Empty, "bin", MsBuildHelper.CurrentConfiguration,
+            Path.ChangeExtension(Path.GetFileName(TestsProject), ".dll"));
 
         /// <summary>
         /// Gets the name of the solution.
         /// </summary>
-        public static string SolutionName => Path.GetFileName(SolutionDirectoryPath);
+        public static string SolutionName => Path.GetFileName(SolutionDir);
 
         /// <summary>
         /// Gets the solution file path.
         /// </summary>
-        public static string SolutionFilePath => Path.Combine(SolutionDirectoryPath,
-            Path.GetFileName(SolutionDirectoryPath) + ".sln");
+        public static string Solution => Path.Combine(SolutionDir,
+            Path.GetFileName(SolutionDir) + ".sln");
 
         /// <summary>
         /// Gets the project file path.
         /// </summary>
-        public static string ProjectFilePath => Path.Combine(SolutionDirectoryPath,
-            "Sources", Path.GetFileName(SolutionDirectoryPath) ?? string.Empty,
-            Path.GetFileName(SolutionDirectoryPath) + ".csproj");
+        public static string Project => Path.Combine(SolutionDir,
+            "Sources", Path.GetFileName(SolutionDir) ?? string.Empty,
+            Path.GetFileName(SolutionDir) + ".csproj");
 
         /// <summary>
         /// Gets the tests project file path.
         /// </summary>
-        public static string TestsProjectFilePath => Path.Combine(SolutionDirectoryPath,
-            "Tests", Path.GetFileName(SolutionDirectoryPath) + ".Tests",
-            Path.GetFileName(SolutionDirectoryPath) + ".Tests.csproj");
+        public static string TestsProject => Path.Combine(SolutionDir,
+            "Tests", Path.GetFileName(SolutionDir) + ".Tests",
+            Path.GetFileName(SolutionDir) + ".Tests.csproj");
 
         /// <summary>
         /// Gets the out directory path.
         /// </summary>
-        public static string OutDirectoryPath => Path.Combine(SolutionDirectoryPath, "Sources",
-            Path.GetFileName(SolutionDirectoryPath), "bin",
-            Path.GetFileNameWithoutExtension(PathHelper.CurrentDirectoryPath) ?? string.Empty);
+        public static string OutDir => Path.Combine(SolutionDir, "Sources",
+            Path.GetFileName(SolutionDir), "bin",
+            Path.GetFileNameWithoutExtension(PathHelper.CurrentDir) ?? string.Empty);
 
         /// <summary>
         /// Gets the solution directory path.
         /// </summary>
-        public static string SolutionDirectoryPath => Path.Combine(PathHelper.CurrentDirectoryPath,
+        public static string SolutionDir => Path.Combine(PathHelper.CurrentDir,
             "..", "..", "..", "Heleonix.Build.Tests.LibSimulator");
 
         /// <summary>
         /// Gets the reports directory path.
         /// </summary>
-        public static string ReportsDirectoryPath => Path.Combine(SolutionDirectoryPath, "Reports");
+        public static string ReportsDir => Path.Combine(SolutionDir, "Hxb-Reports");
+
+        /// <summary>
+        /// Gets the Nuget deployment directory path.
+        /// </summary>
+        public static string NugetDeploymentDir => Path.Combine(SolutionDir, "Hxb-Deployments",
+            MsBuildHelper.CurrentConfiguration, "Nuget");
 
         #endregion
     }

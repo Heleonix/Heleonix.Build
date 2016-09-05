@@ -73,39 +73,46 @@ namespace Heleonix.Build.Tests.Targets
                 }
             }
 
-            var overridesFile = new XDocument(new XDeclaration("1.0", "UTF-8", null));
+            var overrides = new XDocument(new XDeclaration("1.0", "UTF-8", null));
 
-            overridesFile.Add(new XElement(ns + "Project", propertyGroup, itemGroup));
+            var target = new XElement(ns + "Target", new XAttribute("Name", TargetName + "-Before-Overrides"),
+                new XAttribute("BeforeTargets", testCases.DependsOnTargets ?? TargetName), propertyGroup, itemGroup);
 
-            var overridesFilePath = Path.Combine(PathHelper.CurrentDirectoryPath, Path.GetRandomFileName());
+            overrides.Add(new XElement(ns + "Project", target));
 
-            overridesFile.Save(overridesFilePath);
+            var overridesFilePath = Path.ChangeExtension(
+                Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName()), ".proj");
+
+            overrides.Save(overridesFilePath);
 
             var props = ArgsBuilder.By(';', '=')
-                .Add("Hxb-In-Flow", TargetName)
+                .Add("Hxb-In-Flow", testCases.DependsOnTargets + ";" + TargetName, true)
                 .Add("Hxb-In-Configuration", MsBuildHelper.CurrentConfiguration)
-                .Add("Hxb-In-Overrides", overridesFilePath, true);
+                .Add("Hxb-In-Overrides", overridesFilePath, true)
+                .Add("BUILD_NUMBER", "123");
 
             switch (ciType)
             {
                 case CIType.Jenkins:
-                    props.Add("JENKINS_URL", "http://localhost:8080");
+                    props.Add("JENKINS_URL", "http://localhost:8080")
+                        .Add("BRANCH_NAME", "1.2");
 
                     switch (SimulatorType)
                     {
                         case SimulatorType.Library:
-                            props.Add("WORKSPACE", LibSimulatorHelper.SolutionDirectoryPath, true);
+                            props.Add("WORKSPACE", LibSimulatorHelper.SolutionDir, true);
                             break;
                     }
 
                     break;
                 case CIType.TeamCity:
-                    props.Add("TEAMCITY_VERSION", "10.0");
+                    props.Add("TEAMCITY_VERSION", "10.0")
+                        .Add("teamcity_build_branch", "1.2");
 
                     switch (SimulatorType)
                     {
                         case SimulatorType.Library:
-                            props.Add("system_agent_work_dir", LibSimulatorHelper.SolutionDirectoryPath, true);
+                            props.Add("system_agent_work_dir", LibSimulatorHelper.SolutionDir, true);
                             break;
                     }
 
@@ -114,7 +121,7 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
-                var succeeded = MsBuildHelper.ExecuteMsBuild(PathHelper.MainProjectPath, null, props) == 0;
+                var succeeded = MsBuildHelper.ExecuteMsBuild(PathHelper.MainProject, null, props) == 0;
 
                 Assert.That(succeeded, Is.EqualTo(testCases.Result));
             }
@@ -158,6 +165,11 @@ namespace Heleonix.Build.Tests.Targets
             /// Gets or sets the items.
             /// </summary>
             public IDictionary<string, ITaskItem[]> Items { get; set; }
+
+            /// <summary>
+            /// Gets or sets the depends on targets.
+            /// </summary>
+            public string DependsOnTargets { get; set; }
 
             /// <summary>
             /// Gets or sets the test case result.
