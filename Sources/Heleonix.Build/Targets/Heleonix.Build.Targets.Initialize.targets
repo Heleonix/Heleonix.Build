@@ -52,6 +52,7 @@ SOFTWARE.
     <Error Condition="'$(Hxb-Build-Version)' == ''" Text="'$Hxb-Build-Version' is not defined."/>
     <Error Condition="'$(Hxb-Build-Version-Informational)' == ''" Text="'$Hxb-Build-Version-Informational' is not defined."/>
     <Error Condition="'$(Hxb-Build-Reports-Dir)' == ''" Text="'$Hxb-Build-Reports-Dir' is not defined."/>
+    <Error Condition="'$(Hxb-Build-Deployments-Dir)' == ''" Text="'$Hxb-Build-Deployments-Dir' is not defined."/>
 
     <Error Condition="!Exists('$(Hxb-Build-Sln-Dir)')" Text="'$Hxb-Build-Sln-Dir' is not found."/>
     <Error Condition="!Exists('@(Hxb-Build-Sln)')" Text="'@Hxb-Build-Sln' is not found."/>
