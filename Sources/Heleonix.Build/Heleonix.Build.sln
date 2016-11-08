@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Flows", "Flows", "{217EF65C-3070-4441-A6BA-0A29428F410E}"
+	ProjectSection(SolutionItems) = preProject
+		Flows\Heleonix.Build.Flows.proj = Flows\Heleonix.Build.Flows.proj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{0F130366-AB60-4BF9-842C-81B91876FA18}"
+	ProjectSection(SolutionItems) = preProject
+		Settings\Heleonix.Build.Settings.Conventions.proj = Settings\Heleonix.Build.Settings.Conventions.proj
+		Settings\Heleonix.Build.Settings.System.proj = Settings\Heleonix.Build.Settings.System.proj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{C34039B0-37F3-4E00-8DFA-C8331D185DF7}"
+	ProjectSection(SolutionItems) = preProject
+		Targets\Heleonix.Build.Targets.Finalize.targets = Targets\Heleonix.Build.Targets.Finalize.targets
+		Targets\Heleonix.Build.Targets.FxCop.targets = Targets\Heleonix.Build.Targets.FxCop.targets
+		Targets\Heleonix.Build.Targets.Initialize.targets = Targets\Heleonix.Build.Targets.Initialize.targets
+		Targets\Heleonix.Build.Targets.NugetDeploy.targets = Targets\Heleonix.Build.Targets.NugetDeploy.targets
+		Targets\Heleonix.Build.Targets.NUnit.targets = Targets\Heleonix.Build.Targets.NUnit.targets
+		Targets\Heleonix.Build.Targets.OnError.targets = Targets\Heleonix.Build.Targets.OnError.targets
+		Targets\Heleonix.Build.Targets.OpenCover.targets = Targets\Heleonix.Build.Targets.OpenCover.targets
+		Targets\Heleonix.Build.Targets.Rebuild.targets = Targets\Heleonix.Build.Targets.Rebuild.targets
+		Targets\Heleonix.Build.Targets.ReportUnit.targets = Targets\Heleonix.Build.Targets.ReportUnit.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{9996E8D5-CB9D-443D-BE36-9095C3224E5A}"
+	ProjectSection(SolutionItems) = preProject
+		Tasks\Heleonix.Build.Tasks.tasks = Tasks\Heleonix.Build.Tasks.tasks
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A076C1E-6286-44DC-9C17-47228234B666}"
+	ProjectSection(SolutionItems) = preProject
+		Heleonix.Build.Intellisense.proj = Heleonix.Build.Intellisense.proj
+		Heleonix.Build.Intellisense.xsd = Heleonix.Build.Intellisense.xsd
+		Heleonix.Build.Projects.Main.proj = Heleonix.Build.Projects.Main.proj
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
