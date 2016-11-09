@@ -6,8 +6,8 @@
     <ProjectGuid>{2C70B11C-97BD-4ABE-BECF-86BB9808F571}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Heleonix.Build.Tests.LibSimulator.Tests</RootNamespace>
-    <AssemblyName>Heleonix.Build.Tests.LibSimulator.Tests</AssemblyName>
+    <RootNamespace>LibSimulator.Tests</RootNamespace>
+    <AssemblyName>LibSimulator.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -78,7 +78,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Sources\Heleonix.Build.Tests.LibSimulator\Heleonix.Build.Tests.LibSimulator.csproj">
+    <ProjectReference Include="..\..\Sources\LibSimulator\LibSimulator.csproj">
       <Project>{60efea6a-b136-448d-b4e1-3ad490dee3e4}</Project>
       <Name>Heleonix.Build.Tests.LibSimulator</Name>
     </ProjectReference>

@@ -164,14 +164,14 @@ SOFTWARE.
   <!--Region Target: Hxb-FxCop-->
   <Target Name="Hxb-FxCop">
     <PropertyGroup>
-      <Hxb-FxCop-In-IsVerbose></Hxb-FxCop-In-IsVerbose>
+      <Hxb-FxCop-In-IsVerbose>true</Hxb-FxCop-In-IsVerbose>
       <Hxb-FxCop-In-TargetsTypes></Hxb-FxCop-In-TargetsTypes>
       <Hxb-FxCop-In-FailOn>CriticalErrors</Hxb-FxCop-In-FailOn>
-      <Hxb-FxCop-Out-CriticalErrors></Hxb-FxCop-Out-CriticalErrors>
-      <Hxb-FxCop-Out-Errors></Hxb-FxCop-Out-Errors>
-      <Hxb-FxCop-Out-CriticalWarnings></Hxb-FxCop-Out-CriticalWarnings>
-      <Hxb-FxCop-Out-Warnings></Hxb-FxCop-Out-Warnings>
-      <Hxb-FxCop-Out-Informational></Hxb-FxCop-Out-Informational>
+      <Hxb-FxCop-Out-CriticalErrors>0</Hxb-FxCop-Out-CriticalErrors>
+      <Hxb-FxCop-Out-Errors>0</Hxb-FxCop-Out-Errors>
+      <Hxb-FxCop-Out-CriticalWarnings>0</Hxb-FxCop-Out-CriticalWarnings>
+      <Hxb-FxCop-Out-Warnings>0</Hxb-FxCop-Out-Warnings>
+      <Hxb-FxCop-Out-Informational>0</Hxb-FxCop-Out-Informational>
     </PropertyGroup>
 
     <ItemGroup>

@@ -82,7 +82,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the solution directory path.
         /// </summary>
         public static string SolutionDir => Path.Combine(PathHelper.CurrentDir,
-            "..", "..", "..", "Heleonix.Build.Tests.LibSimulator");
+            "..", "..", "..", "LibSimulator");
 
         /// <summary>
         /// Gets the reports directory path.
