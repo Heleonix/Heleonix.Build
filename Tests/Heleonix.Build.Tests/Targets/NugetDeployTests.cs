@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class NugetDeployTests : TargetTests
     {
-        #region Methods
+        #region Test Cases
 
         /// <summary>
         /// The test case source.
@@ -46,10 +46,6 @@ namespace Heleonix.Build.Tests.Targets
         {
             yield return new TargetTestCase
             {
-                Properties = new Dictionary<string, string>
-                {
-                    { "Hxb-NugetDeploy-In-Source", "" }
-                },
                 Items = new Dictionary<string, ITaskItem[]>
                 {
                     { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
@@ -79,7 +75,7 @@ namespace Heleonix.Build.Tests.Targets
 
                 Assert.That(exitCode, Is.Zero);
 
-                testCases.Properties["Hxb-NugetDeploy-In-Source"] = tempSource;
+                testCases.Items["Hxb-NugetDeploy-In-Source"] = new ITaskItem[] { new TaskItem(tempSource) };
 
                 ExecuteTest(CIType.Jenkins, testCases);
 

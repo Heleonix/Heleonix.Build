@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 The MIT License (MIT)
 
@@ -27,6 +26,15 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-CI-DotNet" DependsOnTargets="Hxb-NugetRestore;Hxb-OpenCover;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
+  <Target Name="Hxb-NugetRestore">
+    <Heleonix.Build.Tasks.NugetRestore NugetExeFile="@(Hxb-System-NugetExe)"
+                                       SolutionFile="@(Hxb-Build-Sln)"
+                                       SourcesPaths="@(Hxb-NugetRestore-In-Sources)"
+                                       PackagesDir="@(Hxb-NugetRestore-In-Packages-Dir)"
+                                       MsBuildVersion="$(Hxb-NugetRestore-In-MSBuildVersion)"
+                                       NoCache="$(Hxb-NugetRestore-In-NoCache)"
+                                       Verbosity="$(Hxb-Build-Verbosity)"/>
+
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
 </Project>

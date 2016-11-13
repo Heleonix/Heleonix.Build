@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class FxCopTests : TargetTests
     {
-        #region Methods
+        #region Test Cases
 
         /// <summary>
         /// The test case source.

@@ -22,14 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.IO;
+using System.Linq;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
 {
     /// <summary>
-    /// Runs the Nuget push command.
+    /// Runs the Nuget restore command.
     /// </summary>
-    public class NugetPush : BaseTask
+    public class NugetRestore : BaseTask
     {
         #region Properties
 
@@ -40,25 +42,33 @@ namespace Heleonix.Build.Tasks
         public ITaskItem NugetExeFile { get; set; }
 
         /// <summary>
-        /// The package file path.
+        /// The solution file to restore packages for.
         /// </summary>
         [Required]
-        public ITaskItem PackageFile { get; set; }
+        public ITaskItem SolutionFile { get; set; }
 
         /// <summary>
-        /// The API key.
+        /// The packages directory where restore packages to.
         /// </summary>
-        public string ApiKey { get; set; }
+        /// <remarks>
+        /// Default is the "packages" directory inside the solution's directory.
+        /// </remarks>
+        public ITaskItem PackagesDir { get; set; }
 
         /// <summary>
-        /// The source path.
+        /// The sources paths to load packages from.
         /// </summary>
-        public ITaskItem SourcePath { get; set; }
+        public ITaskItem[] SourcesPaths { get; set; }
 
         /// <summary>
-        /// The configuration file path.
+        /// The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.
         /// </summary>
-        public ITaskItem ConfigFile { get; set; }
+        public int MsBuildVersion { get; set; }
+
+        /// <summary>
+        /// Indicates whether disable using machine cache as the first package source.
+        /// </summary>
+        public bool NoCache { get; set; }
 
         /// <summary>
         /// The verbosity of the command.
@@ -83,14 +93,19 @@ namespace Heleonix.Build.Tasks
         protected override void ExecuteInternal()
         {
             var args = ArgsBuilder.By(' ', ' ')
-                .Add("push", PackageFile.ItemSpec, true)
-                .Add(ApiKey)
-                .Add("-source", SourcePath?.ItemSpec, true, SourcePath != null)
-                .Add("-ConfigFile", ConfigFile?.ItemSpec, true, ConfigFile != null)
+                .Add("restore", SolutionFile.ItemSpec, true)
+                .Add("-MSBuildVersion", MsBuildVersion, false, MsBuildVersion > 0)
+                .Add("-NoCache", NoCache, false, NoCache)
+                .Add("-PackagesDirectory", PackagesDir?.ItemSpec
+                                           ?? Path.Combine(Path.GetDirectoryName(SolutionFile.ItemSpec)
+                                                           ?? "." + Path.DirectorySeparatorChar, "packages"), true,
+                    PackagesDir != null)
+                .Add("-Source", string.Join(";", SourcesPaths?.Select(sp => sp.ItemSpec) ?? new string[0]), true,
+                    SourcesPaths != null && SourcesPaths.Length > 0)
                 .Add("-Verbosity", Verbosity, false, !string.IsNullOrEmpty(Verbosity))
                 .Add("-NonInteractive");
 
-            Log.LogMessage($"Pushing '{PackageFile.ItemSpec}'.");
+            Log.LogMessage($"Restoring '{SolutionFile.ItemSpec}'.");
 
             string output;
             string error;
@@ -106,7 +121,7 @@ namespace Heleonix.Build.Tasks
 
             if (exitCode != 0)
             {
-                Log.LogError($"Failed pushing '{PackageFile.ItemSpec}'. Exit code: {exitCode}.");
+                Log.LogError($"Failed restoring '{SolutionFile.ItemSpec}'. Exit code: {exitCode}.");
             }
         }
 

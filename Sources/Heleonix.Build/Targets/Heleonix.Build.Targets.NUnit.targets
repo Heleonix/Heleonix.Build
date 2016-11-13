@@ -28,6 +28,12 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-NUnit" DependsOnTargets="Hxb-Rebuild">
+    <PropertyGroup>
+      <_Hxb-NUnit-TraceLevel Condition="'$(Hxb-Build-Verbosity)' == 'Quiet'">Off</_Hxb-NUnit-TraceLevel>
+      <_Hxb-NUnit-TraceLevel Condition="'$(Hxb-Build-Verbosity)' == 'Normal'">Warning</_Hxb-NUnit-TraceLevel>
+      <_Hxb-NUnit-TraceLevel Condition="'$(Hxb-Build-Verbosity)' == 'Detailed'">Verbose</_Hxb-NUnit-TraceLevel>
+    </PropertyGroup>
+
     <Heleonix.Build.Tasks.NUnit NUnitConsoleExeFile="@(Hxb-System-NUnitConsoleExe)"
                                 NUnitProjectOrTestsFiles="@(Hxb-Rebuild-Out-Outputs-Tests)"
                                 AgentsNumber="$(Hxb-NUnit-In-AgentsNumber)"
@@ -40,7 +46,7 @@ SOFTWARE.
                                 TestsResultFile="@(Hxb-NUnit-In-TestsResult)"
                                 StopOnErrorOrFailedTest="$(Hxb-NUnit-In-StopOnErrorOrFailedTest)"
                                 TestsFilter="$(Hxb-NUnit-In-TestsFilter)"
-                                TraceLevel="$(Hxb-NUnit-In-TraceLevel)"
+                                TraceLevel="$(_Hxb-NUnit-TraceLevel)"
                                 TestsListFile="@(Hxb-NUnit-In-TestsList)"
                                 TestsOutputFile="@(Hxb-NUnit-In-TestsOutput)"
                                 TestsParameters="$(Hxb-NUnit-In-TestsParameters)"

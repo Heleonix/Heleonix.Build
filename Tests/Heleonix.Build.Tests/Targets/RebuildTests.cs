@@ -35,7 +35,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class RebuildTests : TargetTests
     {
-        #region Methods
+        #region Test Cases
 
         /// <summary>
         /// The test case source.

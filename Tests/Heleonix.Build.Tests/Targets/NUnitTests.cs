@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class NUnitTests : TargetTests
     {
-        #region Methods
+        #region Test Cases
 
         /// <summary>
         /// The test case source.

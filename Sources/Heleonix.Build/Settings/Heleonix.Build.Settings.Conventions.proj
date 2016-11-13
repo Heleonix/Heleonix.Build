@@ -41,6 +41,7 @@ SOFTWARE.
       <Hxb-Build-Reports-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Reports-Dir)\$(Hxb-In-Platform)</Hxb-Build-Reports-Dir>
       <Hxb-Build-Deployments-Dir>$(Hxb-Build-Sln-Dir)\Hxb-Deployments\$(Hxb-In-Configuration)</Hxb-Build-Deployments-Dir>
       <Hxb-Build-Deployments-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Deployments-Dir)\$(Hxb-In-Platform)</Hxb-Build-Deployments-Dir>
+      <Hxb-Build-Verbosity>Normal</Hxb-Build-Verbosity>
     </PropertyGroup>
 
     <ItemGroup>

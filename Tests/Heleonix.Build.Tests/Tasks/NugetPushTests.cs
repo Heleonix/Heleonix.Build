@@ -60,7 +60,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new FakeBuildEngine(),
                     NugetExeFile = new TaskItem(PathHelper.NugetExe),
-                    SourcePath = tempSource,
+                    SourcePath = new TaskItem(tempSource),
                     PackageFile = new TaskItem(nugetPackage),
                     Verbosity = "detailed"
                 };

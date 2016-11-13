@@ -39,6 +39,7 @@ SOFTWARE.
   <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.FxCop.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.NugetDeploy.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.NugetRestore.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.NUnit.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.OpenCover.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.ReportUnit.targets"/>

@@ -59,6 +59,28 @@ Example custom task with single required parameter
     </xs:complexContent>
   </xs:complexType>
 </xs:element>
+
+Example custom enum
+<xs:simpleType name="Some-Enum">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Value1"/>
+    <xs:enumeration value="Value2"/>
+  </xs:restriction>
+</xs:simpleType>
+
+Example custom property of type of custom enum
+<xs:element name="Some-Enum-Prop" substitutionGroup="msb:Property">
+  <xs:annotation>
+    <xs:documentation>Description.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="msb:Some-Enum">
+        <xs:attribute name="Condition" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
 -->
 
 <xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
@@ -107,8 +129,8 @@ Example custom task with single required parameter
   </xs:simpleType>
   <xs:simpleType name="Hxb-Nuget-Verbosity-Enum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Normal"/>
       <xs:enumeration value="Quiet"/>
+      <xs:enumeration value="Normal"/>
       <xs:enumeration value="Detailed"/>
     </xs:restriction>
   </xs:simpleType>
@@ -152,6 +174,13 @@ Example custom task with single required parameter
       <xs:enumeration value="Intersection"/>
       <xs:enumeration value="RelativeComplement"/>
       <xs:enumeration value="SymmetricDifference"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Hxb-Build-Verbosity-Enum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Quiet"/>
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Detailed"/>
     </xs:restriction>
   </xs:simpleType>
   <!--Endregion-->
@@ -646,7 +675,7 @@ Example custom task with single required parameter
               <xs:documentation>The API key.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="SourcePath" type="xs:string">
+          <xs:attribute name="SourcePath">
             <xs:annotation>
               <xs:documentation>The source path.</xs:documentation>
             </xs:annotation>
@@ -654,6 +683,52 @@ Example custom task with single required parameter
           <xs:attribute name="ConfigFile">
             <xs:annotation>
               <xs:documentation>The configuration file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Verbosity" type="msb:Hxb-Nuget-Verbosity-Enum">
+            <xs:annotation>
+              <xs:documentation>The verbosity of the command.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.NugetRestore" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the Nuget restore command.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="NugetExeFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The Nuget executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SolutionFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The solution file to restore packages for.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PackagesDir">
+            <xs:annotation>
+              <xs:documentation>The packages directory where restore packages to.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SourcesPaths">
+            <xs:annotation>
+              <xs:documentation>The sources paths to load packages from.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MsBuildVersion" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="NoCache" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Indicates whether disable using machine cache as the first package source.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Verbosity" type="msb:Hxb-Nuget-Verbosity-Enum">
@@ -1161,6 +1236,18 @@ Example custom task with single required parameter
       <xs:documentation>A path to the deployments directory to put Nuget packages, Web sites zips etc.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hxb-Build-Verbosity" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Common build verbosity for all targets and tasks.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="msb:Hxb-Build-Verbosity-Enum">
+          <xs:attribute name="Condition" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="Hxb-Build-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
@@ -1214,11 +1301,6 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hxb-FxCop-->
-  <xs:element name="Hxb-FxCop-In-IsVerbose" type="xs:boolean" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A value indicating whether the FxCop is verbose.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-FxCop-In-TargetsTypes" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The comma-separated types to analyze. It isables analysis of assemblies, namespaces, and resources.</xs:documentation>
@@ -1310,11 +1392,6 @@ Example custom task with single required parameter
       <xs:documentation>The API key.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NugetDeploy-In-Source" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The source path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-NugetDeploy-In-IncludeReferencedProjects" type="xs:boolean" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Indicates whether to include referenced projects.</xs:documentation>
@@ -1325,18 +1402,6 @@ Example custom task with single required parameter
       <xs:documentation>Indicates whether to exclude empty directories.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NugetDeploy-In-Verbosity" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The verbosity of the command.</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-Nuget-Verbosity-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
 
   <xs:element name="Hxb-NugetDeploy-In-Nuspecs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
@@ -1346,6 +1411,11 @@ Example custom task with single required parameter
   <xs:element name="Hxb-NugetDeploy-In-Projects" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The project files paths.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-NugetDeploy-In-Source" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The source path.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hxb-NugetDeploy-In-PackagesDir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
@@ -1361,6 +1431,30 @@ Example custom task with single required parameter
   <xs:element name="Hxb-NugetDeploy-Out-Packages" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The output packages files paths.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-NugetRestore-->
+  <xs:element name="Hxb-NugetRestore-In-MSBuildVersion" type="xs:int" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-NugetRestore-In-NoCache" type="xs:boolean" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Indicates whether disable using machine cache as the first package source.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hxb-NugetRestore-In-Sources" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The sources paths to load packages from.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-NugetRestore-In-Packages-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The packages directory where restore packages to.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
@@ -1395,18 +1489,6 @@ Example custom task with single required parameter
     <xs:annotation>
       <xs:documentation>The framework to use for tests. Examples: "mono", "net-4.5", "v4.0", "2.0", "mono-4.0".</xs:documentation>
     </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-NUnit-In-TraceLevel" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The trace level.</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-NUnit-TraceLevel-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
   </xs:element>
   <xs:element name="Hxb-NUnit-In-ProcessIsolation" substitutionGroup="msb:Property">
     <xs:annotation>

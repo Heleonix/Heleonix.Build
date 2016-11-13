@@ -39,7 +39,7 @@ SOFTWARE.
                                     ProjectFile="%(_Hxb-NugetDeploy-Nuspecs.Project)"
                                     ExcludeEmptyDirectories="$(Hxb-NugetDeploy-In-ExcludeEmptyDirectories)"
                                     IncludeReferencedProjects="$(Hxb-NugetDeploy-In-IncludeReferencedProjects)"
-                                    Verbosity="$(Hxb-NugetDeploy-In-Verbosity)"
+                                    Verbosity="$(Hxb-Build-Verbosity)"
                                     PackageDir="@(Hxb-NugetDeploy-In-PackagesDir)">
       <Output TaskParameter="PackageFile" ItemName="Hxb-NugetDeploy-Out-Packages"/>
     </Heleonix.Build.Tasks.NugetPack>
@@ -48,8 +48,8 @@ SOFTWARE.
                                     PackageFile="%(Hxb-NugetDeploy-Out-Packages.FullPath)"
                                     ApiKey="$(Hxb-NugetDeploy-In-ApiKey)"
                                     ConfigFile="@(Hxb-NugetDeploy-In-Config)"
-                                    SourcePath="$(Hxb-NugetDeploy-In-Source)"
-                                    Verbosity="$(Hxb-NugetDeploy-In-Verbosity)"/>
+                                    SourcePath="@(Hxb-NugetDeploy-In-Source)"
+                                    Verbosity="$(Hxb-Build-Verbosity)"/>
 
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>

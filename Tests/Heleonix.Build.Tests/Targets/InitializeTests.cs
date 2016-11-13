@@ -33,7 +33,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class InitializeTests : TargetTests
     {
-        #region Methods
+        #region Test Cases
 
         /// <summary>
         /// The test case source.

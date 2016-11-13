@@ -32,9 +32,9 @@ using NUnit.Framework;
 namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
-    /// Tests the Hxb-ReportUnit target.
+    /// Tests the Hxb-NugetRestore target.
     /// </summary>
-    public class ReportUnitTests : TargetTests
+    public class NugetRestoreTests : TargetTests
     {
         #region Test Cases
 
@@ -44,17 +44,14 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> TestCaseSource()
         {
-            yield return
-                new TargetTestCase
+            yield return new TargetTestCase
+            {
+                Items = new Dictionary<string, ITaskItem[]>
                 {
-                    Items = new Dictionary<string, ITaskItem[]>
-                    {
-                        { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.NUnitConsoleExe) } },
-                        { "Hxb-System-ReportUnitExe", new ITaskItem[] { new TaskItem(PathHelper.ReportUnitExe) } }
-                    },
-                    DependsOnTargets = "Hxb-NUnit",
-                    Result = true
-                };
+                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
+                },
+                Result = true
+            };
         }
 
         #endregion
@@ -62,19 +59,32 @@ namespace Heleonix.Build.Tests.Targets
         #region Tests
 
         /// <summary>
-        /// Tests the Hxb-NUnit target.
+        /// Tests the Hxb-NugetDeploy target.
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]
         public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
         {
+            var packagesDir = Path.Combine(LibSimulatorHelper.SolutionDir, "packages");
+
+            if (Directory.Exists(packagesDir))
+            {
+                Directory.Delete(packagesDir, true);
+            }
+
             try
             {
                 ExecuteTest(CIType.Jenkins, testCases);
+
+                Assert.That(Directory.Exists(packagesDir), Is.True);
+                Assert.That(Directory.GetDirectories(packagesDir), Is.Not.Empty);
             }
             finally
             {
-                Directory.Delete(LibSimulatorHelper.ReportsDir, true);
+                if (Directory.Exists(packagesDir))
+                {
+                    Directory.Delete(packagesDir, true);
+                }
             }
         }
 
@@ -90,7 +100,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <summary>
         /// Gets or sets the name of the target.
         /// </summary>
-        protected override string TargetName => "Hxb-ReportUnit";
+        protected override string TargetName => "Hxb-NugetRestore";
 
         #endregion
     }

@@ -69,6 +69,11 @@ namespace Heleonix.Build.Tests.Common
         public static string CurrentConfiguration => Path.GetFileName(PathHelper.CurrentDir);
 
         /// <summary>
+        /// Gets the MSBuild version.
+        /// </summary>
+        public static int MsBuildVersion => 14;
+
+        /// <summary>
         /// Gets the MSBuild executable path.
         /// </summary>
         /// <exception cref="NotSupportedException">Current OS platform is not supported.</exception>

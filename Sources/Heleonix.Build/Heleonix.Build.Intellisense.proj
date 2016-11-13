@@ -64,6 +64,8 @@ SOFTWARE.
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetRestore" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetRestore" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="Heleonix.Build.dll"/>
@@ -116,6 +118,7 @@ SOFTWARE.
     <Hxb-Build-Deployments-Dir></Hxb-Build-Deployments-Dir>
     <Hxb-Build-Sln-Dir></Hxb-Build-Sln-Dir>
     <Hxb-Build-Sln-File></Hxb-Build-Sln-File>
+    <Hxb-Build-Verbosity></Hxb-Build-Verbosity>
   </PropertyGroup>
 
   <ItemGroup>
@@ -164,7 +167,6 @@ SOFTWARE.
   <!--Region Target: Hxb-FxCop-->
   <Target Name="Hxb-FxCop">
     <PropertyGroup>
-      <Hxb-FxCop-In-IsVerbose>true</Hxb-FxCop-In-IsVerbose>
       <Hxb-FxCop-In-TargetsTypes></Hxb-FxCop-In-TargetsTypes>
       <Hxb-FxCop-In-FailOn>CriticalErrors</Hxb-FxCop-In-FailOn>
       <Hxb-FxCop-Out-CriticalErrors>0</Hxb-FxCop-Out-CriticalErrors>
@@ -191,10 +193,8 @@ SOFTWARE.
   <Target Name="Hxb-NugetDeploy">
     <PropertyGroup>
       <Hxb-NugetDeploy-In-ApiKey></Hxb-NugetDeploy-In-ApiKey>
-      <Hxb-NugetDeploy-In-Source></Hxb-NugetDeploy-In-Source>
       <Hxb-NugetDeploy-In-IncludeReferencedProjects>true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
       <Hxb-NugetDeploy-In-ExcludeEmptyDirectories>true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
-      <Hxb-NugetDeploy-In-Verbosity>Normal</Hxb-NugetDeploy-In-Verbosity>
     </PropertyGroup>
 
     <ItemGroup>
@@ -202,7 +202,22 @@ SOFTWARE.
       <Hxb-NugetDeploy-In-Projects Include="0"/>
       <Hxb-NugetDeploy-In-PackagesDir Include="0"/>
       <Hxb-NugetDeploy-In-Config Include="0"/>
+      <Hxb-NugetDeploy-In-Source Include="0"/>
       <Hxb-NugetDeploy-Out-Packages Include="0"/>
+    </ItemGroup>
+  </Target>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-NugetRestore-->
+  <Target Name="Hxb-NugetRestore">
+    <PropertyGroup>
+      <Hxb-NugetRestore-In-MSBuildVersion>14</Hxb-NugetRestore-In-MSBuildVersion>
+      <Hxb-NugetRestore-In-NoCache>true</Hxb-NugetRestore-In-NoCache>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-NugetRestore-In-Sources Include="0"/>
+      <Hxb-NugetRestore-In-Packages-Dir Include="0"/>
     </ItemGroup>
   </Target>
   <!--Endregion-->
@@ -216,7 +231,6 @@ SOFTWARE.
       <Hxb-NUnit-In-StopOnErrorOrFailedTest>false</Hxb-NUnit-In-StopOnErrorOrFailedTest>
       <Hxb-NUnit-In-UseTeamCityServiceMessages>false</Hxb-NUnit-In-UseTeamCityServiceMessages>
       <Hxb-NUnit-In-Framework></Hxb-NUnit-In-Framework>
-      <Hxb-NUnit-In-TraceLevel>Error</Hxb-NUnit-In-TraceLevel>
       <Hxb-NUnit-In-ProcessIsolation>Separate</Hxb-NUnit-In-ProcessIsolation>
       <Hxb-NUnit-In-DomainIsolation>Multiple</Hxb-NUnit-In-DomainIsolation>
       <Hxb-NUnit-In-ShadowCopy>false</Hxb-NUnit-In-ShadowCopy>

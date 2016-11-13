@@ -107,10 +107,10 @@ namespace Heleonix.Build.Tasks
             var args = ArgsBuilder.By(' ', ' ')
                 .Add("pack", ProjectFile.ItemSpec, true)
                 .Add("-OutputDirectory", tempOutputDir, true)
-                .Add("-NonInteractive")
                 .Add("-IncludeReferencedProjects", false, IncludeReferencedProjects)
                 .Add("-ExcludeEmptyDirectories", false, ExcludeEmptyDirectories)
-                .Add("-Verbosity", Verbosity);
+                .Add("-Verbosity", Verbosity, !string.IsNullOrEmpty(Verbosity))
+                .Add("-NonInteractive");
 
             Log.LogMessage($"Packing '{ProjectFile.ItemSpec}' using '{NuspecFile.ItemSpec}'.");
 

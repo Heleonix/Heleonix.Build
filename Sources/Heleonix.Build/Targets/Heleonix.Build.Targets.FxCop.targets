@@ -28,10 +28,15 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-FxCop" DependsOnTargets="Hxb-Rebuild">
+    <PropertyGroup>
+      <_Hxb-FxCop-IsVerbose>false</_Hxb-FxCop-IsVerbose>
+      <_Hxb-FxCop-IsVerbose Condition="'$(Hxb-Build-Verbosity)' == 'Detailed'">true</_Hxb-FxCop-IsVerbose>
+    </PropertyGroup>
+
     <Heleonix.Build.Tasks.FxCop FxCopCmdFile="@(Hxb-System-FxCopCmd)"
                                 AnalysisResultFile="@(Hxb-FxCop-In-AnalysisResult)"
                                 AnalysisResultsXslFile="@(Hxb-FxCop-In-AnalysisResultsXsl)"
-                                IsVerbose="$(Hxb-FxCop-In-IsVerbose)"
+                                IsVerbose="$(_Hxb-FxCop-IsVerbose)"
                                 DependenciesDirs="@(Hxb-FxCop-In-Dependencies-Dirs)"
                                 DictionaryFile="@(Hxb-FxCop-In-Dictionary)"
                                 ProjectFile="@(Hxb-FxCop-In-Project)"

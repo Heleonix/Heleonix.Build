@@ -82,7 +82,7 @@ namespace Heleonix.Build.Tasks
             else
             {
                 output = Regex.Replace(input, RegEx, Replacement ?? string.Empty,
-                    (RegexOptions) Enum.Parse(typeof (RegexOptions), RegExOptions, true));
+                    (RegexOptions) Enum.Parse(typeof(RegexOptions), RegExOptions, true));
             }
 
             Log.LogMessage($"Updating file '{File.ItemSpec}'.");

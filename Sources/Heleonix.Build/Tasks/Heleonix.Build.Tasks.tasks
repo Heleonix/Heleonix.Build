@@ -35,6 +35,7 @@ SOFTWARE.
   <UsingTask TaskName="Heleonix.Build.Tasks.ItemSet" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPack" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="..\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetRestore" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="..\Heleonix.Build.dll"/>
