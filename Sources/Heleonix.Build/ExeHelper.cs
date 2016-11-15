@@ -29,7 +29,7 @@ namespace Heleonix.Build
     /// <summary>
     /// Provides functionality for working with executables.
     /// </summary>
-    internal static class ExeHelper
+    public static class ExeHelper
     {
         #region Methods
 

@@ -23,13 +23,7 @@ SOFTWARE.
 */
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Heleonix.Build")]
 [assembly: Guid("baa6af87-a6cb-4049-9c00-36b31e28b192")]
-
-#if DEBUG || CI
-
-[assembly: InternalsVisibleTo("Heleonix.Build.Tests")]
-#endif

@@ -30,7 +30,7 @@ namespace Heleonix.Build
     /// <summary>
     /// Builder for arguments to be passed to executable commands.
     /// </summary>
-    internal class ArgsBuilder
+    public class ArgsBuilder
     {
         #region Fields
 
