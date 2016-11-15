@@ -40,11 +40,11 @@ SOFTWARE.
   <ItemGroup>
     <Hxb-System-FxCopCmd
       Include="$(MSBuildProgramFiles32)\Microsoft Visual Studio $(MSBuildToolsVersion)\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"/>
-    <Hxb-System-NUnitConsoleExe Include="..\..\NUnit.ConsoleRunner.*\tools\nunit3-console.exe"/>
-    <Hxb-System-ReportUnitExe Include="..\..\ReportUnit.*\tools\ReportUnit.exe'))"/>
-    <Hxb-System-OpenCoverConsoleExe Include="\..\..\OpenCover.*\tools\OpenCover.Console.exe"/>
-    <Hxb-System-ReportGeneratorExe Include="..\..\ReportGenerator.*\tools\ReportGenerator.exe"/>
-    <Hxb-System-NugetExe Include="\..\..\NuGet.CommandLine.*\tools\NuGet.exe"/>
+    <Hxb-System-NUnitConsoleExe Include="$(MSBuildThisFileDirectory)..\..\NUnit.ConsoleRunner.*\tools\nunit3-console.exe"/>
+    <Hxb-System-ReportUnitExe Include="$(MSBuildThisFileDirectory)..\..\ReportUnit.*\tools\ReportUnit.exe'))"/>
+    <Hxb-System-OpenCoverConsoleExe Include="$(MSBuildThisFileDirectory)..\..\OpenCover.*\tools\OpenCover.Console.exe"/>
+    <Hxb-System-ReportGeneratorExe Include="$(MSBuildThisFileDirectory)..\..\ReportGenerator.*\tools\ReportGenerator.exe"/>
+    <Hxb-System-NugetExe Include="$(MSBuildThisFileDirectory)..\..\NuGet.CommandLine.*\tools\NuGet.exe"/>
     <Hxb-System-GitExe Include="C:\Program Files\Git\cmd\git.exe"/>
     <Hxb-System-SvnExe Include="C:\Program Files\TortoiseSVN\bin\svn.exe"/>
   </ItemGroup>
