@@ -27,6 +27,10 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-NugetRestore">
+    <RemoveDir Directories="@(Hxb-NugetRestore-In-Packages-Dir)" ContinueOnError="true"/>
+    <RemoveDir Directories="@(Hxb-NugetRestore-In-Packages-Dir)" ContinueOnError="true"/>
+    <RemoveDir Directories="@(Hxb-NugetRestore-In-Packages-Dir)" ContinueOnError="true"/>
+
     <Heleonix.Build.Tasks.NugetRestore NugetExeFile="@(Hxb-System-NugetExe)"
                                        SolutionFile="@(Hxb-Build-Sln)"
                                        SourcesPaths="@(Hxb-NugetRestore-In-Sources)"

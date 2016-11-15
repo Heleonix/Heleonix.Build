@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <!--
 The MIT License (MIT)
 
@@ -25,8 +24,14 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
+  <Import Project="Sources\Heleonix.Build\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-CI-DotNet" DependsOnTargets="Hxb-OpenCover;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
+  <Target Name="Hxb-OpenCover-Before-Conventions-Custom" BeforeTargets="Hxb-OpenCover">
+    <PropertyGroup>
+      <Hxb-OpenCover-In-MinClassCoverage>70</Hxb-OpenCover-In-MinClassCoverage>
+      <Hxb-OpenCover-In-MinMethodCoverage>70</Hxb-OpenCover-In-MinMethodCoverage>
+      <Hxb-OpenCover-In-MinBranchCoverage>70</Hxb-OpenCover-In-MinBranchCoverage>
+      <Hxb-OpenCover-In-MinLineCoverage>70</Hxb-OpenCover-In-MinLineCoverage>
+    </PropertyGroup>
+  </Target>
 </Project>

@@ -78,7 +78,7 @@ namespace Heleonix.Build
         public static int Execute(string exePath, string arguments, out string output,
             out string error, string workingDirectory = "")
         {
-            var process = Process.Start(new ProcessStartInfo
+            using (var process = Process.Start(new ProcessStartInfo
             {
                 Arguments = arguments,
                 FileName = exePath,
@@ -88,28 +88,29 @@ namespace Heleonix.Build
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
-            });
-
-            if (process == null)
+            }))
             {
-                output = null;
-                error = null;
+                if (process == null)
+                {
+                    output = null;
+                    error = null;
 
-                return int.MaxValue;
+                    return int.MaxValue;
+                }
+
+                output = process.StandardOutput.ReadToEnd();
+
+                error = process.StandardError.ReadToEnd();
+
+                var exited = process.WaitForExit(int.MaxValue);
+
+                if (!exited)
+                {
+                    process.Kill();
+                }
+
+                return process.ExitCode;
             }
-
-            output = process.StandardOutput.ReadToEnd();
-
-            error = process.StandardError.ReadToEnd();
-
-            var exited = process.WaitForExit(int.MaxValue);
-
-            if (!exited)
-            {
-                process.Kill();
-            }
-
-            return process.ExitCode;
         }
 
         #endregion

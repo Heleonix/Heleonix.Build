@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class OpenCoverTests : TargetTests
     {
-        #region Test Cases
+        #region Tests
 
         /// <summary>
         /// The test case source.
@@ -55,6 +55,7 @@ namespace Heleonix.Build.Tests.Targets
                 },
                 Items = new Dictionary<string, ITaskItem[]>
                 {
+                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
                     { "Hxb-System-OpenCoverConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.OpenCoverExe) } },
                     {
                         "Hxb-OpenCover-In-Target",
@@ -70,13 +71,10 @@ namespace Heleonix.Build.Tests.Targets
                         }
                     }
                 },
+                DependsOnTargets = "Hxb-NugetRestore",
                 Result = true
             };
         }
-
-        #endregion
-
-        #region Tests
 
         /// <summary>
         /// Tests the Hxb-OpenCover target.

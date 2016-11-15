@@ -35,7 +35,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class RebuildTests : TargetTests
     {
-        #region Test Cases
+        #region Tests
 
         /// <summary>
         /// The test case source.
@@ -43,20 +43,26 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> TestCaseSource()
         {
-            yield return new TargetTestCase { Result = true };
             yield return new TargetTestCase
             {
                 Items = new Dictionary<string, ITaskItem[]>
                 {
+                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
+                },
+                DependsOnTargets = "Hxb-NugetRestore",
+                Result = true
+            };
+            yield return new TargetTestCase
+            {
+                Items = new Dictionary<string, ITaskItem[]>
+                {
+                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
                     { "Hxb-Rebuild-In-SnkPair", new[] { new TaskItem(PathHelper.SnkPair) as ITaskItem } }
                 },
+                DependsOnTargets = "Hxb-NugetRestore",
                 Result = true
             };
         }
-
-        #endregion
-
-        #region Tests
 
         /// <summary>
         /// Tests the Hxb-Rebuild target.

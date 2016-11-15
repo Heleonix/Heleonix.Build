@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class NugetDeployTests : TargetTests
     {
-        #region Test Cases
+        #region Tests
 
         /// <summary>
         /// The test case source.
@@ -50,13 +50,10 @@ namespace Heleonix.Build.Tests.Targets
                 {
                     { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
                 },
+                DependsOnTargets = "Hxb-NugetRestore",
                 Result = true
             };
         }
-
-        #endregion
-
-        #region Tests
 
         /// <summary>
         /// Tests the Hxb-NugetDeploy target.

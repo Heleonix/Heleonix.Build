@@ -31,7 +31,7 @@ SOFTWARE.
 
   <PropertyGroup>
     <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">Release</Hxb-In-Configuration>
-    <Hxb-Setup-Sln-Flows>$(Hxb-System-Workspace-Dir)\Build.Flows.proj</Hxb-Setup-Sln-Flows>
+    <Hxb-Setup-Sln-Flows>$(Hxb-System-Workspace-Dir)\Build.proj</Hxb-Setup-Sln-Flows>
   </PropertyGroup>
 
   <Target Name="Hxb-Initialize-Before-Conventions" BeforeTargets="Hxb-Initialize">

@@ -33,7 +33,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class InitializeTests : TargetTests
     {
-        #region Test Cases
+        #region Tests
 
         /// <summary>
         /// The test case source.
@@ -43,10 +43,6 @@ namespace Heleonix.Build.Tests.Targets
         {
             yield return new TargetTestCase { Result = true };
         }
-
-        #endregion
-
-        #region Tests
 
         /// <summary>
         /// Tests the Hxb-Initialize target.

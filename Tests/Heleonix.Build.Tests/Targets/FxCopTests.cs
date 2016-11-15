@@ -25,6 +25,8 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
+using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -34,7 +36,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class FxCopTests : TargetTests
     {
-        #region Test Cases
+        #region Tests
 
         /// <summary>
         /// The test case source.
@@ -42,12 +44,16 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> TestCaseSource()
         {
-            yield return new TargetTestCase { Result = true };
+            yield return new TargetTestCase
+            {
+                Items = new Dictionary<string, ITaskItem[]>
+                {
+                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
+                },
+                DependsOnTargets = "Hxb-NugetRestore",
+                Result = true
+            };
         }
-
-        #endregion
-
-        #region Tests
 
         /// <summary>
         /// Tests the Hxb-FxCop target.

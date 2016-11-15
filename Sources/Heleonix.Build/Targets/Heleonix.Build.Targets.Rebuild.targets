@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Rebuild">
+  <Target Name="Hxb-Rebuild" DependsOnTargets="Hxb-NugetRestore">
     <!--Validation-->
     <Error Condition="'$(Hxb-Rebuild-In-Outputs-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-RegEx' is not defined."/>
     <Message Condition="'$(Hxb-Rebuild-In-Outputs-Tests-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-Tests-RegEx' is not defined."/>

@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public class NUnitTests : TargetTests
     {
-        #region Test Cases
+        #region Tests
 
         /// <summary>
         /// The test case source.
@@ -49,15 +49,13 @@ namespace Heleonix.Build.Tests.Targets
                 {
                     Items = new Dictionary<string, ITaskItem[]>
                     {
+                        { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
                         { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.NUnitConsoleExe) } }
                     },
+                    DependsOnTargets = "Hxb-NugetRestore",
                     Result = true
                 };
         }
-
-        #endregion
-
-        #region Tests
 
         /// <summary>
         /// Tests the Hxb-NUnit target.

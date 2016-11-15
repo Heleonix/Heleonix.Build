@@ -86,7 +86,7 @@ namespace Heleonix.Build.Tests.Targets
             overrides.Save(overridesFilePath);
 
             var props = ArgsBuilder.By(';', '=')
-                .Add("Hxb-In-Flow", testCases.DependsOnTargets + ";" + TargetName, true)
+                .Add("Hxb-In-Flow", (testCases.DependsOnTargets + ";" + TargetName).Trim(';'), true)
                 .Add("Hxb-In-Configuration", MsBuildHelper.CurrentConfiguration)
                 .Add("Hxb-In-Overrides", overridesFilePath, true)
                 .Add("BUILD_NUMBER", "123");
