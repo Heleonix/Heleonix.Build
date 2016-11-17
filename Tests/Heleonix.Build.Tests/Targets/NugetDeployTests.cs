@@ -69,6 +69,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 Console.WriteLine($"-------{AppDomain.CurrentDomain.BaseDirectory}----------");
                 Console.WriteLine($"-------{PathHelper.CurrentDir}----------");
+                Console.WriteLine($"-------{MsBuildHelper.CurrentConfiguration}----------");
                 Console.WriteLine($"-------{LibSimulatorHelper.NugetDeploymentDir}----------");
 
                 Directory.CreateDirectory(tempSource);
