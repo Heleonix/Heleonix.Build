@@ -46,7 +46,7 @@ namespace Heleonix.Build.Tasks
         internal static string BuildArgs(ITaskItem item)
         {
             return ArgsBuilder.By(' ', '=')
-                .Add(item.GetMetadata(nameof(NUnitProjectOrTestsFiles)).Replace(";", " "), true)
+                .Add(item.GetMetadata(nameof(NUnitProjectOrTestsFiles)).Replace(";", "\" \""), true)
                 .Add("--result", item.GetMetadata(nameof(TestsResultFile)), true)
                 .Add("--noresult", false, item.GetMetadata(nameof(TestsResultFile)) == null)
                 .Add("--testlist", item.GetMetadata(nameof(TestsListFile)), true)
