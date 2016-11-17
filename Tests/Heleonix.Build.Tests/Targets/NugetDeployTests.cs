@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
@@ -66,6 +67,8 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
+                Console.WriteLine($"-------{LibSimulatorHelper.NugetDeploymentDir}----------");
+
                 Directory.CreateDirectory(tempSource);
 
                 var exitCode = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
