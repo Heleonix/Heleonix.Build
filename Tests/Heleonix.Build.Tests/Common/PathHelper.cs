@@ -37,7 +37,7 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the current directory path.
         /// </summary>
-        public static string CurrentDir => AppDomain.CurrentDomain.BaseDirectory;
+        public static string CurrentDir => AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
 
         /// <summary>
         /// Gets the SNK pair file path.

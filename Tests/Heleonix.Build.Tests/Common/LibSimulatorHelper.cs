@@ -75,8 +75,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the out directory path.
         /// </summary>
         public static string OutDir => Path.Combine(SolutionDir, "Sources",
-            Path.GetFileName(SolutionDir), "bin",
-            Path.GetFileNameWithoutExtension(PathHelper.CurrentDir) ?? string.Empty);
+            Path.GetFileName(SolutionDir), "bin", MsBuildHelper.CurrentConfiguration ?? string.Empty);
 
         /// <summary>
         /// Gets the solution directory path.
