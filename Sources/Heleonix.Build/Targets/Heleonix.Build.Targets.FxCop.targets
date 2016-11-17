@@ -43,7 +43,8 @@ SOFTWARE.
                                 RulesFilesDirs="@(Hxb-FxCop-In-Rules-FilesDirs)"
                                 RulesetFile="@(Hxb-FxCop-In-Ruleset)"
                                 TargetsFilesDirs="@(Hxb-FxCop-In-Targets-FilesDirs)"
-                                TargetsTypes="$(Hxb-FxCop-In-TargetsTypes)">
+                                TargetsTypes="$(Hxb-FxCop-In-TargetsTypes)"
+                                FailOn="$(Hxb-FxCop-In-FailOn)">
       <Output TaskParameter="CriticalErrors" ItemName="Hxb-FxCop-Out-CriticalErrors"/>
       <Output TaskParameter="Errors" ItemName="Hxb-FxCop-Out-Errors"/>
       <Output TaskParameter="CriticalWarnings" ItemName="Hxb-FxCop-Out-CriticalWarnings"/>

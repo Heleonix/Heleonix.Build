@@ -39,7 +39,7 @@ namespace Heleonix.Build.Tests.Targets
         /// The test case source.
         /// </summary>
         /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> TestCaseSource()
+        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
             yield return new TargetTestCase { Result = true };
         }
@@ -51,7 +51,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <param name="testCases">The test cases.</param>
         [Test]
         public void Execute([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType,
-            [ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+            [ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
         {
             ExecuteTest(ciType, testCases);
         }

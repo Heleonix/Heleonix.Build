@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
@@ -43,7 +42,7 @@ namespace Heleonix.Build.Tests.Targets
         /// The test case source.
         /// </summary>
         /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> TestCaseSource()
+        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
             yield return new TargetTestCase
             {
@@ -61,17 +60,12 @@ namespace Heleonix.Build.Tests.Targets
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+        public void Execute([ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
         {
             var tempSource = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
 
             try
             {
-                Console.WriteLine($"-------{AppDomain.CurrentDomain.BaseDirectory}----------");
-                Console.WriteLine($"-------{PathHelper.CurrentDir}----------");
-                Console.WriteLine($"-------{MsBuildHelper.CurrentConfiguration}----------");
-                Console.WriteLine($"-------{LibSimulatorHelper.NugetDeploymentDir}----------");
-
                 Directory.CreateDirectory(tempSource);
 
                 var exitCode = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");

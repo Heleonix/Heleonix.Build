@@ -171,32 +171,32 @@ namespace Heleonix.Build.Tasks
             /// <summary>
             /// No issues.
             /// </summary>
-            None = 0,
+            None = 1,
 
             /// <summary>
             /// The critical errors.
             /// </summary>
-            CriticalErrors = 1,
+            CriticalErrors = 2,
 
             /// <summary>
             /// The errors.
             /// </summary>
-            Errors = 2,
+            Errors = 4,
 
             /// <summary>
             /// The critical warnings.
             /// </summary>
-            CriticalWarnings = 4,
+            CriticalWarnings = 8,
 
             /// <summary>
             /// The warnings.
             /// </summary>
-            Warnings = 8,
+            Warnings = 16,
 
             /// <summary>
             /// The informational.
             /// </summary>
-            Informational = 16,
+            Informational = 32,
 
             /// <summary>
             /// Any type of the issue.
@@ -288,7 +288,7 @@ namespace Heleonix.Build.Tasks
 
                 var failOn = string.IsNullOrEmpty(FailOn)
                     ? IssueTypes.Any
-                    : (IssueTypes) Enum.Parse(typeof (IssueTypes), FailOn);
+                    : (IssueTypes) Enum.Parse(typeof(IssueTypes), FailOn);
 
                 if (failOn.HasFlag(IssueTypes.None))
                 {

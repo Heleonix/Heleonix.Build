@@ -42,10 +42,27 @@ namespace Heleonix.Build.Tests.Targets
         /// The test case source.
         /// </summary>
         /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> TestCaseSource()
+        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
             yield return new TargetTestCase
             {
+                Properties = new Dictionary<string, string>
+                {
+                    { "Hxb-FxCop-In-FailOn", "Any" }
+                },
+                Items = new Dictionary<string, ITaskItem[]>
+                {
+                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
+                },
+                DependsOnTargets = "Hxb-NugetRestore",
+                Result = false
+            };
+            yield return new TargetTestCase
+            {
+                Properties = new Dictionary<string, string>
+                {
+                    { "Hxb-FxCop-In-FailOn", "None" }
+                },
                 Items = new Dictionary<string, ITaskItem[]>
                 {
                     { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
@@ -60,7 +77,7 @@ namespace Heleonix.Build.Tests.Targets
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+        public void Execute([ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
         {
             try
             {

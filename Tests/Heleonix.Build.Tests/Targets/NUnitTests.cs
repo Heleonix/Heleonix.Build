@@ -42,7 +42,7 @@ namespace Heleonix.Build.Tests.Targets
         /// The test case source.
         /// </summary>
         /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> TestCaseSource()
+        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
             yield return
                 new TargetTestCase
@@ -62,7 +62,7 @@ namespace Heleonix.Build.Tests.Targets
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+        public void Execute([ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
         {
             try
             {

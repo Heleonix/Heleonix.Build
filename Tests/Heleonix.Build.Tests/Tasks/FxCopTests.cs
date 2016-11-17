@@ -58,7 +58,7 @@ namespace Heleonix.Build.Tests.Tasks
                     ? new TaskItem(Path.Combine(Path.GetDirectoryName(PathHelper.FxCopExe) ?? string.Empty, "Xml",
                         "CodeAnalysisReport.xsl"))
                     : null,
-                FailOn = "CriticalErrors"
+                FailOn = failOn.ToString()
             };
 
             var succeeded = task.Execute();
@@ -75,6 +75,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     Assert.That(succeeded, Is.False);
                 }
+
                 Assert.That(analysisResultsExists, Is.True);
             }
             finally
