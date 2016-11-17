@@ -96,8 +96,8 @@ SOFTWARE.
 
   <Target Name="Hxb-Rebuild-Before-Conventions" BeforeTargets="Hxb-Rebuild">
     <PropertyGroup>
-      <Hxb-Rebuild-In-Outputs-RegEx>^((?!%(Hxb-Build-Sln.Filename).*\.Tests\.dll).)*$</Hxb-Rebuild-In-Outputs-RegEx>
-      <Hxb-Rebuild-In-Outputs-Tests-RegEx>^.+%(Hxb-Build-Sln.Filename).*\.Tests\.dll$</Hxb-Rebuild-In-Outputs-Tests-RegEx>
+      <Hxb-Rebuild-In-Outputs-RegEx>^((?!%(Hxb-Build-Sln.Filename)[a-zA-Z0-9.]*\.Tests\.dll).)*$</Hxb-Rebuild-In-Outputs-RegEx>
+      <Hxb-Rebuild-In-Outputs-Tests-RegEx>^.+%(Hxb-Build-Sln.Filename)[a-zA-Z0-9.]*\.Tests\.dll$</Hxb-Rebuild-In-Outputs-Tests-RegEx>
     </PropertyGroup>
   </Target>
 
