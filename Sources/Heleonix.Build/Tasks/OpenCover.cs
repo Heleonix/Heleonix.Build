@@ -103,6 +103,20 @@ namespace Heleonix.Build.Tasks
         public int MaxVisitCount { get; set; }
 
         /// <summary>
+        /// The type of registration of the OpenCover profiler.
+        /// </summary>
+        /// <remarks>
+        /// Possible values:
+        /// <list type="bullet">
+        /// <item><term>auto</term></item>
+        /// <item><term>user</term></item>
+        /// <item><term>path32</term></item>
+        /// <item><term>path64</term></item>
+        /// </list>
+        /// </remarks>
+        public string Register { get; set; }
+
+        /// <summary>
         /// [Output] The total lines count.
         /// </summary>
         [Output]
@@ -217,7 +231,6 @@ namespace Heleonix.Build.Tasks
                 .Add("-filter", Filters, true)
                 .Add("-mergebyhash")
                 .Add("-output", CoverageResultFile.ItemSpec, true)
-                .Add("-register", "path64")
                 .Add("-skipautoprops")
                 .Add("-searchdirs", "\\\"" + string.Join("\\\";", PdbSearchDirs?.Select(i => i.ItemSpec)
                                                                   ?? Enumerable.Empty<string>()) + "\\\"", true,
@@ -225,6 +238,14 @@ namespace Heleonix.Build.Tasks
                 .Add("-showunvisited", false, ShowUnvisited)
                 .Add("-returntargetcode")
                 .Add("-threshold", MaxVisitCount, false, MaxVisitCount > 0);
+            if (Register == "auto")
+            {
+                args.Add("-register");
+            }
+            else
+            {
+                args.Add("-register", Register, false, !string.IsNullOrEmpty(Register));
+            }
 
             // OpenCover does not create a directory for coverage result file.
             if (!Directory.Exists(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty))

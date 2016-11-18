@@ -39,7 +39,8 @@ SOFTWARE.
                                     MinBranchCoverage="$(Hxb-OpenCover-In-MinBranchCoverage)"
                                     MinLineCoverage="$(Hxb-OpenCover-In-MinLineCoverage)"
                                     MaxVisitCount="$(Hxb-OpenCover-In-MaxVisitCount)"
-                                    ShowUnvisited="$(Hxb-OpenCover-In-ShowUnvisited)">
+                                    ShowUnvisited="$(Hxb-OpenCover-In-ShowUnvisited)"
+                                    Register="$(Hxb-OpenCover-In-Register)">
       <Output TaskParameter="ClassCoverage" PropertyName="Hxb-OpenCover-Out-ClassCoverage"/>
       <Output TaskParameter="BranchCoverage" PropertyName="Hxb-OpenCover-Out-BranchCoverage"/>
       <Output TaskParameter="LineCoverage" PropertyName="Hxb-OpenCover-Out-LineCoverage"/>

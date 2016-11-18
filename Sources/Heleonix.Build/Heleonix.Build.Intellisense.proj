@@ -119,7 +119,8 @@ SOFTWARE.
     <Hxb-Build-Deployments-Dir></Hxb-Build-Deployments-Dir>
     <Hxb-Build-Sln-Dir></Hxb-Build-Sln-Dir>
     <Hxb-Build-Sln-File></Hxb-Build-Sln-File>
-    <Hxb-Build-Verbosity></Hxb-Build-Verbosity>
+    <Hxb-Build-Sln-Name></Hxb-Build-Sln-Name>
+    <Hxb-Build-Verbosity>Quiet</Hxb-Build-Verbosity>
   </PropertyGroup>
 
   <ItemGroup>
@@ -268,6 +269,7 @@ SOFTWARE.
       <Hxb-OpenCover-In-ExcludeByAttributeFilters></Hxb-OpenCover-In-ExcludeByAttributeFilters>
       <Hxb-OpenCover-In-Filters></Hxb-OpenCover-In-Filters>
       <Hxb-OpenCover-In-ShowUnvisited>true</Hxb-OpenCover-In-ShowUnvisited>
+      <Hxb-OpenCover-In-Register>user</Hxb-OpenCover-In-Register>
       <Hxb-OpenCover-In-MaxVisitCount>0</Hxb-OpenCover-In-MaxVisitCount>
       <Hxb-OpenCover-Out-TotalLines>0</Hxb-OpenCover-Out-TotalLines>
       <Hxb-OpenCover-Out-VisitedLines>0</Hxb-OpenCover-Out-VisitedLines>

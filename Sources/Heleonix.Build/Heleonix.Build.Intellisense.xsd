@@ -162,6 +162,14 @@ Example custom property of type of custom enum
       <xs:enumeration value="NUnit"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="Hxb-OpenCover-Register-Enum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="auto"/>
+      <xs:enumeration value="user"/>
+      <xs:enumeration value="path32"/>
+      <xs:enumeration value="path64"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="Hxb-ItemCombine-Operation-Enum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Pairing"/>
@@ -953,6 +961,11 @@ Example custom property of type of custom enum
               <xs:documentation>Show unvisited methods and classes after coverage finishes and results are presented.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="Register" type="msb:Hxb-OpenCover-Register-Enum">
+            <xs:annotation>
+              <xs:documentation>The type of registration of the OpenCover profiler.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="MaxVisitCount" type="xs:int">
             <xs:annotation>
               <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
@@ -1224,6 +1237,11 @@ Example custom property of type of custom enum
   <xs:element name="Hxb-Build-Sln-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Build-Sln-Name" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A name of the solution without file extension.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hxb-Build-Reports-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
@@ -1638,6 +1656,18 @@ Example custom property of type of custom enum
     <xs:annotation>
       <xs:documentation>Show unvisited methods and classes after coverage finishes and results are presented.</xs:documentation>
     </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-OpenCover-In-Register" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The type of registration of the OpenCover profiler.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="msb:Hxb-OpenCover-Register-Enum">
+          <xs:attribute name="Condition" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
   </xs:element>
   <xs:element name="Hxb-OpenCover-In-MaxVisitCount" type="xs:int" substitutionGroup="msb:Property">
     <xs:annotation>
