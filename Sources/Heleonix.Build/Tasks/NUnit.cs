@@ -53,8 +53,8 @@ namespace Heleonix.Build.Tasks
                 .Add("--where", item.GetMetadata(nameof(TestsFilter)))
                 .Add("--params", item.GetMetadata(nameof(TestsParameters)))
                 .Add("--agents", item.GetMetadata(nameof(AgentsNumber)))
-                .Add("--stoponerror", false, item.GetMetadata(nameof(StopOnErrorOrFailedTest)) == "True")
-                .Add("--teamcity", false, item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "True")
+                .Add("--stoponerror", false, item.GetMetadata(nameof(StopOnErrorOrFailedTest)) == "true")
+                .Add("--teamcity", false, item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "true")
                 .Add("--trace", item.GetMetadata(nameof(TraceLevel)))
                 .Add("--output", item.GetMetadata(nameof(TestsOutputFile)), true)
                 .Add("--err", item.GetMetadata(nameof(ErrorsOutputFile)), true)
@@ -62,7 +62,7 @@ namespace Heleonix.Build.Tasks
                 .Add("--config", item.GetMetadata(nameof(Configuration)))
                 .Add("--process", item.GetMetadata(nameof(ProcessIsolation)))
                 .Add("--domain", item.GetMetadata(nameof(DomainIsolation)))
-                .Add("--shadowcopy", false, !string.IsNullOrEmpty(item.GetMetadata(nameof(ShadowCopy))));
+                .Add("--shadowcopy", false, item.GetMetadata(nameof(ShadowCopy)) == "true");
         }
 
         /// <summary>

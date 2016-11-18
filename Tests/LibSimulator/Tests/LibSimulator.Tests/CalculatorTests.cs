@@ -24,7 +24,7 @@ SOFTWARE.
 
 using NUnit.Framework;
 
-namespace Heleonix.Build.Tests.LibSimulator.Tests
+namespace LibSimulator.Tests
 {
     /// <summary>
     /// Tests the <see cref="Calculator"/>

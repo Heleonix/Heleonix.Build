@@ -217,7 +217,7 @@ namespace Heleonix.Build.Tasks
                 .Add("-filter", Filters, true)
                 .Add("-mergebyhash")
                 .Add("-output", CoverageResultFile.ItemSpec, true)
-                .Add("-register", "user")
+                .Add("-register", "path64")
                 .Add("-skipautoprops")
                 .Add("-searchdirs", "\\\"" + string.Join("\\\";", PdbSearchDirs?.Select(i => i.ItemSpec)
                                                                   ?? Enumerable.Empty<string>()) + "\\\"", true,

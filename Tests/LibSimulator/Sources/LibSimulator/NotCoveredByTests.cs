@@ -1,4 +1,4 @@
-﻿namespace Heleonix.Build.Tests.LibSimulator
+﻿namespace LibSimulator
 {
     /// <summary>
     /// Represents the class, which is not covered by tests.

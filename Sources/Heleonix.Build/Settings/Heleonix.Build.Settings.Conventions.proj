@@ -112,8 +112,10 @@ SOFTWARE.
 
   <Target Name="Hxb-NUnit-Before-Conventions" BeforeTargets="Hxb-NUnit">
     <ItemGroup>
-      <Hxb-NUnit-In-TestsResult Include="$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml"/>
       <Hxb-NUnit-In-NUnitProjectOrTests Include="@(Hxb-Rebuild-Out-Outputs-Tests)"/>
+      <Hxb-NUnit-In-ErrorsOutput Include="$(Hxb-Build-Reports-Dir)\NUnit\Errors.txt"/>
+      <Hxb-NUnit-In-TestsOutput Include="$(Hxb-Build-Reports-Dir)\NUnit\Output.txt"/>
+      <Hxb-NUnit-In-TestsResult Include="$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml"/>
     </ItemGroup>
   </Target>
 
@@ -130,8 +132,10 @@ SOFTWARE.
     <ItemGroup>
       <Hxb-OpenCover-In-Target Include="@(Hxb-System-NUnitConsoleExe)">
         <Type>NUnit</Type>
-        <TestsResultFile>$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml</TestsResultFile>
         <NUnitProjectOrTestsFiles>@(Hxb-Rebuild-Out-Outputs-Tests)</NUnitProjectOrTestsFiles>
+        <ErrorsOutputFile>$(Hxb-Build-Reports-Dir)\NUnit\Errors.txt</ErrorsOutputFile>
+        <TestsOutputFile>$(Hxb-Build-Reports-Dir)\NUnit\Output.txt</TestsOutputFile>
+        <TestsResultFile>$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml</TestsResultFile>
       </Hxb-OpenCover-In-Target>
       <Hxb-OpenCover-In-CoverageResult Include="$(Hxb-Build-Reports-Dir)\OpenCover\OpenCover.xml"/>
     </ItemGroup>
