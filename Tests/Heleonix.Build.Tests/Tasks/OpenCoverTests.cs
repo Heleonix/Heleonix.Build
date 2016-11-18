@@ -54,10 +54,14 @@ namespace Heleonix.Build.Tests.Tasks
                 Target = new TaskItem(PathHelper.NUnitConsoleExe, new Dictionary<string, string>
                 {
                     { nameof(Build.Tasks.NUnit.NUnitProjectOrTestsFiles), LibSimulatorHelper.TestsOut },
-                    { "Type", nameof(Build.Tasks.NUnit) }
+                    { "Type", nameof(Build.Tasks.NUnit) },
+                    { "Hxb-NUnit-In-ErrorsOutput", Path.Combine(LibSimulatorHelper.ReportsDir, "Errors.txt") },
+                    { "Hxb-NUnit-In-TestsOutput", Path.Combine(LibSimulatorHelper.ReportsDir, "Output.txt") },
+                    { "Hxb-NUnit-In-TestsResult", Path.Combine(LibSimulatorHelper.ReportsDir, "NUnit.xml") }
                 }),
                 CoverageResultFile = new TaskItem(coverageResults),
-                MinClassCoverage = minClassCoverage
+                MinClassCoverage = minClassCoverage,
+                Register = "path64"
             };
 
             task.Execute();
