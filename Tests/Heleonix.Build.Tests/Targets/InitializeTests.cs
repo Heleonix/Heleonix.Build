@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Collections.Generic;
 using Heleonix.Build.Tests.Common;
 using NUnit.Framework;
 
@@ -36,24 +35,13 @@ namespace Heleonix.Build.Tests.Targets
         #region Tests
 
         /// <summary>
-        /// The test case source.
-        /// </summary>
-        /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
-        {
-            yield return new TargetTestCase { Result = true };
-        }
-
-        /// <summary>
         /// Tests the Hxb-Initialize target.
         /// </summary>
         /// <param name="ciType">The continuous integration system type.</param>
-        /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType,
-            [ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
+        public void Execute([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType)
         {
-            ExecuteTest(ciType, testCases);
+            ExecuteTest(ciType, new TargetTestCase { Result = true });
         }
 
         #endregion

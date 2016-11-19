@@ -22,12 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -37,6 +39,18 @@ namespace Heleonix.Build.Tests.Targets
     /// </summary>
     public abstract class TargetTests
     {
+        #region Fields
+
+        private readonly IDictionary<string, ITaskItem[]> _systemItems = new Dictionary<string, ITaskItem[]>
+        {
+            { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
+            { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.NUnitConsoleExe) } },
+            { "Hxb-System-OpenCoverConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.OpenCoverExe) } },
+            { "Hxb-System-ReportUnitExe", new ITaskItem[] { new TaskItem(PathHelper.ReportUnitExe) } }
+        };
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -46,39 +60,64 @@ namespace Heleonix.Build.Tests.Targets
         /// <param name="testCases">The test cases.</param>
         protected void ExecuteTest(CIType ciType, TargetTestCase testCases)
         {
+            var overrides = new XDocument(new XDeclaration("1.0", "UTF-8", null));
+
             var ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003");
+
+            var project = new XElement(ns + "Project");
+
+            overrides.Add(project);
+
+            Action<XElement, IDictionary<string, string>> addProperties = delegate(XElement group,
+                IDictionary<string, string> properties)
+            {
+                foreach (var property in properties)
+                {
+                    group.Add(new XElement(ns + property.Key, property.Value));
+                }
+            };
+
+            Action<XElement, IDictionary<string, ITaskItem[]>> addItems = delegate(XElement group,
+                IDictionary<string, ITaskItem[]> items)
+            {
+                foreach (var item in items)
+                {
+                    foreach (var value in item.Value)
+                    {
+                        var metadata = value.CloneCustomMetadata();
+                        group.Add(new XElement(ns + item.Key, new XAttribute("Include", value.ItemSpec),
+                            metadata.Keys.OfType<string>().Select(name => new XElement(ns + name, metadata[name]))));
+                    }
+                }
+            };
 
             var propertyGroup = new XElement(ns + "PropertyGroup");
 
             if (testCases.Properties?.Count > 0)
             {
-                foreach (var property in testCases.Properties)
-                {
-                    propertyGroup.Add(new XElement(ns + property.Key, property.Value));
-                }
+                addProperties(propertyGroup, testCases.Properties);
             }
 
             var itemGroup = new XElement(ns + "ItemGroup");
 
             if (testCases.Items?.Count > 0)
             {
-                foreach (var item in testCases.Items)
-                {
-                    foreach (var value in item.Value)
-                    {
-                        var metadata = value.CloneCustomMetadata();
-                        itemGroup.Add(new XElement(ns + item.Key, new XAttribute("Include", value.ItemSpec),
-                            metadata.Keys.OfType<string>().Select(name => new XElement(ns + name, metadata[name]))));
-                    }
-                }
+                addItems(itemGroup, testCases.Items);
             }
 
-            var overrides = new XDocument(new XDeclaration("1.0", "UTF-8", null));
-
             var target = new XElement(ns + "Target", new XAttribute("Name", TargetName + "-Before-Overrides"),
-                new XAttribute("BeforeTargets", testCases.DependsOnTargets ?? TargetName), propertyGroup, itemGroup);
+                new XAttribute("BeforeTargets", TargetName), propertyGroup, itemGroup);
 
-            overrides.Add(new XElement(ns + "Project", target));
+            project.Add(target);
+
+            var systemItemGroup = new XElement(ns + "ItemGroup");
+
+            addItems(systemItemGroup, _systemItems);
+
+            var systemTarget = new XElement(ns + "Target", new XAttribute("Name", "Hxb-Initialize-Before-Overrides"),
+                new XAttribute("BeforeTargets", "Hxb-Initialize"), systemItemGroup);
+
+            project.Add(systemTarget);
 
             var overridesFilePath = Path.ChangeExtension(
                 Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName()), ".proj");
@@ -86,7 +125,7 @@ namespace Heleonix.Build.Tests.Targets
             overrides.Save(overridesFilePath);
 
             var props = ArgsBuilder.By(';', '=')
-                .Add("Hxb-In-Flow", (testCases.DependsOnTargets + ";" + TargetName).Trim(';'), true)
+                .Add("Hxb-In-Flow", testCases.DependsOnTargets + ";" + TargetName, true)
                 .Add("Hxb-In-Configuration", MsBuildHelper.CurrentConfiguration)
                 .Add("Hxb-In-Overrides", overridesFilePath, true)
                 .Add("BUILD_NUMBER", "123");
@@ -167,14 +206,14 @@ namespace Heleonix.Build.Tests.Targets
             public IDictionary<string, ITaskItem[]> Items { get; set; }
 
             /// <summary>
-            /// Gets or sets the depends on targets.
-            /// </summary>
-            public string DependsOnTargets { get; set; }
-
-            /// <summary>
             /// Gets or sets the test case result.
             /// </summary>
             public bool Result { get; set; }
+
+            /// <summary>
+            /// Gets or sets the targets depends on.
+            /// </summary>
+            public string DependsOnTargets { get; set; }
 
             #endregion
         }

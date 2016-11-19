@@ -39,28 +39,10 @@ namespace Heleonix.Build.Tests.Targets
         #region Tests
 
         /// <summary>
-        /// The test case source.
-        /// </summary>
-        /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
-        {
-            yield return new TargetTestCase
-            {
-                Items = new Dictionary<string, ITaskItem[]>
-                {
-                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
-                },
-                DependsOnTargets = "Hxb-NugetRestore",
-                Result = true
-            };
-        }
-
-        /// <summary>
         /// Tests the Hxb-NugetDeploy target.
         /// </summary>
-        /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
+        public void Execute()
         {
             var tempSource = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
 
@@ -72,7 +54,14 @@ namespace Heleonix.Build.Tests.Targets
 
                 Assert.That(exitCode, Is.Zero);
 
-                testCases.Items["Hxb-NugetDeploy-In-Source"] = new ITaskItem[] { new TaskItem(tempSource) };
+                var testCases = new TargetTestCase
+                {
+                    Items = new Dictionary<string, ITaskItem[]>
+                    {
+                        { "Hxb-NugetDeploy-In-Source", new ITaskItem[] { new TaskItem(tempSource) } }
+                    },
+                    Result = true
+                };
 
                 ExecuteTest(CIType.Jenkins, testCases);
 

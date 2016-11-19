@@ -43,23 +43,13 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
+            yield return new TargetTestCase { Result = true };
             yield return new TargetTestCase
             {
                 Items = new Dictionary<string, ITaskItem[]>
                 {
-                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
-                },
-                DependsOnTargets = "Hxb-NugetRestore",
-                Result = true
-            };
-            yield return new TargetTestCase
-            {
-                Items = new Dictionary<string, ITaskItem[]>
-                {
-                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
                     { "Hxb-Rebuild-In-SnkPair", new[] { new TaskItem(PathHelper.SnkPair) as ITaskItem } }
                 },
-                DependsOnTargets = "Hxb-NugetRestore",
                 Result = true
             };
         }

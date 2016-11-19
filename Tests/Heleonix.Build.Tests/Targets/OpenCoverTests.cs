@@ -25,8 +25,6 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -48,31 +46,11 @@ namespace Heleonix.Build.Tests.Targets
             {
                 Properties = new Dictionary<string, string>
                 {
-                    { "Hxb-OpenCover-In-MinClassCoverage", "40" },
-                    { "Hxb-OpenCover-In-MinMethodCoverage", "40" },
-                    { "Hxb-OpenCover-In-MinBranchCoverage", "40" },
-                    { "Hxb-OpenCover-In-MinLineCoverage", "25" },
-                    { "Hxb-OpenCover-In-Register", "path64" }
+                    { "Hxb-OpenCover-In-MinClassCoverage", "50" },
+                    { "Hxb-OpenCover-In-MinMethodCoverage", "33" },
+                    { "Hxb-OpenCover-In-MinBranchCoverage", "33" },
+                    { "Hxb-OpenCover-In-MinLineCoverage", "12" }
                 },
-                Items = new Dictionary<string, ITaskItem[]>
-                {
-                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
-                    { "Hxb-System-OpenCoverConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.OpenCoverExe) } },
-                    {
-                        "Hxb-OpenCover-In-Target",
-                        new ITaskItem[]
-                        {
-                            new TaskItem(PathHelper.NUnitConsoleExe,
-                                new Dictionary<string, string>
-                                {
-                                    { "Type", "NUnit" },
-                                    { "TestsResultFile", "$(Hxb-Build-Reports-Dir)\\NUnit\\NUnit.xml" },
-                                    { "NUnitProjectOrTestsFiles", "@(Hxb-Rebuild-Out-Outputs-Tests)" }
-                                })
-                        }
-                    }
-                },
-                DependsOnTargets = "Hxb-NugetRestore",
                 Result = true
             };
         }

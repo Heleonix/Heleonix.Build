@@ -25,8 +25,6 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -46,28 +44,12 @@ namespace Heleonix.Build.Tests.Targets
         {
             yield return new TargetTestCase
             {
-                Properties = new Dictionary<string, string>
-                {
-                    { "Hxb-FxCop-In-FailOn", "Any" }
-                },
-                Items = new Dictionary<string, ITaskItem[]>
-                {
-                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
-                },
-                DependsOnTargets = "Hxb-NugetRestore",
+                Properties = new Dictionary<string, string> { { "Hxb-FxCop-In-FailOn", "Any" } },
                 Result = false
             };
             yield return new TargetTestCase
             {
-                Properties = new Dictionary<string, string>
-                {
-                    { "Hxb-FxCop-In-FailOn", "None" }
-                },
-                Items = new Dictionary<string, ITaskItem[]>
-                {
-                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
-                },
-                DependsOnTargets = "Hxb-NugetRestore",
+                Properties = new Dictionary<string, string> { { "Hxb-FxCop-In-FailOn", "None" } },
                 Result = true
             };
         }

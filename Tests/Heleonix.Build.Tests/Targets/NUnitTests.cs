@@ -22,11 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -39,34 +36,14 @@ namespace Heleonix.Build.Tests.Targets
         #region Tests
 
         /// <summary>
-        /// The test case source.
-        /// </summary>
-        /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
-        {
-            yield return
-                new TargetTestCase
-                {
-                    Items = new Dictionary<string, ITaskItem[]>
-                    {
-                        { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
-                        { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.NUnitConsoleExe) } }
-                    },
-                    DependsOnTargets = "Hxb-NugetRestore",
-                    Result = true
-                };
-        }
-
-        /// <summary>
         /// Tests the Hxb-NUnit target.
         /// </summary>
-        /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
+        public void Execute()
         {
             try
             {
-                ExecuteTest(CIType.Jenkins, testCases);
+                ExecuteTest(CIType.Jenkins, new TargetTestCase { Result = true });
             }
             finally
             {

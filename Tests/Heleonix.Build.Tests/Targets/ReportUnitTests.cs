@@ -25,8 +25,6 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -44,18 +42,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
-            yield return
-                new TargetTestCase
-                {
-                    Items = new Dictionary<string, ITaskItem[]>
-                    {
-                        { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
-                        { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.NUnitConsoleExe) } },
-                        { "Hxb-System-ReportUnitExe", new ITaskItem[] { new TaskItem(PathHelper.ReportUnitExe) } }
-                    },
-                    DependsOnTargets = "Hxb-NugetRestore;Hxb-NUnit",
-                    Result = true
-                };
+            yield return new TargetTestCase { DependsOnTargets = "Hxb-NUnit", Result = true };
         }
 
         /// <summary>
