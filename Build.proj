@@ -28,10 +28,10 @@ SOFTWARE.
 
   <Target Name="Hxb-OpenCover-Before-Conventions-Custom" BeforeTargets="Hxb-OpenCover">
     <PropertyGroup>
-      <Hxb-OpenCover-In-MinClassCoverage>70</Hxb-OpenCover-In-MinClassCoverage>
-      <Hxb-OpenCover-In-MinMethodCoverage>70</Hxb-OpenCover-In-MinMethodCoverage>
-      <Hxb-OpenCover-In-MinBranchCoverage>70</Hxb-OpenCover-In-MinBranchCoverage>
-      <Hxb-OpenCover-In-MinLineCoverage>70</Hxb-OpenCover-In-MinLineCoverage>
+      <Hxb-OpenCover-In-MinClassCoverage>90</Hxb-OpenCover-In-MinClassCoverage>
+      <Hxb-OpenCover-In-MinMethodCoverage>90</Hxb-OpenCover-In-MinMethodCoverage>
+      <Hxb-OpenCover-In-MinBranchCoverage>66</Hxb-OpenCover-In-MinBranchCoverage>
+      <Hxb-OpenCover-In-MinLineCoverage>80</Hxb-OpenCover-In-MinLineCoverage>
     </PropertyGroup>
   </Target>
 </Project>
