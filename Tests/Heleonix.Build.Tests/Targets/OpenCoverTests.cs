@@ -51,7 +51,8 @@ namespace Heleonix.Build.Tests.Targets
                     { "Hxb-OpenCover-In-MinClassCoverage", "40" },
                     { "Hxb-OpenCover-In-MinMethodCoverage", "40" },
                     { "Hxb-OpenCover-In-MinBranchCoverage", "40" },
-                    { "Hxb-OpenCover-In-MinLineCoverage", "25" }
+                    { "Hxb-OpenCover-In-MinLineCoverage", "25" },
+                    { "Hxb-OpenCover-In-Register", "path64" }
                 },
                 Items = new Dictionary<string, ITaskItem[]>
                 {
