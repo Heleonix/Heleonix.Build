@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Diagnostics;
 
 namespace Heleonix.Build
@@ -108,6 +109,8 @@ namespace Heleonix.Build
                 {
                     process.Kill();
                 }
+
+                Console.WriteLine($"==={output}===");
 
                 return process.ExitCode;
             }
