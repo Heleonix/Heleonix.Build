@@ -146,7 +146,7 @@ SOFTWARE.
 
   <Target Name="Hxb-ReportUnit-Before-Conventions" BeforeTargets="Hxb-ReportUnit">
     <ItemGroup>
-      <Hxb-ReportUnit-In-TestsResult Include="@(Hxb-NUnit-In-TestsResult)"/>
+      <Hxb-ReportUnit-In-TestsResult Include="$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml"/>
       <Hxb-ReportUnit-In-Report Include="$(Hxb-Build-Reports-Dir)\ReportUnit\ReportUnit.html"/>
     </ItemGroup>
   </Target>
