@@ -37,6 +37,10 @@ SOFTWARE.
     <Hxb-System-Workspace-Dir>$(system_agent_work_dir)</Hxb-System-Workspace-Dir>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Hxb-System-MSBuildVersion>14</Hxb-System-MSBuildVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <Hxb-System-FxCopCmd
       Include="$(MSBuildProgramFiles32)\Microsoft Visual Studio $(MSBuildToolsVersion)\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"/>

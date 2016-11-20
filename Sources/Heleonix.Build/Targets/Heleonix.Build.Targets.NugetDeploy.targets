@@ -40,6 +40,9 @@ SOFTWARE.
                                     ExcludeEmptyDirectories="$(Hxb-NugetDeploy-In-ExcludeEmptyDirectories)"
                                     IncludeReferencedProjects="$(Hxb-NugetDeploy-In-IncludeReferencedProjects)"
                                     Verbosity="$(Hxb-Build-Verbosity)"
+                                    Configuration="$(Hxb-In-Configuration)"
+                                    Properties="$(Hxb-NugetDeploy-In-Properties)"
+                                    MsBuildVersion="$(Hxb-System-MSBuildVesion)"
                                     PackageDir="@(Hxb-NugetDeploy-In-PackagesDir)">
       <Output TaskParameter="PackageFile" ItemName="Hxb-NugetDeploy-Out-Packages"/>
     </Heleonix.Build.Tasks.NugetPack>

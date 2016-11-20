@@ -35,7 +35,7 @@ SOFTWARE.
                                        SolutionFile="@(Hxb-Build-Sln)"
                                        SourcesPaths="@(Hxb-NugetRestore-In-Sources)"
                                        PackagesDir="@(Hxb-NugetRestore-In-Packages-Dir)"
-                                       MsBuildVersion="$(Hxb-NugetRestore-In-MSBuildVersion)"
+                                       MsBuildVersion="$(Hxb-System-MSBuildVersion)"
                                        NoCache="$(Hxb-NugetRestore-In-NoCache)"
                                        Verbosity="$(Hxb-Build-Verbosity)"/>
 

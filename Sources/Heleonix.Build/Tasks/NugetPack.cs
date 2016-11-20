@@ -56,9 +56,20 @@ namespace Heleonix.Build.Tasks
         public ITaskItem ProjectFile { get; set; }
 
         /// <summary>
+        /// The configuration to create package from: Debug, Release etc.
+        /// </summary>
+        [Required]
+        public string Configuration { get; set; }
+
+        /// <summary>
         /// The output package directory path.
         /// </summary>
         public ITaskItem PackageDir { get; set; }
+
+        /// <summary>
+        /// Additional properties to pass to the .nuspec file, in format: token1=value1;token2="value2".
+        /// </summary>
+        public string Properties { get; set; }
 
         /// <summary>
         /// Indicates whether to include referenced projects.
@@ -69,6 +80,11 @@ namespace Heleonix.Build.Tasks
         /// Indicates whether to exclude empty directories.
         /// </summary>
         public bool ExcludeEmptyDirectories { get; set; }
+
+        /// <summary>
+        /// The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.
+        /// </summary>
+        public int MsBuildVersion { get; set; }
 
         /// <summary>
         /// The verbosity of the command.
@@ -104,13 +120,17 @@ namespace Heleonix.Build.Tasks
 
             Directory.CreateDirectory(tempOutputDir);
 
+            var props = ArgsBuilder.By(';', '=').Add("Configuration", Configuration);
+
             var args = ArgsBuilder.By(' ', ' ')
                 .Add("pack", ProjectFile.ItemSpec, true)
                 .Add("-OutputDirectory", tempOutputDir, true)
+                .Add("-MSBuildVersion", MsBuildVersion, false, MsBuildVersion > 0)
                 .Add("-IncludeReferencedProjects", false, IncludeReferencedProjects)
                 .Add("-ExcludeEmptyDirectories", false, ExcludeEmptyDirectories)
                 .Add("-Verbosity", Verbosity, !string.IsNullOrEmpty(Verbosity))
-                .Add("-NonInteractive");
+                .Add("-NonInteractive")
+                .Add("-Properties", (props + ";" + Properties).TrimEnd(';'));
 
             Log.LogMessage($"Packing '{ProjectFile.ItemSpec}' using '{NuspecFile.ItemSpec}'.");
 

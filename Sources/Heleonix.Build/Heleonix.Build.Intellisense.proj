@@ -90,6 +90,7 @@ SOFTWARE.
   <PropertyGroup>
     <Hxb-System-CI>Jenkins</Hxb-System-CI>
     <Hxb-System-Workspace-Dir></Hxb-System-Workspace-Dir>
+    <Hxb-System-MSBuildVersion></Hxb-System-MSBuildVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -197,6 +198,7 @@ SOFTWARE.
       <Hxb-NugetDeploy-In-ApiKey></Hxb-NugetDeploy-In-ApiKey>
       <Hxb-NugetDeploy-In-IncludeReferencedProjects>true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
       <Hxb-NugetDeploy-In-ExcludeEmptyDirectories>true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
+      <Hxb-NugetDeploy-In-Properties></Hxb-NugetDeploy-In-Properties>
     </PropertyGroup>
 
     <ItemGroup>
@@ -213,7 +215,6 @@ SOFTWARE.
   <!--Region Target: Hxb-NugetRestore-->
   <Target Name="Hxb-NugetRestore">
     <PropertyGroup>
-      <Hxb-NugetRestore-In-MSBuildVersion>14</Hxb-NugetRestore-In-MSBuildVersion>
       <Hxb-NugetRestore-In-NoCache>true</Hxb-NugetRestore-In-NoCache>
     </PropertyGroup>
 

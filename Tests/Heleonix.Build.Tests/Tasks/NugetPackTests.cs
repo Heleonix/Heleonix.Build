@@ -50,6 +50,7 @@ namespace Heleonix.Build.Tests.Tasks
                 NuspecFile = new TaskItem(Path.Combine(LibSimulatorHelper.SolutionDir,
                     LibSimulatorHelper.SolutionName + ".nuspec")),
                 ProjectFile = new TaskItem(LibSimulatorHelper.Project),
+                Configuration = MsBuildHelper.CurrentConfiguration,
                 Verbosity = "detailed"
             };
 

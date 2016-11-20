@@ -632,9 +632,19 @@ Example custom property of type of custom enum
               <xs:documentation>The project file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="Configuration" use="required">
+            <xs:annotation>
+              <xs:documentation>The configuration to create package from: Debug, Release etc.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="PackageDir">
             <xs:annotation>
               <xs:documentation>The output package directory path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Properties">
+            <xs:annotation>
+              <xs:documentation>Additional properties to pass to the .nuspec file, i.e. token1=value1;token2="value2".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="IncludeReferencedProjects" type="xs:boolean">
@@ -645,6 +655,11 @@ Example custom property of type of custom enum
           <xs:attribute name="ExcludeEmptyDirectories" type="xs:boolean">
             <xs:annotation>
               <xs:documentation>Indicates whether to exclude empty directories.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MsBuildVersion" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Verbosity" type="msb:Hxb-Nuget-Verbosity-Enum">
@@ -1155,6 +1170,11 @@ Example custom property of type of custom enum
       <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hxb-System-MSBuildVersion" type="xs:int" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The MSBuild version. Allowed values are 4, 12, 14.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 
   <xs:element name="Hxb-System-GitExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
@@ -1420,6 +1440,11 @@ Example custom property of type of custom enum
       <xs:documentation>Indicates whether to exclude empty directories.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hxb-NugetDeploy-In-Properties" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Additional properties to pass to the .nuspec file, in format: token1=value1;token2="value2".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 
   <xs:element name="Hxb-NugetDeploy-In-Nuspecs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
@@ -1454,11 +1479,6 @@ Example custom property of type of custom enum
   <!--Endregion-->
 
   <!--Region Target: Hxb-NugetRestore-->
-  <xs:element name="Hxb-NugetRestore-In-MSBuildVersion" type="xs:int" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-NugetRestore-In-NoCache" type="xs:boolean" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Indicates whether disable using machine cache as the first package source.</xs:documentation>
