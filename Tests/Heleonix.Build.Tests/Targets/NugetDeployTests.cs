@@ -66,10 +66,9 @@ namespace Heleonix.Build.Tests.Targets
                 ExecuteTest(CIType.Jenkins, testCases);
 
                 Assert.That(Directory.Exists(LibSimulatorHelper.NugetDeploymentDir), Is.True);
-
-                var package = Directory.GetFiles(LibSimulatorHelper.NugetDeploymentDir);
-
-                Assert.That(package, Has.Length.EqualTo(1));
+                Assert.That(Directory.GetFiles(LibSimulatorHelper.NugetDeploymentDir), Has.Length.EqualTo(1));
+                Assert.That(Directory.Exists(tempSource));
+                Assert.That(Directory.GetFiles(tempSource), Has.Length.EqualTo(1));
             }
             finally
             {
