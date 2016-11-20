@@ -218,16 +218,18 @@ namespace Heleonix.Build.Tasks
 
             var args = ArgsBuilder.By(' ', ':')
                 .Add("/verbose", false, IsVerbose)
-                .Add("/types", TargetsTypes)
-                .Add("/project", ProjectFile?.ItemSpec, true)
-                .Add("/rule", RulesFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
-                .Add("/file", TargetsFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
+                .Add("/types", TargetsTypes, TargetsTypes != null)
+                .Add("/project", ProjectFile?.ItemSpec, true, ProjectFile != null)
+                .Add("/rule", RulesFilesDirs?.Select(i => "+" + i.ItemSpec), true,
+                    ProjectFile == null && RulesFilesDirs != null)
+                .Add("/file", TargetsFilesDirs?.Select(i => i.ItemSpec), true,
+                    ProjectFile == null && TargetsFilesDirs != null)
                 .Add("/out", tempAnalysisResults, true)
-                .Add("/directory", DependenciesDirs?.Select(i => i.ItemSpec), true)
+                .Add("/directory", DependenciesDirs?.Select(i => i.ItemSpec), true, DependenciesDirs != null)
                 .Add("/ignoregeneratedcode")
-                .Add("/ruleSet", RulesetFile?.ItemSpec, true)
+                .Add("/ruleSet", "+" + RulesetFile?.ItemSpec, true, RulesetFile != null)
                 .Add("/searchgac")
-                .Add("/dictionary", DictionaryFile?.ItemSpec, true)
+                .Add("/dictionary", DictionaryFile?.ItemSpec, true, DictionaryFile != null)
                 .Add("/summary");
 
             // FxCopCmd does not create a directory for analysis result file.

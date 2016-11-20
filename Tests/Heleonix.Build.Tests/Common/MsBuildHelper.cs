@@ -56,13 +56,7 @@ namespace Heleonix.Build.Tests.Common
             string output;
             string error;
 
-            var result = ExeHelper.Execute(MsBuildExe, args, out output, out error);
-
-            Console.WriteLine("-------------START--------------");
-            Console.WriteLine(output);
-            Console.WriteLine("--------------END---------------");
-
-            return result;
+            return ExeHelper.Execute(MsBuildExe, args, out output, out error);
         }
 
         #endregion

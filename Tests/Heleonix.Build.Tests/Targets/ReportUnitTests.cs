@@ -43,7 +43,6 @@ namespace Heleonix.Build.Tests.Targets
         public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
             yield return new TargetTestCase { DependsOnTargets = "Hxb-NUnit", Result = true };
-            yield return new TargetTestCase { DependsOnTargets = "Hxb-OpenCover", Result = true };
         }
 
         /// <summary>
