@@ -161,16 +161,11 @@ namespace Heleonix.Build.Tasks
 
             var destPackageDir = PackageDir?.ItemSpec ?? projectDir;
 
-            Console.WriteLine($"---NUGET PACK: DEST PACKAGE DIR: '{destPackageDir}'---");
-
             var destPackage = Path.Combine(destPackageDir, Path.GetFileName(srcPackage) ?? string.Empty);
 
             if (!Directory.Exists(destPackageDir))
             {
-                var info = Directory.CreateDirectory(destPackageDir);
-
-                Console.WriteLine($"---NUGET PACK: CREATED DEST PACKAGE DIR: '{destPackageDir}'---");
-                Console.WriteLine($"---NUGET PACK: CREATED DEST PACKAGE DIR2: '{info}'---");
+                Directory.CreateDirectory(destPackageDir);
             }
 
             File.Copy(srcPackage, destPackage);
