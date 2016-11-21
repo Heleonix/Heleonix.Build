@@ -64,6 +64,8 @@ namespace Heleonix.Build.Tests.Tasks
             var succeeded = task.Execute();
 
             var analysisResultsExists = File.Exists(analysisResults);
+            var analysisResultsHtml = Path.ChangeExtension(analysisResults, ".html");
+            var analysisResultsHtmlExists = File.Exists(analysisResultsHtml);
 
             try
             {
@@ -83,6 +85,11 @@ namespace Heleonix.Build.Tests.Tasks
                 if (analysisResultsExists)
                 {
                     File.Delete(analysisResults);
+                }
+
+                if (analysisResultsHtmlExists)
+                {
+                    File.Delete(analysisResultsHtml);
                 }
             }
         }

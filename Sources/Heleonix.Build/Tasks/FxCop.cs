@@ -332,21 +332,17 @@ namespace Heleonix.Build.Tasks
                     {
                         results = results ?? XDocument.Load(tempAnalysisResults);
 
-                        using (var outputStream = File.Create(AnalysisResultFile.ItemSpec))
+                        using (var outStream = File.Create(Path.ChangeExtension(AnalysisResultFile.ItemSpec, ".html")))
                         {
                             var transform = new XslCompiledTransform();
 
                             transform.Load(AnalysisResultsXslFile.ItemSpec);
 
-                            transform.Transform(results.CreateNavigator(), null, outputStream);
+                            transform.Transform(results.CreateNavigator(), null, outStream);
                         }
+                    }
 
-                        File.Delete(tempAnalysisResults);
-                    }
-                    else
-                    {
-                        File.Move(tempAnalysisResults, AnalysisResultFile.ItemSpec);
-                    }
+                    File.Move(tempAnalysisResults, AnalysisResultFile.ItemSpec);
                 }
             }
         }
