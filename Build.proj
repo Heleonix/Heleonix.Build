@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="Sources\Heleonix.Build\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Initialize-Conventions-Before-Dev" BeforeTargets="Hxb-Initialize-Before-Conventions">
+  <Target Name="Hxb-Initialize-Conventions-Before-Dev" BeforeTargets="Hxb-Initialize-Before-Conventions" Condition="'$(Hxb-Build-CI)' == 'Dev'">
     <PropertyGroup>
       <Hxb-In-Configuration>CI</Hxb-In-Configuration>
     </PropertyGroup>
