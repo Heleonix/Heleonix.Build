@@ -97,7 +97,7 @@ namespace Heleonix.Build.Tasks
                 .Add("--verbose")
                 .Add("--xml")
                 .Add("--with-all-revprops")
-                .Add(RepositoryFileDir.ItemSpec, true);
+                .Add(RepositoryFileDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), true);
 
             var workingDir = File.Exists(RepositoryFileDir.ItemSpec)
                 ? Path.GetDirectoryName(RepositoryFileDir.ItemSpec)

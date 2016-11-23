@@ -35,9 +35,6 @@ SOFTWARE.
     <Error Condition="'$(Hxb-In-Configuration)' == ''" Text="'$Hxb-In-Configuration' is not defined."/>
 
     <!--System-->
-    <Error Condition="'$(Hxb-System-CI)' == ''" Text="'$Hxb-System-CI' is not defined."/>
-    <Error Condition="!Exists('$(Hxb-System-Workspace-Dir)')" Text="'$Hxb-System-Workspace-Dir' is not found."/>
-
     <Error Condition="'@(Hxb-System-FxCopCmd)' != '' And !Exists('@(Hxb-System-FxCopCmd)')" Text="'@Hxb-System-FxCopCmd' is not found."/>
     <Error Condition="'@(Hxb-System-NUnitConsoleExe)' != '' And !Exists('@(Hxb-System-NUnitConsoleExe)')" Text="'@Hxb-System-NUnitConsoleExe' is not found."/>
     <Error Condition="'@(Hxb-System-NugetExe)' != '' And !Exists('@(Hxb-System-NugetExe)')" Text="'@Hxb-System-NugetExe' is not found."/>
@@ -48,6 +45,8 @@ SOFTWARE.
     <Error Condition="'$(Hxb-Build-VCS)' == 'Svn' And !Exists('@(Hxb-System-SvnExe)')" Text="'@Hxb-System-SvnExe' is not found."/>
 
     <!--Build-->
+    <Error Condition="'$(Hxb-Build-CI)' == ''" Text="'$Hxb-Build-CI' is not defined."/>
+    <Error Condition="!Exists('$(Hxb-Build-Workspace-Dir)')" Text="'$Hxb-Build-Workspace-Dir' is not found."/>
     <Error Condition="'$(Hxb-Build-VCS)' == ''" Text="'$Hxb-Build-VCS' is not defined."/>
     <Error Condition="'$(Hxb-Build-Version)' == ''" Text="'$Hxb-Build-Version' is not defined."/>
     <Error Condition="'$(Hxb-Build-Version-Informational)' == ''" Text="'$Hxb-Build-Version-Informational' is not defined."/>

@@ -1,0 +1,1136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 14.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="14.0">
+ <Namespaces>
+  <Namespace Name="Heleonix.Build">
+   <Messages>
+    <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+     <Issue Certainty="50" Level="Warning">Consider merging the types defined in 'Heleonix.Build' with another namespace.</Issue>
+    </Message>
+   </Messages>
+  </Namespace>
+ </Namespaces>
+ <Targets>
+  <Target Name="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\bin\CI\Heleonix.Build.dll">
+   <Modules>
+    <Module Name="heleonix.build.dll">
+     <Messages>
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+       <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Sign 'Heleonix.Build.dll' with a strong name key.</Issue>
+      </Message>
+      <Message TypeName="AttributeStringLiteralsShouldParseCorrectly" Category="Microsoft.Usage" CheckId="CA2243" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+       <Issue Certainty="75" Level="Warning">In the constructor of 'AssemblyInformationalVersionAttribute', change the value of argument 'informationalVersion', which is currently "1.0.0.204ff70", to something that can be correctly parsed as 'Version'.</Issue>
+      </Message>
+     </Messages>
+     <Namespaces>
+      <Namespace Name="Heleonix.Build">
+       <Types>
+        <Type Name="ArgsBuilder" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Add(System.Collections.Generic.IEnumerable`1&lt;System.Object&gt;,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="120">Replace method 'ArgsBuilder.Add(IEnumerable&lt;object&gt;, bool, bool)' with an overload that supplies all default arguments.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Add(System.Object,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="89">Replace method 'ArgsBuilder.Add(object, bool, bool)' with an overload that supplies all default arguments.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="91">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'ArgsBuilder.Add(object, bool, bool)' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="91">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'ArgsBuilder.Add(object, bool, bool)' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Add(System.String,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="106">Replace method 'ArgsBuilder.Add(string, bool, bool)' with an overload that supplies all default arguments.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Add(System.String,System.Collections.Generic.IEnumerable`1&lt;System.Object&gt;,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="143">Replace method 'ArgsBuilder.Add(string, IEnumerable&lt;object&gt;, bool, bool)' with an overload that supplies all default arguments.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Add(System.String,System.Object,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="166">Replace method 'ArgsBuilder.Add(string, object, bool, bool)' with an overload that supplies all default arguments.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object[])" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="168">Because the behavior of 'string.Format(string, params object[])' could vary based on the current user's locale settings, replace this call in 'ArgsBuilder.Add(string, object, bool, bool)' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="168">Because the behavior of 'string.Format(string, params object[])' could vary based on the current user's locale settings, replace this call in 'ArgsBuilder.Add(string, object, bool, bool)' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Implicit(Heleonix.Build.ArgsBuilder):System.String" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ArgsBuilder.cs" Line="185">In externally visible method 'ArgsBuilder.implicit operator string(ArgsBuilder)', validate parameter 'builder' before using it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ExeHelper" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Execute(System.String,System.String,System.String&amp;,System.String&amp;,System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ExeHelper.cs" Line="81">Consider a design that does not require that 'output' be an out parameter.</Issue>
+            </Message>
+            <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ExeHelper.cs" Line="81">Consider a design that does not require that 'error' be an out parameter.</Issue>
+            </Message>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ExeHelper.cs" Line="81">Replace method 'ExeHelper.Execute(string, string, out string, out string, string)' with an overload that supplies all default arguments.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Execute(System.String,System.String,System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build" File="ExeHelper.cs" Line="45">Replace method 'ExeHelper.Execute(string, string, string)' with an overload that supplies all default arguments.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Heleonix.Build.Tasks">
+       <Types>
+        <Type Name="BaseTask" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Execute()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="BaseTask.cs" Line="61">Method 'BaseTask.Execute()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Task failed: \', \'.".</Issue>
+            </Message>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="BaseTask.cs" Line="57">Modify 'BaseTask.Execute()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="BaseTask.cs" Line="61">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'BaseTask.Execute()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="DirectoryClean" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#CleanedDirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="49">Correct the spelling of 'Dirs' in member name 'DirectoryClean.CleanedDirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Dirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="43">Correct the spelling of 'Dirs' in member name 'DirectoryClean.Dirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="75">Method 'DirectoryClean.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Cleaning directory \', \' started.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="91">Method 'DirectoryClean.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The directory \', \' is not found. Skipping.".</Issue>
+            </Message>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="94">Modify 'DirectoryClean.ExecuteInternal()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="75">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'DirectoryClean.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="91">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'DirectoryClean.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FailedDirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="DirectoryClean.cs" Line="55">Correct the spelling of 'Dirs' in member name 'DirectoryClean.FailedDirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="FileSystemSearch" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ContentRegEx" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="162">The compound word 'RegEx' in member name 'FileSystemSearch.ContentRegEx' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberNewerVersion" Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="162">Either replace the suffix 'Ex' in member name 'FileSystemSearch.ContentRegEx' with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ContentRegExOptions" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="167">The compound word 'RegEx' in member name 'FileSystemSearch.ContentRegExOptions' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="221">Method 'FileSystemSearch.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Start searching in \', \'; Type: , ; Direction: , ; , PathRegEx: , ; ContentRegE...".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="198">Method 'FileSystemSearch.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The starting directory \', \' is not found. Stopping.".</Issue>
+            </Message>
+            <Message Id="ContentRegEx" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="221">Correct the spelling of the unrecognized token 'ContentRegEx' in the literal '"; ContentRegEx: "'.</Issue>
+            </Message>
+            <Message Id="PathRegEx" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="221">Correct the spelling of the unrecognized token 'PathRegEx' in the literal '"PathRegEx: "'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="198">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FileSystemSearch.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="221">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'FileSystemSearch.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="221">Because the behavior of 'string.Format(string, object, object, object)' could vary based on the current user's locale settings, replace this call in 'FileSystemSearch.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FoundDirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="179">Correct the spelling of 'Dirs' in member name 'FileSystemSearch.FoundDirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PathRegEx" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="152">The compound word 'RegEx' in member name 'FileSystemSearch.PathRegEx' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberNewerVersion" Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="152">Either replace the suffix 'Ex' in member name 'FileSystemSearch.PathRegEx' with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PathRegExOptions" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="157">The compound word 'RegEx' in member name 'FileSystemSearch.PathRegExOptions' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Search(System.String,System.Text.RegularExpressions.Regex,System.Text.RegularExpressions.Regex,System.Collections.Generic.ICollection`1&lt;Microsoft.Build.Framework.ITaskItem&gt;,System.Collections.Generic.ICollection`1&lt;Microsoft.Build.Framework.ITaskItem&gt;,System.Collections.Generic.ICollection`1&lt;Microsoft.Build.Framework.ITaskItem&gt;)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="54">'FileSystemSearch.Search(string, Regex, Regex, ICollection&lt;ITaskItem&gt;, ICollection&lt;ITaskItem&gt;, ICollection&lt;ITaskItem&gt;)' has a cyclomatic complexity of 31. Rewrite or refactor the method to reduce complexity to 25.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#StartDir" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dir" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileSystemSearch.cs" Line="120">Correct the spelling of 'Dir' in member name 'FileSystemSearch.StartDir' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="FileUpdate" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileUpdate.cs" Line="71">Method 'FileUpdate.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The file \', \' is not found. Stopping.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileUpdate.cs" Line="88">Method 'FileUpdate.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Updating file \', \'.".</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileUpdate.cs" Line="71">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FileUpdate.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileUpdate.cs" Line="88">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FileUpdate.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RegEx" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileUpdate.cs" Line="48">The compound word 'RegEx' in member name 'FileUpdate.RegEx' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberNewerVersion" Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileUpdate.cs" Line="48">Either replace the suffix 'Ex' in member name 'FileUpdate.RegEx' with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RegExOptions" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FileUpdate.cs" Line="53">The compound word 'RegEx' in member name 'FileUpdate.RegExOptions' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="FxCop" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#DependenciesDirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="98">Correct the spelling of 'Dirs' in member name 'FxCop.DependenciesDirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="216">'FxCop.ExecuteInternal()' has a cyclomatic complexity of 50. Rewrite or refactor the method to reduce complexity to 25.</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="259">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "FxCop,  failed. Exit code: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="302">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The task failed due to critical errors.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="310">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The task failed due to critical warnings.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="306">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The task failed due to errors.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="318">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The task failed due to informational.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="314">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The task failed due to warnings.".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="285">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Critical errors: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="287">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Critical warnings: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="286">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Errors: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="289">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Informational: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="288">Method 'FxCop.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Warnings: , .".</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="285">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FxCop.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="286">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FxCop.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="287">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FxCop.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="288">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FxCop.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="289">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'FxCop.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="259">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'FxCop.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Equals(System.String,System.String,System.StringComparison)" TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="StringComparison" Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="274">'FxCop.ExecuteInternal()' passes 'StringComparison.InvariantCultureIgnoreCase' as the 'StringComparison' parameter to 'string.Equals(string, string, StringComparison)'. To perform a non-linguistic comparison, specify 'StringComparison.Ordinal' or 'StringComparison.OrdinalIgnoreCase' instead.</Issue>
+             <Issue Name="StringComparison" Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="276">'FxCop.ExecuteInternal()' passes 'StringComparison.InvariantCultureIgnoreCase' as the 'StringComparison' parameter to 'string.Equals(string, string, StringComparison)'. To perform a non-linguistic comparison, specify 'StringComparison.Ordinal' or 'StringComparison.OrdinalIgnoreCase' instead.</Issue>
+             <Issue Name="StringComparison" Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="278">'FxCop.ExecuteInternal()' passes 'StringComparison.InvariantCultureIgnoreCase' as the 'StringComparison' parameter to 'string.Equals(string, string, StringComparison)'. To perform a non-linguistic comparison, specify 'StringComparison.Ordinal' or 'StringComparison.OrdinalIgnoreCase' instead.</Issue>
+             <Issue Name="StringComparison" Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="280">'FxCop.ExecuteInternal()' passes 'StringComparison.InvariantCultureIgnoreCase' as the 'StringComparison' parameter to 'string.Equals(string, string, StringComparison)'. To perform a non-linguistic comparison, specify 'StringComparison.Ordinal' or 'StringComparison.OrdinalIgnoreCase' instead.</Issue>
+             <Issue Name="StringComparison" Certainty="75" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="282">'FxCop.ExecuteInternal()' passes 'StringComparison.InvariantCultureIgnoreCase' as the 'StringComparison' parameter to 'string.Equals(string, string, StringComparison)'. To perform a non-linguistic comparison, specify 'StringComparison.Ordinal' or 'StringComparison.OrdinalIgnoreCase' instead.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RulesetFile" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Ruleset" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="106">Correct the spelling of 'Ruleset' in member name 'FxCop.RulesetFile' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RulesFilesDirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="75">Correct the spelling of 'Dirs' in member name 'FxCop.RulesFilesDirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#TargetsFilesDirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="FxCop.cs" Line="88">Correct the spelling of 'Dirs' in member name 'FxCop.TargetsFilesDirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="GitLog" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Git" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Git' in type name 'GitLog'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="GitLog.cs" Line="126">Method 'GitLog.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "GitLog,  failed. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="GitLog" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="GitLog.cs" Line="126">Correct the spelling of the unrecognized token 'GitLog' in the literal '"GitLog"'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="GitLog.cs" Line="126">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'GitLog.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="GitLog.cs" Line="164">Because the behavior of 'string.EndsWith(string)' could vary based on the current user's locale settings, replace this call in 'GitLog.ExecuteInternal()' with a call to 'string.EndsWith(string, StringComparison)'. If the result of 'string.EndsWith(string, StringComparison)' will be displayed to the user, such as when sorting a list of items for display in a list box, specify 'StringComparison.CurrentCulture' or 'StringComparison.CurrentCultureIgnoreCase' as the 'StringComparison' parameter. If comparing case-insensitive identifiers, such as file paths, environment variables, or registry keys and values, specify 'StringComparison.OrdinalIgnoreCase'. Otherwise, if comparing case-sensitive identifiers, specify 'StringComparison.Ordinal'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GitExeFile" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Git" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="GitLog.cs" Line="45">Correct the spelling of 'Git' in member name 'GitLog.GitExeFile' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RepositoryFileDir" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dir" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="GitLog.cs" Line="51">Correct the spelling of 'Dir' in member name 'GitLog.RepositoryFileDir' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ItemCombine" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemCombine.cs" Line="134">Method 'ItemCombine.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Operation \', Operation, \' is not recognized.".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemCombine.cs" Line="89">Method 'ItemCombine.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "\', Left, \' is null.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemCombine.cs" Line="96">Method 'ItemCombine.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "\', Right, \' is null.".</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemCombine.cs" Line="89">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'ItemCombine.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemCombine.cs" Line="96">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'ItemCombine.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemCombine.cs" Line="134">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'ItemCombine.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ItemFilter" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#RegEx" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemFilter.cs" Line="49">The compound word 'RegEx' in member name 'ItemFilter.RegEx' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberNewerVersion" Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemFilter.cs" Line="49">Either replace the suffix 'Ex' in member name 'ItemFilter.RegEx' with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RegExOptions" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="RegEx" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemFilter.cs" Line="54">The compound word 'RegEx' in member name 'ItemFilter.RegExOptions' exists as a discrete term. If your usage is intended to be single word, case it as 'Regex' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ItemSet" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemSet.cs" Line="80">'ItemSet.ExecuteInternal()' has a cyclomatic complexity of 32. Rewrite or refactor the method to reduce complexity to 25.</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemSet.cs" Line="157">Method 'ItemSet.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Operation \', Operation, \' is not recognized.".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemSet.cs" Line="82">Method 'ItemSet.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "\', Left, \' is null.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemSet.cs" Line="89">Method 'ItemSet.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "\', Right, \' is null.".</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemSet.cs" Line="82">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'ItemSet.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemSet.cs" Line="89">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'ItemSet.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ItemSet.cs" Line="157">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'ItemSet.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="NugetPack" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Nuget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Nuget' in type name 'NugetPack'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="155">Method 'NugetPack.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Failed packing \', \'. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="135">Method 'NugetPack.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Packing \', \' using \', \'.".</Issue>
+            </Message>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="177">Modify 'NugetPack.ExecuteInternal()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+             <Issue Certainty="95" Level="CriticalError" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="186">Modify 'NugetPack.ExecuteInternal()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="135">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'NugetPack.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="155">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'NugetPack.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#MsBuildVersion" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Ms" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="87">Correct the casing of 'Ms' in member name 'NugetPack.MsBuildVersion' by changing it to 'MS'.</Issue>
+            </Message>
+            <Message Id="Ms" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="87">Correct the spelling of 'Ms' in member name 'NugetPack.MsBuildVersion' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NugetExeFile" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Nuget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="44">Correct the spelling of 'Nuget' in member name 'NugetPack.NugetExeFile' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NuspecFile" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Nuspec" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="50">Correct the spelling of 'Nuspec' in member name 'NugetPack.NuspecFile' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PackageDir" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dir" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPack.cs" Line="67">Correct the spelling of 'Dir' in member name 'NugetPack.PackageDir' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="NugetPush" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Nuget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Nuget' in type name 'NugetPush'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#ApiKey" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Api" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPush.cs" Line="51">Correct the spelling of 'Api' in member name 'NugetPush.ApiKey' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPush.cs" Line="109">Method 'NugetPush.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Failed pushing \', \'. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPush.cs" Line="93">Method 'NugetPush.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Pushing \', \'.".</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPush.cs" Line="93">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NugetPush.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPush.cs" Line="109">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'NugetPush.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NugetExeFile" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Nuget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetPush.cs" Line="40">Correct the spelling of 'Nuget' in member name 'NugetPush.NugetExeFile' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="NugetRestore" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Nuget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Nuget' in type name 'NugetRestore'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="124">Method 'NugetRestore.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Failed restoring \', \'. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="108">Method 'NugetRestore.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Restoring \', \'.".</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="108">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NugetRestore.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="124">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'NugetRestore.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#MsBuildVersion" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Ms" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="66">Correct the casing of 'Ms' in member name 'NugetRestore.MsBuildVersion' by changing it to 'MS'.</Issue>
+            </Message>
+            <Message Id="Ms" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="66">Correct the spelling of 'Ms' in member name 'NugetRestore.MsBuildVersion' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NugetExeFile" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Nuget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="42">Correct the spelling of 'Nuget' in member name 'NugetRestore.NugetExeFile' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PackagesDir" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dir" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NugetRestore.cs" Line="56">Correct the spelling of 'Dir' in member name 'NugetRestore.PackagesDir' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="NUnit" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="346">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "NUnit,  falied. Exit code: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="357">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "NUnit,  finished with failed tests. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="397">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Asserts: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="400">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Duration: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="399">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "End time: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="394">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Failed: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="395">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Inconclusive: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="375">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "No tests were run.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="393">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Passed: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="396">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Skipped: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="398">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Start time: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="391">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Test cases: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="392">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Total: , .".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogWarning(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="361">Method 'NUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogWarning(string, params object[])'. Retrieve the following string(s) from a resource table instead: "NUnit,  finished with failed tests. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="NUnit" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="346">Correct the spelling of the unrecognized token 'NUnit' in the literal '"NUnit"'.</Issue>
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="357">Correct the spelling of the unrecognized token 'NUnit' in the literal '"NUnit"'.</Issue>
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="361">Correct the spelling of the unrecognized token 'NUnit' in the literal '"NUnit"'.</Issue>
+            </Message>
+            <Message Id="falied" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="346">Correct the spelling of the unrecognized token 'falied' in the literal '" falied. Exit code: "'.</Issue>
+            </Message>
+            <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="380">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="381">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="382">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="383">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="384">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="385">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="386">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="391">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="392">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="393">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="394">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="395">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="396">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="397">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="398">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="399">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="400">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="346">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="353">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'NUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NUnitProjectOrTestsFiles" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="ProjectOr" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="NUnit.cs" Line="122">The compound word 'ProjectOr' in member name 'NUnit.NUnitProjectOrTestsFiles' exists as a discrete term. If your usage is intended to be single word, case it as 'Projector' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="OpenCover" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="338">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Minimum branch coverage failed.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="323">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Minimum class coverage failed.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="333">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Minimum line coverage failed.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="328">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Minimum method coverage failed.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="270">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "OpenCover,  failed. Exit code: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="222">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "The target type is not supported: \', \'.".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="319">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Branch coverage: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="316">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Class coverage: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="318">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Line coverage: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="315">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Maximum cyclomatic complexity: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="317">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Method coverage: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="314">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Minimum cyclomatic complexity: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="286">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Summary was not found.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="308">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Total branches: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="310">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Total classes: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="306">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Total lines: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="312">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Total methods: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="309">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Visited branches: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="311">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Visited classes: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="307">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Visited lines: , .".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="313">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogMessage(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Visited methods: , .".</Issue>
+            </Message>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogWarning(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="277">Method 'OpenCover.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogWarning(string, params object[])'. Retrieve the following string(s) from a resource table instead: "Target failed. Target\'s exit code: , .".</Issue>
+            </Message>
+            <Message Id="OpenCover" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="270">Correct the spelling of the unrecognized token 'OpenCover' in the literal '"OpenCover"'.</Issue>
+            </Message>
+            <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="299">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="300">Because the behavior of 'Convert.ToInt32(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt32(string, IFormatProvider)'. If the result of 'Convert.ToInt32(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.Convert.ToInt64(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="291">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="292">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="293">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="294">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="295">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="296">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="297">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="298">Because the behavior of 'Convert.ToInt64(string)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'Convert.ToInt64(string, IFormatProvider)'. If the result of 'Convert.ToInt64(string, IFormatProvider)' will be based on input from the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="222">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="277">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="306">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="307">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="308">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="309">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="310">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="311">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="312">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="313">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="314">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="315">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="316">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="317">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="318">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="319">Because the behavior of 'string.Format(string, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="270">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'OpenCover.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PdbSearchDirs" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dirs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="OpenCover.cs" Line="93">Correct the spelling of 'Dirs' in member name 'OpenCover.PdbSearchDirs' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ReportUnit" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ReportUnit.cs" Line="81">Method 'ReportUnit.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "ReportUnit,  failed for \', \'. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="ReportUnit" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ReportUnit.cs" Line="81">Correct the spelling of the unrecognized token 'ReportUnit' in the literal '"ReportUnit"'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="ReportUnit.cs" Line="81">Because the behavior of 'string.Format(string, object, object, object)' could vary based on the current user's locale settings, replace this call in 'ReportUnit.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="SvnLog" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Svn" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Svn' in type name 'SvnLog'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#ExecuteInternal()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="SvnLog.cs" Line="120">Method 'SvnLog.ExecuteInternal()' passes a literal string as parameter 'message' of a call to 'TaskLoggingHelper.LogError(string, params object[])'. Retrieve the following string(s) from a resource table instead: "SvnLog,  failed. Exit code: , .".</Issue>
+            </Message>
+            <Message Id="SvnLog" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="SvnLog.cs" Line="120">Correct the spelling of the unrecognized token 'SvnLog' in the literal '"SvnLog"'.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="SvnLog.cs" Line="92">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'SvnLog.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="SvnLog.cs" Line="120">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'SvnLog.ExecuteInternal()' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RepositoryFileDir" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Dir" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="SvnLog.cs" Line="50">Correct the spelling of 'Dir' in member name 'SvnLog.RepositoryFileDir' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SvnExeFile" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Svn" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Sources\Heleonix.Build\Tasks" File="SvnLog.cs" Line="44">Correct the spelling of 'Svn' in member name 'SvnLog.SvnExeFile' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+  <Target Name="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Sources\LibSimulator\bin\CI\LibSimulator.dll">
+   <Modules>
+    <Module Name="libsimulator.dll">
+     <Messages>
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+       <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Sign 'LibSimulator.dll' with a strong name key.</Issue>
+      </Message>
+      <Message TypeName="AttributeStringLiteralsShouldParseCorrectly" Category="Microsoft.Usage" CheckId="CA2243" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+       <Issue Certainty="75" Level="Warning">In the constructor of 'AssemblyInformationalVersionAttribute', change the value of argument 'informationalVersion', which is currently "1.0.123.50c0f5a", to something that can be correctly parsed as 'Version'.</Issue>
+      </Message>
+     </Messages>
+     <Namespaces>
+      <Namespace Name="LibSimulator">
+       <Types>
+        <Type Name="Calculator" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Add(System.Int32,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Sources\LibSimulator" File="Calculator.cs" Line="16">In method 'Calculator.Add(int, int)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Sources\LibSimulator" File="Calculator.cs" Line="16">In method 'Calculator.Add(int, int)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Sources\LibSimulator" File="Calculator.cs" Line="16">The 'this' parameter (or 'Me' in Visual Basic) of 'Calculator.Add(int, int)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="NotCoveredByTests" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Sources\LibSimulator" File="NotCoveredByTests.cs" Line="22">In method 'NotCoveredByTests.NotCoveredByTests(int)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Increase(System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Sources\LibSimulator" File="NotCoveredByTests.cs" Line="37">In method 'NotCoveredByTests.Increase(int)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+  <Target Name="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Tests\LibSimulator.Tests\bin\CI\LibSimulator.Tests.dll">
+   <Modules>
+    <Module Name="libsimulator.tests.dll">
+     <Messages>
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+       <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Sign 'LibSimulator.Tests.dll' with a strong name key.</Issue>
+      </Message>
+      <Message TypeName="AttributeStringLiteralsShouldParseCorrectly" Category="Microsoft.Usage" CheckId="CA2243" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="NonBreaking">
+       <Issue Certainty="75" Level="Warning">In the constructor of 'AssemblyInformationalVersionAttribute', change the value of argument 'informationalVersion', which is currently "1.0.123.50c0f5a", to something that can be correctly parsed as 'Version'.</Issue>
+      </Message>
+     </Messages>
+     <Namespaces>
+      <Namespace Name="LibSimulator.Tests">
+       <Types>
+        <Type Name="CalculatorTests" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Add(System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Tests\LibSimulator.Tests" File="CalculatorTests.cs" Line="58">In method 'CalculatorTests.Add(int)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Tests\LibSimulator.Tests" File="CalculatorTests.cs" Line="58">The 'this' parameter (or 'Me' in Visual Basic) of 'CalculatorTests.Add(int)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message Id="a" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Tests\LibSimulator.Tests" File="CalculatorTests.cs" Line="58">Parameter 'a' of 'CalculatorTests.Add(int)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Add(System.Int32,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Tests\LibSimulator.Tests" File="CalculatorTests.cs" Line="48">In method 'CalculatorTests.Add(int, int)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Tests\LibSimulator.Tests" File="CalculatorTests.cs" Line="48">In method 'CalculatorTests.Add(int, int)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2016-11-23 22:01:08Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="D:\Development\Projects\Heleonix\Heleonix.Build\Tests\LibSimulator\Tests\LibSimulator.Tests" File="CalculatorTests.cs" Line="48">The 'this' parameter (or 'Me' in Visual Basic) of 'CalculatorTests.Add(int, int)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+   <Name>Assemblies should have valid strong names</Name>
+   <Description>Either the assembly has no strong name, an invalid one, or the strong name is valid only because of the computer configuration. The assembly should not be deployed in this state. The most common causes of this are: 1) The assembly's contents were modified after it was signed. 2) The signing process failed. 3) The assembly was delay-signed. 4) A registry key existed that allowed the check to pass (where it would not have otherwise).</Description>
+   <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182127.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="AttributeStringLiteralsShouldParseCorrectly" Category="Microsoft.Usage" CheckId="CA2243">
+   <Name>Attribute string literals should parse correctly</Name>
+   <Description>Literal strings used as attribute parameters that represent URLs, version numbers, or GUIDs, should have the appropriate format.</Description>
+   <Resolution Name="Default">In the constructor of {0}, change the value of argument {1}, which is currently "{2}", to something that can be correctly parsed as {3}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb264490.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502">
+   <Name>Avoid excessive complexity</Name>
+   <Description>Method implementations that are exceedingly complex increase the challenge of understanding and maintaining code.</Description>
+   <Resolution Name="Default">{0} has a cyclomatic complexity of {1}. Rewrite or refactor the method to reduce complexity to {2}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182212.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Warning</MessageLevel>
+   <File Name="maintainabilityrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+   <Name>Avoid namespaces with few types</Name>
+   <Description>A namespace should generally have more than five types.</Description>
+   <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182130.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">Warning</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
+   <Name>Avoid out parameters</Name>
+   <Description>Using out parameters might indicate a design flaw. Although there are legitimate times to use out parameters, their use frequently indicates a design that does not conform to the design guidelines for managed code.</Description>
+   <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182131.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">Warning</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
+   <Name>Compound words should be cased correctly</Name>
+   <Description>Avoid creating compound words from terms which exist in the dictionary as discrete terms. Do not create a compound word such as 'StopWatch' or 'PopUp'. These terms are recognized in the dictionary and should be cased as 'Stopwatch' and 'Popup'.</Description>
+   <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb264474.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="80">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026">
+   <Name>Default parameters should not be used</Name>
+   <Description>Some programming languages do not support default parameters. Replace default parameters with method overloads that supply the default argument.</Description>
+   <Resolution Name="Default">Replace method {0} with an overload that supplies all default arguments.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182135.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303">
+   <Name>Do not pass literals as localized parameters</Name>
+   <Description>Literal strings that are embedded in source code are difficult to localize. Avoid passing literal strings as arguments in circumstances where a localized string is generally expected.</Description>
+   <Resolution Name="KnownValue">Method {0} passes a literal string as parameter '{1}' of a call to {2}. Retrieve the following string(s) from a resource table instead: {3}.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182187.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+   <Name>Do not catch general exception types</Name>
+   <Description>You should not catch Exception or SystemException. Catching generic exception types can hide run-time problems from the library user, and can complicate debugging. You should catch only those exceptions that you can handle gracefully.</Description>
+   <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182137.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+   <Name>Identifiers should be cased correctly</Name>
+   <Description>Type, namespace, and member identifiers are Pascal-cased. Parameter identifiers are camel-cased. Two letter acronyms within these identifiers should be upper-cased, for example, use System.IO instead of System.Io. Acronyms of three or more letters should be Pascal-cased, for example, use System.Xml instead of System.XML. The pascal-casing convention capitalizes the first letter of each word, as in BackColor. The camel-casing convention formats the first letter of the first word in lowercase and capitalizes the first letter of all subsequent words, as in backgroundColor. Although it may be common practice for some two letter acronyms to not be fully capitalized, violations of this rule should not be excluded for this reason. For example, 'DbConnection', is common but incorrect; use DBConnection. A violation of this rule might be required for compatibility with existing, non-managed symbol schemes. In general, however, these symbols should not be visible outside the assembly that uses them.</Description>
+   <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182240.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+   <Name>Identifiers should be spelled correctly</Name>
+   <Description>The individual words that make up an identifier should not be abbreviated and should be spelled correctly. If this rule generates a false positive on a term that should be recognized, add the word to the FxCop custom dictionary.</Description>
+   <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+   <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
+   <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb264492.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
+   <Name>Identifiers should not have incorrect suffix</Name>
+   <Description>Types that do not extend certain base types should not use reserved name suffixes. Types and members should not use 'Ex' or 'New' to distinguish them from an earlier version of the same API, instead, use a numeric suffix such as '2' or provide a more meaningful suffix. Concrete type implementations and members should not end 'Impl'. Members instead, should either consider using the suggested alternate 'Core' in replacement of 'Impl' or avoid any suffix at all.</Description>
+   <Resolution Name="MemberNewerVersion">Either replace the suffix '{0}' in member name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182247.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204">
+   <Name>Literals should be spelled correctly</Name>
+   <Description>This rule parses the literal string into words, tokenizing compound words, and checks the spelling of each word/token.</Description>
+   <Resolution Name="Default">Correct the spelling of the unrecognized token '{0}' in the literal '{1}'.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/bb264488.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+   <Name>Mark members as static</Name>
+   <Description>Methods which do not access instance data or call instance methods can be marked as static (Shared in Visual Basic). After doing so, the compiler will emit non-virtual call sites to these members which will prevent a check at runtime for each call that ensures the current object pointer is non-null. This can result in a measurable performance gain for performance-sensitive code. In some cases, the failure to access the current object instance represents a correctness issue.</Description>
+   <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms245046.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+   <Name>Review unused parameters</Name>
+   <Description>Review parameters in non-virtual methods that are not used in the method body to ensure no correctness exists around failure to access them. Unused parameters incur maintenance and performance costs. Sometimes a violation of this rule can point to an implementation bug in the method (i.e. the parameter should actually have been used in the method body). Exclude warnings of this rule if the parameter has to exist because of backward compatibility.</Description>
+   <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182268.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+   <Name>Specify IFormatProvider</Name>
+   <Description>If an overload exists that takes an IFormatProvider argument, it should always be called in favor of an overload that does not. Some methods in the runtime convert a value to or from a string representation and take a string parameter that contains one or more characters, called format specifiers, which indicate how the value is to be converted. If the meaning of the format specifier varies by culture, a formatting object supplies the actual characters used in the string representation. In scenarios where sorting and comparison behavior should never change between cultures, specify CultureInfo.InvariantCulture, otherwise, specify CultureInfo.CurrentCulture.</Description>
+   <Resolution Name="IFormatProviderAlternate">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be based on input from the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify {4}.</Resolution>
+   <Resolution Name="IFormatProviderAlternateString">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify {4}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182190.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
+   <Name>Specify StringComparison</Name>
+   <Description>If an overload exists that takes a StringComparison argument, it should always be called in favor of an overload that does not.</Description>
+   <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, such as when sorting a list of items for display in a list box, specify 'StringComparison.CurrentCulture' or 'StringComparison.CurrentCultureIgnoreCase' as the 'StringComparison' parameter. If comparing case-insensitive identifiers, such as file paths, environment variables, or registry keys and values, specify 'StringComparison.OrdinalIgnoreCase'. Otherwise, if comparing case-sensitive identifiers, specify 'StringComparison.Ordinal'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb386080.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309">
+   <Name>Use ordinal StringComparison</Name>
+   <Description>For non-linguistic comparisons, StringComparison.Ordinal or StringComparison.OrdinalIgnoreCase should be used instead of the linguistically-sensitive StringComparison.InvariantCulture.</Description>
+   <Resolution Name="StringComparison">{0} passes '{1}' as the 'StringComparison' parameter to {2}. To perform a non-linguistic comparison, specify 'StringComparison.Ordinal' or 'StringComparison.OrdinalIgnoreCase' instead.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb385972.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062">
+   <Name>Validate arguments of public methods</Name>
+   <Description>All reference arguments passed to externally visible methods should be checked against null (Nothing in VB). If appropriate, throw a System.ArgumentNullException when the argument is null.</Description>
+   <Resolution Name="Default">In externally visible method {0}, validate parameter '{1}' before using it.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182182.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

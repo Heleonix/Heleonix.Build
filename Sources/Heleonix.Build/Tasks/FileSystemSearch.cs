@@ -61,7 +61,7 @@ namespace Heleonix.Build.Tasks
                 if (Direction == "Up")
                 {
                     var dirs = Directory.GetDirectories(currentDir).Where(d =>
-                        pathRegEx?.IsMatch(d) ?? true).Select(d => new TaskItem(d));
+                            pathRegEx?.IsMatch(d) ?? true).Select(d => new TaskItem(d));
 
                     foreach (var dir in dirs)
                     {
@@ -85,7 +85,7 @@ namespace Heleonix.Build.Tasks
             if (string.IsNullOrEmpty(Types) || Types == "Files" || Types == "All")
             {
                 var files = Directory.GetFiles(currentDir).Where(f =>
-                    (pathRegEx?.IsMatch(f) ?? true) && (contentRegEx?.IsMatch(File.ReadAllText(f)) ?? true))
+                            (pathRegEx?.IsMatch(f) ?? true) && (contentRegEx?.IsMatch(File.ReadAllText(f)) ?? true))
                     .Select(f => new TaskItem(f));
 
                 foreach (var file in files)
@@ -205,22 +205,24 @@ namespace Heleonix.Build.Tasks
                 : new Regex(PathRegEx,
                     string.IsNullOrEmpty(PathRegExOptions)
                         ? RegexOptions.IgnoreCase
-                        : (RegexOptions) Enum.Parse(typeof (RegexOptions), PathRegExOptions));
+                        : (RegexOptions) Enum.Parse(typeof(RegexOptions), PathRegExOptions));
 
             var contentRegEx = string.IsNullOrEmpty(ContentRegEx)
                 ? null
                 : new Regex(ContentRegEx,
                     string.IsNullOrEmpty(ContentRegExOptions)
                         ? RegexOptions.IgnoreCase
-                        : (RegexOptions) Enum.Parse(typeof (RegexOptions), ContentRegExOptions));
+                        : (RegexOptions) Enum.Parse(typeof(RegexOptions), ContentRegExOptions));
 
             var foundFiles = new List<ITaskItem>();
             var foundDirs = new List<ITaskItem>();
             var foundItems = new List<ITaskItem>();
 
-            Log.LogMessage($"Start searching in the start directory '{StartDir.ItemSpec}'.");
+            Log.LogMessage($"Start searching in '{StartDir.ItemSpec}'; Type: {Types}; Direction: {Direction}; "
+                           + $"PathRegEx: {PathRegEx}; ContentRegEx: {ContentRegEx}.");
 
-            Search(StartDir.ItemSpec, pathRegEx, contentRegEx, foundFiles, foundDirs, foundItems);
+            Search(StartDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), pathRegEx, contentRegEx,
+                foundFiles, foundDirs, foundItems);
 
             FoundFiles = foundFiles.ToArray();
             FoundDirs = foundDirs.ToArray();

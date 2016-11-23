@@ -91,10 +91,11 @@ Example custom property of type of custom enum
     schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd"/>
 
   <!--Region Custom types-->
-  <xs:simpleType name="Hxb-System-CI-Enum">
+  <xs:simpleType name="Hxb-Build-CI-Enum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Jenkins"/>
       <xs:enumeration value="TeamCity"/>
+      <xs:enumeration value="Dev"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="Hxb-Build-VCS-Enum">
@@ -1153,23 +1154,6 @@ Example custom property of type of custom enum
   <!--Endregion-->
 
   <!--Region System-->
-  <xs:element name="Hxb-System-CI" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A type of continuous integration system.</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-System-CI-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Hxb-System-Workspace-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-System-MSBuildVersion" type="xs:int" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The MSBuild version. Allowed values are 4, 12, 14.</xs:documentation>
@@ -1227,6 +1211,18 @@ Example custom property of type of custom enum
   <!--Endregion-->
 
   <!--Region Build-->
+  <xs:element name="Hxb-Build-CI" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A type of continuous integration system.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="msb:Hxb-Build-CI-Enum">
+          <xs:attribute name="Condition" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Hxb-Build-VCS" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A type of the version control system.</xs:documentation>
@@ -1238,6 +1234,11 @@ Example custom property of type of custom enum
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
+  </xs:element>
+  <xs:element name="Hxb-Build-Workspace-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
+    </xs:annotation>
   </xs:element>
   <xs:element name="Hxb-Build-Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>

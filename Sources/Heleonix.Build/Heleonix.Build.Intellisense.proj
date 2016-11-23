@@ -88,9 +88,7 @@ SOFTWARE.
 
   <!--Region System-->
   <PropertyGroup>
-    <Hxb-System-CI>Jenkins</Hxb-System-CI>
-    <Hxb-System-Workspace-Dir></Hxb-System-Workspace-Dir>
-    <Hxb-System-MSBuildVersion></Hxb-System-MSBuildVersion>
+    <Hxb-System-MSBuildVersion>14</Hxb-System-MSBuildVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -113,6 +111,8 @@ SOFTWARE.
 
   <!--Region Build-->
   <PropertyGroup>
+    <Hxb-Build-CI>Jenkins</Hxb-Build-CI>
+    <Hxb-Build-Workspace-Dir></Hxb-Build-Workspace-Dir>
     <Hxb-Build-VCS>Git</Hxb-Build-VCS>
     <Hxb-Build-Version></Hxb-Build-Version>
     <Hxb-Build-Version-Informational></Hxb-Build-Version-Informational>

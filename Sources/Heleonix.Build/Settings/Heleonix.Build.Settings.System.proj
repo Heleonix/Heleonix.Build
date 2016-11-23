@@ -27,16 +27,6 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <PropertyGroup Condition="'$(JENKINS_URL)' != ''">
-    <Hxb-System-CI>Jenkins</Hxb-System-CI>
-    <Hxb-System-Workspace-Dir>$(WORKSPACE)</Hxb-System-Workspace-Dir>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TEAMCITY_VERSION)' != ''">
-    <Hxb-System-CI>TeamCity</Hxb-System-CI>
-    <Hxb-System-Workspace-Dir>$(system_agent_work_dir)</Hxb-System-Workspace-Dir>
-  </PropertyGroup>
-
   <PropertyGroup>
     <Hxb-System-MSBuildVersion>14</Hxb-System-MSBuildVersion>
   </PropertyGroup>

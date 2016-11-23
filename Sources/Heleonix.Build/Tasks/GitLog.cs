@@ -103,7 +103,7 @@ namespace Heleonix.Build.Tasks
                 .Add("--until", UntilDate, true)
                 .Add("--max-count", MaxCount == 0 ? 1 : MaxCount)
                 .Add("--")
-                .Add(RepositoryFileDir.ItemSpec, true);
+                .Add(RepositoryFileDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), true);
 
             var workingDir = File.Exists(RepositoryFileDir.ItemSpec)
                 ? Path.GetDirectoryName(RepositoryFileDir.ItemSpec)

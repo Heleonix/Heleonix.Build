@@ -30,13 +30,25 @@ SOFTWARE.
   <!--<Target Name="Hxb-[TargetName]-Before-Conventions" BeforeTargets="[TargetName]"></Target>-->
 
   <PropertyGroup>
+    <Hxb-Build-CI>Dev</Hxb-Build-CI>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(JENKINS_URL)' != ''">
+    <Hxb-Build-CI>Jenkins</Hxb-Build-CI>
+    <Hxb-Build-Workspace-Dir>$(WORKSPACE)</Hxb-Build-Workspace-Dir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TEAMCITY_VERSION)' != ''">
+    <Hxb-Build-CI>TeamCity</Hxb-Build-CI>
+    <Hxb-Build-Workspace-Dir>$(system_agent_work_dir)</Hxb-Build-Workspace-Dir>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">Release</Hxb-In-Configuration>
-    <Hxb-Setup-Sln-Flows>$(Hxb-System-Workspace-Dir)\Build.proj</Hxb-Setup-Sln-Flows>
+    <Hxb-Setup-Sln-Flows>$(Hxb-Build-Workspace-Dir)\Build.proj</Hxb-Setup-Sln-Flows>
   </PropertyGroup>
 
   <Target Name="Hxb-Initialize-Before-Conventions" BeforeTargets="Hxb-Initialize">
     <PropertyGroup>
-      <Hxb-Build-Sln-Dir>$(Hxb-System-Workspace-Dir)</Hxb-Build-Sln-Dir>
+      <Hxb-Build-Sln-Dir>$(Hxb-Build-Workspace-Dir)</Hxb-Build-Sln-Dir>
       <Hxb-Build-Reports-Dir>$(Hxb-Build-Sln-Dir)\Hxb-Reports\$(Hxb-In-Configuration)</Hxb-Build-Reports-Dir>
       <Hxb-Build-Reports-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Reports-Dir)\$(Hxb-In-Platform)</Hxb-Build-Reports-Dir>
       <Hxb-Build-Deployments-Dir>$(Hxb-Build-Sln-Dir)\Hxb-Deployments\$(Hxb-In-Configuration)</Hxb-Build-Deployments-Dir>
@@ -72,23 +84,24 @@ SOFTWARE.
     </PropertyGroup>
 
     <Heleonix.Build.Tasks.GitLog GitExeFile="@(Hxb-System-GitExe)"
-                                 RepositoryFileDir="$(Hxb-System-Workspace-Dir)"
+                                 RepositoryFileDir="$(Hxb-Build-Workspace-Dir)"
                                  MaxCount="1"
                                  Condition="'$(Hxb-Build-VCS)' == 'Git'">
       <Output TaskParameter="Commits" ItemName="_Hxb-Setup-Before-Conventions-Commit"/>
     </Heleonix.Build.Tasks.GitLog>
     <Heleonix.Build.Tasks.SvnLog SvnExeFile="@(Hxb-System-SvnExe)"
-                                 RepositoryFileDir="$(Hxb-System-Workspace-Dir)"
+                                 RepositoryFileDir="$(Hxb-Build-Workspace-Dir)"
                                  MaxCount="1"
                                  Condition="'$(Hxb-Build-VCS)' == 'Svn'">
       <Output TaskParameter="Commits" ItemName="_Hxb-Setup-Before-Conventions-Commit"/>
     </Heleonix.Build.Tasks.SvnLog>
 
     <PropertyGroup>
-      <Hxb-Build-Version Condition="$(Hxb-System-CI) == 'Jenkins'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
-      <Hxb-Build-Version Condition="$(Hxb-System-CI) == 'TeamCity'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="$(Hxb-Build-CI) == 'Jenkins'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="$(Hxb-Build-CI) == 'TeamCity'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
       <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' == ''">1.0</Hxb-Build-Version>
-      <Hxb-Build-Version>$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(BUILD_NUMBER)' == ''">$(Hxb-Build-Version).0</Hxb-Build-Version>
       <Hxb-Build-Version-Informational>$(Hxb-Build-Version).%(_Hxb-Setup-Before-Conventions-Commit.Revision)</Hxb-Build-Version-Informational>
       <Hxb-Build-Version Condition="'$(Hxb-Build-VCS)' == 'Git'">$(Hxb-Build-Version).0</Hxb-Build-Version>
       <Hxb-Build-Version Condition="'$(Hxb-Build-VCS)' == 'Svn'">$(Hxb-Build-Version-Informational)</Hxb-Build-Version>
