@@ -28,7 +28,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heleonix.Build.Tests", "Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibSimulator", "LibSimulator", "{064520BF-4D56-4301-B6E5-9D6D8073E217}"
 	ProjectSection(SolutionItems) = preProject
+		Tests\LibSimulator\Build.proj = Tests\LibSimulator\Build.proj
 		Tests\LibSimulator\LibSimulator.nuspec = Tests\LibSimulator\LibSimulator.nuspec
+		Tests\LibSimulator\SharedAssemblyInfo.cs = Tests\LibSimulator\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{66C53829-3C54-4944-B831-FB18B2D8B460}"

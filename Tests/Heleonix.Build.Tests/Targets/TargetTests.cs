@@ -46,6 +46,7 @@ namespace Heleonix.Build.Tests.Targets
             { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } },
             { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.NUnitConsoleExe) } },
             { "Hxb-System-OpenCoverConsoleExe", new ITaskItem[] { new TaskItem(PathHelper.OpenCoverExe) } },
+            { "Hxb-System-ReportGeneratorExe", new ITaskItem[] { new TaskItem(PathHelper.ReportGeneratorExe) } },
             { "Hxb-System-ReportUnitExe", new ITaskItem[] { new TaskItem(PathHelper.ReportUnitExe) } }
         };
 

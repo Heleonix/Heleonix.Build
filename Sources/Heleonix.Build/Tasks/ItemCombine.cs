@@ -29,7 +29,7 @@ using Microsoft.Build.Utilities;
 namespace Heleonix.Build.Tasks
 {
     /// <summary>
-    /// Combines items: adds the right list of items as metadata into the left list.
+    /// Combines items: adds the metadata of the right list of items as metadata into the left list.
     /// </summary>
     public class ItemCombine : BaseTask
     {

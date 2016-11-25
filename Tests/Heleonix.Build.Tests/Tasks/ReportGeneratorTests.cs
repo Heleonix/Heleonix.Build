@@ -26,31 +26,31 @@ using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Tasks
 {
     /// <summary>
-    /// Tests the <see cref="OpenCover"/>.
+    /// Tests the <see cref="ReportGenerator"/>.
     /// </summary>
-    public class OpenCoverTests : TaskTests
+    public class ReportGeneratorTests : TaskTests
     {
         #region Tests
 
         /// <summary>
-        /// Tests the <see cref="OpenCover.Execute"/>.
+        /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [TestCase(40, ExpectedResult = true)]
-        [TestCase(90, ExpectedResult = false)]
-        public bool Execute(int minClassCoverage)
+        [Test]
+        public void Execute()
         {
             var coverageResults = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
             var errorsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, "Errors.txt");
             var testsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, "Output.txt");
             var testsResult = Path.Combine(LibSimulatorHelper.ReportsDir, "NUnit.xml");
 
-            var task = new OpenCover
+            var openCoverTask = new OpenCover
             {
                 BuildEngine = new FakeBuildEngine(),
                 OpenCoverExeFile = new TaskItem(PathHelper.OpenCoverExe),
@@ -63,21 +63,38 @@ namespace Heleonix.Build.Tests.Tasks
                     { nameof(Build.Tasks.NUnit.TestsResultFile), testsResult }
                 }),
                 CoverageResultFile = new TaskItem(coverageResults),
-                MinClassCoverage = minClassCoverage,
+                MinClassCoverage = 0,
                 Register = "path64"
             };
 
-            task.Execute();
+            var succeeded = openCoverTask.Execute();
 
-            var coverageResultsExists = File.Exists(coverageResults);
+            var reportDir = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
 
             try
             {
-                Assert.That(coverageResultsExists, Is.True);
+                Assert.That(succeeded, Is.True);
+
+                var task = new ReportGenerator
+                {
+                    BuildEngine = new FakeBuildEngine(),
+                    ReportGeneratorExeFile = new TaskItem(PathHelper.ReportGeneratorExe),
+                    Verbosity = "Error",
+                    ResultsFiles = new ITaskItem[] { new TaskItem(coverageResults) },
+                    ReportDir = new TaskItem(reportDir),
+                    ReportTypes = "Badges;Html;HtmlSummary"
+                };
+
+                succeeded = task.Execute();
+
+                Assert.That(succeeded, Is.True);
+                Assert.That(File.Exists(Path.Combine(reportDir, "index.htm")), Is.True);
+                Assert.That(File.Exists(Path.Combine(reportDir, "summary.htm")), Is.True);
+                Assert.That(Directory.GetFiles(reportDir, "*.png"), Has.Length.GreaterThan(0));
             }
             finally
             {
-                if (coverageResultsExists)
+                if (File.Exists(coverageResults))
                 {
                     File.Delete(coverageResults);
                 }
@@ -96,9 +113,12 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     File.Delete(testsResult);
                 }
-            }
 
-            return task.ClassCoverage >= minClassCoverage;
+                if (Directory.Exists(reportDir))
+                {
+                    Directory.Delete(reportDir, true);
+                }
+            }
         }
 
         #endregion

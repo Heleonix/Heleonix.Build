@@ -56,6 +56,9 @@ namespace Heleonix.Build.Tests.Common
         public static string ReportUnitExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
             "packages", "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
 
+        public static string ReportGeneratorExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
+            "packages", "ReportGenerator.2.4.5.0", "tools", "ReportGenerator.exe");
+
         /// <summary>
         /// Gets the main project path.
         /// </summary>

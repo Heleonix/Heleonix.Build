@@ -81,6 +81,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Targets\Heleonix.Build.Targets.ReportGenerator.targets">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Targets\Heleonix.Build.Targets.ReportUnit.targets">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -134,6 +138,7 @@
     <Compile Include="Tasks\NugetPack.cs" />
     <Compile Include="Tasks\NugetPush.cs" />
     <Compile Include="Tasks\OpenCover.cs" />
+    <Compile Include="Tasks\ReportGenerator.cs" />
     <Compile Include="Tasks\ReportUnit.cs" />
     <Compile Include="Tasks\NUnit.cs" />
     <Compile Include="Tasks\SvnLog.cs" />

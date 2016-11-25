@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{C340
 		Targets\Heleonix.Build.Targets.OnError.targets = Targets\Heleonix.Build.Targets.OnError.targets
 		Targets\Heleonix.Build.Targets.OpenCover.targets = Targets\Heleonix.Build.Targets.OpenCover.targets
 		Targets\Heleonix.Build.Targets.Rebuild.targets = Targets\Heleonix.Build.Targets.Rebuild.targets
+		Targets\Heleonix.Build.Targets.ReportGenerator.targets = Targets\Heleonix.Build.Targets.ReportGenerator.targets
 		Targets\Heleonix.Build.Targets.ReportUnit.targets = Targets\Heleonix.Build.Targets.ReportUnit.targets
 	EndProjectSection
 EndProject

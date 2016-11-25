@@ -39,5 +39,6 @@ SOFTWARE.
   <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="..\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportGenerator" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="..\Heleonix.Build.dll"/>
 </Project>

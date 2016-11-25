@@ -73,6 +73,8 @@ SOFTWARE.
   <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportGenerator" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportGenerator" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <!--Endregion-->
@@ -292,6 +294,19 @@ SOFTWARE.
       <Hxb-OpenCover-In-Target Include="0"/>
       <Hxb-OpenCover-In-CoverageResult Include="0"/>
       <Hxb-OpenCover-In-PdbSearchDirs Include="0"/>
+    </ItemGroup>
+  </Target>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-ReportGenerator-->
+  <Target Name="Hxb-ReportGenerator">
+    <PropertyGroup>
+      <Hxb-ReportGenerator-In-ReportTypes></Hxb-ReportGenerator-In-ReportTypes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-ReportGenerator-In-Results Include="0"/>
+      <Hxb-ReportGenerator-In-Report-Dir Include="0"/>
     </ItemGroup>
   </Target>
   <!--Endregion-->

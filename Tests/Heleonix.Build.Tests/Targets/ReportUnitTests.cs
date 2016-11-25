@@ -46,7 +46,7 @@ namespace Heleonix.Build.Tests.Targets
         }
 
         /// <summary>
-        /// Tests the Hxb-NUnit target.
+        /// Tests the Hxb-ReportUnit target.
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]

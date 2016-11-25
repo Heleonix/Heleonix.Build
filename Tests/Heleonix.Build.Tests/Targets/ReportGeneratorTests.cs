@@ -30,9 +30,9 @@ using NUnit.Framework;
 namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
-    /// Tests the Hxb-OpenCover target.
+    /// Tests the Hxb-ReportGenerator target.
     /// </summary>
-    public class OpenCoverTests : TargetTests
+    public class ReportGeneratorTests : TargetTests
     {
         #region Tests
 
@@ -42,11 +42,11 @@ namespace Heleonix.Build.Tests.Targets
         /// <returns>Test cases.</returns>
         public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
         {
-            yield return new TargetTestCase { Result = true };
+            yield return new TargetTestCase { DependsOnTargets = "Hxb-OpenCover", Result = true };
         }
 
         /// <summary>
-        /// Tests the Hxb-OpenCover target.
+        /// Tests the Hxb-ReportGenerator target.
         /// </summary>
         /// <param name="testCases">The test cases.</param>
         [Test]
@@ -74,7 +74,7 @@ namespace Heleonix.Build.Tests.Targets
         /// <summary>
         /// Gets or sets the name of the target.
         /// </summary>
-        protected override string TargetName => "Hxb-OpenCover";
+        protected override string TargetName => "Hxb-ReportGenerator";
 
         #endregion
     }

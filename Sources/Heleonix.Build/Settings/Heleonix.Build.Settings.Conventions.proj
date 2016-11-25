@@ -157,6 +157,17 @@ SOFTWARE.
     </ItemGroup>
   </Target>
 
+  <Target Name="Hxb-ReportGenerator-Before-Conventions" BeforeTargets="Hxb-ReportGenerator">
+    <PropertyGroup>
+      <Hxb-ReportGenerator-In-ReportTypes>Badges;Html</Hxb-ReportGenerator-In-ReportTypes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-ReportGenerator-In-Results Include="@(Hxb-OpenCover-In-CoverageResult)"/>
+      <Hxb-ReportGenerator-In-Report-Dir Include="$(Hxb-Build-Reports-Dir)\ReportGenerator"/>
+    </ItemGroup>
+  </Target>
+
   <Target Name="Hxb-ReportUnit-Before-Conventions" BeforeTargets="Hxb-ReportUnit">
     <ItemGroup>
       <Hxb-ReportUnit-In-TestsResult Include="$(Hxb-Build-Reports-Dir)\NUnit\NUnit.xml"/>

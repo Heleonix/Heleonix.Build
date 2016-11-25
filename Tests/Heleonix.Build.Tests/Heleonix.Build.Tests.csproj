@@ -81,6 +81,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Targets\NugetRestoreTests.cs" />
     <Compile Include="Targets\NugetDeployTests.cs" />
+    <Compile Include="Targets\ReportGeneratorTests.cs" />
     <Compile Include="Targets\ReportUnitTests.cs" />
     <Compile Include="Targets\OpenCoverTests.cs" />
     <Compile Include="Targets\NUnitTests.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Tasks\NugetRestoreTests.cs" />
     <Compile Include="Tasks\NUnitTests.cs" />
     <Compile Include="Tasks\OpenCoverTests.cs" />
+    <Compile Include="Tasks\ReportGeneratorTests.cs" />
     <Compile Include="Tasks\ReportUnitTests.cs" />
     <Compile Include="Tasks\SvnLogTests.cs" />
     <Compile Include="Tasks\TaskTests.cs" />

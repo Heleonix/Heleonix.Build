@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 The MIT License (MIT)
 
@@ -27,6 +26,19 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-CI-DotNet" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
+  <Target Name="Hxb-ReportGenerator">
+    <PropertyGroup>
+      <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Quiet'">Error</_Hxb-ReportGenerator-Verbosity>
+      <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Normal'">Info</_Hxb-ReportGenerator-Verbosity>
+      <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Detailed'">Verbose</_Hxb-ReportGenerator-Verbosity>
+    </PropertyGroup>
+
+    <Heleonix.Build.Tasks.ReportGenerator ReportGeneratorExeFile="@(Hxb-System-ReportGeneratorExe)"
+                                          ResultsFiles="@(Hxb-ReportGenerator-In-Results)"
+                                          ReportDir="@(Hxb-ReportGenerator-In-Report-Dir)"
+                                          ReportTypes="$(Hxb-ReportGenerator-In-ReportTypes)"
+                                          Verbosity="$(_Hxb-ReportGenerator-Verbosity)"/>
+
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
 </Project>

@@ -135,6 +135,13 @@ Example custom property of type of custom enum
       <xs:enumeration value="Detailed"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="Hxb-ReportGenerator-Verbosity-Enum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Error"/>
+      <xs:enumeration value="Info"/>
+      <xs:enumeration value="Verbose"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="Hxb-NUnit-TraceLevel-Enum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Off"/>
@@ -1087,6 +1094,42 @@ Example custom property of type of custom enum
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.ReportGenerator" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Generates HTML report using the ReportGenerator tool.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="ReportGeneratorExeFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The ReportGenerator executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ResultsFiles" use="required">
+            <xs:annotation>
+              <xs:documentation>The results files paths.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ReportDir" use="required">
+            <xs:annotation>
+              <xs:documentation>The report directory path to save report to.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ReportTypes" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The report types, separated by semicolon.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Verbosity" type="msb:Hxb-ReportGenerator-Verbosity-Enum">
+            <xs:annotation>
+              <xs:documentation>The verbosity.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Heleonix.Build.Tasks.SvnLog" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Retrieves the Svn log.</xs:documentation>
@@ -1779,6 +1822,25 @@ Example custom property of type of custom enum
   <xs:element name="Hxb-OpenCover-In-PdbSearchDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The PDB search directories path.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-ReportGenerator-->
+  <xs:element name="Hxb-ReportGenerator-In-ReportTypes" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The report types, separated by semicolon: Badges, Html, HtmlSummary, Latex, LatexSummary, TextSummary, Xml, XmlSummary.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hxb-ReportGenerator-In-Results" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The results files paths.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-ReportGenerator-In-Report-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The report directory path to save report to.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
