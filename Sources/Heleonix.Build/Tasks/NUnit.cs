@@ -329,28 +329,25 @@ namespace Heleonix.Build.Tasks
 
             Prepare(TestsResultFile?.ItemSpec, TestsOutputFile?.ItemSpec, ErrorsOutputFile?.ItemSpec);
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(NUnitConsoleExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(NUnitConsoleExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode < 0)
+            if (result.ExitCode < 0)
             {
-                Log.LogError($"{nameof(NUnit)} falied. Exit code: {exitCode}.");
+                Log.LogError($"{nameof(NUnit)} falied. Exit code: {result.ExitCode}.");
 
                 return;
             }
 
-            if (exitCode > 0)
+            if (result.ExitCode > 0)
             {
-                var message = $"{nameof(NUnit)} finished with failed tests. Exit code: {exitCode}.";
+                var message = $"{nameof(NUnit)} finished with failed tests. Exit code: {result.ExitCode}.";
 
                 if (FailOnFailedTests)
                 {

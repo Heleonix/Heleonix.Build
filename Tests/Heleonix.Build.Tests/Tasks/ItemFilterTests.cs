@@ -49,10 +49,10 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 BuildEngine = new FakeBuildEngine(),
                 Inputs = new[] { new TaskItem("Product.Tests.dll"), new TaskItem("Product.dll") as ITaskItem },
-                RegEx = regex,
+                RegExp = regex,
                 MetadataName = "FullPath",
                 Negative = negative,
-                RegExOptions = RegexOptions.IgnoreCase.ToString()
+                RegExpOptions = RegexOptions.IgnoreCase.ToString()
             };
 
             var succeeded = task.Execute();

@@ -59,10 +59,10 @@ namespace Heleonix.Build.Tests.Tasks
                 File.Create(workingCopyFilePath).Close();
 
                 ExeHelper.Execute(PathHelper.SvnExe, ArgsBuilder.By(' ', ' ')
-                    .Add("add").Add(workingCopyFilePath, true), workingCopyDir);
+                    .Add("add").Add(workingCopyFilePath, true), false, workingCopyDir);
 
                 ExeHelper.Execute(PathHelper.SvnExe, ArgsBuilder.By(' ', ' ')
-                    .Add("commit").Add("-m", "Commit 1.", true), workingCopyDir);
+                    .Add("commit").Add("-m", "Commit 1.", true), false, workingCopyDir);
 
                 var task = new SvnLog
                 {

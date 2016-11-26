@@ -43,12 +43,12 @@ namespace Heleonix.Build.Tasks
         /// Searches items in the specified directory.
         /// </summary>
         /// <param name="currentDir">The current directory path.</param>
-        /// <param name="pathRegEx">The .NET regular expression to search items by path.</param>
-        /// <param name="contentRegEx">The .NET regular expression to search items by content.</param>
+        /// <param name="pathRegExp">The .NET regular expression to search items by path.</param>
+        /// <param name="contentRegExp">The .NET regular expression to search items by content.</param>
         /// <param name="foundFiles">The found files.</param>
         /// <param name="foundDirs">The found directories.</param>
         /// <param name="foundItems">All the found items.</param>
-        private void Search(string currentDir, Regex pathRegEx, Regex contentRegEx,
+        private void Search(string currentDir, Regex pathRegExp, Regex contentRegExp,
             ICollection<ITaskItem> foundFiles, ICollection<ITaskItem> foundDirs, ICollection<ITaskItem> foundItems)
         {
             if (string.IsNullOrEmpty(currentDir))
@@ -61,7 +61,7 @@ namespace Heleonix.Build.Tasks
                 if (Direction == "Up")
                 {
                     var dirs = Directory.GetDirectories(currentDir).Where(d =>
-                            pathRegEx?.IsMatch(d) ?? true).Select(d => new TaskItem(d));
+                            pathRegExp?.IsMatch(d) ?? true).Select(d => new TaskItem(d));
 
                     foreach (var dir in dirs)
                     {
@@ -72,7 +72,7 @@ namespace Heleonix.Build.Tasks
 
                 if (string.IsNullOrEmpty(Direction) || Direction == "Down")
                 {
-                    if (pathRegEx?.IsMatch(currentDir) ?? true)
+                    if (pathRegExp?.IsMatch(currentDir) ?? true)
                     {
                         var dirItem = new TaskItem(currentDir);
 
@@ -85,7 +85,7 @@ namespace Heleonix.Build.Tasks
             if (string.IsNullOrEmpty(Types) || Types == "Files" || Types == "All")
             {
                 var files = Directory.GetFiles(currentDir).Where(f =>
-                            (pathRegEx?.IsMatch(f) ?? true) && (contentRegEx?.IsMatch(File.ReadAllText(f)) ?? true))
+                            (pathRegExp?.IsMatch(f) ?? true) && (contentRegExp?.IsMatch(File.ReadAllText(f)) ?? true))
                     .Select(f => new TaskItem(f));
 
                 foreach (var file in files)
@@ -99,13 +99,13 @@ namespace Heleonix.Build.Tasks
             {
                 foreach (var subDir in Directory.GetDirectories(currentDir))
                 {
-                    Search(subDir, pathRegEx, contentRegEx, foundFiles, foundDirs, foundItems);
+                    Search(subDir, pathRegExp, contentRegExp, foundFiles, foundDirs, foundItems);
                 }
             }
 
             if (Direction == "Up")
             {
-                Search(Path.GetDirectoryName(currentDir), pathRegEx, contentRegEx, foundFiles, foundDirs, foundItems);
+                Search(Path.GetDirectoryName(currentDir), pathRegExp, contentRegExp, foundFiles, foundDirs, foundItems);
             }
         }
 
@@ -149,22 +149,22 @@ namespace Heleonix.Build.Tasks
         /// <summary>
         /// The .NET regular expression to search by path.
         /// </summary>
-        public string PathRegEx { get; set; }
+        public string PathRegExp { get; set; }
 
         /// <summary>
         /// The .NET regular expression options to search by path. Default is "IgnoreCase".
         /// </summary>
-        public string PathRegExOptions { get; set; }
+        public string PathRegExpOptions { get; set; }
 
         /// <summary>
         /// The .NET regular expression to search by content.
         /// </summary>
-        public string ContentRegEx { get; set; }
+        public string ContentRegExp { get; set; }
 
         /// <summary>
         /// The .NET regular expression options to search by content.
         /// </summary>
-        public string ContentRegExOptions { get; set; }
+        public string ContentRegExpOptions { get; set; }
 
         /// <summary>
         /// [Output] The found files.
@@ -200,28 +200,28 @@ namespace Heleonix.Build.Tasks
                 return;
             }
 
-            var pathRegEx = string.IsNullOrEmpty(PathRegEx)
+            var pathRegExp = string.IsNullOrEmpty(PathRegExp)
                 ? null
-                : new Regex(PathRegEx,
-                    string.IsNullOrEmpty(PathRegExOptions)
+                : new Regex(PathRegExp,
+                    string.IsNullOrEmpty(PathRegExpOptions)
                         ? RegexOptions.IgnoreCase
-                        : (RegexOptions) Enum.Parse(typeof(RegexOptions), PathRegExOptions));
+                        : (RegexOptions) Enum.Parse(typeof(RegexOptions), PathRegExpOptions));
 
-            var contentRegEx = string.IsNullOrEmpty(ContentRegEx)
+            var contentRegExp = string.IsNullOrEmpty(ContentRegExp)
                 ? null
-                : new Regex(ContentRegEx,
-                    string.IsNullOrEmpty(ContentRegExOptions)
+                : new Regex(ContentRegExp,
+                    string.IsNullOrEmpty(ContentRegExpOptions)
                         ? RegexOptions.IgnoreCase
-                        : (RegexOptions) Enum.Parse(typeof(RegexOptions), ContentRegExOptions));
+                        : (RegexOptions) Enum.Parse(typeof(RegexOptions), ContentRegExpOptions));
 
             var foundFiles = new List<ITaskItem>();
             var foundDirs = new List<ITaskItem>();
             var foundItems = new List<ITaskItem>();
 
             Log.LogMessage($"Start searching in '{StartDir.ItemSpec}'; Type: {Types}; Direction: {Direction}; "
-                           + $"PathRegEx: {PathRegEx}; ContentRegEx: {ContentRegEx}.");
+                           + $"PathRegExp: {PathRegExp}; ContentRegExp: {ContentRegExp}.");
 
-            Search(StartDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), pathRegEx, contentRegEx,
+            Search(StartDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), pathRegExp, contentRegExp,
                 foundFiles, foundDirs, foundItems);
 
             FoundFiles = foundFiles.ToArray();

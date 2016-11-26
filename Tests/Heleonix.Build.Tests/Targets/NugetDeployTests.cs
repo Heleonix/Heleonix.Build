@@ -50,9 +50,9 @@ namespace Heleonix.Build.Tests.Targets
             {
                 Directory.CreateDirectory(tempSource);
 
-                var exitCode = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
+                var result = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
 
-                Assert.That(exitCode, Is.Zero);
+                Assert.That(result.ExitCode, Is.Zero);
 
                 var testCases = new TargetTestCase
                 {

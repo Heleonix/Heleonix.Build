@@ -64,22 +64,19 @@ namespace Heleonix.Build.Tasks
                 .Add(TestsResultFile.ItemSpec, true)
                 .Add(ReportFile.ItemSpec, true);
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(ReportUnitExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(ReportUnitExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
                 Log.LogError(
-                    $"{nameof(ReportUnit)} failed for '{TestsResultFile.ItemSpec}'. Exit code: {exitCode}.");
+                    $"{nameof(ReportUnit)} failed for '{TestsResultFile.ItemSpec}'. Exit code: {result.ExitCode}.");
             }
         }
 

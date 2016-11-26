@@ -46,12 +46,12 @@ namespace Heleonix.Build.Tasks
         /// The .NET regular expression to filter items by.
         /// </summary>
         [Required]
-        public string RegEx { get; set; }
+        public string RegExp { get; set; }
 
         /// <summary>
         /// The .NET regular expression options. Default is "IgnoreCase".
         /// </summary>
-        public string RegExOptions { get; set; }
+        public string RegExpOptions { get; set; }
 
         /// <summary>
         /// The name of the metadata to apply filter to. Default is "FullPath".
@@ -79,15 +79,15 @@ namespace Heleonix.Build.Tasks
         protected override void ExecuteInternal()
         {
             var metadataName = string.IsNullOrEmpty(MetadataName) ? "FullPath" : MetadataName;
-            var options = string.IsNullOrEmpty(RegExOptions)
+            var options = string.IsNullOrEmpty(RegExpOptions)
                 ? RegexOptions.IgnoreCase
-                : (RegexOptions) Enum.Parse(typeof (RegexOptions), RegExOptions, true);
+                : (RegexOptions) Enum.Parse(typeof(RegexOptions), RegExpOptions, true);
 
             Outputs = (from input in Inputs
                 let isMatch =
-                    Negative
-                        ? !Regex.IsMatch(input.GetMetadata(metadataName), RegEx, options)
-                        : Regex.IsMatch(input.GetMetadata(metadataName), RegEx, options)
+                Negative
+                    ? !Regex.IsMatch(input.GetMetadata(metadataName), RegExp, options)
+                    : Regex.IsMatch(input.GetMetadata(metadataName), RegExp, options)
                 where isMatch
                 select input).ToArray();
         }

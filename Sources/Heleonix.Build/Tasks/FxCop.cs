@@ -227,7 +227,7 @@ namespace Heleonix.Build.Tasks
                 .Add("/out", tempAnalysisResults, true)
                 .Add("/directory", DependenciesDirs?.Select(i => i.ItemSpec), true, DependenciesDirs != null)
                 .Add("/ignoregeneratedcode")
-                .Add("/ruleSet", "+" + RulesetFile?.ItemSpec, true, RulesetFile != null)
+                .Add("/ruleset", "=" + RulesetFile?.ItemSpec, true, RulesetFile != null)
                 .Add("/searchgac")
                 .Add("/dictionary", DictionaryFile?.ItemSpec, true, DictionaryFile != null)
                 .Add("/summary");
@@ -238,25 +238,22 @@ namespace Heleonix.Build.Tasks
                 Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty);
             }
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(FxCopCmdFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(FxCopCmdFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
             XDocument results = null;
 
             try
             {
-                if (exitCode != 0)
+                if (result.ExitCode != 0)
                 {
-                    Log.LogError($"{nameof(FxCop)} failed. Exit code: {exitCode}.");
+                    Log.LogError($"{nameof(FxCop)} failed. Exit code: {result.ExitCode}.");
 
                     return;
                 }

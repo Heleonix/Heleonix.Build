@@ -153,8 +153,8 @@ SOFTWARE.
   <!--Region Target: Hxb-Rebuild-->
   <Target Name="Hxb-Rebuild">
     <PropertyGroup>
-      <Hxb-Rebuild-In-Outputs-RegEx></Hxb-Rebuild-In-Outputs-RegEx>
-      <Hxb-Rebuild-In-Outputs-Tests-RegEx></Hxb-Rebuild-In-Outputs-Tests-RegEx>
+      <Hxb-Rebuild-In-Outputs-RegExp></Hxb-Rebuild-In-Outputs-RegExp>
+      <Hxb-Rebuild-In-Outputs-Tests-RegExp></Hxb-Rebuild-In-Outputs-Tests-RegExp>
     </PropertyGroup>
 
     <ItemGroup>

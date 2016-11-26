@@ -105,22 +105,20 @@ namespace Heleonix.Build.Tasks
                 Directory.CreateDirectory(ReportDir.ItemSpec);
             }
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(ReportGeneratorExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(ReportGeneratorExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
                 Log.LogError($"{nameof(ReportGenerator)} failed for "
-                             + $"'{string.Join(";", ResultsFiles.Select(r => r.ItemSpec))}'. Exit code: {exitCode}.");
+                             + $"'{string.Join(";", ResultsFiles.Select(r => r.ItemSpec))}'. "
+                             + $"Exit code: {result.ExitCode}.");
             }
         }
 

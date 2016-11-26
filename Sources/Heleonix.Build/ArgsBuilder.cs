@@ -182,7 +182,7 @@ namespace Heleonix.Build
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator string(ArgsBuilder builder) => builder.ToString();
+        public static implicit operator string(ArgsBuilder builder) => builder?.ToString();
 
         #endregion
 

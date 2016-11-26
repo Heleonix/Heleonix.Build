@@ -71,13 +71,13 @@ SOFTWARE.
     <Heleonix.Build.Tasks.FileSystemSearch StartDir="$(Hxb-Build-Sln-Dir)"
                                            Direction="Up"
                                            Types="Directories"
-                                           PathRegEx="\.git$">
+                                           PathRegExp="\.git$">
       <Output TaskParameter="FoundDirs" ItemName="_Hxb-Build-VCS-Git-Dir"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
     <Heleonix.Build.Tasks.FileSystemSearch StartDir="$(Hxb-Build-Sln-Dir)"
                                            Direction="Up"
                                            Types="Directories"
-                                           PathRegEx="\.svn$">
+                                           PathRegExp="\.svn$">
       <Output TaskParameter="FoundDirs" ItemName="_Hxb-Build-VCS-Svn-Dir"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
 
@@ -113,12 +113,16 @@ SOFTWARE.
 
   <Target Name="Hxb-Rebuild-Before-Conventions" BeforeTargets="Hxb-Rebuild">
     <PropertyGroup>
-      <Hxb-Rebuild-In-Outputs-RegEx>^((?!%(Hxb-Build-Sln.Filename)[a-zA-Z0-9.]*\.Tests\.dll).)*$</Hxb-Rebuild-In-Outputs-RegEx>
-      <Hxb-Rebuild-In-Outputs-Tests-RegEx>^.+%(Hxb-Build-Sln.Filename)[a-zA-Z0-9.]*\.Tests\.dll$</Hxb-Rebuild-In-Outputs-Tests-RegEx>
+      <Hxb-Rebuild-In-Outputs-RegExp>^((?!%(Hxb-Build-Sln.Filename)[a-zA-Z0-9.]*\.Tests\.dll).)*$</Hxb-Rebuild-In-Outputs-RegExp>
+      <Hxb-Rebuild-In-Outputs-Tests-RegExp>^.+%(Hxb-Build-Sln.Filename)[a-zA-Z0-9.]*\.Tests\.dll$</Hxb-Rebuild-In-Outputs-Tests-RegExp>
     </PropertyGroup>
   </Target>
 
   <Target Name="Hxb-FxCop-Before-Conventions" BeforeTargets="Hxb-FxCop">
+    <PropertyGroup>
+      <Hxb-FxCop-In-FailOn Condition="'$(Hxb-Setup-CI)' == 'Dev'">None</Hxb-FxCop-In-FailOn>
+    </PropertyGroup>
+
     <ItemGroup>
       <Hxb-FxCop-In-Targets-FilesDirs Include="@(Hxb-Rebuild-Out-Outputs)"/>
       <Hxb-FxCop-In-AnalysisResult Include="$(Hxb-Build-Reports-Dir)\FxCop\FxCop.xml"/>

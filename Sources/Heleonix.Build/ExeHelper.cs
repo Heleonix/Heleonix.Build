@@ -38,45 +38,11 @@ namespace Heleonix.Build
         /// </summary>
         /// <param name="exePath">The execute path.</param>
         /// <param name="arguments">The arguments.</param>
+        /// <param name="extractOutput">Defines whether to redirect and extract standard output and errors.</param>
         /// <param name="workingDirectory">The working directory.</param>
-        /// <returns>An exit code.</returns>
-        public static int Execute(string exePath, string arguments, string workingDirectory = "")
-        {
-            var process = Process.Start(new ProcessStartInfo
-            {
-                Arguments = arguments,
-                FileName = exePath,
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                WorkingDirectory = workingDirectory
-            });
-
-            if (process == null)
-            {
-                return int.MaxValue;
-            }
-
-            var exited = process.WaitForExit(int.MaxValue);
-
-            if (!exited)
-            {
-                process.Kill();
-            }
-
-            return process.ExitCode;
-        }
-
-        /// <summary>
-        /// Executes an executable by the specified <paramref name="exePath"/>.
-        /// </summary>
-        /// <param name="exePath">The execute path.</param>
-        /// <param name="arguments">The arguments.</param>
-        /// <param name="output">Output string for the <see cref="Process.StandardOutput"/>.</param>
-        /// <param name="error">Error string for the <see cref="Process.StandardError"/>.</param>
-        /// <param name="workingDirectory">The working directory.</param>
-        /// <returns>An exit code.</returns>
-        public static int Execute(string exePath, string arguments, out string output,
-            out string error, string workingDirectory = "")
+        /// <returns>An exit result.</returns>
+        public static ExeResult Execute(string exePath, string arguments, bool extractOutput = false,
+            string workingDirectory = "")
         {
             using (var process = Process.Start(new ProcessStartInfo
             {
@@ -86,21 +52,21 @@ namespace Heleonix.Build
                 WindowStyle = ProcessWindowStyle.Hidden,
                 WorkingDirectory = workingDirectory,
                 UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardOutput = extractOutput,
+                RedirectStandardError = extractOutput
             }))
             {
                 if (process == null)
                 {
-                    output = null;
-                    error = null;
-
-                    return int.MaxValue;
+                    return new ExeResult
+                    {
+                        ExitCode = int.MaxValue
+                    };
                 }
 
-                output = process.StandardOutput.ReadToEnd();
+                var output = extractOutput ? process.StandardOutput.ReadToEnd() : null;
 
-                error = process.StandardError.ReadToEnd();
+                var error = extractOutput ? process.StandardError.ReadToEnd() : null;
 
                 var exited = process.WaitForExit(int.MaxValue);
 
@@ -109,7 +75,12 @@ namespace Heleonix.Build
                     process.Kill();
                 }
 
-                return process.ExitCode;
+                return new ExeResult
+                {
+                    ExitCode = process.ExitCode,
+                    Output = output,
+                    Error = error
+                };
             }
         }
 

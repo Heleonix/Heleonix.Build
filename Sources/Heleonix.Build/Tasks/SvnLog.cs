@@ -103,28 +103,25 @@ namespace Heleonix.Build.Tasks
                 ? Path.GetDirectoryName(RepositoryFileDir.ItemSpec)
                 : RepositoryFileDir.ItemSpec;
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(SvnExeFile.ItemSpec, args, true, workingDir);
 
-            var exitCode = ExeHelper.Execute(SvnExeFile.ItemSpec, args, out output, out error, workingDir);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogError($"{nameof(SvnLog)} failed. Exit code: {exitCode}.");
+                Log.LogError($"{nameof(SvnLog)} failed. Exit code: {result.ExitCode}.");
 
                 return;
             }
 
             var commits = new List<ITaskItem>();
 
-            foreach (var logEntryNode in XDocument.Parse(output).Descendants("logentry"))
+            foreach (var logEntryNode in XDocument.Parse(result.Output).Descendants("logentry"))
             {
                 var commit = new TaskItem { ItemSpec = logEntryNode.Attribute("revision").Value };
 

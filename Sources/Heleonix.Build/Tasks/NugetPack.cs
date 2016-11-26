@@ -138,21 +138,18 @@ namespace Heleonix.Build.Tasks
 
             File.Copy(NuspecFile.ItemSpec, destNuspecFilePath, true);
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(NugetExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(NugetExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogError($"Failed packing '{ProjectFile.ItemSpec}'. Exit code: {exitCode}.");
+                Log.LogError($"Failed packing '{ProjectFile.ItemSpec}'. Exit code: {result.ExitCode}.");
 
                 return;
             }

@@ -45,12 +45,12 @@ namespace Heleonix.Build.Tasks
         /// The .NET regular expression to find content to replace.
         /// </summary>
         [Required]
-        public string RegEx { get; set; }
+        public string RegExp { get; set; }
 
         /// <summary>
         /// The .NET regular expression options.
         /// </summary>
-        public string RegExOptions { get; set; }
+        public string RegExpOptions { get; set; }
 
         /// <summary>
         /// Content to replace with.
@@ -75,14 +75,14 @@ namespace Heleonix.Build.Tasks
 
             string output;
 
-            if (string.IsNullOrEmpty(RegExOptions))
+            if (string.IsNullOrEmpty(RegExpOptions))
             {
-                output = Regex.Replace(input, RegEx, Replacement ?? string.Empty);
+                output = Regex.Replace(input, RegExp, Replacement ?? string.Empty);
             }
             else
             {
-                output = Regex.Replace(input, RegEx, Replacement ?? string.Empty,
-                    (RegexOptions) Enum.Parse(typeof(RegexOptions), RegExOptions, true));
+                output = Regex.Replace(input, RegExp, Replacement ?? string.Empty,
+                    (RegexOptions) Enum.Parse(typeof(RegexOptions), RegExpOptions, true));
             }
 
             Log.LogMessage($"Updating file '{File.ItemSpec}'.");

@@ -52,9 +52,9 @@ namespace Heleonix.Build.Tests.Tasks
 
             try
             {
-                var exitCode = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
+                var result = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
 
-                Assert.That(exitCode, Is.Zero);
+                Assert.That(result.ExitCode, Is.Zero);
 
                 var task = new NugetPush
                 {

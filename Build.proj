@@ -34,18 +34,4 @@ SOFTWARE.
       <Hxb-OpenCover-In-MinLineCoverage>80</Hxb-OpenCover-In-MinLineCoverage>
     </PropertyGroup>
   </Target>
-
-  <Target Name="Hxb-FxCop-Before-Conventions-Sln-Dev" BeforeTargets="Hxb-FxCop" Condition="'$(Hxb-Setup-CI)' == 'Dev'">
-    <PropertyGroup>
-      <Hxb-FxCop-In-FailOn>None</Hxb-FxCop-In-FailOn>
-    </PropertyGroup>
-  </Target>
-
-  <Target Name="Hxb-Flows-CodeAnalysis-Sln-Dev" DependsOnTargets="Hxb-FxCop" Condition="'$(Hxb-Setup-CI)' == 'Dev'">
-    <Exec Command="&quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot; --new-window $(Hxb-Build-Reports-Dir)\FxCop\FxCop.html" ContinueOnError="true"/>
-  </Target>
-
-  <Target Name="Hxb-Flows-TestsCoverage-Sln-Dev" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator">
-    <Exec Command="&quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot; --new-window $(Hxb-Build-Reports-Dir)\ReportGenerator\index.htm" ContinueOnError="true"/>
-  </Target>
 </Project>

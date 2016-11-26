@@ -253,28 +253,25 @@ namespace Heleonix.Build.Tasks
                 Directory.CreateDirectory(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty);
             }
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(OpenCoverExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(OpenCoverExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
             if (!File.Exists(CoverageResultFile.ItemSpec))
             {
-                Log.LogError($"{nameof(OpenCover)} failed. Exit code: {exitCode}.");
+                Log.LogError($"{nameof(OpenCover)} failed. Exit code: {result.ExitCode}.");
 
                 return;
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogWarning($"Target failed. Target's exit code: {exitCode}.");
+                Log.LogWarning($"Target failed. Target's exit code: {result.ExitCode}.");
             }
 
             var summary = XDocument.Load(CoverageResultFile.ItemSpec)

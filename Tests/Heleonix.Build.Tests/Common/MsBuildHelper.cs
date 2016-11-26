@@ -53,10 +53,7 @@ namespace Heleonix.Build.Tests.Common
                 .Add("/t", target)
                 .Add("/p", props);
 
-            string output;
-            string error;
-
-            return ExeHelper.Execute(MsBuildExe, args, out output, out error);
+            return ExeHelper.Execute(MsBuildExe, args).ExitCode;
         }
 
         #endregion

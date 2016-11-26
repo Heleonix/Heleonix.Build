@@ -28,8 +28,8 @@ SOFTWARE.
 
   <Target Name="Hxb-Rebuild" DependsOnTargets="Hxb-NugetRestore">
     <!--Validation-->
-    <Error Condition="'$(Hxb-Rebuild-In-Outputs-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-RegEx' is not defined."/>
-    <Message Condition="'$(Hxb-Rebuild-In-Outputs-Tests-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-Tests-RegEx' is not defined."/>
+    <Error Condition="'$(Hxb-Rebuild-In-Outputs-RegExp)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-RegExp' is not defined."/>
+    <Message Condition="'$(Hxb-Rebuild-In-Outputs-Tests-RegExp)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-Tests-RegExp' is not defined."/>
 
     <!--Preparation-->
     <PropertyGroup>
@@ -56,13 +56,13 @@ SOFTWARE.
     </ItemGroup>
 
     <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
-                                     RegEx="(?&lt;=AssemblyVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     RegExp="(?&lt;=AssemblyVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
                                      Replacement="(&quot;$(Hxb-Build-Version)&quot;)"/>
     <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
-                                     RegEx="(?&lt;=AssemblyFileVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     RegExp="(?&lt;=AssemblyFileVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
                                      Replacement="(&quot;$(Hxb-Build-Version)&quot;)"/>
     <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
-                                     RegEx="(?&lt;=AssemblyInformationalVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     RegExp="(?&lt;=AssemblyInformationalVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
                                      Replacement="(&quot;$(Hxb-Build-Version-Informational)&quot;)"/>
 
     <MSBuild Targets="Build" Projects="@(Hxb-Build-Sln)" Properties="$(_Hxb-Rebuild-Common-Props);$(_Hxb-Rebuild-Sign-Props)">
@@ -72,10 +72,10 @@ SOFTWARE.
     <MakeDir Directories="$(Hxb-Build-Reports-Dir)"/>
     <MakeDir Directories="$(Hxb-Build-Deployments-Dir)"/>
 
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegEx="$(Hxb-Rebuild-In-Outputs-RegEx)">
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegExp="$(Hxb-Rebuild-In-Outputs-RegExp)">
       <Output TaskParameter="Outputs" ItemName="Hxb-Rebuild-Out-Outputs"/>
     </Heleonix.Build.Tasks.ItemFilter>
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegEx="$(Hxb-Rebuild-In-Outputs-Tests-RegEx)">
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegExp="$(Hxb-Rebuild-In-Outputs-Tests-RegExp)">
       <Output TaskParameter="Outputs" ItemName="Hxb-Rebuild-Out-Outputs-Tests"/>
     </Heleonix.Build.Tasks.ItemFilter>
 

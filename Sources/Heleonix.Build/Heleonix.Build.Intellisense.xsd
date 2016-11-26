@@ -298,22 +298,22 @@ Example custom property of type of custom enum
               <xs:documentation>Types of items to search.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="PathRegEx" type="xs:string">
+          <xs:attribute name="PathRegExp" type="xs:string">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to search by path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="PathRegExOptions" type="xs:string">
+          <xs:attribute name="PathRegExpOptions" type="xs:string">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options to search by path. Default is "IgnoreCase".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ContentRegEx" type="xs:string">
+          <xs:attribute name="ContentRegExp" type="xs:string">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to search by content.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ContentRegExOptions" type="xs:string">
+          <xs:attribute name="ContentRegExpOptions" type="xs:string">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options to search by content.</xs:documentation>
             </xs:annotation>
@@ -349,12 +349,12 @@ Example custom property of type of custom enum
               <xs:documentation>The file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegEx" type="xs:string" use="required">
+          <xs:attribute name="RegExp" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to find content to replace.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegExOptions" type="xs:string">
+          <xs:attribute name="RegExpOptions" type="xs:string">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options.</xs:documentation>
             </xs:annotation>
@@ -517,12 +517,12 @@ Example custom property of type of custom enum
               <xs:documentation>Items to check.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegEx" type="xs:string" use="required">
+          <xs:attribute name="RegExp" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to filter items by.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegExOptions" type="xs:string">
+          <xs:attribute name="RegExpOptions" type="xs:string">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options. Default is "IgnoreCase".</xs:documentation>
             </xs:annotation>
@@ -1339,12 +1339,12 @@ Example custom property of type of custom enum
   <!--Endregion-->
 
   <!--Region Target: Hxb-Rebuild-->
-  <xs:element name="Hxb-Rebuild-In-Outputs-RegEx" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-Rebuild-In-Outputs-RegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A regular expression to filter outputs.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-Rebuild-In-Outputs-Tests-RegEx" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-Rebuild-In-Outputs-Tests-RegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A regular expression to filter outputs tests.</xs:documentation>
     </xs:annotation>

@@ -63,8 +63,8 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 BuildEngine = new FakeBuildEngine(),
                 StartDir = new TaskItem(direction == "Up" ? startUpDir : startDir),
-                PathRegEx = @".*\.md2$|.*dir1.?$",
-                ContentRegEx = @".*1.*",
+                PathRegExp = @".*\.md2$|.*dir1.?$",
+                ContentRegExp = @".*1.*",
                 Direction = direction,
                 Types = "All"
             };

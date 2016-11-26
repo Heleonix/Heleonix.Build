@@ -55,7 +55,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new FakeBuildEngine(),
                     File = new TaskItem(input),
-                    RegEx = "\\(.*\\)",
+                    RegExp = "\\(.*\\)",
                     Replacement = "(1.2.3.4)"
                 };
 
