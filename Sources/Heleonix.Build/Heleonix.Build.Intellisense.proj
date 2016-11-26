@@ -25,7 +25,6 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-
   <!--Region External-->
   <PropertyGroup>
     <JENKINS_URL></JENKINS_URL>
@@ -107,14 +106,14 @@ SOFTWARE.
 
   <!--Region Setup-->
   <PropertyGroup>
+    <Hxb-Setup-CI>Jenkins</Hxb-Setup-CI>
+    <Hxb-Setup-Workspace-Dir></Hxb-Setup-Workspace-Dir>
     <Hxb-Setup-Sln-Flows></Hxb-Setup-Sln-Flows>
   </PropertyGroup>
   <!--Endregion-->
 
   <!--Region Build-->
   <PropertyGroup>
-    <Hxb-Build-CI>Jenkins</Hxb-Build-CI>
-    <Hxb-Build-Workspace-Dir></Hxb-Build-Workspace-Dir>
     <Hxb-Build-VCS>Git</Hxb-Build-VCS>
     <Hxb-Build-Version></Hxb-Build-Version>
     <Hxb-Build-Version-Informational></Hxb-Build-Version-Informational>
@@ -324,5 +323,4 @@ SOFTWARE.
   <Target Name="Hxb-Flows-CI-DotNet"/>
   <Target Name="Hxb-Flows-CD-Nuget"/>
   <!--Endregion-->
-
 </Project>
