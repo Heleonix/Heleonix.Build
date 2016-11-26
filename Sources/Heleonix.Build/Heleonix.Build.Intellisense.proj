@@ -321,8 +321,8 @@ SOFTWARE.
   <!--Endregion-->
 
   <!--Region Flows-->
-  <Target Name="Hxb-CI-DotNet"/>
-  <Target Name="Hxb-CD-Nuget"/>
+  <Target Name="Hxb-Flows-CI-DotNet"/>
+  <Target Name="Hxb-Flows-CD-Nuget"/>
   <!--Endregion-->
 
 </Project>

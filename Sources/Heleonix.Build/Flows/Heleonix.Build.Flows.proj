@@ -27,6 +27,6 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-CI-DotNet" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
+  <Target Name="Hxb-Flows-CI-DotNet" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
+  <Target Name="Hxb-Flows-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
 </Project>

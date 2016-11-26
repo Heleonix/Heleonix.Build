@@ -26,13 +26,14 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="Sources\Heleonix.Build\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Initialize-Conventions-Before-Dev" BeforeTargets="Hxb-Initialize-Before-Conventions" Condition="'$(Hxb-Build-CI)' == 'Dev'">
+  <Target Name="Hxb-Initialize-Before-Conventions-Sln-Dev" BeforeTargets="Hxb-Initialize-Before-Conventions"
+          Condition="'$(Hxb-Build-CI)' == 'Dev'">
     <PropertyGroup>
       <Hxb-In-Configuration>CI</Hxb-In-Configuration>
     </PropertyGroup>
   </Target>
 
-  <Target Name="Hxb-OpenCover-Before-Conventions-Custom" BeforeTargets="Hxb-OpenCover">
+  <Target Name="Hxb-OpenCover-Before-Conventions-Sln" BeforeTargets="Hxb-OpenCover">
     <PropertyGroup>
       <Hxb-OpenCover-In-MinClassCoverage>90</Hxb-OpenCover-In-MinClassCoverage>
       <Hxb-OpenCover-In-MinMethodCoverage>90</Hxb-OpenCover-In-MinMethodCoverage>
@@ -41,13 +42,17 @@ SOFTWARE.
     </PropertyGroup>
   </Target>
 
-  <Target Name="Hxb-FxCop-Before-Conventions-Dev" BeforeTargets="Hxb-FxCop" Condition="'$(Hxb-Build-CI)' == 'Dev'">
+  <Target Name="Hxb-FxCop-Before-Conventions-Sln-Dev" BeforeTargets="Hxb-FxCop" Condition="'$(Hxb-Build-CI)' == 'Dev'">
     <PropertyGroup>
       <Hxb-FxCop-In-FailOn>None</Hxb-FxCop-In-FailOn>
     </PropertyGroup>
   </Target>
 
-  <Target Name="Hxb-FxCop-After-ShowReport" Condition="'$(Hxb-Build-CI)' == 'Dev'" AfterTargets="Hxb-FxCop">
+  <Target Name="Hxb-Flows-CodeAnalysis-Sln-Dev" DependsOnTargets="Hxb-FxCop" Condition="'$(Hxb-Build-CI)' == 'Dev'">
     <Exec Command="&quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot; --new-window $(Hxb-Build-Reports-Dir)\FxCop\FxCop.html" ContinueOnError="true"/>
+  </Target>
+
+  <Target Name="Hxb-Flows-TestsCoverage-Sln-Dev" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator">
+    <Exec Command="&quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot; --new-window $(Hxb-Build-Reports-Dir)\ReportGenerator\index.htm" ContinueOnError="true"/>
   </Target>
 </Project>
