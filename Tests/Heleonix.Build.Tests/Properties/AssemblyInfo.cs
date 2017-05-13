@@ -27,7 +27,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Heleonix.Build.Tests")]
-[assembly: AssemblyDescription("The build system for .NET Framework applications")]
+[assembly: AssemblyDescription("The build system for applications.")]
 [assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
 [assembly: AssemblyProduct("Heleonix.Build")]
 [assembly: AssemblyCopyright("Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn")]
