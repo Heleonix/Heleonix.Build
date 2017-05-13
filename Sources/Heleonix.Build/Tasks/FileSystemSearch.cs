@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -60,8 +61,10 @@ namespace Heleonix.Build.Tasks
             {
                 if (Direction == "Up")
                 {
-                    var dirs = Directory.GetDirectories(currentDir).Where(d =>
-                            pathRegExp?.IsMatch(d) ?? true).Select(d => new TaskItem(d));
+                    var dirs = Directory.GetDirectories(currentDir)
+                        .Where(d =>
+                            pathRegExp?.IsMatch(d) ?? true)
+                        .Select(d => new TaskItem(d));
 
                     foreach (var dir in dirs)
                     {
@@ -84,8 +87,9 @@ namespace Heleonix.Build.Tasks
 
             if (string.IsNullOrEmpty(Types) || Types == "Files" || Types == "All")
             {
-                var files = Directory.GetFiles(currentDir).Where(f =>
-                            (pathRegExp?.IsMatch(f) ?? true) && (contentRegExp?.IsMatch(File.ReadAllText(f)) ?? true))
+                var files = Directory.GetFiles(currentDir)
+                    .Where(f =>
+                        (pathRegExp?.IsMatch(f) ?? true) && (contentRegExp?.IsMatch(File.ReadAllText(f)) ?? true))
                     .Select(f => new TaskItem(f));
 
                 foreach (var file in files)
@@ -195,7 +199,7 @@ namespace Heleonix.Build.Tasks
         {
             if (!Directory.Exists(StartDir.ItemSpec))
             {
-                Log.LogMessage($"The starting directory '{StartDir.ItemSpec}' is not found. Stopping.");
+                Log.LogMessage(Resources.FielSystemSearch_StartingDirectoryNotFound, StartDir.ItemSpec);
 
                 return;
             }
@@ -218,8 +222,8 @@ namespace Heleonix.Build.Tasks
             var foundDirs = new List<ITaskItem>();
             var foundItems = new List<ITaskItem>();
 
-            Log.LogMessage($"Start searching in '{StartDir.ItemSpec}'; Type: {Types}; Direction: {Direction}; "
-                           + $"PathRegExp: {PathRegExp}; ContentRegExp: {ContentRegExp}.");
+            Log.LogMessage(Resources.FileSystemSearch_StartSearching, StartDir.ItemSpec,
+                Types, Direction, PathRegExp, ContentRegExp);
 
             Search(StartDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), pathRegExp, contentRegExp,
                 foundFiles, foundDirs, foundItems);

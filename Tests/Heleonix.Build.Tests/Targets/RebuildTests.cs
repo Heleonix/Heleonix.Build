@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Build.Tests.Targets.Common;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
@@ -33,7 +34,8 @@ namespace Heleonix.Build.Tests.Targets
     /// <summary>
     /// Tests the Hxb-Rebuild target.
     /// </summary>
-    public class RebuildTests : TargetTests
+    // ReSharper disable once TestFileNameWarning
+    public static class RebuildTests
     {
         #region Tests
 
@@ -41,42 +43,39 @@ namespace Heleonix.Build.Tests.Targets
         /// The test case source.
         /// </summary>
         /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
+        public static IEnumerable<TargetTestCase> HxbRebuildTestCasesValueSource()
         {
-            yield return new TargetTestCase { Result = true };
-            yield return new TargetTestCase
-            {
-                Items = new Dictionary<string, ITaskItem[]>
+            yield return new TargetTestCase(true);
+            yield return new TargetTestCase(new Dictionary<string, ITaskItem[]>
                 {
-                    { "Hxb-Rebuild-In-SnkPair", new[] { new TaskItem(PathHelper.SnkPair) as ITaskItem } }
+                    { "Hxb-Rebuild-In-SnkPairFile", new[] { new TaskItem(SystemPath.SnkPairFile) as ITaskItem } }
                 },
-                Result = true
-            };
+                true);
         }
 
         /// <summary>
         /// Tests the Hxb-Rebuild target.
         /// </summary>
-        /// <param name="testCases">The test cases.</param>
+        /// <param name="testCase">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
+        public static void HxbRebuild([ValueSource(nameof(HxbRebuildTestCasesValueSource))] TargetTestCase testCase)
         {
-            ExecuteTest(CIType.Jenkins, testCases);
+            var overridesFilePath = TargetSetup.Overrides("Hxb-Rebuild", testCase);
+
+            try
+            {
+                var props = TargetSetup.Properties("Hxb-Rebuild", CIType.Jenkins,
+                    SimulatorType.Library, overridesFilePath, testCase);
+
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+
+                Assert.That(result == 0, Is.EqualTo(testCase.Success));
+            }
+            finally
+            {
+                TargetTeardown.Overrides(overridesFilePath);
+            }
         }
-
-        #endregion
-
-        #region TargetTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
-
-        /// <summary>
-        /// Gets or sets the name of the target.
-        /// </summary>
-        protected override string TargetName => "Hxb-Rebuild";
 
         #endregion
     }

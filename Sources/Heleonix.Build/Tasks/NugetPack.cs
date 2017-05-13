@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.IO;
 using System.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -82,9 +83,9 @@ namespace Heleonix.Build.Tasks
         public bool ExcludeEmptyDirectories { get; set; }
 
         /// <summary>
-        /// The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.
+        /// Specifies the directory of MSBuild to use with the command, taking precedence over MSBuildVersion".
         /// </summary>
-        public int MsBuildVersion { get; set; }
+        public ITaskItem MSBuildDir { get; set; }
 
         /// <summary>
         /// The verbosity of the command.
@@ -120,19 +121,21 @@ namespace Heleonix.Build.Tasks
 
             Directory.CreateDirectory(tempOutputDir);
 
-            var props = ArgsBuilder.By(';', '=').Add("Configuration", Configuration);
+            var props = ArgsBuilder.By(string.Empty, "=", string.Empty, string.Empty, ";")
+                .AddArgument("Configuration", Configuration);
 
-            var args = ArgsBuilder.By(' ', ' ')
-                .Add("pack", ProjectFile.ItemSpec, true)
-                .Add("-OutputDirectory", tempOutputDir, true)
-                .Add("-MSBuildVersion", MsBuildVersion, false, MsBuildVersion > 0)
-                .Add("-IncludeReferencedProjects", false, IncludeReferencedProjects)
-                .Add("-ExcludeEmptyDirectories", false, ExcludeEmptyDirectories)
-                .Add("-Verbosity", Verbosity, !string.IsNullOrEmpty(Verbosity))
-                .Add("-NonInteractive")
-                .Add("-Properties", (props + ";" + Properties).TrimEnd(';'));
+            var args = ArgsBuilder.By("-", " ")
+                .AddValue("pack")
+                .AddPath(ProjectFile.ItemSpec)
+                .AddPath("OutputDirectory", tempOutputDir)
+                .AddPath("MSBuildPath", MSBuildDir.ItemSpec)
+                .AddKey("IncludeReferencedProjects", IncludeReferencedProjects)
+                .AddKey("ExcludeEmptyDirectories", ExcludeEmptyDirectories)
+                .AddArgument("Verbosity", Verbosity)
+                .AddKey("NonInteractive")
+                .AddArgument("Properties", string.Join(";", props, Properties).Trim(';'));
 
-            Log.LogMessage($"Packing '{ProjectFile.ItemSpec}' using '{NuspecFile.ItemSpec}'.");
+            Log.LogMessage(Resources.NugetPack_Started, ProjectFile.ItemSpec, NuspecFile.ItemSpec);
 
             var destNuspecFilePath = Path.Combine(projectDir, Path.GetFileName(NuspecFile.ItemSpec) ?? string.Empty);
 
@@ -149,7 +152,7 @@ namespace Heleonix.Build.Tasks
 
             if (result.ExitCode != 0)
             {
-                Log.LogError($"Failed packing '{ProjectFile.ItemSpec}'. Exit code: {result.ExitCode}.");
+                Log.LogError(Resources.NugetPack_Failed, ProjectFile.ItemSpec, result.ExitCode);
 
                 return;
             }

@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Utilities;
@@ -32,7 +33,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="GitLog"/>.
     /// </summary>
-    public class GitLogTests
+    public static class GitLogTests
     {
         #region Tests
 
@@ -40,13 +41,13 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
             var task = new GitLog
             {
                 BuildEngine = new FakeBuildEngine(),
-                GitExeFile = new TaskItem(PathHelper.GitExe),
-                RepositoryFileDir = new TaskItem(LibSimulatorHelper.SolutionDir),
+                GitExeFile = new TaskItem(SystemPath.GitExe),
+                RepositoryFileDir = new TaskItem(LibSimulatorPath.SolutionDir),
                 MaxCount = 1
             };
 
@@ -55,7 +56,9 @@ namespace Heleonix.Build.Tests.Tasks
             Assert.That(succeeded, Is.True);
             Assert.That(task.Commits, Has.Length.EqualTo(task.MaxCount));
             Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
-            Assert.That(task.Commits[0].ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision")), Is.True);
+            Assert.That(task.Commits[0]
+                .ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision"),
+                    StringComparison.Ordinal), Is.True);
             Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
             Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.Not.Empty);
             Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.Not.Empty);

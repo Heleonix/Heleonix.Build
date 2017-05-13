@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="ItemCombine"/>.
     /// </summary>
-    public class ItemCombineTests
+    public static class ItemCombineTests
     {
         #region Tests
 
@@ -44,15 +44,15 @@ namespace Heleonix.Build.Tests.Tasks
         [TestCase("Pairing", "A,B,C", "M,N,D,B,C", ExpectedResult = "A-M,B-N,C-D")]
         [TestCase("Pairing", "A,B,C,D,F", "M,N,D", ExpectedResult = "A-M,B-N,C-D")]
         [TestCase("CrossProduct", "A,B,C", "M,N,D", ExpectedResult = "A-M,A-N,A-D,B-M,B-N,B-D,C-M,C-N,C-D")]
-        public string Execute(string operation, string left, string right)
+        public static string Execute(string operation, string left, string right)
         {
             var task = new ItemCombine
             {
                 BuildEngine = new FakeBuildEngine(),
                 Operation = operation,
                 TargetMetadataName = "Right",
-                Left = left.Split(',').Select(l => new TaskItem(l) as ITaskItem).ToArray(),
-                Right = right.Split(',').Select(r => new TaskItem(r) as ITaskItem).ToArray()
+                Left = left?.Split(',').Select(l => new TaskItem(l) as ITaskItem).ToArray(),
+                Right = right?.Split(',').Select(r => new TaskItem(r) as ITaskItem).ToArray()
             };
 
             var succeeded = task.Execute();

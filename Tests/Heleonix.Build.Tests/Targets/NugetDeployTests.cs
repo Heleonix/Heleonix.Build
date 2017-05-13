@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,19 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Build.Tests.Targets.Common;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
     /// Tests the Hxb-NugetDeploy target.
     /// </summary>
-    public class NugetDeployTests : TargetTests
+    // ReSharper disable once TestFileNameWarning
+    public static class NugetDeployTests
     {
         #region Tests
 
@@ -42,54 +45,55 @@ namespace Heleonix.Build.Tests.Targets
         /// Tests the Hxb-NugetDeploy target.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void HxbNugetDeploy()
         {
-            var tempSource = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
+            var tempSource = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
             try
             {
                 Directory.CreateDirectory(tempSource);
 
-                var result = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
+                var result = ExeHelper.Execute(SystemPath.NugetExe, Invariant($"init \"{tempSource}\""));
 
-                Assert.That(result.ExitCode, Is.Zero);
+                Assert.That(result, Is.Zero);
 
-                var testCases = new TargetTestCase
-                {
-                    Items = new Dictionary<string, ITaskItem[]>
+                var testCase = new TargetTestCase(
+                    null,
+                    new Dictionary<string, ITaskItem[]>
                     {
                         { "Hxb-NugetDeploy-In-Source", new ITaskItem[] { new TaskItem(tempSource) } }
                     },
-                    Result = true
-                };
+                    "Hxb-NugetRestore;Hxb-Rebuild",
+                    true);
 
-                ExecuteTest(CIType.Jenkins, testCases);
+                var overridesFilePath = TargetSetup.Overrides("Hxb-NugetDeploy", testCase);
 
-                Assert.That(Directory.Exists(LibSimulatorHelper.NugetDeploymentDir), Is.True);
-                Assert.That(Directory.GetFiles(LibSimulatorHelper.NugetDeploymentDir), Has.Length.EqualTo(1));
-                Assert.That(Directory.Exists(tempSource));
-                Assert.That(Directory.GetFiles(tempSource), Has.Length.EqualTo(1));
+                try
+                {
+                    var props = TargetSetup.Properties("Hxb-NugetDeploy", CIType.Jenkins, SimulatorType.Library,
+                        overridesFilePath, testCase);
+
+                    result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+
+                    Assert.That(result, Is.Zero);
+
+                    Assert.That(Directory.Exists(LibSimulatorPath.NugetDeploymentDir), Is.True);
+                    Assert.That(Directory.GetFiles(LibSimulatorPath.NugetDeploymentDir), Has.Length.EqualTo(1));
+                    Assert.That(Directory.Exists(tempSource));
+                    Assert.That(Directory.GetFiles(tempSource), Has.Length.EqualTo(1));
+                }
+                finally
+                {
+                    TargetTeardown.Overrides(overridesFilePath);
+
+                    Directory.Delete(LibSimulatorPath.NugetDeploymentDir, true);
+                }
             }
             finally
             {
-                Directory.Delete(LibSimulatorHelper.NugetDeploymentDir, true);
                 Directory.Delete(tempSource, true);
             }
         }
-
-        #endregion
-
-        #region TargetTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
-
-        /// <summary>
-        /// Gets or sets the name of the target.
-        /// </summary>
-        protected override string TargetName => "Hxb-NugetDeploy";
 
         #endregion
     }

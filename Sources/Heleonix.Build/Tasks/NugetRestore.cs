@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.IO;
 using System.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -61,9 +62,9 @@ namespace Heleonix.Build.Tasks
         public ITaskItem[] SourcesPaths { get; set; }
 
         /// <summary>
-        /// The MSBuild version. If not specified, that one in your path is used, otherwise the highest installed.
+        /// Specifies the directory of MSBuild to use with the command, taking precedence over MSBuildVersion.
         /// </summary>
-        public int MsBuildVersion { get; set; }
+        public ITaskItem MSBuildDir { get; set; }
 
         /// <summary>
         /// Indicates whether disable using machine cache as the first package source.
@@ -92,20 +93,19 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', ' ')
-                .Add("restore", SolutionFile.ItemSpec, true)
-                .Add("-MSBuildVersion", MsBuildVersion, false, MsBuildVersion > 0)
-                .Add("-NoCache", NoCache, false, NoCache)
-                .Add("-PackagesDirectory", PackagesDir?.ItemSpec
-                                           ?? Path.Combine(Path.GetDirectoryName(SolutionFile.ItemSpec)
-                                                           ?? "." + Path.DirectorySeparatorChar, "packages"), true,
-                    PackagesDir != null)
-                .Add("-Source", string.Join(";", SourcesPaths?.Select(sp => sp.ItemSpec) ?? new string[0]), true,
-                    SourcesPaths != null && SourcesPaths.Length > 0)
-                .Add("-Verbosity", Verbosity, false, !string.IsNullOrEmpty(Verbosity))
-                .Add("-NonInteractive");
+            var args = ArgsBuilder.By("-", " ")
+                .AddValue("restore")
+                .AddPath(SolutionFile.ItemSpec)
+                .AddPath("MSBuildPath", MSBuildDir.ItemSpec)
+                .AddArgument("NoCache", NoCache, NoCache)
+                .AddPath("PackagesDirectory",
+                    PackagesDir?.ItemSpec ?? Path.Combine(Path.GetDirectoryName(SolutionFile.ItemSpec)
+                                                          ?? "." + Path.DirectorySeparatorChar, "packages"))
+                .AddPaths("Source", SourcesPaths?.Select(sp => sp.ItemSpec), false)
+                .AddArgument("Verbosity", Verbosity)
+                .AddKey("NonInteractive");
 
-            Log.LogMessage($"Restoring '{SolutionFile.ItemSpec}'.");
+            Log.LogMessage(Resources.NugetRestore_Started, SolutionFile.ItemSpec);
 
             var result = ExeHelper.Execute(NugetExeFile.ItemSpec, args, true);
 
@@ -118,7 +118,7 @@ namespace Heleonix.Build.Tasks
 
             if (result.ExitCode != 0)
             {
-                Log.LogError($"Failed restoring '{SolutionFile.ItemSpec}'. Exit code: {result.ExitCode}.");
+                Log.LogError(Resources.NugetRestore_Failed, SolutionFile.ItemSpec, result.ExitCode);
             }
         }
 

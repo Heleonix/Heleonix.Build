@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +26,8 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Flows-CI-DotNet" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-Flows-CD-Nuget" DependsOnTargets="Hxb-NugetDeploy"/>
+  <Target Name="Hxb-Flows-CI-DotNet"
+          DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
+  <Target Name="Hxb-Flows-CD-Nuget"
+          DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-NugetDeploy"/>
 </Project>

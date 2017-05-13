@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using Heleonix.Build.Tests.Common;
+using Heleonix.Build.Tests.Targets.Common;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -30,7 +31,8 @@ namespace Heleonix.Build.Tests.Targets
     /// <summary>
     /// Tests the Hxb-Initialize target.
     /// </summary>
-    public class InitializeTests : TargetTests
+    // ReSharper disable once TestFileNameWarning
+    public static class InitializeTests
     {
         #region Tests
 
@@ -39,24 +41,26 @@ namespace Heleonix.Build.Tests.Targets
         /// </summary>
         /// <param name="ciType">The continuous integration system type.</param>
         [Test]
-        public void Execute([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType)
+        public static void HxbInitialize([Values(CIType.Jenkins, CIType.TeamCity)] CIType ciType)
         {
-            ExecuteTest(ciType, new TargetTestCase { Result = true });
+            var testCase = new TargetTestCase(true);
+
+            var overridesFilePath = TargetSetup.Overrides("Hxb-Initialize", testCase);
+
+            try
+            {
+                var props = TargetSetup.Properties("Hxb-Initialize", ciType,
+                    SimulatorType.Library, overridesFilePath, testCase);
+
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+
+                Assert.That(result, Is.Zero);
+            }
+            finally
+            {
+                TargetTeardown.Overrides(overridesFilePath);
+            }
         }
-
-        #endregion
-
-        #region TargetTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
-
-        /// <summary>
-        /// Gets or sets the name of the target.
-        /// </summary>
-        protected override string TargetName => "Hxb-Initialize";
 
         #endregion
     }

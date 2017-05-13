@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.IO;
 using System.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -94,11 +95,11 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', ':')
-                .Add("-reports", ArgsBuilder.By(';', ' ').Add(ResultsFiles.Select(r => r.ItemSpec)), true)
-                .Add("-targetdir", ReportDir.ItemSpec, true)
-                .Add("-reporttypes", ReportTypes)
-                .Add("-verbosity", Verbosity, false, !string.IsNullOrEmpty(Verbosity));
+            var args = ArgsBuilder.By("-", ":")
+                .AddPaths("reports", ResultsFiles.Select(r => r.ItemSpec), false)
+                .AddPath("targetdir", ReportDir.ItemSpec)
+                .AddArgument("reporttypes", ReportTypes)
+                .AddArgument("verbosity", Verbosity);
 
             if (!Directory.Exists(ReportDir.ItemSpec))
             {
@@ -116,9 +117,8 @@ namespace Heleonix.Build.Tasks
 
             if (result.ExitCode != 0)
             {
-                Log.LogError($"{nameof(ReportGenerator)} failed for "
-                             + $"'{string.Join(";", ResultsFiles.Select(r => r.ItemSpec))}'. "
-                             + $"Exit code: {result.ExitCode}.");
+                Log.LogError(Resources.ReportGenerator_Failed, nameof(ReportGenerator),
+                    string.Join(";", ResultsFiles.Select(r => r.ItemSpec)), result.ExitCode);
             }
         }
 

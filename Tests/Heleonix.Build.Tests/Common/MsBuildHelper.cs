@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,14 @@ SOFTWARE.
 
 using System;
 using System.IO;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Common
 {
     /// <summary>
     /// The MSBuild helper.
     /// </summary>
-    public static class MsBuildHelper
+    public static class MSBuildHelper
     {
         #region Methods
 
@@ -42,18 +43,18 @@ namespace Heleonix.Build.Tests.Common
         /// <param name="properties">The build properties.</param>
         /// <returns>The exit code.</returns>
         /// <exception cref="NotSupportedException">Current OS platform is not supported.</exception>
-        public static int ExecuteMsBuild(string projectPath, string target, string properties = null)
+        public static int ExecuteMSBuild(string projectPath, string target, string properties)
         {
-            var props = ArgsBuilder.By(';', '=')
-                .Add(properties)
-                .Add("Configuration", CurrentConfiguration);
+            var props = ArgsBuilder.By(string.Empty, "=", string.Empty, string.Empty, ";")
+                .AddValue(properties)
+                .AddArgument("Configuration", CurrentConfiguration);
 
-            var args = ArgsBuilder.By(' ', ':')
-                .Add(projectPath, true)
-                .Add("/t", target)
-                .Add("/p", props);
+            var args = ArgsBuilder.By("/", ":")
+                .AddPath(projectPath)
+                .AddArgument("t", target)
+                .AddArgument("p", props);
 
-            return ExeHelper.Execute(MsBuildExe, args).ExitCode;
+            return ExeHelper.Execute(MSBuildExe, args);
         }
 
         #endregion
@@ -63,18 +64,18 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the current configuration.
         /// </summary>
-        public static string CurrentConfiguration => Path.GetFileName(PathHelper.CurrentDir);
+        public static string CurrentConfiguration => Path.GetFileName(SystemPath.CurrentDir);
 
         /// <summary>
         /// Gets the MSBuild version.
         /// </summary>
-        public static int MsBuildVersion => 14;
+        public static int MSBuildVersion => 14;
 
         /// <summary>
         /// Gets the MSBuild executable path.
         /// </summary>
         /// <exception cref="NotSupportedException">Current OS platform is not supported.</exception>
-        private static string MsBuildExe
+        public static string MSBuildExe
         {
             get
             {
@@ -84,12 +85,13 @@ namespace Heleonix.Build.Tests.Common
                     case PlatformID.Win32S:
                     case PlatformID.Win32Windows:
                     case PlatformID.WinCE:
-                        return Path.Combine("C:\\",
-                            Environment.Is64BitOperatingSystem ? "Program Files (x86)" : "Program Files",
-                            "MSBuild", "14.0", "Bin", "MSBuild.exe");
+                        return Path.Combine(Environment.Is64BitOperatingSystem
+                                ? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)
+                                : Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                            "Microsoft Visual Studio", "2017", "Community", "MSBuild", "15.0", "Bin", "MSBuild.exe");
                     default:
                         throw new NotSupportedException(
-                            $"Current OS platform {Environment.OSVersion.Platform} is not supported.");
+                            Invariant($"Current OS platform {Environment.OSVersion.Platform} is not supported."));
                 }
             }
         }

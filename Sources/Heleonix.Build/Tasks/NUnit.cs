@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -45,24 +46,24 @@ namespace Heleonix.Build.Tasks
         /// <returns>The arguments.</returns>
         internal static string BuildArgs(ITaskItem item)
         {
-            return ArgsBuilder.By(' ', '=')
-                .Add(item.GetMetadata(nameof(NUnitProjectOrTestsFiles)).Replace(";", "\" \""), true)
-                .Add("--result", item.GetMetadata(nameof(TestsResultFile)), true)
-                .Add("--noresult", false, item.GetMetadata(nameof(TestsResultFile)) == null)
-                .Add("--testlist", item.GetMetadata(nameof(TestsListFile)), true)
-                .Add("--where", item.GetMetadata(nameof(TestsFilter)))
-                .Add("--params", item.GetMetadata(nameof(TestsParameters)))
-                .Add("--agents", item.GetMetadata(nameof(AgentsNumber)))
-                .Add("--stoponerror", false, item.GetMetadata(nameof(StopOnErrorOrFailedTest)) == "true")
-                .Add("--teamcity", false, item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "true")
-                .Add("--trace", item.GetMetadata(nameof(TraceLevel)))
-                .Add("--output", item.GetMetadata(nameof(TestsOutputFile)), true)
-                .Add("--err", item.GetMetadata(nameof(ErrorsOutputFile)), true)
-                .Add("--framework", item.GetMetadata(nameof(Framework)))
-                .Add("--config", item.GetMetadata(nameof(Configuration)))
-                .Add("--process", item.GetMetadata(nameof(ProcessIsolation)))
-                .Add("--domain", item.GetMetadata(nameof(DomainIsolation)))
-                .Add("--shadowcopy", false, item.GetMetadata(nameof(ShadowCopy)) == "true");
+            return ArgsBuilder.By("--", "=")
+                .AddPath(item.GetMetadata(nameof(NUnitProjectFileOrTestsFiles)).Replace(";", "\" \""))
+                .AddPath("result", item.GetMetadata(nameof(TestsResultFile)))
+                .AddKey("noresult", item.GetMetadata(nameof(TestsResultFile)) == null)
+                .AddPath("testlist", item.GetMetadata(nameof(TestsListFile)))
+                .AddArgument("where", item.GetMetadata(nameof(TestsFilter)))
+                .AddArgument("params", item.GetMetadata(nameof(TestsParameters)))
+                .AddArgument("agents", item.GetMetadata(nameof(AgentsNumber)))
+                .AddKey("stoponerror", item.GetMetadata(nameof(StopOnErrorOrFailedTest)) == "true")
+                .AddKey("teamcity", item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "true")
+                .AddArgument("trace", item.GetMetadata(nameof(TraceLevel)))
+                .AddPath("output", item.GetMetadata(nameof(TestsOutputFile)))
+                .AddPath("err", item.GetMetadata(nameof(ErrorsOutputFile)))
+                .AddArgument("framework", item.GetMetadata(nameof(Framework)))
+                .AddArgument("config", item.GetMetadata(nameof(Configuration)))
+                .AddArgument("process", item.GetMetadata(nameof(ProcessIsolation)))
+                .AddArgument("domain", item.GetMetadata(nameof(DomainIsolation)))
+                .AddKey("shadowcopy", item.GetMetadata(nameof(ShadowCopy)) == "true");
         }
 
         /// <summary>
@@ -119,7 +120,7 @@ namespace Heleonix.Build.Tasks
         /// The NUnit project or tests files paths.
         /// </summary>
         [Required]
-        public ITaskItem[] NUnitProjectOrTestsFiles { get; set; }
+        public ITaskItem[] NUnitProjectFileOrTestsFiles { get; set; }
 
         /// <summary>
         /// The NUnit tests result file path.
@@ -308,24 +309,24 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', '=')
-                .Add(NUnitProjectOrTestsFiles.Select(i => i.ItemSpec), true)
-                .Add("--result", TestsResultFile?.ItemSpec, true)
-                .Add("--noresult", false, TestsResultFile == null)
-                .Add("--testlist", TestsListFile?.ItemSpec, true)
-                .Add("--where", TestsFilter)
-                .Add("--params", TestsParameters)
-                .Add("--agents", AgentsNumber, false, AgentsNumber > 0)
-                .Add("--stoponerror", false, StopOnErrorOrFailedTest)
-                .Add("--teamcity", false, UseTeamCityServiceMessages)
-                .Add("--trace", TraceLevel)
-                .Add("--output", TestsOutputFile?.ItemSpec, true)
-                .Add("--err", ErrorsOutputFile?.ItemSpec, true)
-                .Add("--framework", Framework)
-                .Add("--config", Configuration)
-                .Add("--process", ProcessIsolation)
-                .Add("--domain", DomainIsolation)
-                .Add("--shadowcopy", false, ShadowCopy);
+            var args = ArgsBuilder.By("--", "=")
+                .AddPaths(NUnitProjectFileOrTestsFiles.Select(i => i.ItemSpec))
+                .AddPath("result", TestsResultFile?.ItemSpec)
+                .AddKey("noresult", TestsResultFile == null)
+                .AddPath("testlist", TestsListFile?.ItemSpec)
+                .AddArgument("where", TestsFilter)
+                .AddArgument("params", TestsParameters)
+                .AddArgument("agents", AgentsNumber, AgentsNumber > 0)
+                .AddKey("stoponerror", StopOnErrorOrFailedTest)
+                .AddKey("teamcity", UseTeamCityServiceMessages)
+                .AddArgument("trace", TraceLevel)
+                .AddPath("output", TestsOutputFile?.ItemSpec)
+                .AddPath("err", ErrorsOutputFile?.ItemSpec)
+                .AddArgument("framework", Framework)
+                .AddArgument("config", Configuration)
+                .AddArgument("process", ProcessIsolation)
+                .AddArgument("domain", DomainIsolation)
+                .AddKey("shadowcopy", ShadowCopy);
 
             Prepare(TestsResultFile?.ItemSpec, TestsOutputFile?.ItemSpec, ErrorsOutputFile?.ItemSpec);
 
@@ -340,22 +341,20 @@ namespace Heleonix.Build.Tasks
 
             if (result.ExitCode < 0)
             {
-                Log.LogError($"{nameof(NUnit)} falied. Exit code: {result.ExitCode}.");
+                Log.LogError(Resources.TaskFailedWithExitCode, nameof(NUnit), result.ExitCode);
 
                 return;
             }
 
             if (result.ExitCode > 0)
             {
-                var message = $"{nameof(NUnit)} finished with failed tests. Exit code: {result.ExitCode}.";
-
                 if (FailOnFailedTests)
                 {
-                    Log.LogError(message);
+                    Log.LogError(Resources.NUnit_FinishedWithFailedTests, nameof(NUnit), result.ExitCode);
                 }
                 else
                 {
-                    Log.LogWarning(message);
+                    Log.LogWarning(Resources.NUnit_FinishedWithFailedTests, nameof(NUnit), result.ExitCode);
                 }
             }
 
@@ -369,32 +368,32 @@ namespace Heleonix.Build.Tasks
 
             if (testRun == null)
             {
-                Log.LogMessage("No tests were run.");
+                Log.LogMessage(Resources.NUnit_NoTestsWereRun);
 
                 return;
             }
 
-            TestCases = Convert.ToInt32(testRun.Attribute("testcasecount").Value);
-            Total = Convert.ToInt32(testRun.Attribute("total").Value);
-            Passed = Convert.ToInt32(testRun.Attribute("passed").Value);
-            Failed = Convert.ToInt32(testRun.Attribute("failed").Value);
-            Inconclusive = Convert.ToInt32(testRun.Attribute("inconclusive").Value);
-            Skipped = Convert.ToInt32(testRun.Attribute("skipped").Value);
-            Asserts = Convert.ToInt32(testRun.Attribute("asserts").Value);
+            TestCases = Convert.ToInt32(testRun.Attribute("testcasecount").Value, NumberFormatInfo.InvariantInfo);
+            Total = Convert.ToInt32(testRun.Attribute("total").Value, NumberFormatInfo.InvariantInfo);
+            Passed = Convert.ToInt32(testRun.Attribute("passed").Value, NumberFormatInfo.InvariantInfo);
+            Failed = Convert.ToInt32(testRun.Attribute("failed").Value, NumberFormatInfo.InvariantInfo);
+            Inconclusive = Convert.ToInt32(testRun.Attribute("inconclusive").Value, NumberFormatInfo.InvariantInfo);
+            Skipped = Convert.ToInt32(testRun.Attribute("skipped").Value, NumberFormatInfo.InvariantInfo);
+            Asserts = Convert.ToInt32(testRun.Attribute("asserts").Value, NumberFormatInfo.InvariantInfo);
             StartTime = testRun.Attribute("start-time").Value;
             EndTime = testRun.Attribute("end-time").Value;
             Duration = Convert.ToSingle(testRun.Attribute("duration").Value, CultureInfo.InvariantCulture);
 
-            Log.LogMessage($"Test cases: {TestCases}.");
-            Log.LogMessage($"Total: {Total}.");
-            Log.LogMessage($"Passed: {Passed}.");
-            Log.LogMessage($"Failed: {Failed}.");
-            Log.LogMessage($"Inconclusive: {Inconclusive}.");
-            Log.LogMessage($"Skipped: {Skipped}.");
-            Log.LogMessage($"Asserts: {Asserts}.");
-            Log.LogMessage($"Start time: {StartTime}.");
-            Log.LogMessage($"End time: {EndTime}.");
-            Log.LogMessage($"Duration: {Duration}.");
+            Log.LogMessage(Resources.NUnit_TestCases, TestCases);
+            Log.LogMessage(Resources.NUnit_Total, Total);
+            Log.LogMessage(Resources.NUnit_Passed, Passed);
+            Log.LogMessage(Resources.NUnit_Failed, Failed);
+            Log.LogMessage(Resources.NUnit_Inconclusive, Inconclusive);
+            Log.LogMessage(Resources.NUnit_Skipped, Skipped);
+            Log.LogMessage(Resources.NUnit_Asserts, Asserts);
+            Log.LogMessage(Resources.NUnit_StartTime, StartTime);
+            Log.LogMessage(Resources.NUnit_EndTime, EndTime);
+            Log.LogMessage(Resources.NUnit_Duration, Duration);
         }
 
         #endregion

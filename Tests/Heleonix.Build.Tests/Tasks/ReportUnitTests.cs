@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="ReportUnit"/>.
     /// </summary>
-    public class ReportUnitTests : TaskTests
+    public static class ReportUnitTests
     {
         #region Tests
 
@@ -42,18 +42,20 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
-            var nunitResult = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName() + ".xml");
-            var report = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName() + ".html");
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+
+            var nunitResult = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName() + ".xml");
+            var report = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName() + ".html");
 
             var nunitTask = new Build.Tasks.NUnit
             {
                 BuildEngine = new FakeBuildEngine(),
-                NUnitConsoleExeFile = new TaskItem(PathHelper.NUnitConsoleExe),
-                NUnitProjectOrTestsFiles = new ITaskItem[]
+                NUnitConsoleExeFile = new TaskItem(SystemPath.NUnitConsoleExe),
+                NUnitProjectFileOrTestsFiles = new ITaskItem[]
                 {
-                    new TaskItem(LibSimulatorHelper.TestsOut)
+                    new TaskItem(LibSimulatorPath.TestsOutFile)
                 },
                 TestsResultFile = new TaskItem(nunitResult)
             };
@@ -67,7 +69,7 @@ namespace Heleonix.Build.Tests.Tasks
                 var task = new ReportUnit
                 {
                     BuildEngine = new FakeBuildEngine(),
-                    ReportUnitExeFile = new TaskItem(PathHelper.ReportUnitExe),
+                    ReportUnitExeFile = new TaskItem(SystemPath.ReportUnitExe),
                     TestsResultFile = new TaskItem(nunitResult),
                     ReportFile = new TaskItem(report)
                 };
@@ -90,15 +92,6 @@ namespace Heleonix.Build.Tests.Tasks
                 }
             }
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

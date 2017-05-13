@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.IO;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Build.Tests.Targets.Common;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -31,7 +32,8 @@ namespace Heleonix.Build.Tests.Targets
     /// <summary>
     /// Tests the Hxb-NUnit target.
     /// </summary>
-    public class NUnitTests : TargetTests
+    // ReSharper disable once TestFileNameSpaceWarning
+    public static class NUnitTests
     {
         #region Tests
 
@@ -39,31 +41,28 @@ namespace Heleonix.Build.Tests.Targets
         /// Tests the Hxb-NUnit target.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void HxbNUnit()
         {
+            var testCase = new TargetTestCase(null, null, "Hxb-NugetRestore;Hxb-Rebuild", true);
+
+            var overridesFilePath = TargetSetup.Overrides("Hxb-NUnit", testCase);
+
             try
             {
-                ExecuteTest(CIType.Jenkins, new TargetTestCase { Result = true });
+                var props = TargetSetup.Properties("Hxb-NUnit", CIType.Jenkins,
+                    SimulatorType.Library, overridesFilePath, testCase);
+
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+
+                Assert.That(result, Is.Zero);
             }
             finally
             {
-                Directory.Delete(LibSimulatorHelper.ReportsDir, true);
+                TargetTeardown.Overrides(overridesFilePath);
+
+                Directory.Delete(LibSimulatorPath.ReportsDir, true);
             }
         }
-
-        #endregion
-
-        #region TargetTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
-
-        /// <summary>
-        /// Gets or sets the name of the target.
-        /// </summary>
-        protected override string TargetName => "Hxb-NUnit";
 
         #endregion
     }

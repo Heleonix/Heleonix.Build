@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Build.Tests.Targets.Common;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -32,49 +32,37 @@ namespace Heleonix.Build.Tests.Targets
     /// <summary>
     /// Tests the Hxb-ReportUnit target.
     /// </summary>
-    public class ReportUnitTests : TargetTests
+    // ReSharper disable once TestFileNameSpaceWarning
+    public static class ReportUnitTests
     {
         #region Tests
 
         /// <summary>
-        /// The test case source.
-        /// </summary>
-        /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> ExecuteTestCasesValueSource()
-        {
-            yield return new TargetTestCase { DependsOnTargets = "Hxb-NUnit", Result = true };
-        }
-
-        /// <summary>
         /// Tests the Hxb-ReportUnit target.
         /// </summary>
-        /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(ExecuteTestCasesValueSource))] TargetTestCase testCases)
+        public static void HxbReportUnit()
         {
+            var testCase = new TargetTestCase(null, null, "Hxb-NugetRestore;Hxb-Rebuild;Hxb-NUnit", true);
+
+            var overridesFilePath = TargetSetup.Overrides("Hxb-ReportUnit", testCase);
+
             try
             {
-                ExecuteTest(CIType.Jenkins, testCases);
+                var props = TargetSetup.Properties("Hxb-ReportUnit", CIType.Jenkins,
+                    SimulatorType.Library, overridesFilePath, testCase);
+
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+
+                Assert.That(result, Is.Zero);
             }
             finally
             {
-                Directory.Delete(LibSimulatorHelper.ReportsDir, true);
+                TargetTeardown.Overrides(overridesFilePath);
+
+                Directory.Delete(LibSimulatorPath.ReportsDir, true);
             }
         }
-
-        #endregion
-
-        #region TargetTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
-
-        /// <summary>
-        /// Gets or sets the name of the target.
-        /// </summary>
-        protected override string TargetName => "Hxb-ReportUnit";
 
         #endregion
     }

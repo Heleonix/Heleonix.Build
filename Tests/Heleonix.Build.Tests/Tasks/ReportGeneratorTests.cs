@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="ReportGenerator"/>.
     /// </summary>
-    public class ReportGeneratorTests : TaskTests
+    public static class ReportGeneratorTests
     {
         #region Tests
 
@@ -43,20 +43,22 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
-            var coverageResults = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
-            var errorsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, "Errors.txt");
-            var testsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, "Output.txt");
-            var testsResult = Path.Combine(LibSimulatorHelper.ReportsDir, "NUnit.xml");
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+
+            var coverageResults = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
+            var errorsOutput = Path.Combine(LibSimulatorPath.ReportsDir, "Errors.txt");
+            var testsOutput = Path.Combine(LibSimulatorPath.ReportsDir, "Output.txt");
+            var testsResult = Path.Combine(LibSimulatorPath.ReportsDir, "NUnit.xml");
 
             var openCoverTask = new OpenCover
             {
                 BuildEngine = new FakeBuildEngine(),
-                OpenCoverExeFile = new TaskItem(PathHelper.OpenCoverExe),
-                Target = new TaskItem(PathHelper.NUnitConsoleExe, new Dictionary<string, string>
+                OpenCoverExeFile = new TaskItem(SystemPath.OpenCoverExe),
+                Target = new TaskItem(SystemPath.NUnitConsoleExe, new Dictionary<string, string>
                 {
-                    { nameof(Build.Tasks.NUnit.NUnitProjectOrTestsFiles), LibSimulatorHelper.TestsOut },
+                    { nameof(Build.Tasks.NUnit.NUnitProjectFileOrTestsFiles), LibSimulatorPath.TestsOutFile },
                     { "Type", nameof(Build.Tasks.NUnit) },
                     { nameof(Build.Tasks.NUnit.ErrorsOutputFile), errorsOutput },
                     { nameof(Build.Tasks.NUnit.TestsOutputFile), testsOutput },
@@ -69,7 +71,7 @@ namespace Heleonix.Build.Tests.Tasks
 
             var succeeded = openCoverTask.Execute();
 
-            var reportDir = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
+            var reportDir = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
 
             try
             {
@@ -78,7 +80,7 @@ namespace Heleonix.Build.Tests.Tasks
                 var task = new ReportGenerator
                 {
                     BuildEngine = new FakeBuildEngine(),
-                    ReportGeneratorExeFile = new TaskItem(PathHelper.ReportGeneratorExe),
+                    ReportGeneratorExeFile = new TaskItem(SystemPath.ReportGeneratorExe),
                     Verbosity = "Error",
                     ResultsFiles = new ITaskItem[] { new TaskItem(coverageResults) },
                     ReportDir = new TaskItem(reportDir),
@@ -120,15 +122,6 @@ namespace Heleonix.Build.Tests.Tasks
                 }
             }
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

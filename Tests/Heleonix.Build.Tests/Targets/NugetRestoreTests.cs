@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.IO;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Build.Tests.Targets.Common;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Targets
@@ -31,7 +32,8 @@ namespace Heleonix.Build.Tests.Targets
     /// <summary>
     /// Tests the Hxb-NugetRestore target.
     /// </summary>
-    public class NugetRestoreTests : TargetTests
+    // ReSharper disable once TestFileNameSpaceWarning
+    public static class NugetRestoreTests
     {
         #region Tests
 
@@ -39,44 +41,40 @@ namespace Heleonix.Build.Tests.Targets
         /// Tests the Hxb-NugetDeploy target.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void HxbNugetRestore()
         {
-            var packagesDir = Path.Combine(LibSimulatorHelper.SolutionDir, "packages");
+            var packagesDir = Path.Combine(LibSimulatorPath.SolutionDir, "packages");
 
             if (Directory.Exists(packagesDir))
             {
                 Directory.Delete(packagesDir, true);
             }
 
+            var testCase = new TargetTestCase(true);
+
+            var overridesFilePath = TargetSetup.Overrides("Hxb-NugetRestore", testCase);
+
             try
             {
-                ExecuteTest(CIType.Jenkins, new TargetTestCase { Result = true });
+                var props = TargetSetup.Properties("Hxb-NugetRestore", CIType.Jenkins,
+                    SimulatorType.Library, overridesFilePath, testCase);
 
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+
+                Assert.That(result, Is.Zero);
                 Assert.That(Directory.Exists(packagesDir), Is.True);
                 Assert.That(Directory.GetDirectories(packagesDir), Is.Not.Empty);
             }
             finally
             {
+                TargetTeardown.Overrides(overridesFilePath);
+
                 if (Directory.Exists(packagesDir))
                 {
                     Directory.Delete(packagesDir, true);
                 }
             }
         }
-
-        #endregion
-
-        #region TargetTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
-
-        /// <summary>
-        /// Gets or sets the name of the target.
-        /// </summary>
-        protected override string TargetName => "Hxb-NugetRestore";
 
         #endregion
     }

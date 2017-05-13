@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,10 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tasks
 {
@@ -89,21 +91,21 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', ' ')
-                .Add("log")
-                .Add("--limit", MaxCount)
-                .Add("--revision", $"{{{SinceDate}}}:{{{UntilDate}}}", false,
+            var args = ArgsBuilder.By("--", " ")
+                .AddValue("log")
+                .AddArgument("limit", MaxCount)
+                .AddArgument("revision", Invariant($"{{{SinceDate}}}:{{{UntilDate}}}"),
                     !string.IsNullOrEmpty(SinceDate) && !string.IsNullOrEmpty(UntilDate))
-                .Add("--verbose")
-                .Add("--xml")
-                .Add("--with-all-revprops")
-                .Add(RepositoryFileDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), true);
+                .AddKey("verbose")
+                .AddKey("xml")
+                .AddKey("with-all-revprops")
+                .AddPath(RepositoryFileDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar));
 
             var workingDir = File.Exists(RepositoryFileDir.ItemSpec)
                 ? Path.GetDirectoryName(RepositoryFileDir.ItemSpec)
                 : RepositoryFileDir.ItemSpec;
 
-            var result = ExeHelper.Execute(SvnExeFile.ItemSpec, args, true, workingDir);
+            var result = ExeHelper.Execute(SvnExeFile.ItemSpec, args, true, workingDir, int.MaxValue);
 
             Log.LogMessage(result.Output);
 
@@ -114,7 +116,7 @@ namespace Heleonix.Build.Tasks
 
             if (result.ExitCode != 0)
             {
-                Log.LogError($"{nameof(SvnLog)} failed. Exit code: {result.ExitCode}.");
+                Log.LogError(Resources.TaskFailedWithExitCode, nameof(SvnLog), result.ExitCode);
 
                 return;
             }

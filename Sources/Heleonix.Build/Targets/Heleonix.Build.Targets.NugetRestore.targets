@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ SOFTWARE.
                                        SolutionFile="@(Hxb-Build-Sln)"
                                        SourcesPaths="@(Hxb-NugetRestore-In-Sources)"
                                        PackagesDir="@(Hxb-NugetRestore-In-Packages-Dir)"
-                                       MsBuildVersion="$(Hxb-System-MSBuildVersion)"
+                                       MSBuildDir="@(Hxb-System-MSBuildDir)"
                                        NoCache="$(Hxb-NugetRestore-In-NoCache)"
                                        Verbosity="$(Hxb-Build-Verbosity)"/>
 

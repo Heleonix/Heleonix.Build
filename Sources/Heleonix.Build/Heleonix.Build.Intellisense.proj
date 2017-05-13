@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +35,9 @@ SOFTWARE.
     <teamcity_build_branch></teamcity_build_branch>
 
     <BUILD_NUMBER></BUILD_NUMBER>
+
+    <GO_PIPELINE_COUNTER></GO_PIPELINE_COUNTER>
+    <GO_SCM_FB_CURRENT_BRANCH></GO_SCM_FB_CURRENT_BRANCH>
 
     <MSBuildProgramFiles32></MSBuildProgramFiles32>
     <MSBuildToolsVersion></MSBuildToolsVersion>
@@ -88,11 +90,8 @@ SOFTWARE.
   <!--Endregion-->
 
   <!--Region System-->
-  <PropertyGroup>
-    <Hxb-System-MSBuildVersion>14</Hxb-System-MSBuildVersion>
-  </PropertyGroup>
-
   <ItemGroup>
+    <Hxb-System-MSBuildDir Include="0"/>
     <Hxb-System-FxCopCmd Include="0"/>
     <Hxb-System-NUnitConsoleExe Include="0"/>
     <Hxb-System-ReportUnitExe Include="0"/>
@@ -106,7 +105,7 @@ SOFTWARE.
 
   <!--Region Setup-->
   <PropertyGroup>
-    <Hxb-Setup-CI>Jenkins</Hxb-Setup-CI>
+    <Hxb-Setup-CI></Hxb-Setup-CI>
     <Hxb-Setup-Workspace-Dir></Hxb-Setup-Workspace-Dir>
     <Hxb-Setup-Sln-Flows></Hxb-Setup-Sln-Flows>
   </PropertyGroup>
@@ -114,7 +113,7 @@ SOFTWARE.
 
   <!--Region Build-->
   <PropertyGroup>
-    <Hxb-Build-VCS>Git</Hxb-Build-VCS>
+    <Hxb-Build-VCS></Hxb-Build-VCS>
     <Hxb-Build-Version></Hxb-Build-Version>
     <Hxb-Build-Version-Informational></Hxb-Build-Version-Informational>
     <Hxb-Build-Reports-Dir></Hxb-Build-Reports-Dir>
@@ -122,7 +121,7 @@ SOFTWARE.
     <Hxb-Build-Sln-Dir></Hxb-Build-Sln-Dir>
     <Hxb-Build-Sln-File></Hxb-Build-Sln-File>
     <Hxb-Build-Sln-Name></Hxb-Build-Sln-Name>
-    <Hxb-Build-Verbosity>Quiet</Hxb-Build-Verbosity>
+    <Hxb-Build-Verbosity></Hxb-Build-Verbosity>
   </PropertyGroup>
 
   <ItemGroup>
@@ -152,18 +151,11 @@ SOFTWARE.
 
   <!--Region Target: Hxb-Rebuild-->
   <Target Name="Hxb-Rebuild">
-    <PropertyGroup>
-      <Hxb-Rebuild-In-Outputs-RegExp></Hxb-Rebuild-In-Outputs-RegExp>
-      <Hxb-Rebuild-In-Outputs-Tests-RegExp></Hxb-Rebuild-In-Outputs-Tests-RegExp>
-    </PropertyGroup>
-
     <ItemGroup>
       <Hxb-Rebuild-In-Delete Include="0"/>
       <Hxb-Rebuild-In-Clean-Dirs Include="0"/>
       <Hxb-Rebuild-In-Delete-Dirs Include="0"/>
       <Hxb-Rebuild-In-Snk Include="0"/>
-      <Hxb-Rebuild-Out-Outputs Include="0"/>
-      <Hxb-Rebuild-Out-Outputs-Tests Include="0"/>
     </ItemGroup>
   </Target>
   <!--Endregion-->
@@ -172,12 +164,12 @@ SOFTWARE.
   <Target Name="Hxb-FxCop">
     <PropertyGroup>
       <Hxb-FxCop-In-TargetsTypes></Hxb-FxCop-In-TargetsTypes>
-      <Hxb-FxCop-In-FailOn>CriticalErrors</Hxb-FxCop-In-FailOn>
-      <Hxb-FxCop-Out-CriticalErrors>0</Hxb-FxCop-Out-CriticalErrors>
-      <Hxb-FxCop-Out-Errors>0</Hxb-FxCop-Out-Errors>
-      <Hxb-FxCop-Out-CriticalWarnings>0</Hxb-FxCop-Out-CriticalWarnings>
-      <Hxb-FxCop-Out-Warnings>0</Hxb-FxCop-Out-Warnings>
-      <Hxb-FxCop-Out-Informational>0</Hxb-FxCop-Out-Informational>
+      <Hxb-FxCop-In-FailOn></Hxb-FxCop-In-FailOn>
+      <Hxb-FxCop-Out-CriticalErrors></Hxb-FxCop-Out-CriticalErrors>
+      <Hxb-FxCop-Out-Errors></Hxb-FxCop-Out-Errors>
+      <Hxb-FxCop-Out-CriticalWarnings></Hxb-FxCop-Out-CriticalWarnings>
+      <Hxb-FxCop-Out-Warnings></Hxb-FxCop-Out-Warnings>
+      <Hxb-FxCop-Out-Informational></Hxb-FxCop-Out-Informational>
     </PropertyGroup>
 
     <ItemGroup>
@@ -196,9 +188,9 @@ SOFTWARE.
   <!--Region Target: Hxb-NugetDeploy-->
   <Target Name="Hxb-NugetDeploy">
     <PropertyGroup>
-      <Hxb-NugetDeploy-In-ApiKey></Hxb-NugetDeploy-In-ApiKey>
-      <Hxb-NugetDeploy-In-IncludeReferencedProjects>true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
-      <Hxb-NugetDeploy-In-ExcludeEmptyDirectories>true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
+      <Hxb-NugetDeploy-In-APIKey></Hxb-NugetDeploy-In-APIKey>
+      <Hxb-NugetDeploy-In-IncludeReferencedProjects></Hxb-NugetDeploy-In-IncludeReferencedProjects>
+      <Hxb-NugetDeploy-In-ExcludeEmptyDirectories></Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
       <Hxb-NugetDeploy-In-Properties></Hxb-NugetDeploy-In-Properties>
     </PropertyGroup>
 
@@ -216,7 +208,7 @@ SOFTWARE.
   <!--Region Target: Hxb-NugetRestore-->
   <Target Name="Hxb-NugetRestore">
     <PropertyGroup>
-      <Hxb-NugetRestore-In-NoCache>true</Hxb-NugetRestore-In-NoCache>
+      <Hxb-NugetRestore-In-NoCache></Hxb-NugetRestore-In-NoCache>
     </PropertyGroup>
 
     <ItemGroup>
@@ -231,24 +223,24 @@ SOFTWARE.
     <PropertyGroup>
       <Hxb-NUnit-In-TestsParameters></Hxb-NUnit-In-TestsParameters>
       <Hxb-NUnit-In-TestsFilter></Hxb-NUnit-In-TestsFilter>
-      <Hxb-NUnit-In-AgentsNumber>1</Hxb-NUnit-In-AgentsNumber>
-      <Hxb-NUnit-In-StopOnErrorOrFailedTest>false</Hxb-NUnit-In-StopOnErrorOrFailedTest>
-      <Hxb-NUnit-In-UseTeamCityServiceMessages>false</Hxb-NUnit-In-UseTeamCityServiceMessages>
+      <Hxb-NUnit-In-AgentsNumber></Hxb-NUnit-In-AgentsNumber>
+      <Hxb-NUnit-In-StopOnErrorOrFailedTest></Hxb-NUnit-In-StopOnErrorOrFailedTest>
+      <Hxb-NUnit-In-UseTeamCityServiceMessages></Hxb-NUnit-In-UseTeamCityServiceMessages>
       <Hxb-NUnit-In-Framework></Hxb-NUnit-In-Framework>
-      <Hxb-NUnit-In-ProcessIsolation>Separate</Hxb-NUnit-In-ProcessIsolation>
-      <Hxb-NUnit-In-DomainIsolation>Multiple</Hxb-NUnit-In-DomainIsolation>
-      <Hxb-NUnit-In-ShadowCopy>false</Hxb-NUnit-In-ShadowCopy>
-      <Hxb-NUnit-In-FailOnFailedTests>false</Hxb-NUnit-In-FailOnFailedTests>
-      <Hxb-NUnit-Out-TestCases>0</Hxb-NUnit-Out-TestCases>
-      <Hxb-NUnit-Out-Total>0</Hxb-NUnit-Out-Total>
-      <Hxb-NUnit-Out-Passed>0</Hxb-NUnit-Out-Passed>
-      <Hxb-NUnit-Out-Failed>0</Hxb-NUnit-Out-Failed>
-      <Hxb-NUnit-Out-Inconclusive>0</Hxb-NUnit-Out-Inconclusive>
-      <Hxb-NUnit-Out-Skipped>0</Hxb-NUnit-Out-Skipped>
-      <Hxb-NUnit-Out-Asserts>0</Hxb-NUnit-Out-Asserts>
-      <Hxb-NUnit-Out-StartTime>2015-01-30T21:32:52</Hxb-NUnit-Out-StartTime>
-      <Hxb-NUnit-Out-EndTime>2015-01-30T21:32:52</Hxb-NUnit-Out-EndTime>
-      <Hxb-NUnit-Out-Duration>0</Hxb-NUnit-Out-Duration>
+      <Hxb-NUnit-In-ProcessIsolation></Hxb-NUnit-In-ProcessIsolation>
+      <Hxb-NUnit-In-DomainIsolation></Hxb-NUnit-In-DomainIsolation>
+      <Hxb-NUnit-In-ShadowCopy></Hxb-NUnit-In-ShadowCopy>
+      <Hxb-NUnit-In-FailOnFailedTests></Hxb-NUnit-In-FailOnFailedTests>
+      <Hxb-NUnit-Out-TestCases></Hxb-NUnit-Out-TestCases>
+      <Hxb-NUnit-Out-Total></Hxb-NUnit-Out-Total>
+      <Hxb-NUnit-Out-Passed></Hxb-NUnit-Out-Passed>
+      <Hxb-NUnit-Out-Failed></Hxb-NUnit-Out-Failed>
+      <Hxb-NUnit-Out-Inconclusive></Hxb-NUnit-Out-Inconclusive>
+      <Hxb-NUnit-Out-Skipped></Hxb-NUnit-Out-Skipped>
+      <Hxb-NUnit-Out-Asserts></Hxb-NUnit-Out-Asserts>
+      <Hxb-NUnit-Out-StartTime></Hxb-NUnit-Out-StartTime>
+      <Hxb-NUnit-Out-EndTime></Hxb-NUnit-Out-EndTime>
+      <Hxb-NUnit-Out-Duration></Hxb-NUnit-Out-Duration>
     </PropertyGroup>
 
     <ItemGroup>
@@ -264,29 +256,29 @@ SOFTWARE.
   <!--Region Target: Hxb-OpenCover-->
   <Target Name="Hxb-OpenCover">
     <PropertyGroup>
-      <Hxb-OpenCover-In-MinClassCoverage>0</Hxb-OpenCover-In-MinClassCoverage>
-      <Hxb-OpenCover-In-MinMethodCoverage>0</Hxb-OpenCover-In-MinMethodCoverage>
-      <Hxb-OpenCover-In-MinBranchCoverage>0</Hxb-OpenCover-In-MinBranchCoverage>
-      <Hxb-OpenCover-In-MinLineCoverage>0</Hxb-OpenCover-In-MinLineCoverage>
+      <Hxb-OpenCover-In-MinClassCoverage></Hxb-OpenCover-In-MinClassCoverage>
+      <Hxb-OpenCover-In-MinMethodCoverage></Hxb-OpenCover-In-MinMethodCoverage>
+      <Hxb-OpenCover-In-MinBranchCoverage></Hxb-OpenCover-In-MinBranchCoverage>
+      <Hxb-OpenCover-In-MinLineCoverage></Hxb-OpenCover-In-MinLineCoverage>
       <Hxb-OpenCover-In-ExcludeByAttributeFilters></Hxb-OpenCover-In-ExcludeByAttributeFilters>
       <Hxb-OpenCover-In-Filters></Hxb-OpenCover-In-Filters>
-      <Hxb-OpenCover-In-ShowUnvisited>true</Hxb-OpenCover-In-ShowUnvisited>
-      <Hxb-OpenCover-In-Register>user</Hxb-OpenCover-In-Register>
-      <Hxb-OpenCover-In-MaxVisitCount>0</Hxb-OpenCover-In-MaxVisitCount>
-      <Hxb-OpenCover-Out-TotalLines>0</Hxb-OpenCover-Out-TotalLines>
-      <Hxb-OpenCover-Out-VisitedLines>0</Hxb-OpenCover-Out-VisitedLines>
-      <Hxb-OpenCover-Out-TotalBranches>0</Hxb-OpenCover-Out-TotalBranches>
-      <Hxb-OpenCover-Out-VisitedBranches>0</Hxb-OpenCover-Out-VisitedBranches>
-      <Hxb-OpenCover-Out-TotalClasses>0</Hxb-OpenCover-Out-TotalClasses>
-      <Hxb-OpenCover-Out-VisitedClasses>0</Hxb-OpenCover-Out-VisitedClasses>
-      <Hxb-OpenCover-Out-TotalMethods>0</Hxb-OpenCover-Out-TotalMethods>
-      <Hxb-OpenCover-Out-VisitedMethods>0</Hxb-OpenCover-Out-VisitedMethods>
-      <Hxb-OpenCover-Out-MinCyclomaticComplexity>0</Hxb-OpenCover-Out-MinCyclomaticComplexity>
-      <Hxb-OpenCover-Out-MaxCyclomaticComplexity>0</Hxb-OpenCover-Out-MaxCyclomaticComplexity>
-      <Hxb-OpenCover-Out-ClassCoverage>0</Hxb-OpenCover-Out-ClassCoverage>
-      <Hxb-OpenCover-Out-MethodCoverage>0</Hxb-OpenCover-Out-MethodCoverage>
-      <Hxb-OpenCover-Out-LineCoverage>0</Hxb-OpenCover-Out-LineCoverage>
-      <Hxb-OpenCover-Out-BranchCoverage>0</Hxb-OpenCover-Out-BranchCoverage>
+      <Hxb-OpenCover-In-ShowUnvisited></Hxb-OpenCover-In-ShowUnvisited>
+      <Hxb-OpenCover-In-Register></Hxb-OpenCover-In-Register>
+      <Hxb-OpenCover-In-MaxVisitCount></Hxb-OpenCover-In-MaxVisitCount>
+      <Hxb-OpenCover-Out-TotalLines></Hxb-OpenCover-Out-TotalLines>
+      <Hxb-OpenCover-Out-VisitedLines></Hxb-OpenCover-Out-VisitedLines>
+      <Hxb-OpenCover-Out-TotalBranches></Hxb-OpenCover-Out-TotalBranches>
+      <Hxb-OpenCover-Out-VisitedBranches></Hxb-OpenCover-Out-VisitedBranches>
+      <Hxb-OpenCover-Out-TotalClasses></Hxb-OpenCover-Out-TotalClasses>
+      <Hxb-OpenCover-Out-VisitedClasses></Hxb-OpenCover-Out-VisitedClasses>
+      <Hxb-OpenCover-Out-TotalMethods></Hxb-OpenCover-Out-TotalMethods>
+      <Hxb-OpenCover-Out-VisitedMethods></Hxb-OpenCover-Out-VisitedMethods>
+      <Hxb-OpenCover-Out-MinCyclomaticComplexity></Hxb-OpenCover-Out-MinCyclomaticComplexity>
+      <Hxb-OpenCover-Out-MaxCyclomaticComplexity></Hxb-OpenCover-Out-MaxCyclomaticComplexity>
+      <Hxb-OpenCover-Out-ClassCoverage></Hxb-OpenCover-Out-ClassCoverage>
+      <Hxb-OpenCover-Out-MethodCoverage></Hxb-OpenCover-Out-MethodCoverage>
+      <Hxb-OpenCover-Out-LineCoverage></Hxb-OpenCover-Out-LineCoverage>
+      <Hxb-OpenCover-Out-BranchCoverage></Hxb-OpenCover-Out-BranchCoverage>
     </PropertyGroup>
 
     <ItemGroup>

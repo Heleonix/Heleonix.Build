@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Text.RegularExpressions;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -68,7 +69,7 @@ namespace Heleonix.Build.Tasks
         {
             if (!System.IO.File.Exists(File.ItemSpec))
             {
-                Log.LogMessage($"The file '{File.ItemSpec}' is not found. Stopping.");
+                Log.LogMessage(Resources.FileUpdate_FileNotFound, File.ItemSpec);
             }
 
             var input = System.IO.File.ReadAllText(File.ItemSpec);
@@ -85,7 +86,7 @@ namespace Heleonix.Build.Tasks
                     (RegexOptions) Enum.Parse(typeof(RegexOptions), RegExpOptions, true));
             }
 
-            Log.LogMessage($"Updating file '{File.ItemSpec}'.");
+            Log.LogMessage(Resources.FileUpdate_UpdatingFile, File.ItemSpec);
 
             System.IO.File.WriteAllText(File.ItemSpec, output);
         }

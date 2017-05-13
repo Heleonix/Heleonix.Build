@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -94,22 +95,20 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', '=')
-                .Add("log")
-                .Add("--format",
-                    "<Heleonix.Build.Tasks.GitLog.Commit>%n%H%n%h%n%an%n%ae%n%aI%n%cn%n%ce%n%cI%n%B%n</Heleonix.Build.Tasks.GitLog.Commit>",
-                    true)
-                .Add("--since", SinceDate, true)
-                .Add("--until", UntilDate, true)
-                .Add("--max-count", MaxCount == 0 ? 1 : MaxCount)
-                .Add("--")
-                .Add(RepositoryFileDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar), true);
+            var args = ArgsBuilder.By("--", "=")
+                .AddValue("log")
+                .AddPath("format",
+                    "<Heleonix.Build.Tasks.GitLog.Commit>%n%H%n%h%n%an%n%ae%n%aI%n%cn%n%ce%n%cI%n%B%n</Heleonix.Build.Tasks.GitLog.Commit>")
+                .AddPath("since", SinceDate)
+                .AddPath("until", UntilDate)
+                .AddArgument("max-count", MaxCount == 0 ? 1 : MaxCount)
+                .AddPath(RepositoryFileDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar));
 
             var workingDir = File.Exists(RepositoryFileDir.ItemSpec)
                 ? Path.GetDirectoryName(RepositoryFileDir.ItemSpec)
                 : RepositoryFileDir.ItemSpec;
 
-            var result = ExeHelper.Execute(GitExeFile.ItemSpec, args, true, workingDir);
+            var result = ExeHelper.Execute(GitExeFile.ItemSpec, args, true, workingDir, int.MaxValue);
 
             Log.LogMessage(result.Output);
 
@@ -120,7 +119,7 @@ namespace Heleonix.Build.Tasks
 
             if (result.ExitCode != 0)
             {
-                Log.LogError($"{nameof(GitLog)} failed. Exit code: {result.ExitCode}.");
+                Log.LogError(Resources.TaskFailedWithExitCode, nameof(GitLog), result.ExitCode);
 
                 return;
             }
@@ -158,7 +157,7 @@ namespace Heleonix.Build.Tasks
                         line = outputReader.ReadLine();
                     }
 
-                    if (textBuilder.ToString().EndsWith(Environment.NewLine))
+                    if (textBuilder.ToString().EndsWith(Environment.NewLine, StringComparison.Ordinal))
                     {
                         textBuilder.Remove(textBuilder.Length - Environment.NewLine.Length,
                             Environment.NewLine.Length);

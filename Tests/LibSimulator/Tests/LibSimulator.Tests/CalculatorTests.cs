@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,32 +29,33 @@ namespace LibSimulator.Tests
     /// <summary>
     /// Tests the <see cref="Calculator"/>
     /// </summary>
-    public class CalculatorTests
+    public static class CalculatorTests
     {
         #region Tests
 
         /// <summary>
         /// Tests the <see cref="Calculator.Add"/>.
         /// </summary>
-        /// <param name="a">a.</param>
-        /// <param name="b">b.</param>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
         /// <returns>The result.</returns>
         [TestCase(1, 2, ExpectedResult = 3)]
         [TestCase(2, 2, ExpectedResult = 4)]
         [TestCase(3, 2, ExpectedResult = 10)]
         [TestCase(3, 2, ExpectedResult = 20)]
-        public int Add(int a, int b)
+        public static int Add(int left, int right)
         {
-            return new Calculator().Add(a, b);
+            return Calculator.Add(left, right);
         }
 
         /// <summary>
         /// Tests ignorance.
         /// </summary>
-        /// <param name="a">a.</param>
+        /// <param name="value">The value.</param>
         [Ignore("Tests ignorance")]
-        public void Add(int a)
+        public static void Add(int value)
         {
+            Calculator.Add(value, value);
         }
 
         #endregion

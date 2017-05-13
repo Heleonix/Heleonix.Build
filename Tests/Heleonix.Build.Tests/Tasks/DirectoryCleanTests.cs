@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="DirectoryClean"/>.
     /// </summary>
-    public class DirectoryCleanTests
+    public static class DirectoryCleanTests
     {
         #region Tests
 
@@ -43,12 +43,12 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
             var directoriesToClean = new[]
             {
-                Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName()),
-                Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName())
+                Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName()),
+                Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName())
             };
 
             foreach (var directoryToClean in directoriesToClean)
@@ -57,9 +57,13 @@ namespace Heleonix.Build.Tests.Tasks
                 Directory.CreateDirectory(Path.Combine(directoryToClean, Path.GetRandomFileName()));
                 File.Create(Path.Combine(directoryToClean, Path.GetRandomFileName())).Close();
                 File.Create(Path.Combine(Directory.CreateDirectory(Path.Combine(directoryToClean,
-                    Path.GetRandomFileName())).FullName, Path.GetRandomFileName())).Close();
+                            Path.GetRandomFileName()))
+                        .FullName, Path.GetRandomFileName()))
+                    .Close();
                 File.Create(Path.Combine(Directory.CreateDirectory(Path.Combine(directoryToClean,
-                    Path.GetRandomFileName())).FullName, Path.GetRandomFileName())).Close();
+                            Path.GetRandomFileName()))
+                        .FullName, Path.GetRandomFileName()))
+                    .Close();
             }
 
             try

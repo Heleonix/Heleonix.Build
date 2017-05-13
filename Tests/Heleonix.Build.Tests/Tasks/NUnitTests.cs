@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="NUnit"/>.
     /// </summary>
-    public class NUnitTests : TaskTests
+    public static class NUnitTests
     {
         #region Tests
 
@@ -45,19 +45,21 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="NUnit.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
-            var errorsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
-            var testsOutput = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
-            var result = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+
+            var errorsOutput = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
+            var testsOutput = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
+            var result = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
 
             var task = new Build.Tasks.NUnit
             {
                 BuildEngine = new FakeBuildEngine(),
-                NUnitConsoleExeFile = new TaskItem(PathHelper.NUnitConsoleExe),
-                NUnitProjectOrTestsFiles = new ITaskItem[]
+                NUnitConsoleExeFile = new TaskItem(SystemPath.NUnitConsoleExe),
+                NUnitProjectFileOrTestsFiles = new ITaskItem[]
                 {
-                    new TaskItem(LibSimulatorHelper.TestsOut)
+                    new TaskItem(LibSimulatorPath.TestsOutFile)
                 },
                 AgentsNumber = 3,
                 ErrorsOutputFile = new TaskItem(errorsOutput),
@@ -80,17 +82,24 @@ namespace Heleonix.Build.Tests.Tasks
 
                 var testRun = XDocument.Load(result).Element("test-run");
 
-                Assert.That(task.TestCases, Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value)));
-                Assert.That(task.Total, Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value)));
-                Assert.That(task.Passed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value)));
-                Assert.That(task.Failed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value)));
-                Assert.That(task.Inconclusive, Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value)));
-                Assert.That(task.Skipped, Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value)));
-                Assert.That(task.Asserts, Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value)));
+                Assert.That(task.TestCases, Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value,
+                    NumberFormatInfo.InvariantInfo)));
+                Assert.That(task.Total, Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value,
+                    NumberFormatInfo.InvariantInfo)));
+                Assert.That(task.Passed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value,
+                    NumberFormatInfo.InvariantInfo)));
+                Assert.That(task.Failed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value,
+                    NumberFormatInfo.InvariantInfo)));
+                Assert.That(task.Inconclusive, Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value,
+                    NumberFormatInfo.InvariantInfo)));
+                Assert.That(task.Skipped, Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value,
+                    NumberFormatInfo.InvariantInfo)));
+                Assert.That(task.Asserts, Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value,
+                    NumberFormatInfo.InvariantInfo)));
                 Assert.That(task.StartTime, Is.EqualTo(testRun.Attribute("start-time").Value));
                 Assert.That(task.EndTime, Is.EqualTo(testRun.Attribute("end-time").Value));
                 Assert.That(task.Duration, Is.EqualTo(Convert.ToSingle(
-                    testRun.Attribute("duration").Value, CultureInfo.InvariantCulture)));
+                    testRun.Attribute("duration").Value, NumberFormatInfo.InvariantInfo)));
             }
             finally
             {
@@ -110,15 +119,6 @@ namespace Heleonix.Build.Tests.Tasks
                 }
             }
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }
