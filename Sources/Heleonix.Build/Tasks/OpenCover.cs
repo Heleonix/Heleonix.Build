@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -101,6 +102,20 @@ namespace Heleonix.Build.Tasks
         /// The maximum visits count. Limiting can improve performance.
         /// </summary>
         public int MaxVisitCount { get; set; }
+
+        /// <summary>
+        /// The type of registration of the OpenCover profiler.
+        /// </summary>
+        /// <remarks>
+        /// Possible values:
+        /// <list type="bullet">
+        /// <item><term>auto</term></item>
+        /// <item><term>user</term></item>
+        /// <item><term>path32</term></item>
+        /// <item><term>path64</term></item>
+        /// </list>
+        /// </remarks>
+        public string Register { get; set; }
 
         /// <summary>
         /// [Output] The total lines count.
@@ -205,26 +220,30 @@ namespace Heleonix.Build.Tasks
             }
             else
             {
-                Log.LogError($"The target type is not supported: '{Target.GetMetadata("Type")}'.");
+                Log.LogError(Resources.OpenCover_TargetTypeIsNotRecognized, Target.GetMetadata("Type"));
 
                 return;
             }
 
-            var args = ArgsBuilder.By(' ', ':')
-                .Add("-target", Target.ItemSpec, true)
-                .Add("-targetargs", targetArgs.Replace("\"", "\\\""), true)
-                .Add("-excludebyattribute", ExcludeByAttributeFilters, true)
-                .Add("-filter", Filters, true)
-                .Add("-mergebyhash")
-                .Add("-output", CoverageResultFile.ItemSpec, true)
-                .Add("-register", "user")
-                .Add("-skipautoprops")
-                .Add("-searchdirs", "\\\"" + string.Join("\\\";", PdbSearchDirs?.Select(i => i.ItemSpec)
-                                                                  ?? Enumerable.Empty<string>()) + "\\\"", true,
+            var directorySeparatorReplacer = Path.DirectorySeparatorChar + "\"";
+
+            var args = ArgsBuilder.By("-", ":")
+                .AddPath("target", Target.ItemSpec)
+                .AddPath("targetargs", targetArgs.Replace("\"", directorySeparatorReplacer))
+                .AddPath("excludebyattribute", ExcludeByAttributeFilters)
+                .AddPath("filter", Filters)
+                .AddKey("mergebyhash")
+                .AddPath("output", CoverageResultFile.ItemSpec)
+                .AddKey("skipautoprops")
+                .AddPath("searchdirs", directorySeparatorReplacer + string.Join(Path.DirectorySeparatorChar + "\";",
+                                           PdbSearchDirs?.Select(i => i.ItemSpec) ?? Enumerable.Empty<string>())
+                                       + directorySeparatorReplacer,
                     PdbSearchDirs != null)
-                .Add("-showunvisited", false, ShowUnvisited)
-                .Add("-returntargetcode")
-                .Add("-threshold", MaxVisitCount, false, MaxVisitCount > 0);
+                .AddKey("showunvisited", ShowUnvisited)
+                .AddKey("returntargetcode")
+                .AddArgument("threshold", MaxVisitCount, MaxVisitCount > 0)
+                .AddKey("register", Register == "auto")
+                .AddArgument("register", Register, Register != "auto");
 
             // OpenCover does not create a directory for coverage result file.
             if (!Directory.Exists(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty))
@@ -232,89 +251,90 @@ namespace Heleonix.Build.Tasks
                 Directory.CreateDirectory(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty);
             }
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(OpenCoverExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(OpenCoverExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
             if (!File.Exists(CoverageResultFile.ItemSpec))
             {
-                Log.LogError($"{nameof(OpenCover)} failed. Exit code: {exitCode}.");
+                Log.LogError(Resources.TaskFailedWithExitCode, nameof(OpenCover), result.ExitCode);
 
                 return;
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogWarning($"Target failed. Target's exit code: {exitCode}.");
+                Log.LogWarning(Resources.OpenCover_TargetFailed, result.ExitCode);
             }
 
-            var summary = XDocument.Load(CoverageResultFile.ItemSpec)
-                .Element("CoverageSession")?
-                .Element("Summary");
+            var summary = XDocument.Load(CoverageResultFile.ItemSpec).Element("CoverageSession")?.Element("Summary");
 
             if (summary == null)
             {
-                Log.LogMessage("Summary was not found.");
+                Log.LogMessage(Resources.OpenCover_SummaryNotFound);
 
                 return;
             }
 
-            TotalLines = Convert.ToInt64(summary.Attribute("numSequencePoints").Value);
-            VisitedLines = Convert.ToInt64(summary.Attribute("visitedSequencePoints").Value);
-            TotalBranches = Convert.ToInt64(summary.Attribute("numBranchPoints").Value);
-            VisitedBranches = Convert.ToInt64(summary.Attribute("visitedBranchPoints").Value);
-            TotalClasses = Convert.ToInt64(summary.Attribute("numClasses").Value);
-            VisitedClasses = Convert.ToInt64(summary.Attribute("visitedClasses").Value);
-            TotalMethods = Convert.ToInt64(summary.Attribute("numMethods").Value);
-            VisitedMethods = Convert.ToInt64(summary.Attribute("visitedMethods").Value);
-            MinCyclomaticComplexity = Convert.ToInt32(summary.Attribute("minCyclomaticComplexity").Value);
-            MaxCyclomaticComplexity = Convert.ToInt32(summary.Attribute("maxCyclomaticComplexity").Value);
-            ClassCoverage = (float) VisitedClasses/TotalClasses*100;
-            MethodCoverage = (float) VisitedMethods/TotalMethods*100;
-            LineCoverage = Convert.ToSingle(summary.Attribute("sequenceCoverage").Value, CultureInfo.InvariantCulture);
-            BranchCoverage = Convert.ToSingle(summary.Attribute("branchCoverage").Value, CultureInfo.InvariantCulture);
+            TotalLines = Convert.ToInt64(summary.Attribute("numSequencePoints").Value, NumberFormatInfo.InvariantInfo);
+            VisitedLines = Convert.ToInt64(summary.Attribute("visitedSequencePoints").Value,
+                NumberFormatInfo.InvariantInfo);
+            TotalBranches = Convert.ToInt64(summary.Attribute("numBranchPoints").Value, NumberFormatInfo.InvariantInfo);
+            VisitedBranches = Convert.ToInt64(summary.Attribute("visitedBranchPoints").Value,
+                NumberFormatInfo.InvariantInfo);
+            TotalClasses = Convert.ToInt64(summary.Attribute("numClasses").Value, NumberFormatInfo.InvariantInfo);
+            VisitedClasses = Convert.ToInt64(summary.Attribute("visitedClasses").Value, NumberFormatInfo.InvariantInfo);
+            TotalMethods = Convert.ToInt64(summary.Attribute("numMethods").Value, NumberFormatInfo.InvariantInfo);
+            VisitedMethods = Convert.ToInt64(summary.Attribute("visitedMethods").Value, NumberFormatInfo.InvariantInfo);
+            MinCyclomaticComplexity = Convert.ToInt32(summary.Attribute("minCyclomaticComplexity").Value,
+                NumberFormatInfo.InvariantInfo);
+            MaxCyclomaticComplexity = Convert.ToInt32(summary.Attribute("maxCyclomaticComplexity").Value,
+                NumberFormatInfo.InvariantInfo);
+            ClassCoverage = (float) VisitedClasses / TotalClasses * 100;
+            MethodCoverage = (float) VisitedMethods / TotalMethods * 100;
+            LineCoverage = Convert.ToSingle(summary.Attribute("sequenceCoverage").Value,
+                NumberFormatInfo.InvariantInfo);
+            BranchCoverage = Convert.ToSingle(summary.Attribute("branchCoverage").Value,
+                NumberFormatInfo.InvariantInfo);
 
-            Log.LogMessage($"Total lines: {TotalLines}.");
-            Log.LogMessage($"Visited lines: {VisitedLines}.");
-            Log.LogMessage($"Total branches: {TotalBranches}.");
-            Log.LogMessage($"Visited branches: {VisitedBranches}.");
-            Log.LogMessage($"Total classes: {TotalClasses}.");
-            Log.LogMessage($"Visited classes: {VisitedClasses}.");
-            Log.LogMessage($"Total methods: {TotalMethods}.");
-            Log.LogMessage($"Visited methods: {VisitedMethods}.");
-            Log.LogMessage($"Minimum cyclomatic complexity: {MinCyclomaticComplexity}.");
-            Log.LogMessage($"Maximum cyclomatic complexity: {MaxCyclomaticComplexity}.");
-            Log.LogMessage($"Class coverage: {ClassCoverage}.");
-            Log.LogMessage($"Method coverage: {MethodCoverage}.");
-            Log.LogMessage($"Line coverage: {LineCoverage}.");
-            Log.LogMessage($"Branch coverage: {BranchCoverage}.");
+            Log.LogMessage(Resources.OpenCover_TotalLines, TotalLines);
+            Log.LogMessage(Resources.OpenCover_VisitedLines, VisitedLines);
+            Log.LogMessage(Resources.OpenCover_TotalBranches, TotalBranches);
+            Log.LogMessage(Resources.OpenCover_VisitedBranches, VisitedBranches);
+            Log.LogMessage(Resources.OpenCover_TotalClasses, TotalClasses);
+            Log.LogMessage(Resources.OpenCover_VisitedClasses, VisitedClasses);
+            Log.LogMessage(Resources.OpenCover_TotalMethods, TotalMethods);
+            Log.LogMessage(Resources.OpenCover_VisitedMethods, VisitedMethods);
+            Log.LogMessage(Resources.OpenCover_MinCyclomaticComplexity, MinCyclomaticComplexity);
+            Log.LogMessage(Resources.OpenCover_MaxCyclomaticComplexity, MaxCyclomaticComplexity);
+            Log.LogMessage(Resources.OpenCover_ClassCoverage, ClassCoverage);
+            Log.LogMessage(Resources.OpenCover_MethodCoverage, MethodCoverage);
+            Log.LogMessage(Resources.OpenCover_LineCoverage, LineCoverage);
+            Log.LogMessage(Resources.OpenCover_BranchCoverage, BranchCoverage);
 
             if (ClassCoverage < MinClassCoverage)
             {
-                Log.LogError("Minimum class coverage failed.");
+                Log.LogError(Resources.OpenCover_MinClassCoverageFailed);
             }
 
             if (MethodCoverage < MinMethodCoverage)
             {
-                Log.LogError("Minimum method coverage failed.");
+                Log.LogError(Resources.OpenCover_MinMethodCoverageFailed);
             }
 
             if (LineCoverage < MinLineCoverage)
             {
-                Log.LogError("Minimum line coverage failed.");
+                Log.LogError(Resources.OpenCover_MinLineCoverageFailed);
             }
 
             if (BranchCoverage < MinBranchCoverage)
             {
-                Log.LogError("Minimum branch coverage failed.");
+                Log.LogError(Resources.OpenCover_MinBranchCoverageFailed);
             }
         }
 

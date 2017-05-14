@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.IO;
 using System.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -56,9 +57,20 @@ namespace Heleonix.Build.Tasks
         public ITaskItem ProjectFile { get; set; }
 
         /// <summary>
+        /// The configuration to create package from: Debug, Release etc.
+        /// </summary>
+        [Required]
+        public string Configuration { get; set; }
+
+        /// <summary>
         /// The output package directory path.
         /// </summary>
         public ITaskItem PackageDir { get; set; }
+
+        /// <summary>
+        /// Additional properties to pass to the .nuspec file, in format: token1=value1;token2="value2".
+        /// </summary>
+        public string Properties { get; set; }
 
         /// <summary>
         /// Indicates whether to include referenced projects.
@@ -69,6 +81,11 @@ namespace Heleonix.Build.Tasks
         /// Indicates whether to exclude empty directories.
         /// </summary>
         public bool ExcludeEmptyDirectories { get; set; }
+
+        /// <summary>
+        /// Specifies the directory of MSBuild to use with the command, taking precedence over MSBuildVersion".
+        /// </summary>
+        public ITaskItem MSBuildDir { get; set; }
 
         /// <summary>
         /// The verbosity of the command.
@@ -104,35 +121,38 @@ namespace Heleonix.Build.Tasks
 
             Directory.CreateDirectory(tempOutputDir);
 
-            var args = ArgsBuilder.By(' ', ' ')
-                .Add("pack", ProjectFile.ItemSpec, true)
-                .Add("-OutputDirectory", tempOutputDir, true)
-                .Add("-NonInteractive")
-                .Add("-IncludeReferencedProjects", false, IncludeReferencedProjects)
-                .Add("-ExcludeEmptyDirectories", false, ExcludeEmptyDirectories)
-                .Add("-Verbosity", Verbosity);
+            var props = ArgsBuilder.By(string.Empty, "=", string.Empty, string.Empty, ";")
+                .AddArgument("Configuration", Configuration);
 
-            Log.LogMessage($"Packing '{ProjectFile.ItemSpec}' using '{NuspecFile.ItemSpec}'.");
+            var args = ArgsBuilder.By("-", " ")
+                .AddValue("pack")
+                .AddPath(ProjectFile.ItemSpec)
+                .AddPath("OutputDirectory", tempOutputDir)
+                .AddPath("MSBuildPath", MSBuildDir.ItemSpec)
+                .AddKey("IncludeReferencedProjects", IncludeReferencedProjects)
+                .AddKey("ExcludeEmptyDirectories", ExcludeEmptyDirectories)
+                .AddArgument("Verbosity", Verbosity)
+                .AddKey("NonInteractive")
+                .AddArgument("Properties", string.Join(";", props, Properties).Trim(';'));
+
+            Log.LogMessage(Resources.NugetPack_Started, ProjectFile.ItemSpec, NuspecFile.ItemSpec);
 
             var destNuspecFilePath = Path.Combine(projectDir, Path.GetFileName(NuspecFile.ItemSpec) ?? string.Empty);
 
             File.Copy(NuspecFile.ItemSpec, destNuspecFilePath, true);
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(NugetExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(NugetExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogError($"Failed packing '{ProjectFile.ItemSpec}'. Exit code: {exitCode}.");
+                Log.LogError(Resources.NugetPack_Failed, ProjectFile.ItemSpec, result.ExitCode);
 
                 return;
             }

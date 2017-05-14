@@ -1,7 +1,7 @@
-/*
+﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
+namespace LibSimulator
+{
+    /// <summary>
+    /// A class.
+    /// </summary>
+    public static class Calculator
+    {
+        #region Methods
 
-[assembly: AssemblyDescription("Build system for .NET Framework applications")]
-[assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyProduct("Heleonix.Build")]
-[assembly: AssemblyCopyright("Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: CLSCompliant(true)]
-[assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.123.0")]
-[assembly: AssemblyFileVersion("1.0.123.0")]
-[assembly: AssemblyInformationalVersion("1.0.123.50c0f5a")]
+        /// <summary>
+        /// Adds two numbers.
+        /// </summary>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
+        /// <returns>Addition of two numbers.</returns>
+        public static int Add(int left, int right) => left + right;
+
+        #endregion
+    }
+}

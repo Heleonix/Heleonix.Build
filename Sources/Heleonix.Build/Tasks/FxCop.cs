@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -171,32 +172,32 @@ namespace Heleonix.Build.Tasks
             /// <summary>
             /// No issues.
             /// </summary>
-            None = 0,
+            None = 1,
 
             /// <summary>
             /// The critical errors.
             /// </summary>
-            CriticalErrors = 1,
+            CriticalErrors = 2,
 
             /// <summary>
             /// The errors.
             /// </summary>
-            Errors = 2,
+            Errors = 4,
 
             /// <summary>
             /// The critical warnings.
             /// </summary>
-            CriticalWarnings = 4,
+            CriticalWarnings = 8,
 
             /// <summary>
             /// The warnings.
             /// </summary>
-            Warnings = 8,
+            Warnings = 16,
 
             /// <summary>
             /// The informational.
             /// </summary>
-            Informational = 16,
+            Informational = 32,
 
             /// <summary>
             /// Any type of the issue.
@@ -216,19 +217,19 @@ namespace Heleonix.Build.Tasks
             var tempAnalysisResults = Path.Combine(
                 Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty, Path.GetRandomFileName());
 
-            var args = ArgsBuilder.By(' ', ':')
-                .Add("/verbose", false, IsVerbose)
-                .Add("/types", TargetsTypes)
-                .Add("/project", ProjectFile?.ItemSpec, true)
-                .Add("/rule", RulesFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
-                .Add("/file", TargetsFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
-                .Add("/out", tempAnalysisResults, true)
-                .Add("/directory", DependenciesDirs?.Select(i => i.ItemSpec), true)
-                .Add("/ignoregeneratedcode")
-                .Add("/ruleSet", RulesetFile?.ItemSpec, true)
-                .Add("/searchgac")
-                .Add("/dictionary", DictionaryFile?.ItemSpec, true)
-                .Add("/summary");
+            var args = ArgsBuilder.By("/", ":")
+                .AddKey("verbose", IsVerbose)
+                .AddArgument("types", TargetsTypes)
+                .AddPath("project", ProjectFile?.ItemSpec)
+                .AddPaths("rule", RulesFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile?.ItemSpec == null)
+                .AddPaths("file", TargetsFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile?.ItemSpec == null)
+                .AddPath("out", tempAnalysisResults)
+                .AddPaths("directory", DependenciesDirs?.Select(i => i.ItemSpec), true)
+                .AddKey("ignoregeneratedcode")
+                .AddPath("ruleset", "=" + RulesetFile?.ItemSpec, RulesetFile?.ItemSpec != null)
+                .AddKey("searchgac")
+                .AddPath("dictionary", DictionaryFile?.ItemSpec)
+                .AddKey("summary");
 
             // FxCopCmd does not create a directory for analysis result file.
             if (!Directory.Exists(Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty))
@@ -236,25 +237,22 @@ namespace Heleonix.Build.Tasks
                 Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty);
             }
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(FxCopCmdFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(FxCopCmdFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
             XDocument results = null;
 
             try
             {
-                if (exitCode != 0)
+                if (result.ExitCode != 0)
                 {
-                    Log.LogError($"{nameof(FxCop)} failed. Exit code: {exitCode}.");
+                    Log.LogError(Resources.TaskFailedWithExitCode, nameof(FxCop), result.ExitCode);
 
                     return;
                 }
@@ -270,25 +268,25 @@ namespace Heleonix.Build.Tasks
                 var issues = results.Descendants("Issue").ToArray();
 
                 CriticalErrors = issues.Count(i => string.Equals(i.Attribute("Level").Value, "CriticalError",
-                    StringComparison.InvariantCultureIgnoreCase));
+                    StringComparison.OrdinalIgnoreCase));
                 Errors = issues.Count(i => string.Equals(i.Attribute("Level").Value, "Error",
-                    StringComparison.InvariantCultureIgnoreCase));
+                    StringComparison.OrdinalIgnoreCase));
                 CriticalWarnings = issues.Count(i => string.Equals(i.Attribute("Level").Value, "CriticalWarning",
-                    StringComparison.InvariantCultureIgnoreCase));
+                    StringComparison.OrdinalIgnoreCase));
                 Warnings = issues.Count(i => string.Equals(i.Attribute("Level").Value, "Warning",
-                    StringComparison.InvariantCultureIgnoreCase));
+                    StringComparison.OrdinalIgnoreCase));
                 Informational = issues.Count(i => string.Equals(i.Attribute("Level").Value, "Informational",
-                    StringComparison.InvariantCultureIgnoreCase));
+                    StringComparison.OrdinalIgnoreCase));
 
-                Log.LogMessage($"Critical errors: {CriticalErrors}.");
-                Log.LogMessage($"Errors: {Errors}.");
-                Log.LogMessage($"Critical warnings: {CriticalWarnings}.");
-                Log.LogMessage($"Warnings: {Warnings}.");
-                Log.LogMessage($"Informational: {Informational}.");
+                Log.LogMessage(Resources.FxCop_CriticalErrors, CriticalErrors);
+                Log.LogMessage(Resources.FxCop_Errors, Errors);
+                Log.LogMessage(Resources.FxCop_CriticalWarnings, CriticalWarnings);
+                Log.LogMessage(Resources.FxCop_Warnings, Warnings);
+                Log.LogMessage(Resources.FxCop_Informational, Informational);
 
                 var failOn = string.IsNullOrEmpty(FailOn)
                     ? IssueTypes.Any
-                    : (IssueTypes) Enum.Parse(typeof (IssueTypes), FailOn);
+                    : (IssueTypes) Enum.Parse(typeof(IssueTypes), FailOn);
 
                 if (failOn.HasFlag(IssueTypes.None))
                 {
@@ -297,23 +295,23 @@ namespace Heleonix.Build.Tasks
 
                 if (failOn.HasFlag(IssueTypes.CriticalErrors) && CriticalErrors > 0)
                 {
-                    Log.LogError("The task failed due to critical errors.");
+                    Log.LogError(Resources.FxCop_FailedDueToCriticalErrors);
                 }
                 if (failOn.HasFlag(IssueTypes.Errors) && Errors > 0)
                 {
-                    Log.LogError("The task failed due to errors.");
+                    Log.LogError(Resources.FxCop_FailedDueToErrors);
                 }
                 if (failOn.HasFlag(IssueTypes.CriticalWarnings) && CriticalWarnings > 0)
                 {
-                    Log.LogError("The task failed due to critical warnings.");
+                    Log.LogError(Resources.FxCop_FailedDueToCriticalWarnings);
                 }
                 if (failOn.HasFlag(IssueTypes.Warnings) && Warnings > 0)
                 {
-                    Log.LogError("The task failed due to warnings.");
+                    Log.LogError(Resources.FxCop_FailedDueToWarnings);
                 }
                 if (failOn.HasFlag(IssueTypes.Informational) && Informational > 0)
                 {
-                    Log.LogError("The task failed due to informational.");
+                    Log.LogError(Resources.FxCop_FailedDueToInformational);
                 }
             }
             finally
@@ -330,21 +328,17 @@ namespace Heleonix.Build.Tasks
                     {
                         results = results ?? XDocument.Load(tempAnalysisResults);
 
-                        using (var outputStream = File.Create(AnalysisResultFile.ItemSpec))
+                        using (var outStream = File.Create(Path.ChangeExtension(AnalysisResultFile.ItemSpec, ".html")))
                         {
                             var transform = new XslCompiledTransform();
 
                             transform.Load(AnalysisResultsXslFile.ItemSpec);
 
-                            transform.Transform(results.CreateNavigator(), null, outputStream);
+                            transform.Transform(results.CreateNavigator(), null, outStream);
                         }
+                    }
 
-                        File.Delete(tempAnalysisResults);
-                    }
-                    else
-                    {
-                        File.Move(tempAnalysisResults, AnalysisResultFile.ItemSpec);
-                    }
+                    File.Move(tempAnalysisResults, AnalysisResultFile.ItemSpec);
                 }
             }
         }

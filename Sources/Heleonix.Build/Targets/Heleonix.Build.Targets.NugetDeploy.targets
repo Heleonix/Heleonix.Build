@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-NugetDeploy" DependsOnTargets="Hxb-Rebuild">
+  <Target Name="Hxb-NugetDeploy">
     <Heleonix.Build.Tasks.ItemCombine Operation="Pairing"
                                       TargetMetadataName="Project"
                                       Left="@(Hxb-NugetDeploy-In-Nuspecs)"
@@ -39,17 +39,20 @@ SOFTWARE.
                                     ProjectFile="%(_Hxb-NugetDeploy-Nuspecs.Project)"
                                     ExcludeEmptyDirectories="$(Hxb-NugetDeploy-In-ExcludeEmptyDirectories)"
                                     IncludeReferencedProjects="$(Hxb-NugetDeploy-In-IncludeReferencedProjects)"
-                                    Verbosity="$(Hxb-NugetDeploy-In-Verbosity)"
+                                    Verbosity="$(Hxb-Build-Verbosity)"
+                                    Configuration="$(Hxb-In-Configuration)"
+                                    Properties="$(Hxb-NugetDeploy-In-Properties)"
+                                    MSBuildDir="@(Hxb-System-MSBuildDir)"
                                     PackageDir="@(Hxb-NugetDeploy-In-PackagesDir)">
       <Output TaskParameter="PackageFile" ItemName="Hxb-NugetDeploy-Out-Packages"/>
     </Heleonix.Build.Tasks.NugetPack>
 
     <Heleonix.Build.Tasks.NugetPush NugetExeFile="@(Hxb-System-NugetExe)"
                                     PackageFile="%(Hxb-NugetDeploy-Out-Packages.FullPath)"
-                                    ApiKey="$(Hxb-NugetDeploy-In-ApiKey)"
+                                    APIKey="$(Hxb-NugetDeploy-In-APIKey)"
                                     ConfigFile="@(Hxb-NugetDeploy-In-Config)"
-                                    SourcePath="$(Hxb-NugetDeploy-In-Source)"
-                                    Verbosity="$(Hxb-NugetDeploy-In-Verbosity)"/>
+                                    SourcePath="@(Hxb-NugetDeploy-In-Source)"
+                                    Verbosity="$(Hxb-Build-Verbosity)"/>
 
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>

@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,14 +38,18 @@ SOFTWARE.
   <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.FxCop.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.NugetDeploy.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.NugetRestore.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.NUnit.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.OpenCover.targets"/>
+  <Import Project="Targets\Heleonix.Build.Targets.ReportGenerator.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.ReportUnit.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.OnError.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.Finalize.targets"/>
 
   <!--Flows-->
   <Import Project="Flows\Heleonix.Build.Flows.proj"/>
+
+  <!--Custom-->
   <Import Project="$(Hxb-In-Overrides)" Condition="Exists('$(Hxb-In-Overrides)')"/>
   <Import Project="$(Hxb-Setup-Sln-Flows)" Condition="Exists('$(Hxb-Setup-Sln-Flows)')"/>
 

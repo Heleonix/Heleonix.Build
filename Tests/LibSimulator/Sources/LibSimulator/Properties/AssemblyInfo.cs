@@ -1,7 +1,7 @@
-﻿/*
+/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,41 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using NUnit.Framework;
+using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-namespace Heleonix.Build.Tests.LibSimulator.Tests
-{
-    /// <summary>
-    /// Tests the <see cref="Calculator"/>
-    /// </summary>
-    public class CalculatorTests
-    {
-        #region Tests
+[assembly: AssemblyTitle("Heleonix.Build.Tests.Simulator")]
+[assembly: AssemblyDescription("The build system for applications.")]
+[assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
+[assembly: AssemblyProduct("Heleonix.Build")]
+[assembly: AssemblyCopyright("Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: ComVisible(false)]
+[assembly: Guid("60efea6a-b136-448d-b4e1-3ad490dee3e4")]
+[assembly: CLSCompliant(true)]
+[assembly: AssemblyVersion("1.0.0.123")]
+[assembly: AssemblyFileVersion("1.0.0.123")]
+[assembly: AssemblyInformationalVersion("1.0.0.123")]
 
-        /// <summary>
-        /// Tests the <see cref="Calculator.Add"/>.
-        /// </summary>
-        /// <param name="a">a.</param>
-        /// <param name="b">b.</param>
-        /// <returns>The result.</returns>
-        [TestCase(1, 2, ExpectedResult = 3)]
-        [TestCase(2, 2, ExpectedResult = 4)]
-        [TestCase(3, 2, ExpectedResult = 10)]
-        [TestCase(3, 2, ExpectedResult = 20)]
-        public int Add(int a, int b)
-        {
-            return new Calculator().Add(a, b);
-        }
-
-        /// <summary>
-        /// Tests ignorance.
-        /// </summary>
-        /// <param name="a">a.</param>
-        [Ignore("Tests ignorance")]
-        public void Add(int a)
-        {
-        }
-
-        #endregion
-    }
-}
+[assembly: InternalsVisibleTo("Heleonix.Build.Tests.Simulator.Tests")]

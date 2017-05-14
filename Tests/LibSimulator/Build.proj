@@ -1,4 +1,5 @@
-﻿/*
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
 The MIT License (MIT)
 
 Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
@@ -20,21 +21,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+-->
 
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
 
-[assembly: AssemblyDescription("Build system for .NET Framework applications")]
-[assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyProduct("Heleonix.Build")]
-[assembly: AssemblyCopyright("Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: CLSCompliant(true)]
-[assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0")]
+  <Target Name="Hxb-OpenCover-Before-Conventions-Custom" BeforeTargets="Hxb-OpenCover">
+    <PropertyGroup>
+      <Hxb-OpenCover-In-MinClassCoverage>50</Hxb-OpenCover-In-MinClassCoverage>
+      <Hxb-OpenCover-In-MinMethodCoverage>33</Hxb-OpenCover-In-MinMethodCoverage>
+      <Hxb-OpenCover-In-MinBranchCoverage>33</Hxb-OpenCover-In-MinBranchCoverage>
+      <Hxb-OpenCover-In-MinLineCoverage>12</Hxb-OpenCover-In-MinLineCoverage>
+    </PropertyGroup>
+  </Target>
+</Project>

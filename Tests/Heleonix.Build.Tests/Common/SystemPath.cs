@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,31 +24,32 @@ SOFTWARE.
 
 using System;
 using System.IO;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Common
 {
     /// <summary>
-    /// The path helper.
+    /// The system paths.
     /// </summary>
-    public static class PathHelper
+    public static class SystemPath
     {
         #region Properties
 
         /// <summary>
         /// Gets the current directory path.
         /// </summary>
-        public static string CurrentDir => AppDomain.CurrentDomain.BaseDirectory;
+        public static string CurrentDir => AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
 
         /// <summary>
         /// Gets the SNK pair file path.
         /// </summary>
-        public static string SnkPair => Path.Combine(CurrentDir, "SnkPair.snk");
+        public static string SnkPairFile => Path.Combine(CurrentDir, "SnkPairFile.snk");
 
         /// <summary>
         /// Gets the Nuget executable path.
         /// </summary>
         public static string NugetExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
-            "packages", "NuGet.CommandLine.3.4.3", "tools", "NuGet.exe");
+            "packages", "NuGet.CommandLine.3.5.0", "tools", "NuGet.exe");
 
         /// <summary>
         /// Gets the ReportUnit executable path.
@@ -56,10 +57,13 @@ namespace Heleonix.Build.Tests.Common
         public static string ReportUnitExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
             "packages", "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
 
+        public static string ReportGeneratorExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
+            "packages", "ReportGenerator.2.4.5.0", "tools", "ReportGenerator.exe");
+
         /// <summary>
         /// Gets the main project path.
         /// </summary>
-        public static string MainProject => Path.Combine(CurrentDir, "Heleonix.Build.Projects.Main.proj");
+        public static string MainProjectFile => Path.Combine(CurrentDir, "Heleonix.Build.Projects.Main.proj");
 
         /// <summary>
         /// Gets the NUnit console executable path.
@@ -86,13 +90,14 @@ namespace Heleonix.Build.Tests.Common
                     case PlatformID.Win32S:
                     case PlatformID.Win32Windows:
                     case PlatformID.WinCE:
-                        return Path.Combine("C:\\",
-                            Environment.Is64BitOperatingSystem ? "Program Files (x86)" : "Program Files",
-                            "Microsoft Visual Studio 14.0", "Team Tools", "Static Analysis Tools", "FxCop",
-                            "FxCopCmd.exe");
+                        return Path.Combine(Environment.Is64BitOperatingSystem
+                                ? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)
+                                : Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                            "Microsoft Visual Studio", "2017", "Community", "Team Tools", "Static Analysis Tools",
+                            "FxCop", "FxCopCmd.exe");
                     default:
                         throw new NotSupportedException(
-                            $"Current OS platform {Environment.OSVersion.Platform} is not supported.");
+                            Invariant($"Current OS platform {Environment.OSVersion.Platform} is not supported."));
                 }
             }
         }

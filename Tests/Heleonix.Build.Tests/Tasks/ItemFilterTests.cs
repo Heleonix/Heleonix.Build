@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="ItemFilter"/>.
     /// </summary>
-    public class ItemFilterTests
+    public static class ItemFilterTests
     {
         #region Tests
 
@@ -43,16 +43,16 @@ namespace Heleonix.Build.Tests.Tasks
         /// </summary>
         [TestCase(@"^.+\.Tests\.dll$", false)]
         [TestCase(@"^.+\.Tests\.dll$", true)]
-        public void Execute(string regex, bool negative)
+        public static void Execute(string regex, bool negative)
         {
             var task = new ItemFilter
             {
                 BuildEngine = new FakeBuildEngine(),
                 Inputs = new[] { new TaskItem("Product.Tests.dll"), new TaskItem("Product.dll") as ITaskItem },
-                RegEx = regex,
+                RegExp = regex,
                 MetadataName = "FullPath",
                 Negative = negative,
-                RegExOptions = RegexOptions.IgnoreCase.ToString()
+                RegExpOptions = RegexOptions.IgnoreCase.ToString()
             };
 
             var succeeded = task.Execute();

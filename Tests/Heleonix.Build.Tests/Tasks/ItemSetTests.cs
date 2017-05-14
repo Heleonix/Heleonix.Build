@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,25 +34,36 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="ItemSet"/>.
     /// </summary>
-    public class ItemSetTests
+    public static class ItemSetTests
     {
         #region Tests
 
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
+        [TestCase("Union", null, "A,B,C,D,F", ExpectedResult = "A,B,C,D,F")]
+        [TestCase("Union", "A,B,C,D,F", null, ExpectedResult = "A,B,C,D,F")]
         [TestCase("Union", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,B,C,D,F,M,N,E")]
+        [TestCase("Intersection", null, "A,B,C,D,F", ExpectedResult = "")]
+        [TestCase("Intersection", "A,B,C,D,F", null, ExpectedResult = "")]
         [TestCase("Intersection", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "B,C,D")]
+        [TestCase("RelativeComplement", null, "A,B,C,D,F", ExpectedResult = "")]
+        [TestCase("RelativeComplement", "A,B,C,D,F", null, ExpectedResult = "A,B,C,D,F")]
         [TestCase("RelativeComplement", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,F")]
+        [TestCase("SymmetricDifference", null, "A,B,C,D,F", ExpectedResult = "A,B,C,D,F")]
+        [TestCase("SymmetricDifference", "A,B,C,D,F", null, ExpectedResult = "A,B,C,D,F")]
         [TestCase("SymmetricDifference", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,F,M,N,E")]
-        public string Execute(string operation, string left, string right)
+        [TestCase("Intersection", null, "A,B,C,D,F", ExpectedResult = "")]
+        [TestCase("Intersection", "A,B,C,D,F", null, ExpectedResult = "")]
+        [TestCase("Intersection", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "B,C,D")]
+        public static string Execute(string operation, string left, string right)
         {
             var task = new ItemSet
             {
                 BuildEngine = new FakeBuildEngine(),
                 Operation = operation,
-                Left = left.Split(',').Select(l => new TaskItem(l) as ITaskItem).ToArray(),
-                Right = right.Split(',').Select(r => new TaskItem(r) as ITaskItem).ToArray()
+                Left = left?.Split(',').Select(l => new TaskItem(l) as ITaskItem).ToArray(),
+                Right = right?.Split(',').Select(r => new TaskItem(r) as ITaskItem).ToArray()
             };
 
             var succeeded = task.Execute();

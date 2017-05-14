@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="FxCop"/>.
     /// </summary>
-    public class FxCopTests : TaskTests
+    public static class FxCopTests
     {
         #region Tests
 
@@ -44,26 +44,30 @@ namespace Heleonix.Build.Tests.Tasks
         [TestCase(true, FxCop.IssueTypes.Any)]
         [TestCase(false, FxCop.IssueTypes.Any)]
         [TestCase(false, FxCop.IssueTypes.None)]
-        public void Execute(bool useXsl, FxCop.IssueTypes failOn)
+        public static void Execute(bool useXsl, FxCop.IssueTypes failOn)
         {
-            var analysisResults = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+
+            var analysisResults = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
 
             var task = new FxCop
             {
                 BuildEngine = new FakeBuildEngine(),
-                FxCopCmdFile = new TaskItem(PathHelper.FxCopExe),
+                FxCopCmdFile = new TaskItem(SystemPath.FxCopExe),
                 AnalysisResultFile = new TaskItem(analysisResults),
-                TargetsFilesDirs = new ITaskItem[] { new TaskItem(LibSimulatorHelper.Out) },
+                TargetsFilesDirs = new ITaskItem[] { new TaskItem(LibSimulatorPath.OutFile) },
                 AnalysisResultsXslFile = useXsl
-                    ? new TaskItem(Path.Combine(Path.GetDirectoryName(PathHelper.FxCopExe) ?? string.Empty, "Xml",
+                    ? new TaskItem(Path.Combine(Path.GetDirectoryName(SystemPath.FxCopExe) ?? string.Empty, "Xml",
                         "CodeAnalysisReport.xsl"))
                     : null,
-                FailOn = "CriticalErrors"
+                FailOn = failOn.ToString()
             };
 
             var succeeded = task.Execute();
 
             var analysisResultsExists = File.Exists(analysisResults);
+            var analysisResultsHtml = Path.ChangeExtension(analysisResults, ".html");
+            var analysisResultsHtmlExists = File.Exists(analysisResultsHtml);
 
             try
             {
@@ -75,6 +79,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     Assert.That(succeeded, Is.False);
                 }
+
                 Assert.That(analysisResultsExists, Is.True);
             }
             finally
@@ -83,17 +88,13 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     File.Delete(analysisResults);
                 }
+
+                if (analysisResultsHtmlExists)
+                {
+                    File.Delete(analysisResultsHtml);
+                }
             }
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

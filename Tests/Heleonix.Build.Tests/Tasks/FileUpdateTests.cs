@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="FileUpdate"/>.
     /// </summary>
-    public class FileUpdateTests
+    public static class FileUpdateTests
     {
         #region Tests
 
@@ -42,12 +42,14 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
-            var input = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
+            var input = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
             File.WriteAllText(input,
-                "[assembly: System.Reflection.AssemblyVersion(\"1.0.0.0\")]\n[assembly: System.Reflection.AssemblyFileVersion(\"1.0.0.0\")]\n[assembly: System.Reflection.AssemblyInformationalVersion(\"1.0.0.0\")]");
+                @"[assembly: System.Reflection.AssemblyVersion(""1.0.0.0"")]
+[assembly: System.Reflection.AssemblyFileVersion(""1.0.0.0"")]
+[assembly: System.Reflection.AssemblyInformationalVersion(""1.0.0.0"")]");
 
             try
             {
@@ -55,7 +57,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new FakeBuildEngine(),
                     File = new TaskItem(input),
-                    RegEx = "\\(.*\\)",
+                    RegExp = "\\(.*\\)",
                     Replacement = "(1.2.3.4)"
                 };
 

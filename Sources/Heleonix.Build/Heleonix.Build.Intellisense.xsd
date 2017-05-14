@@ -3,7 +3,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ Example custom task with single required parameter
   <xs:complexType>
     <xs:complexContent>
       <xs:extension base="msb:TaskType">
-        <xs:attribute name="MyParameter" type="xs:boolean" use="required"/>
+        <xs:attribute name="MyParameter" use="required"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -66,97 +66,18 @@ Example custom task with single required parameter
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:include
-    schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd"/>
-
-  <!--Region Custom types-->
-  <xs:simpleType name="Hxb-System-CI-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Jenkins"/>
-      <xs:enumeration value="TeamCity"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-Build-VCS-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Git"/>
-      <xs:enumeration value="Svn"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-FileSystemSearch-Direction-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Up"/>
-      <xs:enumeration value="Down"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-FileSystemSearch-Type-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Files"/>
-      <xs:enumeration value="Directories"/>
-      <xs:enumeration value="All"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-FxCop-Issues-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None"/>
-      <xs:enumeration value="CriticalErrors"/>
-      <xs:enumeration value="Errors"/>
-      <xs:enumeration value="CriticalWarnings"/>
-      <xs:enumeration value="Warnings"/>
-      <xs:enumeration value="Informational"/>
-      <xs:enumeration value="Any"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-Nuget-Verbosity-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Normal"/>
-      <xs:enumeration value="Quiet"/>
-      <xs:enumeration value="Detailed"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-NUnit-TraceLevel-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Off"/>
-      <xs:enumeration value="Error"/>
-      <xs:enumeration value="Warning"/>
-      <xs:enumeration value="Info"/>
-      <xs:enumeration value="Verbose"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-NUnit-ProcessIsolation-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Single"/>
-      <xs:enumeration value="Separate"/>
-      <xs:enumeration value="Multiple"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-NUnit-DomainIsolation-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None"/>
-      <xs:enumeration value="Single"/>
-      <xs:enumeration value="Multiple"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-OpenCover-TargetType-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NUnit"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-ItemCombine-Operation-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Pairing"/>
-      <xs:enumeration value="CrossProduct"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="Hxb-ItemSet-Operation-Enum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Union"/>
-      <xs:enumeration value="Intersection"/>
-      <xs:enumeration value="RelativeComplement"/>
-      <xs:enumeration value="SymmetricDifference"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!--Endregion-->
-
+    schemaLocation="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Xml\Schemas\1033\MSBuild\Microsoft.Build.Commontypes.xsd" />
   <!--Region External-->
+  <xs:element name="GO_PIPELINE_COUNTER" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A GoCD pipeline counter.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="GO_SCM_FB_CURRENT_BRANCH" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A current branch being built from GoCD's Git Feature Branch plugin: master, develop, 1.0.0.0 etc.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="JENKINS_URL" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A URL of the Jenkins host instance. Indicates that Jenkins is installed.</xs:documentation>
@@ -243,32 +164,32 @@ Example custom task with single required parameter
               <xs:documentation>The directory to start from, including that directory.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Direction" type="msb:Hxb-FileSystemSearch-Direction-Enum">
+          <xs:attribute name="Direction">
             <xs:annotation>
-              <xs:documentation>The search direction.</xs:documentation>
+              <xs:documentation>The search direction: Up, Down.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Types" type="msb:Hxb-FileSystemSearch-Type-Enum">
+          <xs:attribute name="Types">
             <xs:annotation>
-              <xs:documentation>Types of items to search.</xs:documentation>
+              <xs:documentation>Types of items to search: Files, Directories, All.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="PathRegEx" type="xs:string">
+          <xs:attribute name="PathRegExp">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to search by path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="PathRegExOptions" type="xs:string">
+          <xs:attribute name="PathRegExpOptions">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options to search by path. Default is "IgnoreCase".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ContentRegEx" type="xs:string">
+          <xs:attribute name="ContentRegExp">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to search by content.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ContentRegExOptions" type="xs:string">
+          <xs:attribute name="ContentRegExpOptions">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options to search by content.</xs:documentation>
             </xs:annotation>
@@ -304,17 +225,17 @@ Example custom task with single required parameter
               <xs:documentation>The file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegEx" type="xs:string" use="required">
+          <xs:attribute name="RegExp" use="required">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to find content to replace.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegExOptions" type="xs:string">
+          <xs:attribute name="RegExpOptions">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Replacement" type="xs:string">
+          <xs:attribute name="Replacement">
             <xs:annotation>
               <xs:documentation>Content to replace with.</xs:documentation>
             </xs:annotation>
@@ -340,12 +261,12 @@ Example custom task with single required parameter
               <xs:documentation>The analysis results file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="IsVerbose" type="xs:boolean">
+          <xs:attribute name="IsVerbose">
             <xs:annotation>
               <xs:documentation>A value indicating whether the FxCop is verbose.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TargetsTypes" type="xs:string">
+          <xs:attribute name="TargetsTypes">
             <xs:annotation>
               <xs:documentation>The comma-separated types to analyze.</xs:documentation>
             </xs:annotation>
@@ -385,32 +306,32 @@ Example custom task with single required parameter
               <xs:documentation>The dictionary file path to be used by spelling rules.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="FailOn" type="msb:Hxb-FxCop-Issues-Enum">
+          <xs:attribute name="FailOn">
             <xs:annotation>
-              <xs:documentation>Types of issues to fail the task.</xs:documentation>
+              <xs:documentation>Types of issues to fail the task: Any, None, CriticalErrors, Errors, CriticalWarnings, Warnings, Informational.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="CriticalErrors" type="xs:int">
+          <xs:attribute name="CriticalErrors">
             <xs:annotation>
               <xs:documentation>[Output] The critical errors count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Errors" type="xs:int">
+          <xs:attribute name="Errors">
             <xs:annotation>
               <xs:documentation>[Output] The errors count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="CriticalWarnings" type="xs:int">
+          <xs:attribute name="CriticalWarnings">
             <xs:annotation>
               <xs:documentation>[Output] The critical warnings count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Warnings" type="xs:int">
+          <xs:attribute name="Warnings">
             <xs:annotation>
               <xs:documentation>[Output] The warnings count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Informational" type="xs:int">
+          <xs:attribute name="Informational">
             <xs:annotation>
               <xs:documentation>[Output] The informational messages count.</xs:documentation>
             </xs:annotation>
@@ -436,17 +357,17 @@ Example custom task with single required parameter
               <xs:documentation>The file or directory path to retrieve log for.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MaxCount" type="xs:long">
+          <xs:attribute name="MaxCount">
             <xs:annotation>
               <xs:documentation>The maximum count of commits to retrieve from the log.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="SinceDate" type="xs:dateTime">
+          <xs:attribute name="SinceDate">
             <xs:annotation>
               <xs:documentation>The date to start retrieval of commits from.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="UntilDate" type="xs:dateTime">
+          <xs:attribute name="UntilDate">
             <xs:annotation>
               <xs:documentation>The date to stop retrieval of commits on.</xs:documentation>
             </xs:annotation>
@@ -472,22 +393,22 @@ Example custom task with single required parameter
               <xs:documentation>Items to check.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegEx" type="xs:string" use="required">
+          <xs:attribute name="RegExp" use="required">
             <xs:annotation>
               <xs:documentation>The .NET regular expression to filter items by.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="RegExOptions" type="xs:string">
+          <xs:attribute name="RegExpOptions">
             <xs:annotation>
               <xs:documentation>The .NET regular expression options. Default is "IgnoreCase".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MetadataName" type="xs:string">
+          <xs:attribute name="MetadataName">
             <xs:annotation>
               <xs:documentation>The name of the metadata to apply filter to. Default is "FullPath".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Negative" type="xs:boolean">
+          <xs:attribute name="Negative">
             <xs:annotation>
               <xs:documentation>Determines whether the regular expression is applied as negative expression.</xs:documentation>
             </xs:annotation>
@@ -508,17 +429,17 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="Operation" type="msb:Hxb-ItemCombine-Operation-Enum" use="required">
+          <xs:attribute name="Operation" use="required">
             <xs:annotation>
-              <xs:documentation>The operation on items.</xs:documentation>
+              <xs:documentation>The operation on items: Pairing, CrossProduct.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TargetMetadataName" type="xs:string" use="required">
+          <xs:attribute name="TargetMetadataName" use="required">
             <xs:annotation>
               <xs:documentation>The name of the target metadata to insert other items to.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="SourceMetadataName" type="xs:string">
+          <xs:attribute name="SourceMetadataName">
             <xs:annotation>
               <xs:documentation>The name of the source metadata to get values from. Default is "Identity".</xs:documentation>
             </xs:annotation>
@@ -549,9 +470,14 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="Operation" type="msb:Hxb-ItemCombine-Operation-Enum" use="required">
+          <xs:attribute name="Operation" use="required">
             <xs:annotation>
-              <xs:documentation>The operation on items.</xs:documentation>
+              <xs:documentation>The operation on items: Union, Intersection, RelativeComplement, SymmetricDifference.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MetadataName">
+            <xs:annotation>
+              <xs:documentation>The name of the metadata to handle items by. Default is ItemSpec.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Left">
@@ -595,24 +521,39 @@ Example custom task with single required parameter
               <xs:documentation>The project file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="Configuration" use="required">
+            <xs:annotation>
+              <xs:documentation>The configuration to create package from: Debug, Release etc.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="PackageDir">
             <xs:annotation>
               <xs:documentation>The output package directory path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="IncludeReferencedProjects" type="xs:boolean">
+          <xs:attribute name="Properties">
+            <xs:annotation>
+              <xs:documentation>Additional properties to pass to the .nuspec file, i.e. token1=value1;token2="value2".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="IncludeReferencedProjects">
             <xs:annotation>
               <xs:documentation>Indicates whether to include referenced projects.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ExcludeEmptyDirectories" type="xs:boolean">
+          <xs:attribute name="ExcludeEmptyDirectories">
             <xs:annotation>
               <xs:documentation>Indicates whether to exclude empty directories.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbosity" type="msb:Hxb-Nuget-Verbosity-Enum">
+          <xs:attribute name="MSBuildDir">
             <xs:annotation>
-              <xs:documentation>The verbosity of the command.</xs:documentation>
+              <xs:documentation>Specifies the directory of MSBuild to use with the command, taking precedence over MSBuildVersion.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Verbosity">
+            <xs:annotation>
+              <xs:documentation>The verbosity of the command: Quiet, Normal, Detailed.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="PackageFile">
@@ -641,12 +582,12 @@ Example custom task with single required parameter
               <xs:documentation>The package file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ApiKey" type="xs:string">
+          <xs:attribute name="APIKey">
             <xs:annotation>
               <xs:documentation>The API key.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="SourcePath" type="xs:string">
+          <xs:attribute name="SourcePath">
             <xs:annotation>
               <xs:documentation>The source path.</xs:documentation>
             </xs:annotation>
@@ -656,9 +597,55 @@ Example custom task with single required parameter
               <xs:documentation>The configuration file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbosity" type="msb:Hxb-Nuget-Verbosity-Enum">
+          <xs:attribute name="Verbosity">
             <xs:annotation>
-              <xs:documentation>The verbosity of the command.</xs:documentation>
+              <xs:documentation>The verbosity of the command: Quiet, Normal, Detailed.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.NugetRestore" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the Nuget restore command.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="NugetExeFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The Nuget executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SolutionFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The solution file to restore packages for.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PackagesDir">
+            <xs:annotation>
+              <xs:documentation>The packages directory where restore packages to.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SourcesPaths">
+            <xs:annotation>
+              <xs:documentation>The sources paths to load packages from.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MSBuildDir">
+            <xs:annotation>
+              <xs:documentation>Specifies the directory of MSBuild to use with the command, taking precedence over MSBuildVersion.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="NoCache">
+            <xs:annotation>
+              <xs:documentation>Indicates whether disable using machine cache as the first package source.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Verbosity">
+            <xs:annotation>
+              <xs:documentation>The verbosity of the command: Quiet, Normal, Detailed.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>
@@ -677,7 +664,7 @@ Example custom task with single required parameter
               <xs:documentation>The NUnit console executable path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="NUnitProjectOrTestsFiles" use="required">
+          <xs:attribute name="NUnitProjectFileOrTestsFiles" use="required">
             <xs:annotation>
               <xs:documentation>The NUnit project or tests files path.</xs:documentation>
             </xs:annotation>
@@ -692,12 +679,12 @@ Example custom task with single required parameter
               <xs:documentation>The tests list file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TestsParameters" type="xs:string">
+          <xs:attribute name="TestsParameters">
             <xs:annotation>
               <xs:documentation>The tests parameters, specified in the form name=value.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TestsFilter" type="xs:string">
+          <xs:attribute name="TestsFilter">
             <xs:annotation>
               <xs:documentation>A tests filter to filter tests to run.</xs:documentation>
             </xs:annotation>
@@ -712,102 +699,102 @@ Example custom task with single required parameter
               <xs:documentation>The errors output file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="AgentsNumber" type="xs:int">
+          <xs:attribute name="AgentsNumber">
             <xs:annotation>
               <xs:documentation>The agents number.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="StopOnErrorOrFailedTest" type="xs:boolean">
+          <xs:attribute name="StopOnErrorOrFailedTest">
             <xs:annotation>
               <xs:documentation>Indicates whether to stop on first error or first failed test.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="UseTeamCityServiceMessages" type="xs:boolean">
+          <xs:attribute name="UseTeamCityServiceMessages">
             <xs:annotation>
               <xs:documentation>A value indicating whether to use TeamCity service messages.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Framework" type="xs:string">
+          <xs:attribute name="Framework">
             <xs:annotation>
               <xs:documentation>The framework to use for tests. Examples: "mono", "net-4.5", "v4.0", "2.0", "mono-4.0".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TraceLevel" type="msb:Hxb-NUnit-TraceLevel-Enum">
+          <xs:attribute name="TraceLevel">
             <xs:annotation>
-              <xs:documentation>The trace level.</xs:documentation>
+              <xs:documentation>The trace level: Off, Error, Warning, Info, Verbose.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Configuration" type="xs:string">
+          <xs:attribute name="Configuration">
             <xs:annotation>
-              <xs:documentation>The project configuration to load, i.e. "Debug", "Release".</xs:documentation>
+              <xs:documentation>The project configuration to load: Debug, Release etc.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ProcessIsolation" type="msb:Hxb-NUnit-ProcessIsolation-Enum">
+          <xs:attribute name="ProcessIsolation">
             <xs:annotation>
-              <xs:documentation>Process isolation for test assemblies.</xs:documentation>
+              <xs:documentation>Process isolation for test assemblies: Single, Separate, Multiple.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="DomainIsolation" type="msb:Hxb-NUnit-DomainIsolation-Enum">
+          <xs:attribute name="DomainIsolation">
             <xs:annotation>
-              <xs:documentation>Domain isolation for test assemblies.</xs:documentation>
+              <xs:documentation>Domain isolation for test assemblies: None, Single, Multiple.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ShadowCopy" type="xs:boolean">
+          <xs:attribute name="ShadowCopy">
             <xs:annotation>
               <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="FailOnFailedTests" type="xs:boolean">
+          <xs:attribute name="FailOnFailedTests">
             <xs:annotation>
               <xs:documentation>Indicates whether to fail the task on failed tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TestCases" type="xs:int">
+          <xs:attribute name="TestCases">
             <xs:annotation>
               <xs:documentation>[Output] The count of test cases.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Total" type="xs:int">
+          <xs:attribute name="Total">
             <xs:annotation>
               <xs:documentation>[Output] The total count of tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Passed" type="xs:int">
+          <xs:attribute name="Passed">
             <xs:annotation>
               <xs:documentation>[Output] The count of passed tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Failed" type="xs:int">
+          <xs:attribute name="Failed">
             <xs:annotation>
               <xs:documentation>[Output] The count of failed tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Inconclusive" type="xs:int">
+          <xs:attribute name="Inconclusive">
             <xs:annotation>
               <xs:documentation>[Output] The count of inconclusive tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Skipped" type="xs:int">
+          <xs:attribute name="Skipped">
             <xs:annotation>
               <xs:documentation>[Output] The count of skipped tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Asserts" type="xs:int">
+          <xs:attribute name="Asserts">
             <xs:annotation>
               <xs:documentation>[Output] The count of asserts.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="StartTime" type="xs:dateTime">
+          <xs:attribute name="StartTime">
             <xs:annotation>
               <xs:documentation>[Output] The start time.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="EndTime" type="xs:dateTime">
+          <xs:attribute name="EndTime">
             <xs:annotation>
               <xs:documentation>[Output] The end time.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Duration" type="xs:float">
+          <xs:attribute name="Duration">
             <xs:annotation>
               <xs:documentation>[Output] The duration of tests running.</xs:documentation>
             </xs:annotation>
@@ -838,32 +825,32 @@ Example custom task with single required parameter
               <xs:documentation>The coverage results output file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MinClassCoverage" type="xs:float">
+          <xs:attribute name="MinClassCoverage">
             <xs:annotation>
               <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MinMethodCoverage" type="xs:float">
+          <xs:attribute name="MinMethodCoverage">
             <xs:annotation>
               <xs:documentation>The minimum method coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MinBranchCoverage" type="xs:float">
+          <xs:attribute name="MinBranchCoverage">
             <xs:annotation>
               <xs:documentation>The minimum branch coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MinLineCoverage" type="xs:float">
+          <xs:attribute name="MinLineCoverage">
             <xs:annotation>
               <xs:documentation>The minimum line coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ExcludeByAttributeFilters" type="xs:string">
+          <xs:attribute name="ExcludeByAttributeFilters">
             <xs:annotation>
               <xs:documentation>The filters to exclude code from coverage by attribute in format: Name*;*Attribute.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Filters" type="xs:string">
+          <xs:attribute name="Filters">
             <xs:annotation>
               <xs:documentation>The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.</xs:documentation>
             </xs:annotation>
@@ -873,82 +860,87 @@ Example custom task with single required parameter
               <xs:documentation>The PDB search directories path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ShowUnvisited" type="xs:boolean">
+          <xs:attribute name="ShowUnvisited">
             <xs:annotation>
               <xs:documentation>Show unvisited methods and classes after coverage finishes and results are presented.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MaxVisitCount" type="xs:int">
+          <xs:attribute name="Register">
+            <xs:annotation>
+              <xs:documentation>The type of registration of the OpenCover profiler: auto, user, path32, path64.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MaxVisitCount">
             <xs:annotation>
               <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TotalLines" type="xs:long">
+          <xs:attribute name="TotalLines">
             <xs:annotation>
               <xs:documentation>[Output] The total lines count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="VisitedLines" type="xs:long">
+          <xs:attribute name="VisitedLines">
             <xs:annotation>
               <xs:documentation>[Output] The visited lines count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TotalBranches" type="xs:long">
+          <xs:attribute name="TotalBranches">
             <xs:annotation>
               <xs:documentation>[Output] The total branches count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="VisitedBranches" type="xs:long">
+          <xs:attribute name="VisitedBranches">
             <xs:annotation>
               <xs:documentation>[Output] The visited branches count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TotalClasses" type="xs:long">
+          <xs:attribute name="TotalClasses">
             <xs:annotation>
               <xs:documentation>[Output] The total classes count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="VisitedClasses" type="xs:long">
+          <xs:attribute name="VisitedClasses">
             <xs:annotation>
               <xs:documentation>[Output] The visited classes count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="TotalMethods" type="xs:long">
+          <xs:attribute name="TotalMethods">
             <xs:annotation>
               <xs:documentation>[Output] The total methods count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="VisitedMethods" type="xs:long">
+          <xs:attribute name="VisitedMethods">
             <xs:annotation>
               <xs:documentation>[Output] The visited methods count.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MinCyclomaticComplexity" type="xs:int">
+          <xs:attribute name="MinCyclomaticComplexity">
             <xs:annotation>
               <xs:documentation>[Output] The minimum cyclomatic complexity.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MaxCyclomaticComplexity" type="xs:int">
+          <xs:attribute name="MaxCyclomaticComplexity">
             <xs:annotation>
               <xs:documentation>[Output] The maximum cyclomatic complexity.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ClassCoverage" type="xs:float">
+          <xs:attribute name="ClassCoverage">
             <xs:annotation>
               <xs:documentation>[Output] The class coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MethodCoverage" type="xs:float">
+          <xs:attribute name="MethodCoverage">
             <xs:annotation>
               <xs:documentation>[Output] The method coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="LineCoverage" type="xs:float">
+          <xs:attribute name="LineCoverage">
             <xs:annotation>
               <xs:documentation>[Output] The line coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="BranchCoverage" type="xs:float">
+          <xs:attribute name="BranchCoverage">
             <xs:annotation>
               <xs:documentation>[Output] The branch coverage, in range: 0% - 100%.</xs:documentation>
             </xs:annotation>
@@ -983,6 +975,42 @@ Example custom task with single required parameter
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.ReportGenerator" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Generates HTML report using the ReportGenerator tool.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="ReportGeneratorExeFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The ReportGenerator executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ResultsFiles" use="required">
+            <xs:annotation>
+              <xs:documentation>The results files paths.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ReportDir" use="required">
+            <xs:annotation>
+              <xs:documentation>The report directory path to save report to.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ReportTypes" use="required">
+            <xs:annotation>
+              <xs:documentation>The report types, separated by semicolon.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Verbosity">
+            <xs:annotation>
+              <xs:documentation>The verbosity: Error, Info, Verbose.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Heleonix.Build.Tasks.SvnLog" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Retrieves the Svn log.</xs:documentation>
@@ -1000,17 +1028,17 @@ Example custom task with single required parameter
               <xs:documentation>The file or directory path to retrieve log for.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="MaxCount" type="xs:long">
+          <xs:attribute name="MaxCount">
             <xs:annotation>
               <xs:documentation>The maximum count of commits to retrieve from the log.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="SinceDate" type="xs:dateTime">
+          <xs:attribute name="SinceDate">
             <xs:annotation>
               <xs:documentation>The date to start retrieval of commits from.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="UntilDate" type="xs:dateTime">
+          <xs:attribute name="UntilDate">
             <xs:annotation>
               <xs:documentation>The date to stop retrieval of commits on.</xs:documentation>
             </xs:annotation>
@@ -1050,24 +1078,11 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region System-->
-  <xs:element name="Hxb-System-CI" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-System-MSBuildDir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
-      <xs:documentation>A type of continuous integration system.</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-System-CI-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Hxb-System-Workspace-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
+      <xs:documentation>The MSBuild tools directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-
   <xs:element name="Hxb-System-GitExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The Git executable.</xs:documentation>
@@ -1111,6 +1126,16 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Setup-->
+  <xs:element name="Hxb-Setup-CI" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A type of continuous integration system: Dev, GoCD, Jenkins, TeamCity.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Setup-Workspace-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-Setup-Sln-Flows" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The solution-specific build flows project file.</xs:documentation>
@@ -1119,17 +1144,10 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Build-->
-  <xs:element name="Hxb-Build-VCS" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-Build-VCS" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A type of the version control system.</xs:documentation>
+      <xs:documentation>A type of the version control system: Git, Svn.</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-Build-VCS-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
   </xs:element>
   <xs:element name="Hxb-Build-Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
@@ -1151,6 +1169,11 @@ Example custom task with single required parameter
       <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hxb-Build-Sln-Name" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A name of the solution file without extension.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-Build-Reports-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the reports directory of the solution to put tests reports, coverage reports etc.</xs:documentation>
@@ -1159,6 +1182,11 @@ Example custom task with single required parameter
   <xs:element name="Hxb-Build-Deployments-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the deployments directory to put Nuget packages, Web sites zips etc.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-Build-Verbosity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Common build verbosity for all targets and tasks: Quiet, Normal, Detailed.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
@@ -1170,17 +1198,6 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hxb-Rebuild-->
-  <xs:element name="Hxb-Rebuild-In-Outputs-RegEx" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A regular expression to filter outputs.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-Rebuild-In-Outputs-Tests-RegEx" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A regular expression to filter outputs tests.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-
   <xs:element name="Hxb-Rebuild-In-Delete" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>Files to delete during cleaning.</xs:documentation>
@@ -1201,62 +1218,40 @@ Example custom task with single required parameter
       <xs:documentation>The file with public/private keys pair to sign assemblies.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-Rebuild-Out-Outputs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>Rebuilt items. Additional metadata: "MSBuildSourceProjectFile" - project of this item; "MSBuildSourceTargetName" - target which created this item.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-Rebuild-Out-Outputs-Tests" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>Rebuilt items with tests. Additional metadata: "MSBuildSourceProjectFile" - project of this item; "MSBuildSourceTargetName" - target which created this item.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <!--Endregion-->
 
   <!--Region Target: Hxb-FxCop-->
-  <xs:element name="Hxb-FxCop-In-IsVerbose" type="xs:boolean" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A value indicating whether the FxCop is verbose.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-FxCop-In-TargetsTypes" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The comma-separated types to analyze. It isables analysis of assemblies, namespaces, and resources.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-FxCop-In-FailOn" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-FxCop-In-FailOn" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>Types of issues to fail the task.</xs:documentation>
+      <xs:documentation>Types of issues to fail the task: Any, None, CriticalErrors, Errors, CriticalWarnings, Warnings, Informational.</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-FxCop-Issues-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
   </xs:element>
-  <xs:element name="Hxb-FxCop-Out-CriticalErrors" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-FxCop-Out-CriticalErrors" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The critical errors count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-FxCop-Out-Errors" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-FxCop-Out-Errors" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The errors count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-FxCop-Out-CriticalWarnings" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-FxCop-Out-CriticalWarnings" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The critical warnings count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-FxCop-Out-Warnings" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-FxCop-Out-Warnings" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The warnings count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-FxCop-Out-Informational" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-FxCop-Out-Informational" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The informational messages count.</xs:documentation>
     </xs:annotation>
@@ -1305,37 +1300,27 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hxb-NugetDeploy-->
-  <xs:element name="Hxb-NugetDeploy-In-ApiKey" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NugetDeploy-In-APIKey" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The API key.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NugetDeploy-In-Source" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The source path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-NugetDeploy-In-IncludeReferencedProjects" type="xs:boolean" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NugetDeploy-In-IncludeReferencedProjects" type="msb:StringPropertyType"
+              substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Indicates whether to include referenced projects.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NugetDeploy-In-ExcludeEmptyDirectories" type="xs:boolean" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NugetDeploy-In-ExcludeEmptyDirectories" type="msb:StringPropertyType"
+              substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Indicates whether to exclude empty directories.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NugetDeploy-In-Verbosity" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NugetDeploy-In-Properties" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>The verbosity of the command.</xs:documentation>
+      <xs:documentation>Additional properties to pass to the .nuspec file, in format: token1=value1;token2="value2".</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-Nuget-Verbosity-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
   </xs:element>
 
   <xs:element name="Hxb-NugetDeploy-In-Nuspecs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
@@ -1346,6 +1331,11 @@ Example custom task with single required parameter
   <xs:element name="Hxb-NugetDeploy-In-Projects" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The project files paths.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-NugetDeploy-In-Source" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The source path.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hxb-NugetDeploy-In-PackagesDir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
@@ -1365,6 +1355,25 @@ Example custom task with single required parameter
   </xs:element>
   <!--Endregion-->
 
+  <!--Region Target: Hxb-NugetRestore-->
+  <xs:element name="Hxb-NugetRestore-In-NoCache" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Indicates whether disable using machine cache as the first package source.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hxb-NugetRestore-In-Sources" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The sources paths to load packages from.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-NugetRestore-In-Packages-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The packages directory where restore packages to.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--Endregion-->
+
   <!--Region Target: Hxb-NUnit-->
   <xs:element name="Hxb-NUnit-In-TestsParameters" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
@@ -1376,17 +1385,19 @@ Example custom task with single required parameter
       <xs:documentation>A tests filter to filter tests to run.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-AgentsNumber" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-In-AgentsNumber" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The agents number.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-StopOnErrorOrFailedTest" type="xs:boolean" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-In-StopOnErrorOrFailedTest" type="msb:StringPropertyType"
+              substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Indicates whether to stop on first error or first failed test.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-UseTeamCityServiceMessages" type="xs:boolean" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-In-UseTeamCityServiceMessages" type="msb:StringPropertyType"
+              substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Indicates whether to use TeamCity service messages.</xs:documentation>
     </xs:annotation>
@@ -1396,98 +1407,72 @@ Example custom task with single required parameter
       <xs:documentation>The framework to use for tests. Examples: "mono", "net-4.5", "v4.0", "2.0", "mono-4.0".</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-TraceLevel" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-In-ProcessIsolation" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>The trace level.</xs:documentation>
+      <xs:documentation>Process isolation for test assemblies: Single, Separate, Multiple.</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-NUnit-TraceLevel-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-ProcessIsolation" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-In-DomainIsolation" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>Process isolation for test assemblies.</xs:documentation>
+      <xs:documentation>Domain isolation for test assemblies: None, Single, Multiple.</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-NUnit-ProcessIsolation-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-DomainIsolation" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>Domain isolation for test assemblies.</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="msb:Hxb-NUnit-DomainIsolation-Enum">
-          <xs:attribute name="Condition" type="xs:string"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Hxb-NUnit-In-ShadowCopy" type="xs:boolean" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-In-ShadowCopy" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-FailOnFailedTests" type="xs:boolean" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-In-FailOnFailedTests" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Indicates whether to fail the task on failed tests.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-TestCases" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-TestCases" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The count of test cases.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-Total" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-Total" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The total count of tests.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-Passed" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-Passed" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The count of passed tests.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-Failed" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-Failed" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The count of failed tests.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-Inconclusive" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-Inconclusive" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The count of inconclusive tests.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-Skipped" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-Skipped" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The count of skipped tests.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-Asserts" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-Asserts" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The count of asserts.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-StartTime" type="xs:dateTime" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-StartTime" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The start time.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-EndTime" type="xs:dateTime" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-EndTime" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The end time.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-Out-Duration" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-NUnit-Out-Duration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The duration of tests running.</xs:documentation>
     </xs:annotation>
@@ -1521,22 +1506,22 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hxb-OpenCover-->
-  <xs:element name="Hxb-OpenCover-In-MinClassCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-In-MinClassCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-In-MinMethodCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-In-MinMethodCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The minimum method coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-In-MinBranchCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-In-MinBranchCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The minimum branch coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-In-MinLineCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-In-MinLineCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The minimum line coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
@@ -1552,82 +1537,89 @@ Example custom task with single required parameter
       <xs:documentation>The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-In-ShowUnvisited" type="xs:boolean" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-In-ShowUnvisited" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Show unvisited methods and classes after coverage finishes and results are presented.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-In-MaxVisitCount" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-In-Register" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The type of registration of the OpenCover profiler: auto, user, path32, path64.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-OpenCover-In-MaxVisitCount" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-TotalLines" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-TotalLines" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The total lines count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-VisitedLines" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-VisitedLines" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The visited lines count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-TotalBranches" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-TotalBranches" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The total branches count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-VisitedBranches" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-VisitedBranches" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The visited branches count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-TotalClasses" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-TotalClasses" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The total classes count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-VisitedClasses" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-VisitedClasses" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The visited classes count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-TotalMethods" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-TotalMethods" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The total methods count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-VisitedMethods" type="xs:long" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-VisitedMethods" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The visited methods count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-MinCyclomaticComplexity" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-MinCyclomaticComplexity" type="msb:StringPropertyType"
+              substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The minimum cyclomatic complexity.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-MaxCyclomaticComplexity" type="xs:int" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-MaxCyclomaticComplexity" type="msb:StringPropertyType"
+              substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The maximum cyclomatic complexity.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-ClassCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-ClassCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The class coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-MethodCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-MethodCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The method coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-LineCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-LineCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The line coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-BranchCoverage" type="xs:float" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-BranchCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The branch coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
@@ -1646,6 +1638,25 @@ Example custom task with single required parameter
   <xs:element name="Hxb-OpenCover-In-PdbSearchDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The PDB search directories path.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--Endregion-->
+
+  <!--Region Target: Hxb-ReportGenerator-->
+  <xs:element name="Hxb-ReportGenerator-In-ReportTypes" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The report types, separated by semicolon: Badges, Html, HtmlSummary, Latex, LatexSummary, TextSummary, Xml, XmlSummary.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hxb-ReportGenerator-In-Results" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The results files paths.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-ReportGenerator-In-Report-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The report directory path to save report to.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->

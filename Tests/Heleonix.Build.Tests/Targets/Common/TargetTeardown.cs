@@ -1,7 +1,7 @@
-/*
+﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Reflection;
-using System.Runtime.InteropServices;
+using System.IO;
 
-[assembly: AssemblyTitle("Heleonix.Build.Tests.Simulator.Tests")]
-[assembly: Guid("2c70b11c-97bd-4abe-becf-86bb9808f571")]
+namespace Heleonix.Build.Tests.Targets.Common
+{
+    /// <summary>
+    /// Tears down targets tests.
+    /// </summary>
+    public static class TargetTeardown
+    {
+        #region Methods
+
+        /// <summary>
+        /// Removes the overrides file.
+        /// </summary>
+        /// <param name="overridesFilePath">The overrides file path.</param>
+        public static void Overrides(string overridesFilePath)
+        {
+            if (File.Exists(overridesFilePath))
+            {
+                File.Delete(overridesFilePath);
+            }
+        }
+
+        #endregion
+    }
+}

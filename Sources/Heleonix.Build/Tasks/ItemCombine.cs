@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -84,19 +85,8 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            if (Left == null)
-            {
-                Log.LogMessage($"'{nameof(Left)}' is null.");
-
-                return;
-            }
-
-            if (Right == null)
-            {
-                Log.LogMessage($"'{nameof(Right)}' is null.");
-
-                return;
-            }
+            var left = Left ?? new ITaskItem[0];
+            var right = Right ?? new ITaskItem[0];
 
             var sourceMetadataName = string.IsNullOrEmpty(SourceMetadataName) ? "Identity" : SourceMetadataName;
 
@@ -105,12 +95,12 @@ namespace Heleonix.Build.Tasks
             switch (Operation)
             {
                 case "Pairing":
-                    for (var i = 0; i < Right.Length; i++)
+                    for (var i = 0; i < right.Length; i++)
                     {
-                        if (i < Left.Length)
+                        if (i < left.Length)
                         {
-                            var res = new TaskItem(Left[i]);
-                            res.SetMetadata(TargetMetadataName, Right[i].GetMetadata(sourceMetadataName));
+                            var res = new TaskItem(left[i]);
+                            res.SetMetadata(TargetMetadataName, right[i].GetMetadata(sourceMetadataName));
                             result.Add(res);
                         }
                         else
@@ -120,18 +110,18 @@ namespace Heleonix.Build.Tasks
                     }
                     break;
                 case "CrossProduct":
-                    foreach (var left in Left)
+                    foreach (var l in left)
                     {
-                        foreach (var right in Right)
+                        foreach (var r in right)
                         {
-                            var res = new TaskItem(left);
-                            res.SetMetadata(TargetMetadataName, right.GetMetadata(sourceMetadataName));
+                            var res = new TaskItem(l);
+                            res.SetMetadata(TargetMetadataName, r.GetMetadata(sourceMetadataName));
                             result.Add(res);
                         }
                     }
                     break;
                 default:
-                    Log.LogError($"Operation '{nameof(Operation)}' is not recognized.");
+                    Log.LogError(Resources.OperationIsNotRecognized, nameof(Operation));
                     return;
             }
 

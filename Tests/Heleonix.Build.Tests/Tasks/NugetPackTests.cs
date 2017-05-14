@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="NugetPack"/>.
     /// </summary>
-    public class NugetPackTests : TaskTests
+    public static class NugetPackTests
     {
         #region Tests
 
@@ -41,15 +41,19 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="NugetPack.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+
             var task = new NugetPack
             {
                 BuildEngine = new FakeBuildEngine(),
-                NugetExeFile = new TaskItem(PathHelper.NugetExe),
-                NuspecFile = new TaskItem(Path.Combine(LibSimulatorHelper.SolutionDir,
-                    LibSimulatorHelper.SolutionName + ".nuspec")),
-                ProjectFile = new TaskItem(LibSimulatorHelper.Project),
+                NugetExeFile = new TaskItem(SystemPath.NugetExe),
+                MSBuildDir = new TaskItem(Path.GetDirectoryName(MSBuildHelper.MSBuildExe)),
+                NuspecFile = new TaskItem(Path.Combine(LibSimulatorPath.SolutionDir,
+                    LibSimulatorPath.SolutionName + ".nuspec")),
+                ProjectFile = new TaskItem(LibSimulatorPath.ProjectFile),
+                Configuration = MSBuildHelper.CurrentConfiguration,
                 Verbosity = "detailed"
             };
 
@@ -63,15 +67,6 @@ namespace Heleonix.Build.Tests.Tasks
 
             Assert.That(packageExists, Is.True);
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

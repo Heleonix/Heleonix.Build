@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="FileSystemSearch"/>.
     /// </summary>
-    public class FileSystemSearchTests
+    public static class FileSystemSearchTests
     {
         #region Tests
 
@@ -42,18 +42,19 @@ namespace Heleonix.Build.Tests.Tasks
         /// </summary>
         [TestCase("Down")]
         [TestCase("Up")]
-        public void Execute(string direction)
+        public static void Execute(string direction)
         {
             var startDir = Directory.CreateDirectory(Path.Combine(
-                PathHelper.CurrentDir, Path.GetRandomFileName())).FullName;
-            File.WriteAllText(Path.Combine(startDir, "file1.txt"), "Some 1 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "file2.md2"), "Some 2 text to search.");
+                    SystemPath.CurrentDir, Path.GetRandomFileName()))
+                .FullName;
+            File.WriteAllText(Path.Combine(startDir, "file1.txt"), @"Some 1 text to search.");
+            File.WriteAllText(Path.Combine(startDir, "file2.md2"), @"Some 2 text to search.");
             Directory.CreateDirectory(Path.Combine(startDir, "dir1"));
             Directory.CreateDirectory(Path.Combine(startDir, "dir2"));
-            File.WriteAllText(Path.Combine(startDir, "dir1", "file11.txt"), "Some 11 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "dir1", "file12.md2"), "Some 12 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "dir2", "file21.txt"), "Some 21 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "dir2", "file22.md2"), "Some 22 text to search.");
+            File.WriteAllText(Path.Combine(startDir, "dir1", "file11.txt"), @"Some 11 text to search.");
+            File.WriteAllText(Path.Combine(startDir, "dir1", "file12.md2"), @"Some 12 text to search.");
+            File.WriteAllText(Path.Combine(startDir, "dir2", "file21.txt"), @"Some 21 text to search.");
+            File.WriteAllText(Path.Combine(startDir, "dir2", "file22.md2"), @"Some 22 text to search.");
             Directory.CreateDirectory(Path.Combine(startDir, "dir1", "dir11"));
             var startUpDir = Directory.CreateDirectory(Path.Combine(startDir, "dir1", "dir12")).FullName;
             Directory.CreateDirectory(Path.Combine(startDir, "dir2", "dir21"));
@@ -63,8 +64,8 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 BuildEngine = new FakeBuildEngine(),
                 StartDir = new TaskItem(direction == "Up" ? startUpDir : startDir),
-                PathRegEx = @".*\.md2$|.*dir1.?$",
-                ContentRegEx = @".*1.*",
+                PathRegExp = @".*\.md2$|.*dir1.?$",
+                ContentRegExp = @".*1.*",
                 Direction = direction,
                 Types = "All"
             };

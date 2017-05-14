@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,18 +26,24 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-FxCop" DependsOnTargets="Hxb-Rebuild">
+  <Target Name="Hxb-FxCop">
+    <PropertyGroup>
+      <_Hxb-FxCop-IsVerbose>false</_Hxb-FxCop-IsVerbose>
+      <_Hxb-FxCop-IsVerbose Condition="'$(Hxb-Build-Verbosity)' == 'Detailed'">true</_Hxb-FxCop-IsVerbose>
+    </PropertyGroup>
+
     <Heleonix.Build.Tasks.FxCop FxCopCmdFile="@(Hxb-System-FxCopCmd)"
                                 AnalysisResultFile="@(Hxb-FxCop-In-AnalysisResult)"
                                 AnalysisResultsXslFile="@(Hxb-FxCop-In-AnalysisResultsXsl)"
-                                IsVerbose="$(Hxb-FxCop-In-IsVerbose)"
+                                IsVerbose="$(_Hxb-FxCop-IsVerbose)"
                                 DependenciesDirs="@(Hxb-FxCop-In-Dependencies-Dirs)"
                                 DictionaryFile="@(Hxb-FxCop-In-Dictionary)"
                                 ProjectFile="@(Hxb-FxCop-In-Project)"
                                 RulesFilesDirs="@(Hxb-FxCop-In-Rules-FilesDirs)"
                                 RulesetFile="@(Hxb-FxCop-In-Ruleset)"
                                 TargetsFilesDirs="@(Hxb-FxCop-In-Targets-FilesDirs)"
-                                TargetsTypes="$(Hxb-FxCop-In-TargetsTypes)">
+                                TargetsTypes="$(Hxb-FxCop-In-TargetsTypes)"
+                                FailOn="$(Hxb-FxCop-In-FailOn)">
       <Output TaskParameter="CriticalErrors" ItemName="Hxb-FxCop-Out-CriticalErrors"/>
       <Output TaskParameter="Errors" ItemName="Hxb-FxCop-Out-Errors"/>
       <Output TaskParameter="CriticalWarnings" ItemName="Hxb-FxCop-Out-CriticalWarnings"/>

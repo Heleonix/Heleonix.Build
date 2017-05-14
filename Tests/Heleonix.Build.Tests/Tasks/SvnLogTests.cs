@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,14 @@ using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Tasks
 {
     /// <summary>
     /// Tests the <see cref="SvnLog"/>.
     /// </summary>
-    public class SvnLogTests
+    public static class SvnLogTests
     {
         #region Tests
 
@@ -41,33 +42,37 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
-            var repositoryDir = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
-            var workingCopyDir = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
+            var repositoryDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
+            var workingCopyDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
             try
             {
-                ExeHelper.Execute(PathHelper.SvnAdminExe, ArgsBuilder.By(' ', ' ')
-                    .Add("create", repositoryDir, true));
+                ExeHelper.Execute(SystemPath.SvnAdminExe, ArgsBuilder.By(string.Empty, " ")
+                    .AddPath("create", repositoryDir));
 
-                ExeHelper.Execute(PathHelper.SvnExe, ArgsBuilder.By(' ', ' ').Add("checkout")
-                    .Add("file:///" + repositoryDir, true).Add(workingCopyDir, true));
+                ExeHelper.Execute(SystemPath.SvnExe, ArgsBuilder.By(string.Empty, "")
+                    .AddValue("checkout")
+                    .AddPath("file:///" + repositoryDir)
+                    .AddPath(workingCopyDir));
 
                 var workingCopyFilePath = Path.Combine(workingCopyDir, Path.GetRandomFileName());
 
                 File.Create(workingCopyFilePath).Close();
 
-                ExeHelper.Execute(PathHelper.SvnExe, ArgsBuilder.By(' ', ' ')
-                    .Add("add").Add(workingCopyFilePath, true), workingCopyDir);
+                ExeHelper.Execute(SystemPath.SvnExe, ArgsBuilder.By(string.Empty, " ")
+                    .AddValue("add")
+                    .AddPath(workingCopyFilePath), false, workingCopyDir, int.MaxValue);
 
-                ExeHelper.Execute(PathHelper.SvnExe, ArgsBuilder.By(' ', ' ')
-                    .Add("commit").Add("-m", "Commit 1.", true), workingCopyDir);
+                ExeHelper.Execute(SystemPath.SvnExe, ArgsBuilder.By(string.Empty, " ")
+                    .AddValue("commit")
+                    .AddPath("-m", "Commit 1."), false, workingCopyDir, int.MaxValue);
 
                 var task = new SvnLog
                 {
                     BuildEngine = new FakeBuildEngine(),
-                    SvnExeFile = new TaskItem(PathHelper.SvnExe),
+                    SvnExeFile = new TaskItem(SystemPath.SvnExe),
                     RepositoryFileDir = new TaskItem(workingCopyFilePath),
                     MaxCount = 1
                 };
@@ -87,12 +92,12 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 if (Directory.Exists(repositoryDir))
                 {
-                    ExeHelper.Execute("cmd", $"/C rmdir /s /q {repositoryDir}");
+                    ExeHelper.Execute("cmd", Invariant($"/C rmdir /s /q {repositoryDir}"));
                 }
 
                 if (Directory.Exists(workingCopyDir))
                 {
-                    ExeHelper.Execute("cmd", $"/C rmdir /s /q {workingCopyDir}");
+                    ExeHelper.Execute("cmd", Invariant($"/C rmdir /s /q {workingCopyDir}"));
                 }
             }
         }

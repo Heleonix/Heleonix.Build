@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
     /// <summary>
     /// Tests the <see cref="OpenCover"/>.
     /// </summary>
-    public class OpenCoverTests : TaskTests
+    public static class OpenCoverTests
     {
         #region Tests
 
@@ -43,21 +43,30 @@ namespace Heleonix.Build.Tests.Tasks
         /// </summary>
         [TestCase(40, ExpectedResult = true)]
         [TestCase(90, ExpectedResult = false)]
-        public bool Execute(int minClassCoverage)
+        public static bool Execute(int minClassCoverage)
         {
-            var coverageResults = Path.Combine(LibSimulatorHelper.ReportsDir, Path.GetRandomFileName());
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+
+            var coverageResults = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
+            var errorsOutput = Path.Combine(LibSimulatorPath.ReportsDir, "Errors.txt");
+            var testsOutput = Path.Combine(LibSimulatorPath.ReportsDir, "Output.txt");
+            var testsResult = Path.Combine(LibSimulatorPath.ReportsDir, "NUnit.xml");
 
             var task = new OpenCover
             {
                 BuildEngine = new FakeBuildEngine(),
-                OpenCoverExeFile = new TaskItem(PathHelper.OpenCoverExe),
-                Target = new TaskItem(PathHelper.NUnitConsoleExe, new Dictionary<string, string>
+                OpenCoverExeFile = new TaskItem(SystemPath.OpenCoverExe),
+                Target = new TaskItem(SystemPath.NUnitConsoleExe, new Dictionary<string, string>
                 {
-                    { nameof(Build.Tasks.NUnit.NUnitProjectOrTestsFiles), LibSimulatorHelper.TestsOut },
-                    { "Type", nameof(Build.Tasks.NUnit) }
+                    { nameof(Build.Tasks.NUnit.NUnitProjectFileOrTestsFiles), LibSimulatorPath.TestsOutFile },
+                    { "Type", nameof(Build.Tasks.NUnit) },
+                    { nameof(Build.Tasks.NUnit.ErrorsOutputFile), errorsOutput },
+                    { nameof(Build.Tasks.NUnit.TestsOutputFile), testsOutput },
+                    { nameof(Build.Tasks.NUnit.TestsResultFile), testsResult }
                 }),
                 CoverageResultFile = new TaskItem(coverageResults),
-                MinClassCoverage = minClassCoverage
+                MinClassCoverage = minClassCoverage,
+                Register = "path64"
             };
 
             task.Execute();
@@ -74,19 +83,25 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     File.Delete(coverageResults);
                 }
+
+                if (File.Exists(errorsOutput))
+                {
+                    File.Delete(errorsOutput);
+                }
+
+                if (File.Exists(testsOutput))
+                {
+                    File.Delete(testsOutput);
+                }
+
+                if (File.Exists(testsResult))
+                {
+                    File.Delete(testsResult);
+                }
             }
 
             return task.ClassCoverage >= minClassCoverage;
         }
-
-        #endregion
-
-        #region TaskTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
 
         #endregion
     }

@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,90 +25,75 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Build.Tests.Targets.Common;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Targets
 {
     /// <summary>
     /// Tests the Hxb-NugetDeploy target.
     /// </summary>
-    public class NugetDeployTests : TargetTests
+    // ReSharper disable once TestFileNameWarning
+    public static class NugetDeployTests
     {
-        #region Methods
-
-        /// <summary>
-        /// The test case source.
-        /// </summary>
-        /// <returns>Test cases.</returns>
-        public static IEnumerable<TargetTestCase> TestCaseSource()
-        {
-            yield return new TargetTestCase
-            {
-                Properties = new Dictionary<string, string>
-                {
-                    { "Hxb-NugetDeploy-In-Source", "" }
-                },
-                Items = new Dictionary<string, ITaskItem[]>
-                {
-                    { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(PathHelper.NugetExe) } }
-                },
-                Result = true
-            };
-        }
-
-        #endregion
-
         #region Tests
 
         /// <summary>
         /// Tests the Hxb-NugetDeploy target.
         /// </summary>
-        /// <param name="testCases">The test cases.</param>
         [Test]
-        public void Execute([ValueSource(nameof(TestCaseSource))] TargetTestCase testCases)
+        public static void HxbNugetDeploy()
         {
-            var tempSource = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
+            var tempSource = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
             try
             {
                 Directory.CreateDirectory(tempSource);
 
-                var exitCode = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
+                var result = ExeHelper.Execute(SystemPath.NugetExe, Invariant($"init \"{tempSource}\""));
 
-                Assert.That(exitCode, Is.Zero);
+                Assert.That(result, Is.Zero);
 
-                testCases.Properties["Hxb-NugetDeploy-In-Source"] = tempSource;
+                var testCase = new TargetTestCase(
+                    null,
+                    new Dictionary<string, ITaskItem[]>
+                    {
+                        { "Hxb-NugetDeploy-In-Source", new ITaskItem[] { new TaskItem(tempSource) } }
+                    },
+                    "Hxb-NugetRestore;Hxb-Rebuild",
+                    true);
 
-                ExecuteTest(CIType.Jenkins, testCases);
+                var overridesFilePath = TargetSetup.Overrides("Hxb-NugetDeploy", testCase);
 
-                Assert.That(Directory.Exists(LibSimulatorHelper.NugetDeploymentDir), Is.True);
+                try
+                {
+                    var props = TargetSetup.Properties("Hxb-NugetDeploy", CIType.Jenkins, SimulatorType.Library,
+                        overridesFilePath, testCase);
 
-                var package = Directory.GetFiles(LibSimulatorHelper.NugetDeploymentDir);
+                    result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
 
-                Assert.That(package, Has.Length.EqualTo(1));
+                    Assert.That(result, Is.Zero);
+
+                    Assert.That(Directory.Exists(LibSimulatorPath.NugetDeploymentDir), Is.True);
+                    Assert.That(Directory.GetFiles(LibSimulatorPath.NugetDeploymentDir), Has.Length.EqualTo(1));
+                    Assert.That(Directory.Exists(tempSource));
+                    Assert.That(Directory.GetFiles(tempSource), Has.Length.EqualTo(1));
+                }
+                finally
+                {
+                    TargetTeardown.Overrides(overridesFilePath);
+
+                    Directory.Delete(LibSimulatorPath.NugetDeploymentDir, true);
+                }
             }
             finally
             {
-                Directory.Delete(LibSimulatorHelper.NugetDeploymentDir, true);
                 Directory.Delete(tempSource, true);
             }
         }
-
-        #endregion
-
-        #region TargetTests Members
-
-        /// <summary>
-        /// Gets the type of the simulator.
-        /// </summary>
-        protected override SimulatorType SimulatorType => SimulatorType.Library;
-
-        /// <summary>
-        /// Gets or sets the name of the target.
-        /// </summary>
-        protected override string TargetName => "Hxb-NugetDeploy";
 
         #endregion
     }

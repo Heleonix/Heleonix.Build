@@ -1,2 +1,2 @@
 # Heleonix.Build
-The build system for .NET Framework applications.
+The build system for applications.

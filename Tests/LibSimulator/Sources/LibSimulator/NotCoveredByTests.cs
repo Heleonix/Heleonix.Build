@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using Heleonix.Build.Tests.Common;
-using NUnit.Framework;
-
-namespace Heleonix.Build.Tests.Tasks
+namespace LibSimulator
 {
     /// <summary>
-    /// The base class for tasks testing.
+    /// Represents the class, which is not covered by tests.
     /// </summary>
-    public abstract class TaskTests
+    public class NotCoveredByTests
     {
-        #region Methods
+        #region Fields
 
         /// <summary>
-        /// Setups tests.
+        /// The original value.
         /// </summary>
-        [SetUp]
-        public void Setup()
+        private int _original;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotCoveredByTests"/> class.
+        /// </summary>
+        public NotCoveredByTests(int original)
         {
-            switch (SimulatorType)
-            {
-                case SimulatorType.Library:
-                    MsBuildHelper.ExecuteMsBuild(LibSimulatorHelper.Solution, "Build");
-                    break;
-            }
+            _original = original;
         }
 
         #endregion
 
-        #region Properties
+        #region Methods
 
         /// <summary>
-        /// Gets the type of the simulator.
+        /// Increases the original value by the specified <paramref name="increment"/>.
         /// </summary>
-        protected abstract SimulatorType SimulatorType { get; }
+        /// <param name="increment">The increment.</param>
+        public void Increase(int increment)
+        {
+            _original = _original + increment;
+        }
 
         #endregion
     }

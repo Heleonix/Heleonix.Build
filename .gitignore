@@ -196,4 +196,5 @@ FakesAssemblies/
 *.opt
 
 # Custom
-Reports/
+Hxb-Reports/
+Hxb-Deployments/

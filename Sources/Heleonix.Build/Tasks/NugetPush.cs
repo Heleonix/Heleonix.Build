@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -48,12 +49,12 @@ namespace Heleonix.Build.Tasks
         /// <summary>
         /// The API key.
         /// </summary>
-        public string ApiKey { get; set; }
+        public string APIKey { get; set; }
 
         /// <summary>
         /// The source path.
         /// </summary>
-        public string SourcePath { get; set; }
+        public ITaskItem SourcePath { get; set; }
 
         /// <summary>
         /// The configuration file path.
@@ -82,31 +83,29 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', ' ')
-                .Add("push", PackageFile.ItemSpec, true)
-                .Add(ApiKey)
-                .Add("-NonInteractive")
-                .Add("-source", SourcePath, true)
-                .Add("-ConfigFile", ConfigFile?.ItemSpec, true)
-                .Add("-Verbosity", Verbosity);
+            var args = ArgsBuilder.By("-", " ")
+                .AddValue("push")
+                .AddPath(PackageFile.ItemSpec)
+                .AddValue(APIKey)
+                .AddPath("source", SourcePath?.ItemSpec)
+                .AddPath("ConfigFile", ConfigFile?.ItemSpec)
+                .AddArgument("Verbosity", Verbosity)
+                .AddKey("NonInteractive");
 
-            Log.LogMessage($"Pushing '{PackageFile.ItemSpec}'.");
+            Log.LogMessage(Resources.NugetPush_Started, PackageFile.ItemSpec);
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(NugetExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(NugetExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogError($"Failed pushing '{PackageFile.ItemSpec}'. Exit code: {exitCode}.");
+                Log.LogError(Resources.NugetPush_Failed, PackageFile.ItemSpec, result.ExitCode);
             }
         }
 

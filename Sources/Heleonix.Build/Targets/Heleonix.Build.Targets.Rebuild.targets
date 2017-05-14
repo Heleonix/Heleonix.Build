@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,6 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-Rebuild">
-    <!--Validation-->
-    <Error Condition="'$(Hxb-Rebuild-In-Outputs-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-RegEx' is not defined."/>
-    <Message Condition="'$(Hxb-Rebuild-In-Outputs-Tests-RegEx)' == ''" Text="The '$Hxb-Rebuild-In-Outputs-Tests-RegEx' is not defined."/>
-
     <!--Preparation-->
     <PropertyGroup>
       <_Hxb-Rebuild-Common-Props Condition="'$(Hxb-In-Configuration)' != ''">Configuration=$(Hxb-In-Configuration)</_Hxb-Rebuild-Common-Props>
@@ -42,7 +38,7 @@ SOFTWARE.
 
     <Delete Files="@(Hxb-Rebuild-In-Delete)"/>
 
-    <RemoveDir Directories="@(Hxb-Rebuild-In-Delete-Dirs);$(Hxb-Build-Reports-Dir);$(Hxb-Build-Deployments-Dir);%(Hxb-Build-Sln.FullPath)\**\bin\$(Hxb-In-Configuration);%(Hxb-Build-Sln.FullPath)\**\obj\$(Hxb-In-Configuration)"/>
+    <RemoveDir Directories="@(Hxb-Rebuild-In-Delete-Dirs);%(Hxb-Build-Sln.FullPath)\**\bin\$(Hxb-In-Configuration);%(Hxb-Build-Sln.FullPath)\**\obj\$(Hxb-In-Configuration)"/>
 
     <Heleonix.Build.Tasks.DirectoryClean Dirs="@(Hxb-Rebuild-In-Clean-Dirs)"/>
 
@@ -52,32 +48,21 @@ SOFTWARE.
     </PropertyGroup>
 
     <ItemGroup>
-      <_Hxb-Rebuild-AssemblyInfo Include="$(Hxb-Build-Sln-Dir)\**\*AssemblyInfo.*"/>
+      <_Hxb-Rebuild-AssemblyInfo Include="$(Hxb-Build-Sln-Dir)\**\AssemblyInfo.*"
+                                 Exclude="$(Hxb-Build-Sln-Dir)\packages\**\AssemblyInfo.*"/>
     </ItemGroup>
 
     <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
-                                     RegEx="(?&lt;=AssemblyVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     RegExp="(?&lt;=AssemblyVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
                                      Replacement="(&quot;$(Hxb-Build-Version)&quot;)"/>
     <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
-                                     RegEx="(?&lt;=AssemblyFileVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     RegExp="(?&lt;=AssemblyFileVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
                                      Replacement="(&quot;$(Hxb-Build-Version)&quot;)"/>
     <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
-                                     RegEx="(?&lt;=AssemblyInformationalVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
+                                     RegExp="(?&lt;=AssemblyInformationalVersion)\s*\(\s*&quot;\d+\.\d+\.\d+\.[\d\*]+&quot;\s*\)"
                                      Replacement="(&quot;$(Hxb-Build-Version-Informational)&quot;)"/>
 
-    <MSBuild Targets="Build" Projects="@(Hxb-Build-Sln)" Properties="$(_Hxb-Rebuild-Common-Props);$(_Hxb-Rebuild-Sign-Props)">
-      <Output TaskParameter="TargetOutputs" ItemName="_Hxb-Rebuild-Build-Outputs"/>
-    </MSBuild>
-
-    <MakeDir Directories="$(Hxb-Build-Reports-Dir)"/>
-    <MakeDir Directories="$(Hxb-Build-Deployments-Dir)"/>
-
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegEx="$(Hxb-Rebuild-In-Outputs-RegEx)">
-      <Output TaskParameter="Outputs" ItemName="Hxb-Rebuild-Out-Outputs"/>
-    </Heleonix.Build.Tasks.ItemFilter>
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Rebuild-Build-Outputs)" RegEx="$(Hxb-Rebuild-In-Outputs-Tests-RegEx)">
-      <Output TaskParameter="Outputs" ItemName="Hxb-Rebuild-Out-Outputs-Tests"/>
-    </Heleonix.Build.Tasks.ItemFilter>
+    <MSBuild Targets="Build" Projects="@(Hxb-Build-Sln)" Properties="$(_Hxb-Rebuild-Common-Props);$(_Hxb-Rebuild-Sign-Props)"/>
 
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>

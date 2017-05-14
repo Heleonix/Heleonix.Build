@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,10 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tasks
 {
@@ -89,42 +91,39 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', ' ')
-                .Add("log")
-                .Add("--limit", MaxCount)
-                .Add("--revision", $"{{{SinceDate}}}:{{{UntilDate}}}", false,
+            var args = ArgsBuilder.By("--", " ")
+                .AddValue("log")
+                .AddArgument("limit", MaxCount)
+                .AddArgument("revision", Invariant($"{{{SinceDate}}}:{{{UntilDate}}}"),
                     !string.IsNullOrEmpty(SinceDate) && !string.IsNullOrEmpty(UntilDate))
-                .Add("--verbose")
-                .Add("--xml")
-                .Add("--with-all-revprops")
-                .Add(RepositoryFileDir.ItemSpec, true);
+                .AddKey("verbose")
+                .AddKey("xml")
+                .AddKey("with-all-revprops")
+                .AddPath(RepositoryFileDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar));
 
             var workingDir = File.Exists(RepositoryFileDir.ItemSpec)
                 ? Path.GetDirectoryName(RepositoryFileDir.ItemSpec)
                 : RepositoryFileDir.ItemSpec;
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(SvnExeFile.ItemSpec, args, true, workingDir, int.MaxValue);
 
-            var exitCode = ExeHelper.Execute(SvnExeFile.ItemSpec, args, out output, out error, workingDir);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogError($"{nameof(SvnLog)} failed. Exit code: {exitCode}.");
+                Log.LogError(Resources.TaskFailedWithExitCode, nameof(SvnLog), result.ExitCode);
 
                 return;
             }
 
             var commits = new List<ITaskItem>();
 
-            foreach (var logEntryNode in XDocument.Parse(output).Descendants("logentry"))
+            foreach (var logEntryNode in XDocument.Parse(result.Output).Descendants("logentry"))
             {
                 var commit = new TaskItem { ItemSpec = logEntryNode.Attribute("revision").Value };
 

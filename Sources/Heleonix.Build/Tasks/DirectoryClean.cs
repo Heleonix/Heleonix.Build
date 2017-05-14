@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -72,7 +73,7 @@ namespace Heleonix.Build.Tasks
                 {
                     if (Directory.Exists(dir.ItemSpec))
                     {
-                        Log.LogMessage($"Cleaning directory '{dir.ItemSpec}' started.");
+                        Log.LogMessage(Resources.DirectoryClean_CleaningDirectoryStarted, dir.ItemSpec);
 
                         foreach (var file in Directory.GetFiles(dir.ItemSpec))
                         {
@@ -88,7 +89,7 @@ namespace Heleonix.Build.Tasks
                     }
                     else
                     {
-                        Log.LogMessage($"The directory '{dir.ItemSpec}' is not found. Skipping.");
+                        Log.LogMessage(Resources.DirectoryClean_DirectoryNotFound, dir.ItemSpec);
                     }
                 }
                 catch (Exception ex)

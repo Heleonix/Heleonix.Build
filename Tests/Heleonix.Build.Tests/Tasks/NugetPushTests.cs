@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,13 +28,14 @@ using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Tasks
 {
     /// <summary>
     /// Tests the <see cref="NugetPush"/>.
     /// </summary>
-    public class NugetPushTests
+    public static class NugetPushTests
     {
         #region Tests
 
@@ -42,25 +43,25 @@ namespace Heleonix.Build.Tests.Tasks
         /// Tests the <see cref="NugetPush.Execute"/>.
         /// </summary>
         [Test]
-        public void Execute()
+        public static void Execute()
         {
-            var nugetPackage = Directory.GetFiles(Path.Combine(PathHelper.NugetExe, "..", "..")).First();
+            var nugetPackage = Directory.GetFiles(Path.Combine(SystemPath.NugetExe, "..", "..")).First();
 
-            var tempSource = Path.Combine(PathHelper.CurrentDir, Path.GetRandomFileName());
+            var tempSource = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
             Directory.CreateDirectory(tempSource);
 
             try
             {
-                var exitCode = ExeHelper.Execute(PathHelper.NugetExe, $"init \"{tempSource}\"");
+                var result = ExeHelper.Execute(SystemPath.NugetExe, Invariant($"init \"{tempSource}\""));
 
-                Assert.That(exitCode, Is.Zero);
+                Assert.That(result, Is.Zero);
 
                 var task = new NugetPush
                 {
                     BuildEngine = new FakeBuildEngine(),
-                    NugetExeFile = new TaskItem(PathHelper.NugetExe),
-                    SourcePath = tempSource,
+                    NugetExeFile = new TaskItem(SystemPath.NugetExe),
+                    SourcePath = new TaskItem(tempSource),
                     PackageFile = new TaskItem(nugetPackage),
                     Verbosity = "detailed"
                 };

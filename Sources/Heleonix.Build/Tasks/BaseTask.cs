@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using Heleonix.Build.Properties;
 using Microsoft.Build.Utilities;
 
 namespace Heleonix.Build.Tasks
@@ -58,7 +59,7 @@ namespace Heleonix.Build.Tasks
             {
                 Log.LogErrorFromException(ex);
 
-                Log.LogError($"Task failed: '{GetType().Name}'.");
+                Log.LogError(Resources.TaskFailed, GetType().Name);
             }
 
             return !Log.HasLoggedErrors;

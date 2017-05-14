@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -60,26 +61,23 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var args = ArgsBuilder.By(' ', ' ')
-                .Add(TestsResultFile.ItemSpec, true)
-                .Add(ReportFile.ItemSpec, true);
+            var args = ArgsBuilder.By(string.Empty, string.Empty)
+                .AddPath(TestsResultFile.ItemSpec)
+                .AddPath(ReportFile.ItemSpec);
 
-            string output;
-            string error;
+            var result = ExeHelper.Execute(ReportUnitExeFile.ItemSpec, args, true);
 
-            var exitCode = ExeHelper.Execute(ReportUnitExeFile.ItemSpec, args, out output, out error);
+            Log.LogMessage(result.Output);
 
-            Log.LogMessage(output);
-
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                Log.LogError(error);
+                Log.LogError(result.Error);
             }
 
-            if (exitCode != 0)
+            if (result.ExitCode != 0)
             {
-                Log.LogError(
-                    $"{nameof(ReportUnit)} failed for '{TestsResultFile.ItemSpec}'. Exit code: {exitCode}.");
+                Log.LogError(Resources.ReportUnit_Failed, nameof(ReportUnit), TestsResultFile.ItemSpec,
+                    result.ExitCode);
             }
         }
 
