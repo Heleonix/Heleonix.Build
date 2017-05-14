@@ -48,7 +48,8 @@ SOFTWARE.
     </PropertyGroup>
 
     <ItemGroup>
-      <_Hxb-Rebuild-AssemblyInfo Include="$(Hxb-Build-Sln-Dir)\**\*AssemblyInfo.*"/>
+      <_Hxb-Rebuild-AssemblyInfo Include="$(Hxb-Build-Sln-Dir)\**\AssemblyInfo.*"
+                                 Exclude="$(Hxb-Build-Sln-Dir)\packages\**\AssemblyInfo.*"/>
     </ItemGroup>
 
     <Heleonix.Build.Tasks.FileUpdate File="%(_Hxb-Rebuild-AssemblyInfo.FullPath)"
