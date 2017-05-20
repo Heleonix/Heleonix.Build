@@ -26,8 +26,11 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Flows-CI-DotNet"
-          DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
-  <Target Name="Hxb-Flows-CD-Nuget"
-          DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-NugetDeploy"/>
+  <Target Name="Hxb-Flows-CI-DotNet" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
+  <Target Name="Hxb-Flows-CI-DotNet-Build" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild"/>
+  <Target Name="Hxb-Flows-CI-DotNet-FxCop" DependsOnTargets="Hxb-FxCop"/>
+  <Target Name="Hxb-Flows-CI-DotNet-UnitTests" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit"/>
+
+  <Target Name="Hxb-Flows-CD-Nuget" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-NugetDeploy"/>
+  <Target Name="Hxb-Flows-CD-NugetDeploy" DependsOnTargets="Hxb-NugetDeploy"/>
 </Project>
