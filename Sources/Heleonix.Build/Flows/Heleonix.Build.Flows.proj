@@ -29,7 +29,9 @@ SOFTWARE.
   <Target Name="Hxb-Flows-CI-DotNet" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit;Hxb-FxCop"/>
   <Target Name="Hxb-Flows-CI-DotNet-Build" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild"/>
   <Target Name="Hxb-Flows-CI-DotNet-FxCop" DependsOnTargets="Hxb-FxCop"/>
+  <Target Name="Hxb-Flows-CI-DotNet-FxCop-Dev" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-FxCop"/>
   <Target Name="Hxb-Flows-CI-DotNet-UnitTests" DependsOnTargets="Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit"/>
+  <Target Name="Hxb-Flows-CI-DotNet-UnitTests-Dev" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-OpenCover;Hxb-ReportGenerator;Hxb-ReportUnit"/>
 
   <Target Name="Hxb-Flows-CD-Nuget" DependsOnTargets="Hxb-NugetRestore;Hxb-Rebuild;Hxb-NugetDeploy"/>
   <Target Name="Hxb-Flows-CD-NugetDeploy" DependsOnTargets="Hxb-NugetDeploy"/>
