@@ -25,6 +25,7 @@ SOFTWARE.
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="..\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileCopy" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="..\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FxCop" AssemblyFile="..\Heleonix.Build.dll"/>

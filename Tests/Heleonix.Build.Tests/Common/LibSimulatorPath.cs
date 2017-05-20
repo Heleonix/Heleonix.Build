@@ -31,7 +31,22 @@ namespace Heleonix.Build.Tests.Common
     /// </summary>
     public static class LibSimulatorPath
     {
+        #region Methods
+
+        /// <summary>
+        /// Gets the artifacts directory path.
+        /// </summary>
+        public static string GetArtifactsDir(string targetDir)
+            => Path.Combine(SolutionDir, "Hxb-Artifacts", MSBuildHelper.CurrentConfiguration, targetDir);
+
+        #endregion
+
         #region Properties
+
+        /// <summary>
+        /// Gets the SNK pair file path.
+        /// </summary>
+        public static string SnkPairFile => Path.Combine(SystemPath.CurrentDir, "SnkPair.snk");
 
         /// <summary>
         /// Gets the out file path.
@@ -79,17 +94,6 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the solution directory path.
         /// </summary>
         public static string SolutionDir => Path.Combine(SystemPath.CurrentDir, "..", "..", "..", "LibSimulator");
-
-        /// <summary>
-        /// Gets the reports directory path.
-        /// </summary>
-        public static string ReportsDir => Path.Combine(SolutionDir, "Hxb-Reports");
-
-        /// <summary>
-        /// Gets the Nuget deployment directory path.
-        /// </summary>
-        public static string NugetDeploymentDir => Path.Combine(SolutionDir, "Hxb-Deployments",
-            MSBuildHelper.CurrentConfiguration, "Nuget");
 
         #endregion
     }

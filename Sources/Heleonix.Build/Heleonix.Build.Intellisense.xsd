@@ -152,6 +152,42 @@ Example custom task with single required parameter
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Heleonix.Build.Tasks.FileCopy" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Copies files from sources into destinations.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="Files">
+            <xs:annotation>
+              <xs:documentation>Files to copy.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Destinations">
+            <xs:annotation>
+              <xs:documentation>Destinations to copy files to.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Overwrite">
+            <xs:annotation>
+              <xs:documentation>Determines whether to overwrite destination file or ignore.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CopiedFiles">
+            <xs:annotation>
+              <xs:documentation>[Output] A list of successfully copied files.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FailedFiles">
+            <xs:annotation>
+              <xs:documentation>[Output] A list of failed files, which were not copied.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Heleonix.Build.Tasks.FileSystemSearch" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Searches items in the file system.</xs:documentation>
@@ -1055,6 +1091,11 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region In-->
+  <xs:element name="Hxb-In-Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A version of this build.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-In-Flow" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A name of a flow to run.</xs:documentation>
@@ -1136,9 +1177,9 @@ Example custom task with single required parameter
       <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-Setup-Sln-Flows" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-Setup-Workspace-Flows" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>The solution-specific build flows project file.</xs:documentation>
+      <xs:documentation>The workspace-specific build flows project file.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
@@ -1159,29 +1200,9 @@ Example custom task with single required parameter
       <xs:documentation>An informational version of the build, in a free format, i.e. [major.minor Beta].</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-Build-Sln-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hxb-Build-Artifacts-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the directory of the solution to proceed with.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-Build-Sln-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-Build-Sln-Name" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A name of the solution file without extension.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-Build-Reports-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A path to the reports directory of the solution to put tests reports, coverage reports etc.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-Build-Deployments-Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A path to the deployments directory to put Nuget packages, Web sites zips etc.</xs:documentation>
+      <xs:documentation>A path to the root artifacts directory, where targets produce their artifacts.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hxb-Build-Verbosity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
@@ -1189,15 +1210,41 @@ Example custom task with single required parameter
       <xs:documentation>Common build verbosity for all targets and tasks: Quiet, Normal, Detailed.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <!--Endregion-->
 
-  <xs:element name="Hxb-Build-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <!--Region Target: _Hxb-FindSln-->
+  <xs:element name="_Hxb-FindSln-Out-SlnName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The name of the solution.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="_Hxb-FindSln-Out-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
 
+  <!--Region Target: _Hxb-FindBinaries-->
+  <xs:element name="_Hxb-FindBinaries-Out-Sources" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Binaries of source code.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="_Hxb-FindBinaries-Out-Tests" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Binaries of tests.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--Endregion-->
+
   <!--Region Target: Hxb-Rebuild-->
+  <xs:element name="Hxb-Rebuild-In-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-Rebuild-In-Delete" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>Files to delete during cleaning.</xs:documentation>
@@ -1221,6 +1268,11 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hxb-FxCop-->
+  <xs:element name="Hxb-FxCop-In-AnalysisResult-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The output file relatively to the artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-FxCop-In-TargetsTypes" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The comma-separated types to analyze. It isables analysis of assemblies, namespaces, and resources.</xs:documentation>
@@ -1257,11 +1309,6 @@ Example custom task with single required parameter
     </xs:annotation>
   </xs:element>
 
-  <xs:element name="Hxb-FxCop-In-AnalysisResult" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The analysis result file path relativety to the reports directory.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-FxCop-In-Rules-FilesDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>Locations of rule libraries to load.</xs:documentation>
@@ -1338,11 +1385,6 @@ Example custom task with single required parameter
       <xs:documentation>The source path.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NugetDeploy-In-PackagesDir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The output packages directory path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-NugetDeploy-In-Config" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The configuration file path.</xs:documentation>
@@ -1362,6 +1404,11 @@ Example custom task with single required parameter
     </xs:annotation>
   </xs:element>
 
+  <xs:element name="Hxb-NugetRestore-In-Sln" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-NugetRestore-In-Sources" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The sources paths to load packages from.</xs:documentation>
@@ -1375,6 +1422,21 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hxb-NUnit-->
+  <xs:element name="Hxb-NUnit-In-TestsResult-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The NUnit tests result file path relatively to the artifacts folder.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-NUnit-In-TestsOutput-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The tests output file path relatively to the artifacts folder.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hxb-NUnit-In-ErrorsOutput-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The errors output file path relatively to the artifacts folder.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-NUnit-In-TestsParameters" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The tests parameters, specified in the form name=value.</xs:documentation>
@@ -1483,29 +1545,19 @@ Example custom task with single required parameter
       <xs:documentation>The NUnit project or tests files paths.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-TestsResult" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The NUnit tests result file path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-NUnit-In-TestsList" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The tests list file path.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-NUnit-In-TestsOutput" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The tests output file path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-NUnit-In-ErrorsOutput" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The errors output file path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <!--Endregion-->
 
   <!--Region Target: Hxb-OpenCover-->
+  <xs:element name="Hxb-OpenCover-In-CoverageResult-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The coverage result output file path relatively to the artifacts folder.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hxb-OpenCover-In-MinClassCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
@@ -1526,8 +1578,7 @@ Example custom task with single required parameter
       <xs:documentation>The minimum line coverage, in range: 0% - 100%.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-In-ExcludeByAttributeFilters" type="msb:StringPropertyType"
-              substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-In-ExcludeByAttributeFilters" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The filters to exclude code from coverage by attribute in format: Name*;*Attribute.</xs:documentation>
     </xs:annotation>
@@ -1592,14 +1643,12 @@ Example custom task with single required parameter
       <xs:documentation>The visited methods count.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-MinCyclomaticComplexity" type="msb:StringPropertyType"
-              substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-MinCyclomaticComplexity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The minimum cyclomatic complexity.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-Out-MaxCyclomaticComplexity" type="msb:StringPropertyType"
-              substitutionGroup="msb:Property">
+  <xs:element name="Hxb-OpenCover-Out-MaxCyclomaticComplexity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The maximum cyclomatic complexity.</xs:documentation>
     </xs:annotation>
@@ -1630,11 +1679,6 @@ Example custom task with single required parameter
       <xs:documentation>The target executable path with command line arguments and its type in metadata.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-OpenCover-In-CoverageResult" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The coverage result output file path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hxb-OpenCover-In-PdbSearchDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The PDB search directories path.</xs:documentation>
@@ -1654,22 +1698,18 @@ Example custom task with single required parameter
       <xs:documentation>The results files paths.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hxb-ReportGenerator-In-Report-Dir" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The report directory path to save report to.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <!--Endregion-->
 
   <!--Region Target: Hxb-ReportUnit-->
+  <xs:element name="Hxb-ReportUnit-In-Report-File" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The report file path relatively to the artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hxb-ReportUnit-In-TestsResult" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The tests result file path.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hxb-ReportUnit-In-Report" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The report file path.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->

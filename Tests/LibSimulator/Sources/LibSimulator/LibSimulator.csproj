@@ -41,6 +41,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Calculator.cs" />
     <Compile Include="NotCoveredByTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,6 +52,7 @@
     <None Include="..\..\..\..\Heleonix.licenseheader">
       <Link>Heleonix.licenseheader</Link>
     </None>
+    <None Include="LibSimulator.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

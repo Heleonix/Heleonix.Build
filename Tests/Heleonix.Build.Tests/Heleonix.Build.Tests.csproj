@@ -60,6 +60,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Common\CIType.cs" />
     <Compile Include="Common\FakeBuildEngine.cs" />
     <Compile Include="Common\LibSimulatorPath.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Targets\InitializeTests.cs" />
     <Compile Include="Tasks\DirectoryCleanTests.cs" />
     <Compile Include="Tasks\FileSystemSearchTests.cs" />
+    <Compile Include="Tasks\FileCopy.cs" />
     <Compile Include="Tasks\FileUpdateTests.cs" />
     <Compile Include="Tasks\FxCopTests.cs" />
     <Compile Include="Tasks\GitLogTests.cs" />

@@ -41,11 +41,6 @@ namespace Heleonix.Build.Tests.Common
         public static string CurrentDir => AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
 
         /// <summary>
-        /// Gets the SNK pair file path.
-        /// </summary>
-        public static string SnkPairFile => Path.Combine(CurrentDir, "SnkPairFile.snk");
-
-        /// <summary>
         /// Gets the Nuget executable path.
         /// </summary>
         public static string NugetExe => Path.Combine(CurrentDir, "..", "..", "..", "..",

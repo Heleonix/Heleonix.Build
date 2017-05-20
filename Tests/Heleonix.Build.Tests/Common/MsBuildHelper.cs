@@ -59,7 +59,7 @@ namespace Heleonix.Build.Tests.Common
 
         #endregion
 
-        #region Properties
+        #region InputProperties
 
         /// <summary>
         /// Gets the current configuration.

@@ -27,16 +27,5 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Heleonix.Build.Tests")]
-[assembly: AssemblyDescription("The build system for applications.")]
-[assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyProduct("Heleonix.Build")]
-[assembly: AssemblyCopyright("Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: ComVisible(false)]
 [assembly: Guid("5e249bed-579e-441a-8e8b-0f0503f66532")]
 [assembly: CLSCompliant(false)]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0")]

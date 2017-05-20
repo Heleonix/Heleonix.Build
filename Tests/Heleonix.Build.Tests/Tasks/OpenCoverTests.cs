@@ -47,10 +47,11 @@ namespace Heleonix.Build.Tests.Tasks
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
 
-            var coverageResults = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
-            var errorsOutput = Path.Combine(LibSimulatorPath.ReportsDir, "Errors.txt");
-            var testsOutput = Path.Combine(LibSimulatorPath.ReportsDir, "Output.txt");
-            var testsResult = Path.Combine(LibSimulatorPath.ReportsDir, "NUnit.xml");
+            var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-OpenCover");
+            var coverageResults = Path.Combine(artifactsDir, Path.GetRandomFileName());
+            var errorsOutput = Path.Combine(artifactsDir, "Errors.txt");
+            var testsOutput = Path.Combine(artifactsDir, "Output.txt");
+            var testsResult = Path.Combine(artifactsDir, "NUnit.xml");
 
             var task = new OpenCover
             {

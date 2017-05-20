@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using System.IO;
 using Heleonix.Build.Tests.Common;
 using Heleonix.Build.Tests.Targets.Common;
 using Microsoft.Build.Framework;
@@ -48,7 +49,7 @@ namespace Heleonix.Build.Tests.Targets
             yield return new TargetTestCase(true);
             yield return new TargetTestCase(new Dictionary<string, ITaskItem[]>
                 {
-                    { "Hxb-Rebuild-In-SnkPairFile", new[] { new TaskItem(SystemPath.SnkPairFile) as ITaskItem } }
+                    { "Hxb-Rebuild-In-SnkPairFile", new[] { new TaskItem(LibSimulatorPath.SnkPairFile) as ITaskItem } }
                 },
                 true);
         }
@@ -64,7 +65,7 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
-                var props = TargetSetup.Properties("Hxb-Rebuild", CIType.Jenkins,
+                var props = TargetSetup.InputProperties("Hxb-Rebuild", CIType.Jenkins,
                     SimulatorType.Library, overridesFilePath, testCase);
 
                 var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
@@ -74,6 +75,8 @@ namespace Heleonix.Build.Tests.Targets
             finally
             {
                 TargetTeardown.Overrides(overridesFilePath);
+
+                Directory.Delete(LibSimulatorPath.GetArtifactsDir("Hxb-Rebuild"), true);
             }
         }
 

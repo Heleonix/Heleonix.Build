@@ -27,6 +27,27 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-NugetDeploy">
+    <PropertyGroup>
+      <Hxb-NugetDeploy-In-IncludeReferencedProjects Condition="'$(Hxb-NugetDeploy-In-IncludeReferencedProjects)' == ''">true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
+      <Hxb-NugetDeploy-In-ExcludeEmptyDirectories Condition="'$(Hxb-NugetDeploy-In-ExcludeEmptyDirectories)' == ''">true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-NugetDeploy-In-Nuspecs Condition="!Exists('@(Hxb-NugetDeploy-In-Nuspecs)')"
+                                  Include="$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.nuspec"/>
+      <Hxb-NugetDeploy-In-Projects Condition="!Exists('@(Hxb-NugetDeploy-In-Projects)')"
+                                   Include="$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.csproj"/>
+    </ItemGroup>
+    
+    <Message Text="----------$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.nuspec-----------"/>
+    <Message Text="----------$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.csproj-----------"/>
+
+    <PropertyGroup>
+      <_Hxb-NugetDeploy-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NugetDeploy</_Hxb-NugetDeploy-Artifacts-Dir>
+    </PropertyGroup>
+
+    <RemoveDir Directories="$(_Hxb-NugetDeploy-Artifacts-Dir)"/>
+
     <Heleonix.Build.Tasks.ItemCombine Operation="Pairing"
                                       TargetMetadataName="Project"
                                       Left="@(Hxb-NugetDeploy-In-Nuspecs)"
@@ -43,7 +64,7 @@ SOFTWARE.
                                     Configuration="$(Hxb-In-Configuration)"
                                     Properties="$(Hxb-NugetDeploy-In-Properties)"
                                     MSBuildDir="@(Hxb-System-MSBuildDir)"
-                                    PackageDir="@(Hxb-NugetDeploy-In-PackagesDir)">
+                                    PackageDir="$(_Hxb-NugetDeploy-Artifacts-Dir)">
       <Output TaskParameter="PackageFile" ItemName="Hxb-NugetDeploy-Out-Packages"/>
     </Heleonix.Build.Tasks.NugetPack>
 

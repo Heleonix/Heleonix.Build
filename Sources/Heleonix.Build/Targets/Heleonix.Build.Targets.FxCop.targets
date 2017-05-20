@@ -26,14 +26,34 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-FxCop">
+  <Target Name="Hxb-FxCop" DependsOnTargets="_Hxb-FindBinaries">
+    <ItemGroup>
+      <Hxb-FxCop-In-Targets-FilesDirs Condition="!Exists('@(Hxb-FxCop-In-Targets-FilesDirs)')"
+                                      Include="@(_Hxb-FindBinaries-Out-Sources);@(_Hxb-FindBinaries-Out-Tests)"/>
+      <Hxb-FxCop-In-Dependencies-Dirs Condition="!Exists('@(Hxb-FxCop-In-Dependencies-Dirs)')"
+                                      Include="@(Hxb-FxCop-In-Targets-FilesDirs->DirectoryName())"/>
+      <Hxb-FxCop-In-AnalysisResultsXsl Condition="'@(Hxb-FxCop-In-AnalysisResultsXsl)' == ''"
+                                       Include="%(Hxb-System-FxCopCmd.RootDir)\%(Hxb-System-FxCopCmd.Directory)\Xml\FxCopReport.xsl"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <Hxb-FxCop-In-AnalysisResult-File Condition="'$(Hxb-FxCop-In-AnalysisResult-File)' == ''">FxCop.xml</Hxb-FxCop-In-AnalysisResult-File>
+      <Hxb-FxCop-In-FailOn Condition="'$(Hxb-FxCop-In-FailOn)' == '' And '$(Hxb-Setup-CI)' == 'Dev'">None</Hxb-FxCop-In-FailOn>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <_Hxb-FxCop-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-FxCop</_Hxb-FxCop-Artifacts-Dir>
+    </PropertyGroup>
+
+    <RemoveDir Directories="$(_Hxb-FxCop-Artifacts-Dir)"/>
+
     <PropertyGroup>
       <_Hxb-FxCop-IsVerbose>false</_Hxb-FxCop-IsVerbose>
       <_Hxb-FxCop-IsVerbose Condition="'$(Hxb-Build-Verbosity)' == 'Detailed'">true</_Hxb-FxCop-IsVerbose>
     </PropertyGroup>
 
     <Heleonix.Build.Tasks.FxCop FxCopCmdFile="@(Hxb-System-FxCopCmd)"
-                                AnalysisResultFile="@(Hxb-FxCop-In-AnalysisResult)"
+                                AnalysisResultFile="$(_Hxb-FxCop-Artifacts-Dir)\$(Hxb-FxCop-In-AnalysisResult-File)"
                                 AnalysisResultsXslFile="@(Hxb-FxCop-In-AnalysisResultsXsl)"
                                 IsVerbose="$(_Hxb-FxCop-IsVerbose)"
                                 DependenciesDirs="@(Hxb-FxCop-In-Dependencies-Dirs)"

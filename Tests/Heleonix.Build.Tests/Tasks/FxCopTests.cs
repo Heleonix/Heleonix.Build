@@ -48,7 +48,7 @@ namespace Heleonix.Build.Tests.Tasks
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
 
-            var analysisResults = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
+            var analysisResults = Path.Combine(LibSimulatorPath.GetArtifactsDir("Hxb-FxCop"), Path.GetRandomFileName());
 
             var task = new FxCop
             {

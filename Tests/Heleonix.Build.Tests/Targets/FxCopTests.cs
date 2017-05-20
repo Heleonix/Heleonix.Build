@@ -61,7 +61,7 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
-                var props = TargetSetup.Properties("Hxb-FxCop", CIType.Jenkins,
+                var props = TargetSetup.InputProperties("Hxb-FxCop", CIType.Jenkins,
                     SimulatorType.Library, overridesFilePath, testCase);
 
                 var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
@@ -72,7 +72,9 @@ namespace Heleonix.Build.Tests.Targets
             {
                 TargetTeardown.Overrides(overridesFilePath);
 
-                Directory.Delete(LibSimulatorPath.ReportsDir, true);
+                var path = LibSimulatorPath.GetArtifactsDir("Hxb-FxCop");
+
+                Directory.Delete(path, true);
             }
         }
 

@@ -135,11 +135,16 @@ namespace Heleonix.Build.Tasks
                 .AddKey("NonInteractive")
                 .AddArgument("Properties", string.Join(";", props, Properties).Trim(';'));
 
-            Log.LogMessage(Resources.NugetPack_Started, ProjectFile.ItemSpec, NuspecFile.ItemSpec);
+            var nuspecFilePath = new Uri(NuspecFile.ItemSpec).LocalPath;
 
-            var destNuspecFilePath = Path.Combine(projectDir, Path.GetFileName(NuspecFile.ItemSpec) ?? string.Empty);
+            Log.LogMessage(Resources.NugetPack_Started, ProjectFile.ItemSpec, nuspecFilePath);
 
-            File.Copy(NuspecFile.ItemSpec, destNuspecFilePath, true);
+            var destNuspecFilePath = new Uri(Path.Combine(projectDir, Path.GetFileName(nuspecFilePath))).LocalPath;
+
+            if (!string.Equals(nuspecFilePath, destNuspecFilePath, StringComparison.OrdinalIgnoreCase))
+            {
+                File.Copy(nuspecFilePath, destNuspecFilePath, true);
+            }
 
             var result = ExeHelper.Execute(NugetExeFile.ItemSpec, args, true);
 
@@ -181,7 +186,10 @@ namespace Heleonix.Build.Tasks
 
             try
             {
-                File.Delete(destNuspecFilePath);
+                if (!string.Equals(nuspecFilePath, destNuspecFilePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    File.Delete(destNuspecFilePath);
+                }
             }
             catch (Exception ex)
             {

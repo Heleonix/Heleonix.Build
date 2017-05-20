@@ -46,8 +46,10 @@ namespace Heleonix.Build.Tests.Tasks
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
 
-            var nunitResult = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName() + ".xml");
-            var report = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName() + ".html");
+            var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-ReportUnit");
+
+            var nunitResult = Path.Combine(artifactsDir, Path.GetRandomFileName() + ".xml");
+            var report = Path.Combine(artifactsDir, Path.GetRandomFileName() + ".html");
 
             var nunitTask = new Build.Tasks.NUnit
             {

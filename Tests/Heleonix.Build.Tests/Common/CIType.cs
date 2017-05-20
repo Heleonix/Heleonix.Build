@@ -30,6 +30,7 @@ namespace Heleonix.Build.Tests.Common
     public enum CIType
     {
         Jenkins,
-        TeamCity
+        TeamCity,
+        GoCD
     }
 }

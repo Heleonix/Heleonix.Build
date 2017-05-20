@@ -10,7 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Flows", "Flows", "{217EF65C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{0F130366-AB60-4BF9-842C-81B91876FA18}"
 	ProjectSection(SolutionItems) = preProject
-		Settings\Heleonix.Build.Settings.Conventions.proj = Settings\Heleonix.Build.Settings.Conventions.proj
 		Settings\Heleonix.Build.Settings.System.proj = Settings\Heleonix.Build.Settings.System.proj
 	EndProjectSection
 EndProject
@@ -19,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{C340
 		Targets\Heleonix.Build.Targets.Finalize.targets = Targets\Heleonix.Build.Targets.Finalize.targets
 		Targets\Heleonix.Build.Targets.FxCop.targets = Targets\Heleonix.Build.Targets.FxCop.targets
 		Targets\Heleonix.Build.Targets.Initialize.targets = Targets\Heleonix.Build.Targets.Initialize.targets
+        Targets\Heleonix.Build.Targets.Internal.targets = Targets\Heleonix.Build.Targets.Internal.targets
 		Targets\Heleonix.Build.Targets.NugetDeploy.targets = Targets\Heleonix.Build.Targets.NugetDeploy.targets
 		Targets\Heleonix.Build.Targets.NUnit.targets = Targets\Heleonix.Build.Targets.NUnit.targets
 		Targets\Heleonix.Build.Targets.OnError.targets = Targets\Heleonix.Build.Targets.OnError.targets

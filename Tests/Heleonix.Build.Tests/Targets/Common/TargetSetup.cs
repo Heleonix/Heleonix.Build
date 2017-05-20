@@ -29,7 +29,6 @@ using System.Linq;
 using System.Xml.Linq;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 
 namespace Heleonix.Build.Tests.Targets.Common
 {
@@ -48,15 +47,6 @@ namespace Heleonix.Build.Tests.Targets.Common
         /// <returns>The overrides file path.</returns>
         public static string Overrides(string targetName, TargetTestCase testCase)
         {
-            var systemItems = new Dictionary<string, ITaskItem[]>
-            {
-                { "Hxb-System-NugetExe", new ITaskItem[] { new TaskItem(SystemPath.NugetExe) } },
-                { "Hxb-System-NUnitConsoleExe", new ITaskItem[] { new TaskItem(SystemPath.NUnitConsoleExe) } },
-                { "Hxb-System-OpenCoverConsoleExe", new ITaskItem[] { new TaskItem(SystemPath.OpenCoverExe) } },
-                { "Hxb-System-ReportGeneratorExe", new ITaskItem[] { new TaskItem(SystemPath.ReportGeneratorExe) } },
-                { "Hxb-System-ReportUnitExe", new ITaskItem[] { new TaskItem(SystemPath.ReportUnitExe) } }
-            };
-
             if (testCase == null)
             {
                 throw new ArgumentNullException(nameof(testCase));
@@ -112,15 +102,6 @@ namespace Heleonix.Build.Tests.Targets.Common
 
             project.Add(target);
 
-            var systemItemGroup = new XElement(ns + "ItemGroup");
-
-            addItems(systemItemGroup, systemItems);
-
-            var systemTarget = new XElement(ns + "Target", new XAttribute("Name", "Hxb-Initialize-Before-Overrides"),
-                new XAttribute("BeforeTargets", "Hxb-Initialize"), systemItemGroup);
-
-            project.Add(systemTarget);
-
             var overridesFilePath = Path.ChangeExtension(
                 Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName()), ".proj");
 
@@ -138,7 +119,7 @@ namespace Heleonix.Build.Tests.Targets.Common
         /// <param name="overridesFilePath"></param>
         /// <param name="testCase">The target test case.</param>
         /// <returns>The properties.</returns>
-        public static string Properties(string targetName, CIType ciType, SimulatorType simulatorType,
+        public static string InputProperties(string targetName, CIType ciType, SimulatorType simulatorType,
             string overridesFilePath, TargetTestCase testCase)
         {
             var props = ArgsBuilder.By(string.Empty, "=", string.Empty, "\"", ";")

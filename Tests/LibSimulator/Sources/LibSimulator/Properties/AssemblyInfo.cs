@@ -28,18 +28,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Heleonix.Build.Tests.Simulator")]
-[assembly: AssemblyDescription("The build system for applications.")]
-[assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyProduct("Heleonix.Build")]
-[assembly: AssemblyCopyright("Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: ComVisible(false)]
 [assembly: Guid("60efea6a-b136-448d-b4e1-3ad490dee3e4")]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyVersion("1.0.0.123")]
-[assembly: AssemblyFileVersion("1.0.0.123")]
-[assembly: AssemblyInformationalVersion("1.0.0.123")]
 
 [assembly: InternalsVisibleTo("Heleonix.Build.Tests.Simulator.Tests")]

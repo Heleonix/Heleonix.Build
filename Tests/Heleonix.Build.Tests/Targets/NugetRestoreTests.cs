@@ -56,7 +56,7 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
-                var props = TargetSetup.Properties("Hxb-NugetRestore", CIType.Jenkins,
+                var props = TargetSetup.InputProperties("Hxb-NugetRestore", CIType.Jenkins,
                     SimulatorType.Library, overridesFilePath, testCase);
 
                 var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);

@@ -49,7 +49,7 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
-                var props = TargetSetup.Properties("Hxb-Initialize", ciType,
+                var props = TargetSetup.InputProperties("Hxb-Initialize", ciType,
                     SimulatorType.Library, overridesFilePath, testCase);
 
                 var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
+
+  <Target Name="_Hxb-FindSln">
+    <ItemGroup>
+      <_Hxb-FindSln-Out-Sln Include="$(Hxb-Setup-Workspace-Dir)\*.sln"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_Hxb-FindSln-Out-SlnName>%(_Hxb-FindSln-Out-Sln.Filename)</_Hxb-FindSln-Out-SlnName>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="_Hxb-FindBinaries" DependsOnTargets="_Hxb-FindSln">
+    <PropertyGroup>
+      <_Hxb-FindBinaries-SourcesTemplate>$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\$(_Hxb-FindSln-Out-SlnName)*\bin</_Hxb-FindBinaries-SourcesTemplate>
+      <_Hxb-FindBinaries-SourcesTemplate Condition="'$(Hxb-In-Platform)' != ''">$(_Hxb-FindBinaries-SourcesTemplate)\$(Hxb-In-Platform)</_Hxb-FindBinaries-SourcesTemplate>
+      <_Hxb-FindBinaries-SourcesTemplate>$(_Hxb-FindBinaries-SourcesTemplate)\$(Hxb-In-Configuration)\$(_Hxb-FindSln-Out-SlnName)*</_Hxb-FindBinaries-SourcesTemplate>
+    </PropertyGroup>
+    <ItemGroup>
+      <_Hxb-FindBinaries-Sources Include="$(_Hxb-FindBinaries-SourcesTemplate)"/>
+    </ItemGroup>
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-FindBinaries-Sources)"
+                                     RegExp="^.*\\(.+)\\bin\\.+\\\1(\.dll|\.exe)$">
+      <Output TaskParameter="Outputs" ItemName="_Hxb-FindBinaries-Out-Sources"/>
+    </Heleonix.Build.Tasks.ItemFilter>
+
+    <PropertyGroup>
+      <_Hxb-FindBinaries-TestsTemplate>$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Tests\$(_Hxb-FindSln-Out-SlnName)*\bin</_Hxb-FindBinaries-TestsTemplate>
+      <_Hxb-FindBinaries-TestsTemplate Condition="'$(Hxb-In-Platform)' != ''">$(_Hxb-FindBinaries-TestsTemplate)\$(Hxb-In-Platform)</_Hxb-FindBinaries-TestsTemplate>
+      <_Hxb-FindBinaries-TestsTemplate>$(_Hxb-FindBinaries-TestsTemplate)\$(Hxb-In-Configuration)\$(_Hxb-FindSln-Out-SlnName)*</_Hxb-FindBinaries-TestsTemplate>
+    </PropertyGroup>
+    <ItemGroup>
+      <_Hxb-FindBinaries-Tests Include="$(_Hxb-FindBinaries-TestsTemplate)"/>
+    </ItemGroup>
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-FindBinaries-Tests)"
+                                     RegExp="^.*\\(.+)\\bin\\.+\\\1\.dll$">
+      <Output TaskParameter="Outputs" ItemName="_Hxb-FindBinaries-Out-Tests"/>
+    </Heleonix.Build.Tasks.ItemFilter>
+  </Target>
+</Project>

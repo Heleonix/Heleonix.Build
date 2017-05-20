@@ -27,9 +27,24 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-ReportUnit">
+    <PropertyGroup>
+      <Hxb-ReportUnit-In-Report-File Condition="'$(Hxb-ReportUnit-In-Report-File)' == ''">ReportUnit.html</Hxb-ReportUnit-In-Report-File>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-ReportUnit-In-TestsResult Condition="!Exists('@(Hxb-ReportUnit-In-TestsResult)')"
+                                     Include="$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit\NUnit.xml"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_Hxb-ReportUnit-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-ReportUnit</_Hxb-ReportUnit-Artifacts-Dir>
+    </PropertyGroup>
+
+    <RemoveDir Directories="$(_Hxb-ReportUnit-Artifacts-Dir)"/>
+
     <Heleonix.Build.Tasks.ReportUnit ReportUnitExeFile="@(Hxb-System-ReportUnitExe)"
                                      TestsResultFile="@(Hxb-ReportUnit-In-TestsResult)"
-                                     ReportFile="@(Hxb-ReportUnit-In-Report)"/>
+                                     ReportFile="$(_Hxb-ReportUnit-Artifacts-Dir)\$(Hxb-ReportUnit-In-Report-File)"/>
 
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>

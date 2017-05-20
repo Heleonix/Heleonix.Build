@@ -28,14 +28,29 @@ SOFTWARE.
 
   <Target Name="Hxb-ReportGenerator">
     <PropertyGroup>
+      <Hxb-ReportGenerator-In-ReportTypes Condition="'$(Hxb-ReportGenerator-In-ReportTypes)' == ''">Badges;Html</Hxb-ReportGenerator-In-ReportTypes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hxb-ReportGenerator-In-Results Condition="!Exists('@(Hxb-ReportGenerator-In-Results)')"
+                                      Include="$(Hxb-Build-Artifacts-Dir)\Hxb-OpenCover\OpenCover.xml"/>
+    </ItemGroup>
+
+    <PropertyGroup>
       <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Quiet'">Error</_Hxb-ReportGenerator-Verbosity>
       <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Normal'">Info</_Hxb-ReportGenerator-Verbosity>
       <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Detailed'">Verbose</_Hxb-ReportGenerator-Verbosity>
     </PropertyGroup>
 
+    <PropertyGroup>
+      <_Hxb-ReportGenerator-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-ReportGenerator</_Hxb-ReportGenerator-Artifacts-Dir>
+    </PropertyGroup>
+
+    <RemoveDir Directories="$(_Hxb-ReportGenerator-Artifacts-Dir)"/>
+
     <Heleonix.Build.Tasks.ReportGenerator ReportGeneratorExeFile="@(Hxb-System-ReportGeneratorExe)"
                                           ResultsFiles="@(Hxb-ReportGenerator-In-Results)"
-                                          ReportDir="@(Hxb-ReportGenerator-In-Report-Dir)"
+                                          ReportDir="$(_Hxb-ReportGenerator-Artifacts-Dir)"
                                           ReportTypes="$(Hxb-ReportGenerator-In-ReportTypes)"
                                           Verbosity="$(_Hxb-ReportGenerator-Verbosity)"/>
 

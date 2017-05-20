@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn
+Copyright (c) 2015-2016 Heleonix - Hennadii Lutsyshyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Heleonix.Build")]
-[assembly: Guid("baa6af87-a6cb-4049-9c00-36b31e28b192")]
-[assembly: CLSCompliant(true)]
-
-[assembly: InternalsVisibleTo("Heleonix.Build.Tests")]
+[assembly: AssemblyDescription("The build system for applications.")]
+[assembly: AssemblyCompany("Heleonix - Hennadii Lutsyshyn")]
+[assembly: AssemblyProduct("Heleonix.Build")]
+[assembly: AssemblyCopyright("Copyright (c) 2015-present Heleonix - Hennadii Lutsyshyn")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: ComVisible(false)]
+[assembly: NeutralResourcesLanguage("en")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyInformationalVersion("1.0.0.0")]

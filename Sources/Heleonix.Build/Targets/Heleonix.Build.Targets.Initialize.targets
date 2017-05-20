@@ -26,38 +26,76 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Initialize">
-    <!--Validation-->
+  <PropertyGroup>
+    <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">Release</Hxb-In-Configuration>
+  </PropertyGroup>
 
-    <!--In-->
+  <PropertyGroup>
+    <Hxb-Setup-CI>Dev</Hxb-Setup-CI>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GO_PIPELINE_COUNTER)' != ''">
+    <Hxb-Setup-CI>GoCD</Hxb-Setup-CI>
+    <Hxb-Setup-Workspace-Dir>$(MSBuildStartupDirectory)</Hxb-Setup-Workspace-Dir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(JENKINS_URL)' != ''">
+    <Hxb-Setup-CI>Jenkins</Hxb-Setup-CI>
+    <Hxb-Setup-Workspace-Dir>$(WORKSPACE)</Hxb-Setup-Workspace-Dir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TEAMCITY_VERSION)' != ''">
+    <Hxb-Setup-CI>TeamCity</Hxb-Setup-CI>
+    <Hxb-Setup-Workspace-Dir>$(system_agent_work_dir)</Hxb-Setup-Workspace-Dir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Hxb-Setup-Workspace-Flows>$(Hxb-Setup-Workspace-Dir)\Build.proj</Hxb-Setup-Workspace-Flows>
+  </PropertyGroup>
+
+  <Target Name="Hxb-Initialize">
     <Error Condition="'$(Hxb-In-Flow)' == ''" Text="'$Hxb-In-Flow' is not defined."/>
     <Error Condition="'$(Hxb-In-Configuration)' == ''" Text="'$Hxb-In-Configuration' is not defined."/>
 
-    <!--System-->
-    <Error Condition="'@(Hxb-System-MSBuildDir)' != '' And !Exists('@(Hxb-System-MSBuildDir)')" Text="'@Hxb-System-MSBuildDir' is not found."/>
-    <Error Condition="'@(Hxb-System-FxCopCmd)' != '' And !Exists('@(Hxb-System-FxCopCmd)')" Text="'@Hxb-System-FxCopCmd' is not found."/>
-    <Error Condition="'@(Hxb-System-NUnitConsoleExe)' != '' And !Exists('@(Hxb-System-NUnitConsoleExe)')" Text="'@Hxb-System-NUnitConsoleExe' is not found."/>
-    <Error Condition="'@(Hxb-System-NugetExe)' != '' And !Exists('@(Hxb-System-NugetExe)')" Text="'@Hxb-System-NugetExe' is not found."/>
-    <Error Condition="'@(Hxb-System-OpenCoverConsoleExe)' != '' And !Exists('@(Hxb-System-OpenCoverConsoleExe)')" Text="'@Hxb-System-OpenCoverConsoleExe' is not found."/>
-    <Error Condition="'@(Hxb-System-ReportGeneratorExe)' != '' And !Exists('@(Hxb-System-ReportGeneratorExe)')" Text="'@Hxb-System-ReportGeneratorExe' is not found."/>
-    <Error Condition="'@(Hxb-System-ReportUnitExe)' != '' And !Exists('@(Hxb-System-ReportUnitExe)')" Text="'@Hxb-System-ReportUnitExe' is not found."/>
-    <Error Condition="'$(Hxb-Build-VCS)' == 'Git' And !Exists('@(Hxb-System-GitExe)')" Text="'@Hxb-System-GitExe' is not found."/>
-    <Error Condition="'$(Hxb-Build-VCS)' == 'Svn' And !Exists('@(Hxb-System-SvnExe)')" Text="'@Hxb-System-SvnExe' is not found."/>
-
-    <!--Build-->
     <Error Condition="'$(Hxb-Setup-CI)' == ''" Text="'$Hxb-Setup-CI' is not defined."/>
     <Error Condition="!Exists('$(Hxb-Setup-Workspace-Dir)')" Text="'$Hxb-Setup-Workspace-Dir' is not found."/>
-    <Error Condition="'$(Hxb-Build-VCS)' == ''" Text="'$Hxb-Build-VCS' is not defined."/>
-    <Error Condition="'$(Hxb-Build-Version)' == ''" Text="'$Hxb-Build-Version' is not defined."/>
-    <Error Condition="'$(Hxb-Build-Version-Informational)' == ''" Text="'$Hxb-Build-Version-Informational' is not defined."/>
-    <Error Condition="'$(Hxb-Build-Reports-Dir)' == ''" Text="'$Hxb-Build-Reports-Dir' is not defined."/>
-    <Error Condition="'$(Hxb-Build-Deployments-Dir)' == ''" Text="'$Hxb-Build-Deployments-Dir' is not defined."/>
 
-    <Error Condition="!Exists('$(Hxb-Build-Sln-Dir)')" Text="'$Hxb-Build-Sln-Dir' is not found."/>
-    <Error Condition="!Exists('@(Hxb-Build-Sln)')" Text="'@Hxb-Build-Sln' is not found."/>
+    <Heleonix.Build.Tasks.FileSystemSearch StartDir="$(Hxb-Setup-Workspace-Dir)"
+                                           Direction="Up"
+                                           Types="Directories"
+                                           PathRegExp="\.git$">
+      <Output TaskParameter="FoundDirs" ItemName="_Hxb-Build-VCS-Git-Dir"/>
+    </Heleonix.Build.Tasks.FileSystemSearch>
+    <Heleonix.Build.Tasks.FileSystemSearch StartDir="$(Hxb-Setup-Workspace-Dir)"
+                                           Direction="Up"
+                                           Types="Directories"
+                                           PathRegExp="\.svn$">
+      <Output TaskParameter="FoundDirs" ItemName="_Hxb-Build-VCS-Svn-Dir"/>
+    </Heleonix.Build.Tasks.FileSystemSearch>
+    <PropertyGroup>
+      <Hxb-Build-VCS Condition="Exists('@(_Hxb-Build-VCS-Git-Dir)')">Git</Hxb-Build-VCS>
+      <Hxb-Build-VCS Condition="Exists('@(_Hxb-Build-VCS-Svn-Dir)')">Svn</Hxb-Build-VCS>
+    </PropertyGroup>
 
     <PropertyGroup>
-      <Hxb-Build-Sln-File Condition="'$(Hxb-Build-Sln-File)' == ''">@(Hxb-Build-Sln)</Hxb-Build-Sln-File>
+      <Hxb-Build-Verbosity>Normal</Hxb-Build-Verbosity>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <Hxb-Build-Artifacts-Dir>$(Hxb-Setup-Workspace-Dir)\Hxb-Artifacts\$(Hxb-In-Configuration)</Hxb-Build-Artifacts-Dir>
+      <Hxb-Build-Artifacts-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Artifacts-Dir)\$(Hxb-In-Platform)</Hxb-Build-Artifacts-Dir>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <Hxb-Build-Version>$(Hxb-In-Version)</Hxb-Build-Version>
+      <Hxb-Build-Version-Informational>$(Hxb-In-Version)</Hxb-Build-Version-Informational>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Hxb-In-Version)' == ''">
+      <Hxb-Build-Version Condition="$(Hxb-Setup-CI) == 'Jenkins'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="$(Hxb-Setup-CI) == 'TeamCity'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="$(Hxb-Setup-CI) == 'GoCD'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(GO_SCM_FB_CURRENT_BRANCH)'))</Hxb-Build-Version>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Build-Version)' != ''">
+      <Hxb-Build-Version Condition="'$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(GO_PIPELINE_COUNTER)' != ''">$(Hxb-Build-Version).$(GO_PIPELINE_COUNTER)</Hxb-Build-Version>
+      <Hxb-Build-Version-Informational>$(Hxb-Build-Version)</Hxb-Build-Version-Informational>
     </PropertyGroup>
 
     <OnError ExecuteTargets="Hxb-OnError"/>

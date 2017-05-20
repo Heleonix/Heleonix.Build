@@ -70,15 +70,16 @@ namespace Heleonix.Build.Tests.Targets
 
                 try
                 {
-                    var props = TargetSetup.Properties("Hxb-NugetDeploy", CIType.Jenkins, SimulatorType.Library,
+                    var props = TargetSetup.InputProperties("Hxb-NugetDeploy", CIType.Jenkins, SimulatorType.Library,
                         overridesFilePath, testCase);
 
                     result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
 
                     Assert.That(result, Is.Zero);
 
-                    Assert.That(Directory.Exists(LibSimulatorPath.NugetDeploymentDir), Is.True);
-                    Assert.That(Directory.GetFiles(LibSimulatorPath.NugetDeploymentDir), Has.Length.EqualTo(1));
+                    Assert.That(Directory.Exists(LibSimulatorPath.GetArtifactsDir("Hxb-NugetDeploy")), Is.True);
+                    Assert.That(Directory.GetFiles(LibSimulatorPath.GetArtifactsDir("Hxb-NugetDeploy")),
+                        Has.Length.EqualTo(1));
                     Assert.That(Directory.Exists(tempSource));
                     Assert.That(Directory.GetFiles(tempSource), Has.Length.EqualTo(1));
                 }
@@ -86,7 +87,7 @@ namespace Heleonix.Build.Tests.Targets
                 {
                     TargetTeardown.Overrides(overridesFilePath);
 
-                    Directory.Delete(LibSimulatorPath.NugetDeploymentDir, true);
+                    Directory.Delete(LibSimulatorPath.GetArtifactsDir("Hxb-NugetDeploy"), true);
                 }
             }
             finally

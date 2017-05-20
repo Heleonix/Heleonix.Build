@@ -199,7 +199,7 @@ namespace Heleonix.Build.Tasks
         {
             if (!Directory.Exists(StartDir.ItemSpec))
             {
-                Log.LogMessage(Resources.FielSystemSearch_StartingDirectoryNotFound, StartDir.ItemSpec);
+                Log.LogMessage(Resources.FileSystemSearch_StartingDirectoryNotFound, StartDir.ItemSpec);
 
                 return;
             }

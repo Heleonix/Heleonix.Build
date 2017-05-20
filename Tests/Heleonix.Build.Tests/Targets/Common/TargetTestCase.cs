@@ -66,7 +66,7 @@ namespace Heleonix.Build.Tests.Targets.Common
 
         #endregion
 
-        #region Properties
+        #region InputProperties
 
         /// <summary>
         /// Gets or sets the properties.

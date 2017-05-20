@@ -26,13 +26,17 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-NugetRestore">
+  <Target Name="Hxb-NugetRestore" DependsOnTargets="_Hxb-FindSln">
+    <ItemGroup>
+      <Hxb-NugetRestore-In-Sln Condition="'@(Hxb-NugetRestore-In-Sln)' == ''" Include="@(_Hxb-FindSln-Out-Sln)"/>
+    </ItemGroup>
+
     <RemoveDir Directories="@(Hxb-NugetRestore-In-Packages-Dir)" ContinueOnError="true"/>
     <RemoveDir Directories="@(Hxb-NugetRestore-In-Packages-Dir)" ContinueOnError="true"/>
     <RemoveDir Directories="@(Hxb-NugetRestore-In-Packages-Dir)" ContinueOnError="true"/>
 
     <Heleonix.Build.Tasks.NugetRestore NugetExeFile="@(Hxb-System-NugetExe)"
-                                       SolutionFile="@(Hxb-Build-Sln)"
+                                       SolutionFile="@(Hxb-NugetRestore-In-Sln)"
                                        SourcesPaths="@(Hxb-NugetRestore-In-Sources)"
                                        PackagesDir="@(Hxb-NugetRestore-In-Packages-Dir)"
                                        MSBuildDir="@(Hxb-System-MSBuildDir)"

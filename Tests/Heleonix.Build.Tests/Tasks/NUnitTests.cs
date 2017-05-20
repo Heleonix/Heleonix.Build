@@ -49,9 +49,11 @@ namespace Heleonix.Build.Tests.Tasks
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
 
-            var errorsOutput = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
-            var testsOutput = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
-            var result = Path.Combine(LibSimulatorPath.ReportsDir, Path.GetRandomFileName());
+            var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-NUnit");
+
+            var errorsOutput = Path.Combine(artifactsDir, Path.GetRandomFileName());
+            var testsOutput = Path.Combine(artifactsDir, Path.GetRandomFileName());
+            var result = Path.Combine(artifactsDir, Path.GetRandomFileName());
 
             var task = new Build.Tasks.NUnit
             {

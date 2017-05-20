@@ -25,7 +25,24 @@ SOFTWARE.
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
 
-  <Target Name="Hxb-OpenCover-Before-Conventions-Custom" BeforeTargets="Hxb-OpenCover">
+  <Target Name="Hxb-Initialize-Before-System" BeforeTargets="Hxb-Initialize">
+    <ItemGroup>
+      <Hxb-System-NUnitConsoleExe  Remove="@(Hxb-System-NUnitConsoleExe)"/>
+      <Hxb-System-ReportUnitExe Remove="@(Hxb-System-ReportUnitExe)"/>
+      <Hxb-System-OpenCoverConsoleExe Remove="@(Hxb-System-OpenCoverConsoleExe)"/>
+      <Hxb-System-ReportGeneratorExe Remove="@(Hxb-System-ReportGeneratorExe)"/>
+      <Hxb-System-NugetExe Remove="@(Hxb-System-NugetExe)"/>
+    </ItemGroup>
+    <ItemGroup>
+      <Hxb-System-NUnitConsoleExe Include="$(MSBuildThisFileDirectory)..\..\packages\NUnit.ConsoleRunner.*\tools\nunit3-console.exe"/>
+      <Hxb-System-ReportUnitExe Include="$(MSBuildThisFileDirectory)..\..\packages\ReportUnit.*\tools\ReportUnit.exe"/>
+      <Hxb-System-OpenCoverConsoleExe Include="$(MSBuildThisFileDirectory)..\..\packages\OpenCover.*\tools\OpenCover.Console.exe"/>
+      <Hxb-System-ReportGeneratorExe Include="$(MSBuildThisFileDirectory)..\..\packages\ReportGenerator.*\tools\ReportGenerator.exe"/>
+      <Hxb-System-NugetExe Include="$(MSBuildThisFileDirectory)..\..\packages\NuGet.CommandLine.*\tools\NuGet.exe"/>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="Hxb-OpenCover-Before-Overrides" BeforeTargets="Hxb-OpenCover">
     <PropertyGroup>
       <Hxb-OpenCover-In-MinClassCoverage>50</Hxb-OpenCover-In-MinClassCoverage>
       <Hxb-OpenCover-In-MinMethodCoverage>33</Hxb-OpenCover-In-MinMethodCoverage>

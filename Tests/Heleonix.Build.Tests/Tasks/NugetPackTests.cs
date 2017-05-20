@@ -50,8 +50,8 @@ namespace Heleonix.Build.Tests.Tasks
                 BuildEngine = new FakeBuildEngine(),
                 NugetExeFile = new TaskItem(SystemPath.NugetExe),
                 MSBuildDir = new TaskItem(Path.GetDirectoryName(MSBuildHelper.MSBuildExe)),
-                NuspecFile = new TaskItem(Path.Combine(LibSimulatorPath.SolutionDir,
-                    LibSimulatorPath.SolutionName + ".nuspec")),
+                NuspecFile = new TaskItem(Path.Combine(Path.GetDirectoryName(LibSimulatorPath.ProjectFile),
+                    Path.ChangeExtension(LibSimulatorPath.ProjectFile, ".nuspec"))),
                 ProjectFile = new TaskItem(LibSimulatorPath.ProjectFile),
                 Configuration = MSBuildHelper.CurrentConfiguration,
                 Verbosity = "detailed"

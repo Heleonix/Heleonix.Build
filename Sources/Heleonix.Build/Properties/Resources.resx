@@ -123,7 +123,7 @@
   <data name="DirectoryClean_DirectoryNotFound" xml:space="preserve">
     <value>The directory '{0}' is not found. Skipping.</value>
   </data>
-  <data name="FielSystemSearch_StartingDirectoryNotFound" xml:space="preserve">
+  <data name="FileSystemSearch_StartingDirectoryNotFound" xml:space="preserve">
     <value>The starting directory '{0}' is not found. Stopping.</value>
   </data>
   <data name="FileSystemSearch_StartSearching" xml:space="preserve">
@@ -300,5 +300,29 @@
   </data>
   <data name="TaskFailedWithExitCode" xml:space="preserve">
     <value>{0} failed. Exit code: {1}.</value>
+  </data>
+  <data name="FileCopy_NoDestination" xml:space="preserve">
+    <value>No destination was specified. Skipping.</value>
+  </data>
+  <data name="FileCopy_NoFilesToCopy" xml:space="preserve">
+    <value>No files to copy. Skipping.</value>
+  </data>
+  <data name="FileCopy_SingleDestinationIsFile" xml:space="preserve">
+    <value>Single destination is an existing file, but must be a folder.</value>
+  </data>
+  <data name="FileCopy_FileNotFound" xml:space="preserve">
+    <value>The file to copy '{0}' is not found.</value>
+  </data>
+  <data name="FileCopy_WithSubDirsFromIsInvalid" xml:space="preserve">
+    <value>A directory '{0}' to cory from was specified, but it does not belond to the file '{1}'.</value>
+  </data>
+  <data name="FileCopy_CopyingFile" xml:space="preserve">
+    <value>Copying file: '{0}'.</value>
+  </data>
+  <data name="FileCopy_WithSubDirsFrom" xml:space="preserve">
+    <value>\tWith sub directories from: '{0}'.</value>
+  </data>
+  <data name="FileCopy_ToDestination" xml:space="preserve">
+    <value>To destination: '{0}'.</value>
   </data>
 </root>

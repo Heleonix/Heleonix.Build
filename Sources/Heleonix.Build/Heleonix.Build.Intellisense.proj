@@ -48,6 +48,8 @@ SOFTWARE.
   <!--Region Tasks-->
   <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileCopy" AssemblyFile="Heleonix.Build.dll"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileCopy" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="bin\Debug\Heleonix.Build.dll"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="Heleonix.Build.dll"/>
@@ -82,6 +84,7 @@ SOFTWARE.
 
   <!--Region In-->
   <PropertyGroup>
+    <Hxb-In-Version></Hxb-In-Version>
     <Hxb-In-Flow></Hxb-In-Flow>
     <Hxb-In-Configuration></Hxb-In-Configuration>
     <Hxb-In-Platform></Hxb-In-Platform>
@@ -107,7 +110,7 @@ SOFTWARE.
   <PropertyGroup>
     <Hxb-Setup-CI></Hxb-Setup-CI>
     <Hxb-Setup-Workspace-Dir></Hxb-Setup-Workspace-Dir>
-    <Hxb-Setup-Sln-Flows></Hxb-Setup-Sln-Flows>
+    <Hxb-Setup-Workspace-Flows></Hxb-Setup-Workspace-Flows>
   </PropertyGroup>
   <!--Endregion-->
 
@@ -116,17 +119,30 @@ SOFTWARE.
     <Hxb-Build-VCS></Hxb-Build-VCS>
     <Hxb-Build-Version></Hxb-Build-Version>
     <Hxb-Build-Version-Informational></Hxb-Build-Version-Informational>
-    <Hxb-Build-Reports-Dir></Hxb-Build-Reports-Dir>
-    <Hxb-Build-Deployments-Dir></Hxb-Build-Deployments-Dir>
-    <Hxb-Build-Sln-Dir></Hxb-Build-Sln-Dir>
-    <Hxb-Build-Sln-File></Hxb-Build-Sln-File>
-    <Hxb-Build-Sln-Name></Hxb-Build-Sln-Name>
+    <Hxb-Build-Artifacts-Dir></Hxb-Build-Artifacts-Dir>
     <Hxb-Build-Verbosity></Hxb-Build-Verbosity>
   </PropertyGroup>
+  <!--Endregion-->
 
-  <ItemGroup>
-    <Hxb-Build-Sln Include="0"/>
-  </ItemGroup>
+  <!--Region Target: _Hxb-FindSln-->
+  <Target Name="_Hxb-FindSln">
+    <PropertyGroup>
+      <_Hxb-FindSln-Out-SlnName></_Hxb-FindSln-Out-SlnName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_Hxb-FindSln-Out-Sln Include="0"/>
+    </ItemGroup>
+  </Target>
+  <!--Endregion-->
+
+  <!--Region Target: _Hxb-FindBinaries-->
+  <Target Name="_Hxb-FindBinaries">
+    <ItemGroup>
+      <_Hxb-FindBinaries-Out-Sources Include="0"/>
+      <_Hxb-FindBinaries-Out-Tests Include="0"/>
+    </ItemGroup>
+  </Target>
   <!--Endregion-->
 
   <!--Region Target: Hxb-Main-->
@@ -152,6 +168,7 @@ SOFTWARE.
   <!--Region Target: Hxb-Rebuild-->
   <Target Name="Hxb-Rebuild">
     <ItemGroup>
+      <Hxb-Rebuild-In-Sln Include="0"/>
       <Hxb-Rebuild-In-Delete Include="0"/>
       <Hxb-Rebuild-In-Clean-Dirs Include="0"/>
       <Hxb-Rebuild-In-Delete-Dirs Include="0"/>
@@ -163,6 +180,7 @@ SOFTWARE.
   <!--Region Target: Hxb-FxCop-->
   <Target Name="Hxb-FxCop">
     <PropertyGroup>
+      <Hxb-FxCop-In-AnalysisResult-File></Hxb-FxCop-In-AnalysisResult-File>
       <Hxb-FxCop-In-TargetsTypes></Hxb-FxCop-In-TargetsTypes>
       <Hxb-FxCop-In-FailOn></Hxb-FxCop-In-FailOn>
       <Hxb-FxCop-Out-CriticalErrors></Hxb-FxCop-Out-CriticalErrors>
@@ -173,7 +191,6 @@ SOFTWARE.
     </PropertyGroup>
 
     <ItemGroup>
-      <Hxb-FxCop-In-AnalysisResult Include="0"/>
       <Hxb-FxCop-In-Rules-FilesDirs Include="0"/>
       <Hxb-FxCop-In-Project Include="0"/>
       <Hxb-FxCop-In-Targets-FilesDirs Include="0"/>
@@ -197,7 +214,6 @@ SOFTWARE.
     <ItemGroup>
       <Hxb-NugetDeploy-In-Nuspecs Include="0"/>
       <Hxb-NugetDeploy-In-Projects Include="0"/>
-      <Hxb-NugetDeploy-In-PackagesDir Include="0"/>
       <Hxb-NugetDeploy-In-Config Include="0"/>
       <Hxb-NugetDeploy-In-Source Include="0"/>
       <Hxb-NugetDeploy-Out-Packages Include="0"/>
@@ -212,6 +228,7 @@ SOFTWARE.
     </PropertyGroup>
 
     <ItemGroup>
+      <Hxb-NugetRestore-In-Sln Include="0"/>
       <Hxb-NugetRestore-In-Sources Include="0"/>
       <Hxb-NugetRestore-In-Packages-Dir Include="0"/>
     </ItemGroup>
@@ -221,6 +238,9 @@ SOFTWARE.
   <!--Region Target: Hxb-NUnit-->
   <Target Name="Hxb-NUnit">
     <PropertyGroup>
+      <Hxb-NUnit-In-TestsResult-File></Hxb-NUnit-In-TestsResult-File>
+      <Hxb-NUnit-In-TestsOutput-File></Hxb-NUnit-In-TestsOutput-File>
+      <Hxb-NUnit-In-ErrorsOutput-File></Hxb-NUnit-In-ErrorsOutput-File>
       <Hxb-NUnit-In-TestsParameters></Hxb-NUnit-In-TestsParameters>
       <Hxb-NUnit-In-TestsFilter></Hxb-NUnit-In-TestsFilter>
       <Hxb-NUnit-In-AgentsNumber></Hxb-NUnit-In-AgentsNumber>
@@ -245,10 +265,7 @@ SOFTWARE.
 
     <ItemGroup>
       <Hxb-NUnit-In-NUnitProjectOrTests Include="0"/>
-      <Hxb-NUnit-In-TestsResult Include="0"/>
       <Hxb-NUnit-In-TestsList Include="0"/>
-      <Hxb-NUnit-In-TestsOutput Include="0"/>
-      <Hxb-NUnit-In-ErrorsOutput Include="0"/>
     </ItemGroup>
   </Target>
   <!--Endregion-->
@@ -256,6 +273,7 @@ SOFTWARE.
   <!--Region Target: Hxb-OpenCover-->
   <Target Name="Hxb-OpenCover">
     <PropertyGroup>
+      <Hxb-OpenCover-In-CoverageResult-File></Hxb-OpenCover-In-CoverageResult-File>
       <Hxb-OpenCover-In-MinClassCoverage></Hxb-OpenCover-In-MinClassCoverage>
       <Hxb-OpenCover-In-MinMethodCoverage></Hxb-OpenCover-In-MinMethodCoverage>
       <Hxb-OpenCover-In-MinBranchCoverage></Hxb-OpenCover-In-MinBranchCoverage>
@@ -283,7 +301,6 @@ SOFTWARE.
 
     <ItemGroup>
       <Hxb-OpenCover-In-Target Include="0"/>
-      <Hxb-OpenCover-In-CoverageResult Include="0"/>
       <Hxb-OpenCover-In-PdbSearchDirs Include="0"/>
     </ItemGroup>
   </Target>
@@ -297,16 +314,18 @@ SOFTWARE.
 
     <ItemGroup>
       <Hxb-ReportGenerator-In-Results Include="0"/>
-      <Hxb-ReportGenerator-In-Report-Dir Include="0"/>
     </ItemGroup>
   </Target>
   <!--Endregion-->
 
   <!--Region Target: Hxb-ReportUnit-->
   <Target Name="Hxb-ReportUnit">
+    <PropertyGroup>
+      <Hxb-ReportUnit-In-Report-File></Hxb-ReportUnit-In-Report-File>
+    </PropertyGroup>
+
     <ItemGroup>
       <Hxb-ReportUnit-In-TestsResult Include="0"/>
-      <Hxb-ReportUnit-In-Report Include="0"/>
     </ItemGroup>
   </Target>
   <!--Endregion-->

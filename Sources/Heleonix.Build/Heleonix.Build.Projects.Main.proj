@@ -31,9 +31,9 @@ SOFTWARE.
 
   <!--Settings-->
   <Import Project="Settings\Heleonix.Build.Settings.System.proj"/>
-  <Import Project="Settings\Heleonix.Build.Settings.Conventions.proj"/>
 
   <!--Targets-->
+  <Import Project="Targets\Heleonix.Build.Targets.Internal.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.Initialize.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.FxCop.targets"/>
@@ -51,7 +51,7 @@ SOFTWARE.
 
   <!--Custom-->
   <Import Project="$(Hxb-In-Overrides)" Condition="Exists('$(Hxb-In-Overrides)')"/>
-  <Import Project="$(Hxb-Setup-Sln-Flows)" Condition="Exists('$(Hxb-Setup-Sln-Flows)')"/>
+  <Import Project="$(Hxb-Setup-Workspace-Flows)" Condition="Exists('$(Hxb-Setup-Workspace-Flows)')"/>
 
   <Target Name="Hxb-Main" DependsOnTargets="Hxb-Initialize;$(Hxb-In-Flow);Hxb-Finalize"/>
 </Project>

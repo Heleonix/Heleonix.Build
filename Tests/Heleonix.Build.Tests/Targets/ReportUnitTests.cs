@@ -49,7 +49,7 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
-                var props = TargetSetup.Properties("Hxb-ReportUnit", CIType.Jenkins,
+                var props = TargetSetup.InputProperties("Hxb-ReportUnit", CIType.Jenkins,
                     SimulatorType.Library, overridesFilePath, testCase);
 
                 var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
@@ -60,7 +60,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 TargetTeardown.Overrides(overridesFilePath);
 
-                Directory.Delete(LibSimulatorPath.ReportsDir, true);
+                Directory.Delete(LibSimulatorPath.GetArtifactsDir("Hxb-ReportUnit"), true);
             }
         }
 
