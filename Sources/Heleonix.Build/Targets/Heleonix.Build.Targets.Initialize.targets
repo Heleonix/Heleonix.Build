@@ -86,32 +86,42 @@ SOFTWARE.
     <PropertyGroup>
       <Hxb-Build-Version>$(Hxb-In-Version)</Hxb-Build-Version>
     </PropertyGroup>
-    <Choose Condition="'$(Hxb-In-Version)' == ''">
-      <When Condition="$(Hxb-Setup-CI) == 'Jenkins'">
-        <PropertyGroup>
-          <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
-          <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
-        </PropertyGroup>
-      </When>
-      <When Condition="$(Hxb-Setup-CI) == 'TeamCity'">
-        <PropertyGroup>
-          <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
-          <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
-        </PropertyGroup>
-      </When>
-      <When Condition="$(Hxb-Setup-CI) == 'GoCD'">
-        <ItemGroup>
-          <_Hxb-Initialize-CurrentBranchSourceName Include="$(GO_SCM_CURRENT_BRANCH_SOURCE_NAME)"/>
-        </ItemGroup>
-        <PropertyGroup>
-          <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(%(_Hxb-Initialize-CurrentBranchSourceName.Identity))'))</Hxb-Build-Version>
-          <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(GO_PIPELINE_COUNTER)' != ''">$(Hxb-Build-Version).$(GO_PIPELINE_COUNTER)</Hxb-Build-Version>
-        </PropertyGroup>
-      </When>
-    </Choose>
+    <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'Jenkins'">
+      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'TeamCity'">
+      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'GoCD'">
+      <_Hxb-Initialize-CurrentBranchSourceName Include="$(GO_SCM_CURRENT_BRANCH_SOURCE_NAME)"/>
+    </ItemGroup>
+    <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'GoCD'">
+      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(%(_Hxb-Initialize-CurrentBranchSourceName.Identity))'))</Hxb-Build-Version>
+      <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(GO_PIPELINE_COUNTER)' != ''">$(Hxb-Build-Version).$(GO_PIPELINE_COUNTER)</Hxb-Build-Version>
+    </PropertyGroup>
     <PropertyGroup>
       <Hxb-Build-Version-Informational>$(Hxb-Build-Version)</Hxb-Build-Version-Informational>
     </PropertyGroup>
+
+    <Message Text="Primary initialization:"/>
+
+    <Message Text="$Hxb-In-Configuration: $(Hxb-In-Configuration)"/>
+    <Message Text="$Hxb-In-Flow: $(Hxb-In-Flow)"/>
+    <Message Text="$Hxb-In-Overrides: $(Hxb-In-Overrides)"/>
+    <Message Text="$Hxb-In-Platform: $(Hxb-In-Platform)"/>
+    <Message Text="$Hxb-In-Version: $(Hxb-In-Version)"/>
+
+    <Message Text="$Hxb-Setup-Workspace-Dir: $(Hxb-Setup-Workspace-Dir)"/>
+    <Message Text="$Hxb-Setup-CI: $(Hxb-Setup-CI)"/>
+    <Message Text="$Hxb-Setup-Workspace-Flows: $(Hxb-Setup-Workspace-Flows)"/>
+
+    <Message Text="$Hxb-Build-Version: $(Hxb-Build-Version)"/>
+    <Message Text="$Hxb-Build-Version-Informational: $(Hxb-Build-Version-Informational)"/>
+    <Message Text="$Hxb-Build-Artifacts-Dir: $(Hxb-Build-Artifacts-Dir)"/>
+    <Message Text="$Hxb-Build-VCS: $(Hxb-Build-VCS)"/>
+    <Message Text="$Hxb-Build-Verbosity: $(Hxb-Build-Verbosity)"/>
 
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
