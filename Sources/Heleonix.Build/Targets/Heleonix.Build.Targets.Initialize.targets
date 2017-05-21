@@ -85,16 +85,31 @@ SOFTWARE.
 
     <PropertyGroup>
       <Hxb-Build-Version>$(Hxb-In-Version)</Hxb-Build-Version>
-      <Hxb-Build-Version-Informational>$(Hxb-In-Version)</Hxb-Build-Version-Informational>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Hxb-In-Version)' == ''">
-      <Hxb-Build-Version Condition="$(Hxb-Setup-CI) == 'Jenkins'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
-      <Hxb-Build-Version Condition="$(Hxb-Setup-CI) == 'TeamCity'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
-      <Hxb-Build-Version Condition="$(Hxb-Setup-CI) == 'GoCD'">$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(GO_SCM_FB_CURRENT_BRANCH)'))</Hxb-Build-Version>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Build-Version)' != ''">
-      <Hxb-Build-Version Condition="'$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
-      <Hxb-Build-Version Condition="'$(GO_PIPELINE_COUNTER)' != ''">$(Hxb-Build-Version).$(GO_PIPELINE_COUNTER)</Hxb-Build-Version>
+    <Choose Condition="'$(Hxb-In-Version)' == ''">
+      <When Condition="$(Hxb-Setup-CI) == 'Jenkins'">
+        <PropertyGroup>
+          <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
+          <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+        </PropertyGroup>
+      </When>
+      <When Condition="$(Hxb-Setup-CI) == 'TeamCity'">
+        <PropertyGroup>
+          <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
+          <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
+        </PropertyGroup>
+      </When>
+      <When Condition="$(Hxb-Setup-CI) == 'GoCD'">
+        <ItemGroup>
+          <_Hxb-Initialize-CurrentBranchSourceName Include="$(GO_SCM_CURRENT_BRANCH_SOURCE_NAME)"/>
+        </ItemGroup>
+        <PropertyGroup>
+          <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(%(_Hxb-Initialize-CurrentBranchSourceName.Identity))'))</Hxb-Build-Version>
+          <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(GO_PIPELINE_COUNTER)' != ''">$(Hxb-Build-Version).$(GO_PIPELINE_COUNTER)</Hxb-Build-Version>
+        </PropertyGroup>
+      </When>
+    </Choose>
+    <PropertyGroup>
       <Hxb-Build-Version-Informational>$(Hxb-Build-Version)</Hxb-Build-Version-Informational>
     </PropertyGroup>
 

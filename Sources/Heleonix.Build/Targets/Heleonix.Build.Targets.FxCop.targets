@@ -27,6 +27,11 @@ SOFTWARE.
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
   <Target Name="Hxb-FxCop" DependsOnTargets="_Hxb-FindBinaries">
+    <PropertyGroup>
+      <Hxb-FxCop-In-AnalysisResult-File Condition="'$(Hxb-FxCop-In-AnalysisResult-File)' == ''">FxCop.xml</Hxb-FxCop-In-AnalysisResult-File>
+      <Hxb-FxCop-In-FailOn Condition="'$(Hxb-FxCop-In-FailOn)' == '' And '$(Hxb-Setup-CI)' == 'Dev'">None</Hxb-FxCop-In-FailOn>
+    </PropertyGroup>
+
     <ItemGroup>
       <Hxb-FxCop-In-Targets-FilesDirs Condition="!Exists('@(Hxb-FxCop-In-Targets-FilesDirs)')"
                                       Include="@(_Hxb-FindBinaries-Out-Sources);@(_Hxb-FindBinaries-Out-Tests)"/>
@@ -35,11 +40,6 @@ SOFTWARE.
       <Hxb-FxCop-In-AnalysisResultsXsl Condition="'@(Hxb-FxCop-In-AnalysisResultsXsl)' == ''"
                                        Include="%(Hxb-System-FxCopCmd.RootDir)\%(Hxb-System-FxCopCmd.Directory)\Xml\FxCopReport.xsl"/>
     </ItemGroup>
-
-    <PropertyGroup>
-      <Hxb-FxCop-In-AnalysisResult-File Condition="'$(Hxb-FxCop-In-AnalysisResult-File)' == ''">FxCop.xml</Hxb-FxCop-In-AnalysisResult-File>
-      <Hxb-FxCop-In-FailOn Condition="'$(Hxb-FxCop-In-FailOn)' == '' And '$(Hxb-Setup-CI)' == 'Dev'">None</Hxb-FxCop-In-FailOn>
-    </PropertyGroup>
 
     <PropertyGroup>
       <_Hxb-FxCop-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-FxCop</_Hxb-FxCop-Artifacts-Dir>

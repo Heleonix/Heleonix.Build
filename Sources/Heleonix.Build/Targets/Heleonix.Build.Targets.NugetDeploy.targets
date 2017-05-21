@@ -38,9 +38,6 @@ SOFTWARE.
       <Hxb-NugetDeploy-In-Projects Condition="!Exists('@(Hxb-NugetDeploy-In-Projects)')"
                                    Include="$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.csproj"/>
     </ItemGroup>
-    
-    <Message Text="----------$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.nuspec-----------"/>
-    <Message Text="----------$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.csproj-----------"/>
 
     <PropertyGroup>
       <_Hxb-NugetDeploy-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NugetDeploy</_Hxb-NugetDeploy-Artifacts-Dir>
