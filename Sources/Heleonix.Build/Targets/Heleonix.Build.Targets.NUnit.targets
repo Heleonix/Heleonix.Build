@@ -38,10 +38,10 @@ SOFTWARE.
     </ItemGroup>
 
     <PropertyGroup>
-      <_Hxb-NUnit-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit</_Hxb-NUnit-Artifacts-Dir>
+      <Hxb-NUnit-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit</Hxb-NUnit-Out-Artifacts-Dir>
     </PropertyGroup>
 
-    <RemoveDir Directories="$(_Hxb-NUnit-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-NUnit-Out-Artifacts-Dir)"/>
 
     <PropertyGroup>
       <_Hxb-NUnit-TraceLevel Condition="'$(Hxb-Build-Verbosity)' == 'Quiet'">Off</_Hxb-NUnit-TraceLevel>
@@ -56,14 +56,14 @@ SOFTWARE.
                                 DomainIsolation="$(Hxb-NUnit-In-DomainIsolation)"
                                 ShadowCopy="$(Hxb-NUnit-In-ShadowCopy)"
                                 FailOnFailedTests="$(Hxb-NUnit-In-FailOnFailedTests)"
-                                ErrorsOutputFile="$(_Hxb-NUnit-Artifacts-Dir)\$(Hxb-NUnit-In-ErrorsOutput-File)"
+                                ErrorsOutputFile="$(Hxb-NUnit-Out-Artifacts-Dir)\$(Hxb-NUnit-In-ErrorsOutput-File)"
                                 Framework="$(Hxb-NUnit-In-Framework)"
-                                TestsResultFile="$(_Hxb-NUnit-Artifacts-Dir)\$(Hxb-NUnit-In-TestsResult-File)"
+                                TestsResultFile="$(Hxb-NUnit-Out-Artifacts-Dir)\$(Hxb-NUnit-In-TestsResult-File)"
                                 StopOnErrorOrFailedTest="$(Hxb-NUnit-In-StopOnErrorOrFailedTest)"
                                 TestsFilter="$(Hxb-NUnit-In-TestsFilter)"
                                 TraceLevel="$(_Hxb-NUnit-TraceLevel)"
                                 TestsListFile="@(Hxb-NUnit-In-TestsList)"
-                                TestsOutputFile="$(_Hxb-NUnit-Artifacts-Dir)\$(Hxb-NUnit-In-TestsOutput-File)"
+                                TestsOutputFile="$(Hxb-NUnit-Out-Artifacts-Dir)\$(Hxb-NUnit-In-TestsOutput-File)"
                                 TestsParameters="$(Hxb-NUnit-In-TestsParameters)"
                                 UseTeamCityServiceMessages="$(Hxb-NUnit-In-UseTeamCityServiceMessages)"
                                 ProcessIsolation="$(Hxb-NUnit-In-ProcessIsolation)">

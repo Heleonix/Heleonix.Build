@@ -314,7 +314,7 @@
     <value>The file to copy '{0}' is not found.</value>
   </data>
   <data name="FileCopy_WithSubDirsFromIsInvalid" xml:space="preserve">
-    <value>A directory '{0}' to cory from was specified, but it does not belond to the file '{1}'.</value>
+    <value>A directory '{0}' to cory from was specified, but it does not belong to the file '{1}'.</value>
   </data>
   <data name="FileCopy_CopyingFile" xml:space="preserve">
     <value>Copying file: '{0}'.</value>

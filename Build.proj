@@ -24,28 +24,15 @@ SOFTWARE.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
+  <Import Project="Sources/Heleonix.Build/Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-ReportUnit">
-    <PropertyGroup>
-      <Hxb-ReportUnit-In-Report-File Condition="'$(Hxb-ReportUnit-In-Report-File)' == ''">ReportUnit.html</Hxb-ReportUnit-In-Report-File>
-    </PropertyGroup>
-
+  <Target Name="Hxb-Rebuild-A-CopyOutputs" AfterTargets="Hxb-Rebuild">
     <ItemGroup>
-      <Hxb-ReportUnit-In-TestsResult Condition="!Exists('@(Hxb-ReportUnit-In-TestsResult)')"
-                                     Include="$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit\NUnit.xml"/>
+      <_Hxb-Rebuild-A-CopyOutputs Include="@(Hxb-Rebuild-In-Sln.DirectoryName())\Tests\LibSimulator\**\*.*"
+                                  Exclude="@(Hxb-Rebuild-In-Sln.DirectoryName())\Tests\LibSimulator\**\bin;@(Hxb-Rebuild-In-Sln.DirectoryName())\Tests\LibSimulator\**\obj">
+        <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
+      </_Hxb-Rebuild-A-CopyOutputs>
     </ItemGroup>
-
-    <PropertyGroup>
-      <Hxb-ReportUnit-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-ReportUnit</Hxb-ReportUnit-Out-Artifacts-Dir>
-    </PropertyGroup>
-
-    <RemoveDir Directories="$(Hxb-ReportUnit-Out-Artifacts-Dir)"/>
-
-    <Heleonix.Build.Tasks.ReportUnit ReportUnitExeFile="@(Hxb-System-ReportUnitExe)"
-                                     TestsResultFile="@(Hxb-ReportUnit-In-TestsResult)"
-                                     ReportFile="$(Hxb-ReportUnit-Out-Artifacts-Dir)\$(Hxb-ReportUnit-In-Report-File)"/>
-
-    <OnError ExecuteTargets="Hxb-OnError"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)"/>
   </Target>
 </Project>

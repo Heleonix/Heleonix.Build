@@ -42,10 +42,10 @@ SOFTWARE.
     </ItemGroup>
 
     <PropertyGroup>
-      <_Hxb-FxCop-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-FxCop</_Hxb-FxCop-Artifacts-Dir>
+      <Hxb-FxCop-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-FxCop</Hxb-FxCop-Out-Artifacts-Dir>
     </PropertyGroup>
 
-    <RemoveDir Directories="$(_Hxb-FxCop-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-FxCop-Out-Artifacts-Dir)"/>
 
     <PropertyGroup>
       <_Hxb-FxCop-IsVerbose>false</_Hxb-FxCop-IsVerbose>
@@ -53,7 +53,7 @@ SOFTWARE.
     </PropertyGroup>
 
     <Heleonix.Build.Tasks.FxCop FxCopCmdFile="@(Hxb-System-FxCopCmd)"
-                                AnalysisResultFile="$(_Hxb-FxCop-Artifacts-Dir)\$(Hxb-FxCop-In-AnalysisResult-File)"
+                                AnalysisResultFile="$(Hxb-FxCop-Out-Artifacts-Dir)\$(Hxb-FxCop-In-AnalysisResult-File)"
                                 AnalysisResultsXslFile="@(Hxb-FxCop-In-AnalysisResultsXsl)"
                                 IsVerbose="$(_Hxb-FxCop-IsVerbose)"
                                 DependenciesDirs="@(Hxb-FxCop-In-Dependencies-Dirs)"

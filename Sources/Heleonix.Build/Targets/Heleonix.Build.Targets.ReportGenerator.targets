@@ -43,14 +43,14 @@ SOFTWARE.
     </PropertyGroup>
 
     <PropertyGroup>
-      <_Hxb-ReportGenerator-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-ReportGenerator</_Hxb-ReportGenerator-Artifacts-Dir>
+      <Hxb-ReportGenerator-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-ReportGenerator</Hxb-ReportGenerator-Out-Artifacts-Dir>
     </PropertyGroup>
 
-    <RemoveDir Directories="$(_Hxb-ReportGenerator-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-ReportGenerator-Out-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.ReportGenerator ReportGeneratorExeFile="@(Hxb-System-ReportGeneratorExe)"
                                           ResultsFiles="@(Hxb-ReportGenerator-In-Results)"
-                                          ReportDir="$(_Hxb-ReportGenerator-Artifacts-Dir)"
+                                          ReportDir="$(Hxb-ReportGenerator-Out-Artifacts-Dir)"
                                           ReportTypes="$(Hxb-ReportGenerator-In-ReportTypes)"
                                           Verbosity="$(_Hxb-ReportGenerator-Verbosity)"/>
 

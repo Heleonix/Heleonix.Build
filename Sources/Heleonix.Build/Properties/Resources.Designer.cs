@@ -142,7 +142,7 @@ namespace Heleonix.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A directory &apos;{0}&apos; to cory from was specified, but it does not belond to the file &apos;{1}&apos;..
+        ///   Looks up a localized string similar to A directory &apos;{0}&apos; to cory from was specified, but it does not belong to the file &apos;{1}&apos;..
         /// </summary>
         internal static string FileCopy_WithSubDirsFromIsInvalid {
             get {

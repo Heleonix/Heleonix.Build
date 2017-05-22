@@ -167,12 +167,17 @@ SOFTWARE.
 
   <!--Region Target: Hxb-Rebuild-->
   <Target Name="Hxb-Rebuild">
+    <PropertyGroup>
+      <Hxb-Rebuild-Out-Artifacts-Dir></Hxb-Rebuild-Out-Artifacts-Dir>
+    </PropertyGroup>
+
     <ItemGroup>
       <Hxb-Rebuild-In-Sln Include="0"/>
       <Hxb-Rebuild-In-Delete Include="0"/>
       <Hxb-Rebuild-In-Clean-Dirs Include="0"/>
       <Hxb-Rebuild-In-Delete-Dirs Include="0"/>
       <Hxb-Rebuild-In-Snk Include="0"/>
+      <Hxb-Rebuild-Out-Outputs Include="0"/>
     </ItemGroup>
   </Target>
   <!--Endregion-->
@@ -188,6 +193,7 @@ SOFTWARE.
       <Hxb-FxCop-Out-CriticalWarnings></Hxb-FxCop-Out-CriticalWarnings>
       <Hxb-FxCop-Out-Warnings></Hxb-FxCop-Out-Warnings>
       <Hxb-FxCop-Out-Informational></Hxb-FxCop-Out-Informational>
+      <Hxb-FxCop-Out-Artifacts-Dir></Hxb-FxCop-Out-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
@@ -209,6 +215,7 @@ SOFTWARE.
       <Hxb-NugetDeploy-In-IncludeReferencedProjects></Hxb-NugetDeploy-In-IncludeReferencedProjects>
       <Hxb-NugetDeploy-In-ExcludeEmptyDirectories></Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
       <Hxb-NugetDeploy-In-Properties></Hxb-NugetDeploy-In-Properties>
+      <Hxb-NugetDeploy-Out-Artifacts-Dir></Hxb-NugetDeploy-Out-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
@@ -261,6 +268,7 @@ SOFTWARE.
       <Hxb-NUnit-Out-StartTime></Hxb-NUnit-Out-StartTime>
       <Hxb-NUnit-Out-EndTime></Hxb-NUnit-Out-EndTime>
       <Hxb-NUnit-Out-Duration></Hxb-NUnit-Out-Duration>
+      <Hxb-NUnit-Out-Artifacts-Dir></Hxb-NUnit-Out-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
@@ -297,6 +305,7 @@ SOFTWARE.
       <Hxb-OpenCover-Out-MethodCoverage></Hxb-OpenCover-Out-MethodCoverage>
       <Hxb-OpenCover-Out-LineCoverage></Hxb-OpenCover-Out-LineCoverage>
       <Hxb-OpenCover-Out-BranchCoverage></Hxb-OpenCover-Out-BranchCoverage>
+      <Hxb-OpenCover-Out-Artifacts-Dir></Hxb-OpenCover-Out-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
@@ -310,6 +319,7 @@ SOFTWARE.
   <Target Name="Hxb-ReportGenerator">
     <PropertyGroup>
       <Hxb-ReportGenerator-In-ReportTypes></Hxb-ReportGenerator-In-ReportTypes>
+      <Hxb-ReportGenerator-Out-Artifacts-Dir></Hxb-ReportGenerator-Out-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
@@ -322,6 +332,7 @@ SOFTWARE.
   <Target Name="Hxb-ReportUnit">
     <PropertyGroup>
       <Hxb-ReportUnit-In-Report-File></Hxb-ReportUnit-In-Report-File>
+      <Hxb-ReportUnit-Out-Artifacts-Dir></Hxb-ReportUnit-Out-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>

@@ -39,7 +39,7 @@ namespace Heleonix.Build.Tasks
     {
         #region Constants
 
-        private const string WithSubDirsFromMetadataKey = "WithSubDirsFrom";
+        private const string WithSubDirsFromKey = "WithSubDirsFrom";
 
         #endregion
 
@@ -150,7 +150,7 @@ namespace Heleonix.Build.Tasks
 
                     var filePath = new Uri(Files[i].ItemSpec).LocalPath.TrimEnd(Path.DirectorySeparatorChar);
 
-                    var subDirsFrom = Files[i].GetMetadata(WithSubDirsFromMetadataKey);
+                    var subDirsFrom = Files[i].GetMetadata(WithSubDirsFromKey);
 
                     if (!string.IsNullOrEmpty(subDirsFrom))
                     {

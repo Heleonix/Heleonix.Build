@@ -53,13 +53,13 @@ SOFTWARE.
     </PropertyGroup>
 
     <PropertyGroup>
-      <_Hxb-OpenCover-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-OpenCover</_Hxb-OpenCover-Artifacts-Dir>
+      <Hxb-OpenCover-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-OpenCover</Hxb-OpenCover-Out-Artifacts-Dir>
     </PropertyGroup>
 
-    <RemoveDir Directories="$(_Hxb-OpenCover-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-OpenCover-Out-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.OpenCover OpenCoverExeFile="@(Hxb-System-OpenCoverConsoleExe)"
-                                    CoverageResultFile="$(_Hxb-OpenCover-Artifacts-Dir)\$(Hxb-OpenCover-In-CoverageResult-File)"
+                                    CoverageResultFile="$(Hxb-OpenCover-Out-Artifacts-Dir)\$(Hxb-OpenCover-In-CoverageResult-File)"
                                     ExcludeByAttributeFilters="$(Hxb-OpenCover-In-ExcludeByAttributeFilters)"
                                     Filters="$(Hxb-OpenCover-In-Filters)"
                                     Target="@(Hxb-OpenCover-In-Target)"

@@ -97,7 +97,7 @@ namespace Heleonix.Build.Tests.Targets.Common
                 addItems(itemGroup, testCase.Items);
             }
 
-            var target = new XElement(ns + "Target", new XAttribute("Name", targetName + "-Before-Overrides"),
+            var target = new XElement(ns + "Target", new XAttribute("Name", targetName + "-B-Overrides"),
                 new XAttribute("BeforeTargets", targetName), propertyGroup, itemGroup);
 
             project.Add(target);

@@ -40,10 +40,10 @@ SOFTWARE.
     </ItemGroup>
 
     <PropertyGroup>
-      <_Hxb-NugetDeploy-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NugetDeploy</_Hxb-NugetDeploy-Artifacts-Dir>
+      <Hxb-NugetDeploy-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NugetDeploy</Hxb-NugetDeploy-Out-Artifacts-Dir>
     </PropertyGroup>
 
-    <RemoveDir Directories="$(_Hxb-NugetDeploy-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-NugetDeploy-Out-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.ItemCombine Operation="Pairing"
                                       TargetMetadataName="Project"
@@ -61,7 +61,7 @@ SOFTWARE.
                                     Configuration="$(Hxb-In-Configuration)"
                                     Properties="$(Hxb-NugetDeploy-In-Properties)"
                                     MSBuildDir="@(Hxb-System-MSBuildDir)"
-                                    PackageDir="$(_Hxb-NugetDeploy-Artifacts-Dir)">
+                                    PackageDir="$(Hxb-NugetDeploy-Out-Artifacts-Dir)">
       <Output TaskParameter="PackageFile" ItemName="Hxb-NugetDeploy-Out-Packages"/>
     </Heleonix.Build.Tasks.NugetPack>
 
