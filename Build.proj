@@ -28,7 +28,7 @@ SOFTWARE.
 
   <Target Name="Hxb-Rebuild-A-CopyOutputs" AfterTargets="Hxb-Rebuild">
     <PropertyGroup>
-      <_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>@(Hxb-Rebuild-In-Sln.DirectoryName())</_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>
+      <_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>@(Hxb-Rebuild-In-Sln->DirectoryName())</_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>
     </PropertyGroup>
     <ItemGroup>
       <_Hxb-Rebuild-A-CopyOutputs Include="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\*.*"
