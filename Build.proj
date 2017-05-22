@@ -32,13 +32,14 @@ SOFTWARE.
     </PropertyGroup>
     <ItemGroup>
       <_Hxb-Rebuild-A-CopyOutputs Include="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\*.*"
-                                  Exclude="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\bin;$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\obj">
+                                  Exclude="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\bin\*.*;$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\obj\*.*">
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-A-CopyOutputs>
     </ItemGroup>
 
     <Message Text="---@(_Hxb-Rebuild-A-CopyOutputs)---"/>
     <Message Text="===$(Hxb-Rebuild-Out-Artifacts-Dir)==="/>
+    <Message Text="+++$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild+++"/>
 
     <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
   </Target>
