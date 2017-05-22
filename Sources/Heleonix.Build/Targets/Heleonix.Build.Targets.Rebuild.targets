@@ -91,7 +91,8 @@ SOFTWARE.
 
     <!--Copy relevant projects files-->
     <ItemGroup>
-      <_Hxb-Rebuild-Proj Include="$(_Hxb-Rebuild-Sln-Dir)\**\*.*proj">
+      <_Hxb-Rebuild-Proj Include="$(_Hxb-Rebuild-Sln-Dir)\**\*.*proj"
+                         Exclude="$(_Hxb-Rebuild-Sln-Dir)\**\packages\**\*.*proj">
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-Proj>
     </ItemGroup>
@@ -99,7 +100,8 @@ SOFTWARE.
 
     <!--Copy relevant nuspec files-->
     <ItemGroup>
-      <_Hxb-Rebuild-Nuspec Include="$(_Hxb-Rebuild-Sln-Dir)\**\*.nuspec">
+      <_Hxb-Rebuild-Nuspec Include="$(_Hxb-Rebuild-Sln-Dir)\**\*.nuspec"
+                           Exclude="$(_Hxb-Rebuild-Sln-Dir)\**\packages\**\*.nuspec">
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-Nuspec>
     </ItemGroup>
