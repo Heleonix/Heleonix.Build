@@ -36,6 +36,10 @@ SOFTWARE.
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-A-CopyOutputs>
     </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)"/>
+
+    <Message Text="---@(_Hxb-Rebuild-A-CopyOutputs)---"/>
+    <Message Text="===$(Hxb-Rebuild-Out-Artifacts-Dir)==="/>
+
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
   </Target>
 </Project>
