@@ -26,8 +26,6 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="Sources\Heleonix.Build\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="FakeTarget"/>
-
   <Target Name="Hxb-Rebuild-A-CopyOutputs" AfterTargets="Hxb-Rebuild">
     <PropertyGroup>
       <_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>@(Hxb-Rebuild-In-Sln->DirectoryName())</_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>
@@ -38,10 +36,6 @@ SOFTWARE.
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-A-CopyOutputs>
     </ItemGroup>
-
-    <Message Text="---@(_Hxb-Rebuild-A-CopyOutputs)---"/>
-    <Message Text="===$(Hxb-Rebuild-Out-Artifacts-Dir)==="/>
-    <Message Text="+++@(_Hxb-Rebuild-Proj)+++"/>
 
     <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
   </Target>
