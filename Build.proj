@@ -41,7 +41,7 @@ SOFTWARE.
 
     <Message Text="---@(_Hxb-Rebuild-A-CopyOutputs)---"/>
     <Message Text="===$(Hxb-Rebuild-Out-Artifacts-Dir)==="/>
-    <Message Text="+++$(_Hxb-Rebuild-OutputsTemplates)+++"/>
+    <Message Text="+++@(_Hxb-Rebuild-Proj)+++"/>
 
     <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
   </Target>
