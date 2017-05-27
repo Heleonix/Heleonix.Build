@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-NUnit" DependsOnTargets="Hxb-ArrangeRebuild;_Hxb-Find-Binaries">
+  <Target Name="Hxb-NUnit-Initialize" DependsOnTargets="_Hxb-Find-Binaries">
     <PropertyGroup>
       <Hxb-NUnit-In-ErrorsOutput-File Condition="'$(Hxb-NUnit-In-ErrorsOutput-File)' == ''">Errors.txt</Hxb-NUnit-In-ErrorsOutput-File>
       <Hxb-NUnit-In-TestsOutput-File Condition="'$(Hxb-NUnit-In-TestsOutput-File)' == ''">Output.txt</Hxb-NUnit-In-TestsOutput-File>
@@ -39,6 +39,10 @@ SOFTWARE.
                                         Include="@(_Hxb-Find-Binaries-Out-Tests)"/>
     </ItemGroup>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-NUnit" DependsOnTargets="Hxb-ArrangeRebuild;Hxb-NUnit-Initialize">
     <RemoveDir Directories="$(Hxb-NUnit-In-Artifacts-Dir)"/>
 
     <PropertyGroup>
@@ -77,6 +81,10 @@ SOFTWARE.
       <Output TaskParameter="Duration" PropertyName="Hxb-NUnit-Out-Duration"/>
     </Heleonix.Build.Tasks.NUnit>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-NUnit-Finalize" AfterTargets="Hxb-NUnit">
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

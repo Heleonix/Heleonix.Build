@@ -166,6 +166,8 @@ SOFTWARE.
   <!--Endregion-->
 
   <!--Region Target: Hxb-Rebuild-->
+  <Target Name="Hxb-Rebuild-Initialize"/>
+
   <Target Name="Hxb-Rebuild">
     <PropertyGroup>
       <Hxb-Rebuild-In-Artifacts-Dir></Hxb-Rebuild-In-Artifacts-Dir>
@@ -180,17 +182,29 @@ SOFTWARE.
       <Hxb-Rebuild-Out-Outputs Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-Rebuild-Finalize">
+    <ItemGroup>
+      <Hxb-Rebuild-Finalize-In-ExtraOutputs Include="0"/>
+    </ItemGroup>
+  </Target>
   <!--Endregion-->
 
   <!--Region Target: Hxb-ArrangeRebuild-->
+  <Target Name="Hxb-ArrangeRebuild-Initialize"/>
+
   <Target Name="Hxb-ArrangeRebuild">
     <PropertyGroup>
       <Hxb-ArrangeRebuild-In-ArtifactsDir></Hxb-ArrangeRebuild-In-ArtifactsDir>
     </PropertyGroup>
   </Target>
+
+  <Target Name="Hxb-ArrangeRebuild-Finalize"/>
   <!--Endregion-->
 
   <!--Region Target: Hxb-FxCop-->
+  <Target Name="Hxb-FxCop-Initialize"/>
+
   <Target Name="Hxb-FxCop">
     <PropertyGroup>
       <Hxb-FxCop-In-AnalysisResult-File></Hxb-FxCop-In-AnalysisResult-File>
@@ -214,9 +228,13 @@ SOFTWARE.
       <Hxb-FxCop-In-Dictionary Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-FxCop-Finalize"/>
   <!--Endregion-->
 
   <!--Region Target: Hxb-NugetDeploy-->
+  <Target Name="Hxb-NugetDeploy-Initialize"/>
+
   <Target Name="Hxb-NugetDeploy">
     <PropertyGroup>
       <Hxb-NugetDeploy-In-APIKey></Hxb-NugetDeploy-In-APIKey>
@@ -234,9 +252,13 @@ SOFTWARE.
       <Hxb-NugetDeploy-Out-Packages Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-NugetDeploy-Finalize"/>
   <!--Endregion-->
 
   <!--Region Target: Hxb-NugetRestore-->
+  <Target Name="Hxb-NugetRestore-Initialize"/>
+
   <Target Name="Hxb-NugetRestore">
     <PropertyGroup>
       <Hxb-NugetRestore-In-NoCache></Hxb-NugetRestore-In-NoCache>
@@ -248,9 +270,13 @@ SOFTWARE.
       <Hxb-NugetRestore-In-Packages-Dir Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-NugetRestore-Finalize"/>
   <!--Endregion-->
 
   <!--Region Target: Hxb-NUnit-->
+  <Target Name="Hxb-NUnit-Initialize"/>
+
   <Target Name="Hxb-NUnit">
     <PropertyGroup>
       <Hxb-NUnit-In-TestsResult-File></Hxb-NUnit-In-TestsResult-File>
@@ -284,9 +310,13 @@ SOFTWARE.
       <Hxb-NUnit-In-TestsList Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-NUnit-Finalize"/>
   <!--Endregion-->
 
   <!--Region Target: Hxb-OpenCover-->
+  <Target Name="Hxb-OpenCover-Initialize"/>
+
   <Target Name="Hxb-OpenCover">
     <PropertyGroup>
       <Hxb-OpenCover-In-CoverageResult-File></Hxb-OpenCover-In-CoverageResult-File>
@@ -321,9 +351,13 @@ SOFTWARE.
       <Hxb-OpenCover-In-PdbSearchDirs Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-OpenCover-Finalize"/>
   <!--Endregion-->
 
   <!--Region Target: Hxb-ReportGenerator-->
+  <Target Name="Hxb-ReportGenerator-Initialize"/>
+
   <Target Name="Hxb-ReportGenerator">
     <PropertyGroup>
       <Hxb-ReportGenerator-In-ReportTypes></Hxb-ReportGenerator-In-ReportTypes>
@@ -334,9 +368,13 @@ SOFTWARE.
       <Hxb-ReportGenerator-In-Results Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-ReportGenerator-Finalize"/>
   <!--Endregion-->
 
   <!--Region Target: Hxb-ReportUnit-->
+  <Target Name="Hxb-ReportUnit-Initialize"/>
+
   <Target Name="Hxb-ReportUnit">
     <PropertyGroup>
       <Hxb-ReportUnit-In-Report-File></Hxb-ReportUnit-In-Report-File>
@@ -347,6 +385,8 @@ SOFTWARE.
       <Hxb-ReportUnit-In-TestsResult Include="0"/>
     </ItemGroup>
   </Target>
+
+  <Target Name="Hxb-ReportUnit-Finalize"/>
   <!--Endregion-->
 
   <!--Region Flows-->

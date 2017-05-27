@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-ReportUnit" DependsOnTargets="Hxb-ArrangeRebuild">
+  <Target Name="Hxb-ReportUnit-Initialize" DependsOnTargets="Hxb-NUnit-Initialize">
     <PropertyGroup>
       <Hxb-ReportUnit-In-Report-File Condition="'$(Hxb-ReportUnit-In-Report-File)' == ''">ReportUnit.html</Hxb-ReportUnit-In-Report-File>
       <Hxb-ReportUnit-In-Artifacts-Dir Condition="'$(Hxb-ReportUnit-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-ReportUnit</Hxb-ReportUnit-In-Artifacts-Dir>
@@ -37,12 +37,20 @@ SOFTWARE.
                                      Include="$(Hxb-NUnit-In-Artifacts-Dir)\NUnit.xml"/>
     </ItemGroup>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-ReportUnit" DependsOnTargets="Hxb-ArrangeRebuild;Hxb-ReportUnit-Initialize">
     <RemoveDir Directories="$(Hxb-ReportUnit-In-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.ReportUnit ReportUnitExeFile="@(Hxb-System-ReportUnitExe)"
                                      TestsResultFile="@(Hxb-ReportUnit-In-TestsResult)"
                                      ReportFile="$(Hxb-ReportUnit-In-Artifacts-Dir)\$(Hxb-ReportUnit-In-Report-File)"/>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-ReportUnit-Finalize" AfterTargets="Hxb-ReportUnit">
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

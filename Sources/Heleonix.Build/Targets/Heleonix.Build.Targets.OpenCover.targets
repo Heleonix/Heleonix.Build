@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-OpenCover" DependsOnTargets="Hxb-ArrangeRebuild;_Hxb-Find-Binaries">
+  <Target Name="Hxb-OpenCover-Initialize" DependsOnTargets="_Hxb-Find-Binaries;Hxb-NUnit-Initialize">
     <PropertyGroup>
       <Hxb-OpenCover-In-Filters Condition="'$(Hxb-OpenCover-In-Filters)' == ''">+[$(_Hxb-Find-Sln-Out-SlnName)*]* -[*.Tests]*</Hxb-OpenCover-In-Filters>
       <Hxb-OpenCover-In-Artifacts-Dir Condition="'$(Hxb-OpenCover-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-OpenCover</Hxb-OpenCover-In-Artifacts-Dir>
@@ -53,6 +53,10 @@ SOFTWARE.
       <Hxb-OpenCover-In-CoverageResult-File Condition="'$(Hxb-OpenCover-In-CoverageResult-File)' == ''">OpenCover.xml</Hxb-OpenCover-In-CoverageResult-File>
     </PropertyGroup>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-OpenCover" DependsOnTargets="Hxb-ArrangeRebuild;Hxb-OpenCover-Initialize">
     <RemoveDir Directories="$(Hxb-OpenCover-In-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.OpenCover OpenCoverExeFile="@(Hxb-System-OpenCoverConsoleExe)"
@@ -84,6 +88,10 @@ SOFTWARE.
       <Output TaskParameter="VisitedBranches" PropertyName="Hxb-OpenCover-Out-VisitedBranches"/>
     </Heleonix.Build.Tasks.OpenCover>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-OpenCover-Finalize" AfterTargets="Hxb-OpenCover">
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Rebuild" DependsOnTargets="_Hxb-Find-Sln">
+  <Target Name="Hxb-Rebuild-Initialize" DependsOnTargets="_Hxb-Find-Sln">
     <PropertyGroup>
       <Hxb-Rebuild-In-Artifacts-Dir Condition="'$(Hxb-Rebuild-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild</Hxb-Rebuild-In-Artifacts-Dir>
     </PropertyGroup>
@@ -37,6 +37,10 @@ SOFTWARE.
       </Hxb-Rebuild-In-Sln>
     </ItemGroup>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-Rebuild" DependsOnTargets="Hxb-Rebuild-Initialize">
     <Error Condition="'@(Hxb-Rebuild-In-Sln)' == ''" Text="'@Hxb-Rebuild-In-Sln' is not found."/>
 
     <PropertyGroup>
@@ -80,6 +84,10 @@ SOFTWARE.
       <Output TaskParameter="TargetOutputs" ItemName="Hxb-Rebuild-Out-Outputs"/>
     </MSBuild>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-Rebuild-Finalize" AfterTargets="Hxb-Rebuild">
     <MakeDir Directories="$(Hxb-Rebuild-In-Artifacts-Dir)"/>
 
     <!--Copy the solution file-->
@@ -113,6 +121,9 @@ SOFTWARE.
       </_Hxb-Rebuild-Outputs>
     </ItemGroup>
     <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-Outputs)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
+    
+    <!--Copy extra outputs-->
+    <Heleonix.Build.Tasks.FileCopy Files="@(Hxb-Rebuild-Finalize-In-ExtraOutputs)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
 
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>

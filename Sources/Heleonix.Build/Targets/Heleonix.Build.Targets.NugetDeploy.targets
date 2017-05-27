@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-NugetDeploy" DependsOnTargets="Hxb-ArrangeRebuild;_Hxb-Find-Sln">
+  <Target Name="Hxb-NugetDeploy-Initialize" DependsOnTargets="_Hxb-Find-Sln">
     <PropertyGroup>
       <Hxb-NugetDeploy-In-IncludeReferencedProjects Condition="'$(Hxb-NugetDeploy-In-IncludeReferencedProjects)' == ''">true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
       <Hxb-NugetDeploy-In-ExcludeEmptyDirectories Condition="'$(Hxb-NugetDeploy-In-ExcludeEmptyDirectories)' == ''">true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
@@ -40,6 +40,10 @@ SOFTWARE.
                                    Include="$(_Hxb-Find-Sln-Out-SlnDir)\Sources\*\*.csproj"/>
     </ItemGroup>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-NugetDeploy" DependsOnTargets="Hxb-ArrangeRebuild;Hxb-NugetDeploy-Initialize">
     <RemoveDir Directories="$(Hxb-NugetDeploy-In-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.ItemCombine Operation="Pairing"
@@ -69,6 +73,10 @@ SOFTWARE.
                                     SourcePath="@(Hxb-NugetDeploy-In-Source)"
                                     Verbosity="$(Hxb-Build-Verbosity)"/>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-NugetDeploy-Finalize" AfterTargets="Hxb-NugetDeploy">
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-ReportGenerator" DependsOnTargets="Hxb-ArrangeRebuild">
+  <Target Name="Hxb-ReportGenerator-Initialize" DependsOnTargets="Hxb-OpenCover-Initialize">
     <PropertyGroup>
       <Hxb-ReportGenerator-In-ReportTypes Condition="'$(Hxb-ReportGenerator-In-ReportTypes)' == ''">Badges;Html</Hxb-ReportGenerator-In-ReportTypes>
       <Hxb-ReportGenerator-In-Artifacts-Dir Condition="'$(Hxb-ReportGenerator-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-ReportGenerator</Hxb-ReportGenerator-In-Artifacts-Dir>
@@ -37,6 +37,10 @@ SOFTWARE.
                                       Include="$(Hxb-OpenCover-In-Artifacts-Dir)\OpenCover.xml"/>
     </ItemGroup>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-ReportGenerator" DependsOnTargets="Hxb-ArrangeRebuild;Hxb-ReportGenerator-Initialize">
     <PropertyGroup>
       <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Quiet'">Error</_Hxb-ReportGenerator-Verbosity>
       <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Normal'">Info</_Hxb-ReportGenerator-Verbosity>
@@ -51,6 +55,10 @@ SOFTWARE.
                                           ReportTypes="$(Hxb-ReportGenerator-In-ReportTypes)"
                                           Verbosity="$(_Hxb-ReportGenerator-Verbosity)"/>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-ReportGenerator-Finalize" AfterTargets="Hxb-ReportGenerator">
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

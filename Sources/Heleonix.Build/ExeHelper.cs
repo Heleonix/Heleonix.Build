@@ -97,6 +97,8 @@ namespace Heleonix.Build
 
                 if (!exited) process.Kill();
 
+                Console.WriteLine(output);
+
                 return new ExeResult
                 {
                     ExitCode = process.ExitCode,

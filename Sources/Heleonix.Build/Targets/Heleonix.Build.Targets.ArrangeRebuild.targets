@@ -26,7 +26,11 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Condition="'$(Hxb-Setup-CI)' == 'GoCD'" Name="Hxb-ArrangeRebuild">
+  <Target Name="Hxb-ArrangeRebuild-Initialize">
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-ArrangeRebuild" DependsOnTargets="Hxb-ArrangeRebuild-Initialize" Condition="'$(Hxb-Setup-CI)' == 'GoCD'" >
     <PropertyGroup>
       <Hxb-ArrangeRebuild-In-ArtifactsDir Condition="'$(Hxb-ArrangeRebuild-In-ArtifactsDir)' == '' And '$(Hxb-Rebuild-In-Artifacts-Dir)' != ''">$(Hxb-Rebuild-In-Artifacts-Dir)</Hxb-ArrangeRebuild-In-ArtifactsDir>
       <Hxb-ArrangeRebuild-In-ArtifactsDir Condition="'$(Hxb-ArrangeRebuild-In-ArtifactsDir)' == '' And '$(Hxb-Rebuild-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild</Hxb-ArrangeRebuild-In-ArtifactsDir>
@@ -42,5 +46,11 @@ SOFTWARE.
                                    Overwrite="false"/>
 
     <RemoveDir Directories="$(Hxb-ArrangeRebuild-In-ArtifactsDir)"/>
+
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-ArrangeRebuild-Finalize" AfterTargets="Hxb-ArrangeRebuild">
+    <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>

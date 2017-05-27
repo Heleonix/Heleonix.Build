@@ -26,7 +26,7 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-FxCop" DependsOnTargets="Hxb-ArrangeRebuild;_Hxb-Find-Binaries">
+  <Target Name="Hxb-FxCop-Initialize" DependsOnTargets="_Hxb-Find-Binaries">
     <PropertyGroup>
       <Hxb-FxCop-In-AnalysisResult-File Condition="'$(Hxb-FxCop-In-AnalysisResult-File)' == ''">FxCop.xml</Hxb-FxCop-In-AnalysisResult-File>
       <Hxb-FxCop-In-FailOn Condition="'$(Hxb-FxCop-In-FailOn)' == '' And '$(Hxb-Setup-CI)' == 'Dev'">None</Hxb-FxCop-In-FailOn>
@@ -42,6 +42,10 @@ SOFTWARE.
                                        Include="%(Hxb-System-FxCopCmd.RootDir)\%(Hxb-System-FxCopCmd.Directory)\Xml\FxCopReport.xsl"/>
     </ItemGroup>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-FxCop" DependsOnTargets="Hxb-ArrangeRebuild;Hxb-FxCop-Initialize">
     <RemoveDir Directories="$(Hxb-FxCop-In-Artifacts-Dir)"/>
 
     <PropertyGroup>
@@ -68,6 +72,10 @@ SOFTWARE.
       <Output TaskParameter="Informational" ItemName="Hxb-FxCop-Out-Informational"/>
     </Heleonix.Build.Tasks.FxCop>
 
+    <OnError ExecuteTargets="Hxb-OnError"/>
+  </Target>
+
+  <Target Name="Hxb-FxCop-Finalize" AfterTargets="Hxb-FxCop">
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>
 </Project>
