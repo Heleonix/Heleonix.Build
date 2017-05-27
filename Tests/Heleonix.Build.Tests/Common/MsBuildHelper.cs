@@ -41,9 +41,10 @@ namespace Heleonix.Build.Tests.Common
         /// <param name="projectPath">The project path.</param>
         /// <param name="target">The build target.</param>
         /// <param name="properties">The build properties.</param>
+        /// <param name="workingDirectory">A directory where MSBuild was run from.</param>
         /// <returns>The exit code.</returns>
         /// <exception cref="NotSupportedException">Current OS platform is not supported.</exception>
-        public static int ExecuteMSBuild(string projectPath, string target, string properties)
+        public static int ExecuteMSBuild(string projectPath, string target, string properties, string workingDirectory)
         {
             var props = ArgsBuilder.By(string.Empty, "=", string.Empty, string.Empty, ";")
                 .AddValue(properties)
@@ -54,12 +55,12 @@ namespace Heleonix.Build.Tests.Common
                 .AddArgument("t", target)
                 .AddArgument("p", props);
 
-            return ExeHelper.Execute(MSBuildExe, args);
+            return ExeHelper.Execute(MSBuildExe, args, true, workingDirectory, int.MaxValue).ExitCode;
         }
 
         #endregion
 
-        #region InputProperties
+        #region Properties
 
         /// <summary>
         /// Gets the current configuration.

@@ -26,18 +26,19 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-OpenCover" DependsOnTargets="_Hxb-FindSln;_Hxb-FindBinaries">
+  <Target Name="Hxb-OpenCover" DependsOnTargets="Hxb-ArrangeRebuild;_Hxb-Find-Binaries">
     <PropertyGroup>
-      <Hxb-OpenCover-In-Filters Condition="'$(Hxb-OpenCover-In-Filters)' == ''">+[$(_Hxb-FindSln-Out-SlnName)*]* -[*.Tests]*</Hxb-OpenCover-In-Filters>
+      <Hxb-OpenCover-In-Filters Condition="'$(Hxb-OpenCover-In-Filters)' == ''">+[$(_Hxb-Find-Sln-Out-SlnName)*]* -[*.Tests]*</Hxb-OpenCover-In-Filters>
+      <Hxb-OpenCover-In-Artifacts-Dir Condition="'$(Hxb-OpenCover-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-OpenCover</Hxb-OpenCover-In-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
-      <Hxb-OpenCover-In-Target Condition="!Exists('@(Hxb-OpenCover-In-Target)')" Include="@(Hxb-System-NUnitConsoleExe)">
+      <Hxb-OpenCover-In-Target Condition="'@(Hxb-OpenCover-In-Target)' == ''" Include="@(Hxb-System-NUnitConsoleExe)">
         <Type>NUnit</Type>
-        <NUnitProjectFileOrTestsFiles>@(_Hxb-FindBinaries-Out-Tests)</NUnitProjectFileOrTestsFiles>
-        <ErrorsOutputFile>$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit\Errors.txt</ErrorsOutputFile>
-        <TestsOutputFile>$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit\Output.txt</TestsOutputFile>
-        <TestsResultFile>$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit\NUnit.xml</TestsResultFile>
+        <NUnitProjectFileOrTestsFiles>@(_Hxb-Find-Binaries-Out-Tests)</NUnitProjectFileOrTestsFiles>
+        <ErrorsOutputFile>$(Hxb-NUnit-In-Artifacts-Dir)\Errors.txt</ErrorsOutputFile>
+        <TestsOutputFile>$(Hxb-NUnit-In-Artifacts-Dir)\Output.txt</TestsOutputFile>
+        <TestsResultFile>$(Hxb-NUnit-In-Artifacts-Dir)\NUnit.xml</TestsResultFile>
       </Hxb-OpenCover-In-Target>
     </ItemGroup>
 
@@ -52,14 +53,10 @@ SOFTWARE.
       <Hxb-OpenCover-In-CoverageResult-File Condition="'$(Hxb-OpenCover-In-CoverageResult-File)' == ''">OpenCover.xml</Hxb-OpenCover-In-CoverageResult-File>
     </PropertyGroup>
 
-    <PropertyGroup>
-      <Hxb-OpenCover-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-OpenCover</Hxb-OpenCover-Out-Artifacts-Dir>
-    </PropertyGroup>
-
-    <RemoveDir Directories="$(Hxb-OpenCover-Out-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-OpenCover-In-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.OpenCover OpenCoverExeFile="@(Hxb-System-OpenCoverConsoleExe)"
-                                    CoverageResultFile="$(Hxb-OpenCover-Out-Artifacts-Dir)\$(Hxb-OpenCover-In-CoverageResult-File)"
+                                    CoverageResultFile="$(Hxb-OpenCover-In-Artifacts-Dir)\$(Hxb-OpenCover-In-CoverageResult-File)"
                                     ExcludeByAttributeFilters="$(Hxb-OpenCover-In-ExcludeByAttributeFilters)"
                                     Filters="$(Hxb-OpenCover-In-Filters)"
                                     Target="@(Hxb-OpenCover-In-Target)"

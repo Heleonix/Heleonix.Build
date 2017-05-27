@@ -26,22 +26,20 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-NUnit" DependsOnTargets="_Hxb-FindBinaries">
+  <Target Name="Hxb-NUnit" DependsOnTargets="Hxb-ArrangeRebuild;_Hxb-Find-Binaries">
     <PropertyGroup>
       <Hxb-NUnit-In-ErrorsOutput-File Condition="'$(Hxb-NUnit-In-ErrorsOutput-File)' == ''">Errors.txt</Hxb-NUnit-In-ErrorsOutput-File>
       <Hxb-NUnit-In-TestsOutput-File Condition="'$(Hxb-NUnit-In-TestsOutput-File)' == ''">Output.txt</Hxb-NUnit-In-TestsOutput-File>
       <Hxb-NUnit-In-TestsResult-File Condition="'$(Hxb-NUnit-In-TestsResult-File)' == ''">NUnit.xml</Hxb-NUnit-In-TestsResult-File>
+      <Hxb-NUnit-In-Artifacts-Dir Condition="'$(Hxb-NUnit-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit</Hxb-NUnit-In-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
-      <Hxb-NUnit-In-NUnitProjectOrTests Condition="!Exists('')" Include="@(_Hxb-FindBinaries-Out-Tests)"/>
+      <Hxb-NUnit-In-NUnitProjectOrTests Condition="'@(Hxb-NUnit-In-NUnitProjectOrTests)' == ''"
+                                        Include="@(_Hxb-Find-Binaries-Out-Tests)"/>
     </ItemGroup>
 
-    <PropertyGroup>
-      <Hxb-NUnit-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NUnit</Hxb-NUnit-Out-Artifacts-Dir>
-    </PropertyGroup>
-
-    <RemoveDir Directories="$(Hxb-NUnit-Out-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-NUnit-In-Artifacts-Dir)"/>
 
     <PropertyGroup>
       <_Hxb-NUnit-TraceLevel Condition="'$(Hxb-Build-Verbosity)' == 'Quiet'">Off</_Hxb-NUnit-TraceLevel>
@@ -56,14 +54,14 @@ SOFTWARE.
                                 DomainIsolation="$(Hxb-NUnit-In-DomainIsolation)"
                                 ShadowCopy="$(Hxb-NUnit-In-ShadowCopy)"
                                 FailOnFailedTests="$(Hxb-NUnit-In-FailOnFailedTests)"
-                                ErrorsOutputFile="$(Hxb-NUnit-Out-Artifacts-Dir)\$(Hxb-NUnit-In-ErrorsOutput-File)"
+                                ErrorsOutputFile="$(Hxb-NUnit-In-Artifacts-Dir)\$(Hxb-NUnit-In-ErrorsOutput-File)"
                                 Framework="$(Hxb-NUnit-In-Framework)"
-                                TestsResultFile="$(Hxb-NUnit-Out-Artifacts-Dir)\$(Hxb-NUnit-In-TestsResult-File)"
+                                TestsResultFile="$(Hxb-NUnit-In-Artifacts-Dir)\$(Hxb-NUnit-In-TestsResult-File)"
                                 StopOnErrorOrFailedTest="$(Hxb-NUnit-In-StopOnErrorOrFailedTest)"
                                 TestsFilter="$(Hxb-NUnit-In-TestsFilter)"
                                 TraceLevel="$(_Hxb-NUnit-TraceLevel)"
                                 TestsListFile="@(Hxb-NUnit-In-TestsList)"
-                                TestsOutputFile="$(Hxb-NUnit-Out-Artifacts-Dir)\$(Hxb-NUnit-In-TestsOutput-File)"
+                                TestsOutputFile="$(Hxb-NUnit-In-Artifacts-Dir)\$(Hxb-NUnit-In-TestsOutput-File)"
                                 TestsParameters="$(Hxb-NUnit-In-TestsParameters)"
                                 UseTeamCityServiceMessages="$(Hxb-NUnit-In-UseTeamCityServiceMessages)"
                                 ProcessIsolation="$(Hxb-NUnit-In-ProcessIsolation)">

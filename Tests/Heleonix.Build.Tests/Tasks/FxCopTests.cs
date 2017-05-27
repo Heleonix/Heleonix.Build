@@ -46,7 +46,7 @@ namespace Heleonix.Build.Tests.Tasks
         [TestCase(false, FxCop.IssueTypes.None)]
         public static void Execute(bool useXsl, FxCop.IssueTypes failOn)
         {
-            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
             var analysisResults = Path.Combine(LibSimulatorPath.GetArtifactsDir("Hxb-FxCop"), Path.GetRandomFileName());
 

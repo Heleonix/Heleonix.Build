@@ -26,24 +26,21 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-NugetDeploy">
+  <Target Name="Hxb-NugetDeploy" DependsOnTargets="Hxb-ArrangeRebuild;_Hxb-Find-Sln">
     <PropertyGroup>
       <Hxb-NugetDeploy-In-IncludeReferencedProjects Condition="'$(Hxb-NugetDeploy-In-IncludeReferencedProjects)' == ''">true</Hxb-NugetDeploy-In-IncludeReferencedProjects>
       <Hxb-NugetDeploy-In-ExcludeEmptyDirectories Condition="'$(Hxb-NugetDeploy-In-ExcludeEmptyDirectories)' == ''">true</Hxb-NugetDeploy-In-ExcludeEmptyDirectories>
+      <Hxb-NugetDeploy-In-Artifacts-Dir Condition="'$(Hxb-NugetDeploy-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-NugetDeploy</Hxb-NugetDeploy-In-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
-      <Hxb-NugetDeploy-In-Nuspecs Condition="!Exists('@(Hxb-NugetDeploy-In-Nuspecs)')"
-                                  Include="$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.nuspec"/>
-      <Hxb-NugetDeploy-In-Projects Condition="!Exists('@(Hxb-NugetDeploy-In-Projects)')"
-                                   Include="$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\*\*.csproj"/>
+      <Hxb-NugetDeploy-In-Nuspecs Condition="'@(Hxb-NugetDeploy-In-Nuspecs)' == ''"
+                                  Include="$(_Hxb-Find-Sln-Out-SlnDir)\Sources\*\*.nuspec"/>
+      <Hxb-NugetDeploy-In-Projects Condition="'@(Hxb-NugetDeploy-In-Projects)' == ''"
+                                   Include="$(_Hxb-Find-Sln-Out-SlnDir)\Sources\*\*.csproj"/>
     </ItemGroup>
 
-    <PropertyGroup>
-      <Hxb-NugetDeploy-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-NugetDeploy</Hxb-NugetDeploy-Out-Artifacts-Dir>
-    </PropertyGroup>
-
-    <RemoveDir Directories="$(Hxb-NugetDeploy-Out-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-NugetDeploy-In-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.ItemCombine Operation="Pairing"
                                       TargetMetadataName="Project"
@@ -61,7 +58,7 @@ SOFTWARE.
                                     Configuration="$(Hxb-In-Configuration)"
                                     Properties="$(Hxb-NugetDeploy-In-Properties)"
                                     MSBuildDir="@(Hxb-System-MSBuildDir)"
-                                    PackageDir="$(Hxb-NugetDeploy-Out-Artifacts-Dir)">
+                                    PackageDir="$(Hxb-NugetDeploy-In-Artifacts-Dir)">
       <Output TaskParameter="PackageFile" ItemName="Hxb-NugetDeploy-Out-Packages"/>
     </Heleonix.Build.Tasks.NugetPack>
 

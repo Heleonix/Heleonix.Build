@@ -64,7 +64,8 @@ namespace Heleonix.Build.Tests.Targets
                 var props = TargetSetup.InputProperties("Hxb-FxCop", CIType.Jenkins,
                     SimulatorType.Library, overridesFilePath, testCase);
 
-                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props,
+                    LibSimulatorPath.SolutionDir);
 
                 Assert.That(result == 0, Is.EqualTo(testCase.Success));
             }

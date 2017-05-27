@@ -73,7 +73,8 @@ namespace Heleonix.Build.Tests.Targets
                     var props = TargetSetup.InputProperties("Hxb-NugetDeploy", CIType.Jenkins, SimulatorType.Library,
                         overridesFilePath, testCase);
 
-                    result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+                    result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props,
+                        LibSimulatorPath.SolutionDir);
 
                     Assert.That(result, Is.Zero);
 

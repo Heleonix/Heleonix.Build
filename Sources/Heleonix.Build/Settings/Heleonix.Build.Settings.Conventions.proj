@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 The MIT License (MIT)
 
@@ -26,23 +26,9 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-ReportUnit" DependsOnTargets="Hxb-ArrangeRebuild">
-    <PropertyGroup>
-      <Hxb-ReportUnit-In-Report-File Condition="'$(Hxb-ReportUnit-In-Report-File)' == ''">ReportUnit.html</Hxb-ReportUnit-In-Report-File>
-      <Hxb-ReportUnit-In-Artifacts-Dir Condition="'$(Hxb-ReportUnit-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-ReportUnit</Hxb-ReportUnit-In-Artifacts-Dir>
-    </PropertyGroup>
+  <Target Name="Hxb-Initialize-B-Conventions" BeforeTargets="Hxb-Initialize">
+  </Target>
 
-    <ItemGroup>
-      <Hxb-ReportUnit-In-TestsResult Condition="'@(Hxb-ReportUnit-In-TestsResult)' == ''"
-                                     Include="$(Hxb-NUnit-In-Artifacts-Dir)\NUnit.xml"/>
-    </ItemGroup>
-
-    <RemoveDir Directories="$(Hxb-ReportUnit-In-Artifacts-Dir)"/>
-
-    <Heleonix.Build.Tasks.ReportUnit ReportUnitExeFile="@(Hxb-System-ReportUnitExe)"
-                                     TestsResultFile="@(Hxb-ReportUnit-In-TestsResult)"
-                                     ReportFile="$(Hxb-ReportUnit-In-Artifacts-Dir)\$(Hxb-ReportUnit-In-Report-File)"/>
-
-    <OnError ExecuteTargets="Hxb-OnError"/>
+  <Target Name="Hxb-Initialize-A-Conventions" AfterTargets="Hxb-Initialize">
   </Target>
 </Project>

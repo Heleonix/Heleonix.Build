@@ -31,8 +31,10 @@ SOFTWARE.
 
   <!--Settings-->
   <Import Project="Settings\Heleonix.Build.Settings.System.proj"/>
+  <Import Project="Settings\Heleonix.Build.Settings.Conventions.proj"/>
 
   <!--Targets-->
+  <Import Project="Targets\Heleonix.Build.Targets.ArrangeRebuild.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.Internal.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.Initialize.targets"/>
   <Import Project="Targets\Heleonix.Build.Targets.Rebuild.targets"/>

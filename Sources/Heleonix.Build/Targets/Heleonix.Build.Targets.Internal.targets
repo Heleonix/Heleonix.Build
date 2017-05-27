@@ -26,41 +26,45 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="_Hxb-FindSln">
+  <Target Name="_Hxb-Find-Sln">
     <ItemGroup>
-      <_Hxb-FindSln-Out-Sln Include="$(Hxb-Setup-Workspace-Dir)\*.sln"/>
+      <_Hxb-Find-Sln-Out-Sln Include="$(Hxb-Setup-Workspace-Dir)\*.sln"/>
     </ItemGroup>
 
     <PropertyGroup>
-      <_Hxb-FindSln-Out-SlnName>%(_Hxb-FindSln-Out-Sln.Filename)</_Hxb-FindSln-Out-SlnName>
+      <_Hxb-Find-Sln-Out-SlnDir>@(_Hxb-Find-Sln-Out-Sln->DirectoryName())</_Hxb-Find-Sln-Out-SlnDir>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <_Hxb-Find-Sln-Out-SlnName>%(_Hxb-Find-Sln-Out-Sln.Filename)</_Hxb-Find-Sln-Out-SlnName>
     </PropertyGroup>
   </Target>
 
-  <Target Name="_Hxb-FindBinaries" DependsOnTargets="_Hxb-FindSln">
+  <Target Name="_Hxb-Find-Binaries" DependsOnTargets="_Hxb-Find-Sln">
     <PropertyGroup>
-      <_Hxb-FindBinaries-SourcesTemplate>$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Sources\$(_Hxb-FindSln-Out-SlnName)*\bin</_Hxb-FindBinaries-SourcesTemplate>
-      <_Hxb-FindBinaries-SourcesTemplate Condition="'$(Hxb-In-Platform)' != ''">$(_Hxb-FindBinaries-SourcesTemplate)\$(Hxb-In-Platform)</_Hxb-FindBinaries-SourcesTemplate>
-      <_Hxb-FindBinaries-SourcesTemplate>$(_Hxb-FindBinaries-SourcesTemplate)\$(Hxb-In-Configuration)\$(_Hxb-FindSln-Out-SlnName)*</_Hxb-FindBinaries-SourcesTemplate>
+      <_Hxb-Find-Binaries-SourcesTemplate>$(_Hxb-Find-Sln-Out-SlnDir)\Sources\$(_Hxb-Find-Sln-Out-SlnName)*\bin</_Hxb-Find-Binaries-SourcesTemplate>
+      <_Hxb-Find-Binaries-SourcesTemplate Condition="'$(Hxb-In-Platform)' != ''">$(_Hxb-Find-Binaries-SourcesTemplate)\$(Hxb-In-Platform)</_Hxb-Find-Binaries-SourcesTemplate>
+      <_Hxb-Find-Binaries-SourcesTemplate>$(_Hxb-Find-Binaries-SourcesTemplate)\$(Hxb-In-Configuration)\$(_Hxb-Find-Sln-Out-SlnName)*</_Hxb-Find-Binaries-SourcesTemplate>
     </PropertyGroup>
     <ItemGroup>
-      <_Hxb-FindBinaries-Sources Include="$(_Hxb-FindBinaries-SourcesTemplate)"/>
+      <_Hxb-Find-Binaries-Sources Include="$(_Hxb-Find-Binaries-SourcesTemplate)"/>
     </ItemGroup>
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-FindBinaries-Sources)"
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Find-Binaries-Sources)"
                                      RegExp="^.*\\(.+)\\bin\\.+\\\1(\.dll|\.exe)$">
-      <Output TaskParameter="Outputs" ItemName="_Hxb-FindBinaries-Out-Sources"/>
+      <Output TaskParameter="Outputs" ItemName="_Hxb-Find-Binaries-Out-Sources"/>
     </Heleonix.Build.Tasks.ItemFilter>
 
     <PropertyGroup>
-      <_Hxb-FindBinaries-TestsTemplate>$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild\Tests\$(_Hxb-FindSln-Out-SlnName)*\bin</_Hxb-FindBinaries-TestsTemplate>
-      <_Hxb-FindBinaries-TestsTemplate Condition="'$(Hxb-In-Platform)' != ''">$(_Hxb-FindBinaries-TestsTemplate)\$(Hxb-In-Platform)</_Hxb-FindBinaries-TestsTemplate>
-      <_Hxb-FindBinaries-TestsTemplate>$(_Hxb-FindBinaries-TestsTemplate)\$(Hxb-In-Configuration)\$(_Hxb-FindSln-Out-SlnName)*</_Hxb-FindBinaries-TestsTemplate>
+      <_Hxb-Find-Binaries-TestsTemplate>$(_Hxb-Find-Sln-Out-SlnDir)\Tests\$(_Hxb-Find-Sln-Out-SlnName)*\bin</_Hxb-Find-Binaries-TestsTemplate>
+      <_Hxb-Find-Binaries-TestsTemplate Condition="'$(Hxb-In-Platform)' != ''">$(_Hxb-Find-Binaries-TestsTemplate)\$(Hxb-In-Platform)</_Hxb-Find-Binaries-TestsTemplate>
+      <_Hxb-Find-Binaries-TestsTemplate>$(_Hxb-Find-Binaries-TestsTemplate)\$(Hxb-In-Configuration)\$(_Hxb-Find-Sln-Out-SlnName)*</_Hxb-Find-Binaries-TestsTemplate>
     </PropertyGroup>
     <ItemGroup>
-      <_Hxb-FindBinaries-Tests Include="$(_Hxb-FindBinaries-TestsTemplate)"/>
+      <_Hxb-Find-Binaries-Tests Include="$(_Hxb-Find-Binaries-TestsTemplate)"/>
     </ItemGroup>
-    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-FindBinaries-Tests)"
+    <Heleonix.Build.Tasks.ItemFilter Inputs="@(_Hxb-Find-Binaries-Tests)"
                                      RegExp="^.*\\(.+)\\bin\\.+\\\1\.dll$">
-      <Output TaskParameter="Outputs" ItemName="_Hxb-FindBinaries-Out-Tests"/>
+      <Output TaskParameter="Outputs" ItemName="_Hxb-Find-Binaries-Out-Tests"/>
     </Heleonix.Build.Tasks.ItemFilter>
   </Target>
 </Project>

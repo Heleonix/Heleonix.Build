@@ -26,20 +26,16 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-Rebuild" DependsOnTargets="_Hxb-FindSln">
-    <!--Preparation-->
+  <Target Name="Hxb-Rebuild" DependsOnTargets="_Hxb-Find-Sln">
     <PropertyGroup>
-      <Hxb-Rebuild-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild</Hxb-Rebuild-Out-Artifacts-Dir>
+      <Hxb-Rebuild-In-Artifacts-Dir Condition="'$(Hxb-Rebuild-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild</Hxb-Rebuild-In-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
-      <Hxb-Rebuild-In-Sln Condition="!Exists('@(Hxb-Rebuild-In-Sln)')" Include="@(_Hxb-FindSln-Out-Sln)">
+      <Hxb-Rebuild-In-Sln Condition="'@(Hxb-Rebuild-In-Sln)' == ''" Include="@(_Hxb-Find-Sln-Out-Sln)">
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </Hxb-Rebuild-In-Sln>
     </ItemGroup>
-    <PropertyGroup>
-      <_Hxb-Rebuild-Sln-Dir>@(Hxb-Rebuild-In-Sln->DirectoryName())</_Hxb-Rebuild-Sln-Dir>
-    </PropertyGroup>
 
     <Error Condition="'@(Hxb-Rebuild-In-Sln)' == ''" Text="'@Hxb-Rebuild-In-Sln' is not found."/>
 
@@ -53,7 +49,7 @@ SOFTWARE.
 
     <Delete Files="@(Hxb-Rebuild-In-Delete)"/>
 
-    <RemoveDir Directories="@(Hxb-Rebuild-In-Delete-Dirs);$(Hxb-Rebuild-Out-Artifacts-Dir)"/>
+    <RemoveDir Directories="@(Hxb-Rebuild-In-Delete-Dirs);$(Hxb-Rebuild-In-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.DirectoryClean Dirs="@(Hxb-Rebuild-In-Clean-Dirs)"/>
 
@@ -63,8 +59,8 @@ SOFTWARE.
     </PropertyGroup>
 
     <ItemGroup>
-      <_Hxb-Rebuild-AssemblyInfo Include="$(_Hxb-Rebuild-Sln-Dir)\**\*AssemblyInfo.*"
-                                 Exclude="$(_Hxb-Rebuild-Sln-Dir)\packages\**\*AssemblyInfo.*"/>
+      <_Hxb-Rebuild-AssemblyInfo Include="$(_Hxb-Find-Sln-Out-SlnDir)\**\*AssemblyInfo.*"
+                                 Exclude="$(_Hxb-Find-Sln-Out-SlnDir)\packages\**\*AssemblyInfo.*"/>
     </ItemGroup>
 
     <Heleonix.Build.Tasks.FileUpdate Condition="'$(Hxb-Build-Version)' != ''"
@@ -84,28 +80,28 @@ SOFTWARE.
       <Output TaskParameter="TargetOutputs" ItemName="Hxb-Rebuild-Out-Outputs"/>
     </MSBuild>
 
-    <MakeDir Directories="$(Hxb-Rebuild-Out-Artifacts-Dir)"/>
+    <MakeDir Directories="$(Hxb-Rebuild-In-Artifacts-Dir)"/>
 
     <!--Copy the solution file-->
-    <Heleonix.Build.Tasks.FileCopy Files="@(Hxb-Rebuild-In-Sln)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(Hxb-Rebuild-In-Sln)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
 
     <!--Copy relevant projects files-->
     <ItemGroup>
-      <_Hxb-Rebuild-Proj Include="$(_Hxb-Rebuild-Sln-Dir)\**\*.*proj"
-                         Exclude="$(_Hxb-Rebuild-Sln-Dir)\packages\**\*.*proj">
+      <_Hxb-Rebuild-Proj Include="$(_Hxb-Find-Sln-Out-SlnDir)\**\*.*proj"
+                         Exclude="$(_Hxb-Find-Sln-Out-SlnDir)\packages\**\*.*proj">
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-Proj>
     </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-Proj)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-Proj)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
 
     <!--Copy relevant nuspec files-->
     <ItemGroup>
-      <_Hxb-Rebuild-Nuspec Include="$(_Hxb-Rebuild-Sln-Dir)\**\*.nuspec"
-                           Exclude="$(_Hxb-Rebuild-Sln-Dir)\packages\**\*.nuspec">
+      <_Hxb-Rebuild-Nuspec Include="$(_Hxb-Find-Sln-Out-SlnDir)\**\*.nuspec"
+                           Exclude="$(_Hxb-Find-Sln-Out-SlnDir)\packages\**\*.nuspec">
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-Nuspec>
     </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-Nuspec)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-Nuspec)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
 
     <!--Copy relevant bin folders-->
     <PropertyGroup>
@@ -116,7 +112,7 @@ SOFTWARE.
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-Outputs>
     </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-Outputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-Outputs)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
 
     <OnError ExecuteTargets="Hxb-OnError"/>
   </Target>

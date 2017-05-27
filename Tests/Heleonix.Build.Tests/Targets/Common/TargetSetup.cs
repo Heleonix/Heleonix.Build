@@ -125,34 +125,43 @@ namespace Heleonix.Build.Tests.Targets.Common
             var props = ArgsBuilder.By(string.Empty, "=", string.Empty, "\"", ";")
                 .AddPath("Hxb-In-Flow", string.Join(";", testCase?.DependsOnTargets, targetName).Trim(';'))
                 .AddArgument("Hxb-In-Configuration", MSBuildHelper.CurrentConfiguration)
-                .AddPath("Hxb-In-Overrides", overridesFilePath)
-                .AddArgument("BUILD_NUMBER", 123);
+                .AddPath("Hxb-In-Overrides", overridesFilePath);
 
             switch (ciType)
             {
                 case CIType.Jenkins:
                     props.AddArgument("JENKINS_URL", "http://localhost:8080")
-                        .AddArgument("BRANCH_NAME", "1.2");
-
+                        .AddArgument("BRANCH_NAME", "1.2.3")
+                        .AddArgument("BUILD_NUMBER", 123);
                     switch (simulatorType)
                     {
                         case SimulatorType.Library:
                             props.AddPath("WORKSPACE", LibSimulatorPath.SolutionDir);
                             break;
                     }
-
                     break;
                 case CIType.TeamCity:
                     props.AddArgument("TEAMCITY_VERSION", "10.0")
-                        .AddArgument("teamcity_build_branch", "1.2");
-
+                        .AddArgument("teamcity_build_branch", "1.2.3")
+                        .AddArgument("BUILD_NUMBER", 123);
                     switch (simulatorType)
                     {
                         case SimulatorType.Library:
                             props.AddPath("system_agent_work_dir", LibSimulatorPath.SolutionDir);
                             break;
                     }
+                    break;
 
+                case CIType.GoCD:
+                    props.AddArgument("GO_PIPELINE_COUNTER", "123")
+                        .AddArgument("GO_SCM_CURRENT_BRANCH_SOURCE_NAME", "GO_SCM_HELEONIX_BUILD_CURRENT_BRANCH")
+                        .AddArgument("GO_SCM_HELEONIX_BUILD_CURRENT_BRANCH", "1.2.3");
+                    switch (simulatorType)
+                    {
+                        case SimulatorType.Library:
+                            props.AddPath("system_agent_work_dir", LibSimulatorPath.SolutionDir);
+                            break;
+                    }
                     break;
             }
 

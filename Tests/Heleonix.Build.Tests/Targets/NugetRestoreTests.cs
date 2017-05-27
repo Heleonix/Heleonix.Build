@@ -59,7 +59,7 @@ namespace Heleonix.Build.Tests.Targets
                 var props = TargetSetup.InputProperties("Hxb-NugetRestore", CIType.Jenkins,
                     SimulatorType.Library, overridesFilePath, testCase);
 
-                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props, LibSimulatorPath.SolutionDir);
 
                 Assert.That(result, Is.Zero);
                 Assert.That(Directory.Exists(packagesDir), Is.True);

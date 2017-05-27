@@ -31,12 +31,18 @@ SOFTWARE.
       <_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>@(Hxb-Rebuild-In-Sln->DirectoryName())</_Hxb-Rebuild-A-CopyOutputs-Sln-Dir>
     </PropertyGroup>
     <ItemGroup>
-      <_Hxb-Rebuild-A-CopyOutputs Include="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\*.*"
+      <_Hxb-Rebuild-A-CopyOutputs Include="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\*.*;$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\Sources\**\*.*;$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\Tests\**\*.*"
                                   Exclude="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\bin\*.*;$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\Tests\LibSimulator\**\obj\*.*">
         <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
       </_Hxb-Rebuild-A-CopyOutputs>
     </ItemGroup>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
 
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs)" Destinations="$(Hxb-Rebuild-Out-Artifacts-Dir)" Overwrite="true"/>
+    <ItemGroup>
+      <_Hxb-Rebuild-A-CopyOutputs-Packages-Dir Include="$(_Hxb-Rebuild-A-CopyOutputs-Sln-Dir)\packages\**\*.*">
+        <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
+      </_Hxb-Rebuild-A-CopyOutputs-Packages-Dir>
+    </ItemGroup>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-A-CopyOutputs-Packages-Dir)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
   </Target>
 </Project>

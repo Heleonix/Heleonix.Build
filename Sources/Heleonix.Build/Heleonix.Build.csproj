@@ -51,9 +51,17 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+    <None Include="Settings\Heleonix.Build.Settings.Conventions.proj">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Settings\Heleonix.Build.Settings.System.proj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Targets\Heleonix.Build.Targets.ArrangeRebuild.targets">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Targets\Heleonix.Build.Targets.Finalize.targets">
       <SubType>Designer</SubType>

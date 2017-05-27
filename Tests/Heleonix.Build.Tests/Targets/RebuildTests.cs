@@ -47,6 +47,7 @@ namespace Heleonix.Build.Tests.Targets
         public static IEnumerable<TargetTestCase> HxbRebuildTestCasesValueSource()
         {
             yield return new TargetTestCase(true);
+
             yield return new TargetTestCase(new Dictionary<string, ITaskItem[]>
                 {
                     { "Hxb-Rebuild-In-SnkPairFile", new[] { new TaskItem(LibSimulatorPath.SnkPairFile) as ITaskItem } }
@@ -65,10 +66,11 @@ namespace Heleonix.Build.Tests.Targets
 
             try
             {
-                var props = TargetSetup.InputProperties("Hxb-Rebuild", CIType.Jenkins,
+                var props = TargetSetup.InputProperties("Hxb-Rebuild", CIType.GoCD,
                     SimulatorType.Library, overridesFilePath, testCase);
 
-                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props);
+                var result = MSBuildHelper.ExecuteMSBuild(SystemPath.MainProjectFile, null, props,
+                    LibSimulatorPath.SolutionDir);
 
                 Assert.That(result == 0, Is.EqualTo(testCase.Success));
             }

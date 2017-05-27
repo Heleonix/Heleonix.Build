@@ -45,7 +45,7 @@ namespace Heleonix.Build.Tests.Tasks
         [TestCase(90, ExpectedResult = false)]
         public static bool Execute(int minClassCoverage)
         {
-            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
             var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-OpenCover");
             var coverageResults = Path.Combine(artifactsDir, Path.GetRandomFileName());

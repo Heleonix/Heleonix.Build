@@ -26,23 +26,21 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-ReportUnit" DependsOnTargets="Hxb-ArrangeRebuild">
+  <Target Condition="'$(Hxb-Setup-CI)' == 'GoCD'" Name="Hxb-ArrangeRebuild">
     <PropertyGroup>
-      <Hxb-ReportUnit-In-Report-File Condition="'$(Hxb-ReportUnit-In-Report-File)' == ''">ReportUnit.html</Hxb-ReportUnit-In-Report-File>
-      <Hxb-ReportUnit-In-Artifacts-Dir Condition="'$(Hxb-ReportUnit-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-ReportUnit</Hxb-ReportUnit-In-Artifacts-Dir>
+      <Hxb-ArrangeRebuild-In-ArtifactsDir Condition="'$(Hxb-ArrangeRebuild-In-ArtifactsDir)' == '' And '$(Hxb-Rebuild-In-Artifacts-Dir)' != ''">$(Hxb-Rebuild-In-Artifacts-Dir)</Hxb-ArrangeRebuild-In-ArtifactsDir>
+      <Hxb-ArrangeRebuild-In-ArtifactsDir Condition="'$(Hxb-ArrangeRebuild-In-ArtifactsDir)' == '' And '$(Hxb-Rebuild-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-Rebuild</Hxb-ArrangeRebuild-In-ArtifactsDir>
     </PropertyGroup>
 
     <ItemGroup>
-      <Hxb-ReportUnit-In-TestsResult Condition="'@(Hxb-ReportUnit-In-TestsResult)' == ''"
-                                     Include="$(Hxb-NUnit-In-Artifacts-Dir)\NUnit.xml"/>
+      <_Hxb-ArrangeRebuild-In-Artifacts Include="$(Hxb-ArrangeRebuild-In-ArtifactsDir)\**\*.*">
+        <WithSubDirsFrom>$(Hxb-ArrangeRebuild-In-ArtifactsDir)</WithSubDirsFrom>
+      </_Hxb-ArrangeRebuild-In-Artifacts>
     </ItemGroup>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-ArrangeRebuild-In-Artifacts)"
+                                   Destinations="$(Hxb-Setup-Workspace-Dir)"
+                                   Overwrite="false"/>
 
-    <RemoveDir Directories="$(Hxb-ReportUnit-In-Artifacts-Dir)"/>
-
-    <Heleonix.Build.Tasks.ReportUnit ReportUnitExeFile="@(Hxb-System-ReportUnitExe)"
-                                     TestsResultFile="@(Hxb-ReportUnit-In-TestsResult)"
-                                     ReportFile="$(Hxb-ReportUnit-In-Artifacts-Dir)\$(Hxb-ReportUnit-In-Report-File)"/>
-
-    <OnError ExecuteTargets="Hxb-OnError"/>
+    <RemoveDir Directories="$(Hxb-ArrangeRebuild-In-ArtifactsDir)"/>
   </Target>
 </Project>

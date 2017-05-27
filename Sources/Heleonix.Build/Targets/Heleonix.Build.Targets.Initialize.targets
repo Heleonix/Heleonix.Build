@@ -30,32 +30,31 @@ SOFTWARE.
     <Hxb-In-Configuration Condition="'$(Hxb-In-Configuration)' == ''">Release</Hxb-In-Configuration>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(Hxb-Setup-CI)' == ''">
     <Hxb-Setup-CI>Dev</Hxb-Setup-CI>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(GO_PIPELINE_COUNTER)' != ''">
-    <Hxb-Setup-CI>GoCD</Hxb-Setup-CI>
-    <Hxb-Setup-Workspace-Dir>$(MSBuildStartupDirectory)</Hxb-Setup-Workspace-Dir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(JENKINS_URL)' != ''">
-    <Hxb-Setup-CI>Jenkins</Hxb-Setup-CI>
-    <Hxb-Setup-Workspace-Dir>$(WORKSPACE)</Hxb-Setup-Workspace-Dir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TEAMCITY_VERSION)' != ''">
-    <Hxb-Setup-CI>TeamCity</Hxb-Setup-CI>
-    <Hxb-Setup-Workspace-Dir>$(system_agent_work_dir)</Hxb-Setup-Workspace-Dir>
+    <Hxb-Setup-CI Condition="'$(GO_PIPELINE_COUNTER)' != ''">GoCD</Hxb-Setup-CI>
+    <Hxb-Setup-Workspace-Dir Condition="'$(GO_PIPELINE_COUNTER)' != ''">$(MSBuildStartupDirectory)</Hxb-Setup-Workspace-Dir>
+    <Hxb-Setup-CI Condition="'$(JENKINS_URL)' != ''">Jenkins</Hxb-Setup-CI>
+    <Hxb-Setup-Workspace-Dir Condition="'$(JENKINS_URL)' != ''">$(WORKSPACE)</Hxb-Setup-Workspace-Dir>
+    <Hxb-Setup-CI Condition="'$(TEAMCITY_VERSION)' != ''">TeamCity</Hxb-Setup-CI>
+    <Hxb-Setup-Workspace-Dir Condition="'$(TEAMCITY_VERSION)' != ''">$(system_agent_work_dir)</Hxb-Setup-Workspace-Dir>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Hxb-Setup-Workspace-Flows>$(Hxb-Setup-Workspace-Dir)\Build.proj</Hxb-Setup-Workspace-Flows>
+    <Hxb-Setup-Workspace-Flows Condition="'$(Hxb-Setup-Workspace-Flows)' == ''">$(Hxb-Setup-Workspace-Dir)\Build.proj</Hxb-Setup-Workspace-Flows>
   </PropertyGroup>
 
   <Target Name="Hxb-Initialize">
     <Error Condition="'$(Hxb-In-Flow)' == ''" Text="'$Hxb-In-Flow' is not defined."/>
-    <Error Condition="'$(Hxb-In-Configuration)' == ''" Text="'$Hxb-In-Configuration' is not defined."/>
 
     <Error Condition="'$(Hxb-Setup-CI)' == ''" Text="'$Hxb-Setup-CI' is not defined."/>
     <Error Condition="!Exists('$(Hxb-Setup-Workspace-Dir)')" Text="'$Hxb-Setup-Workspace-Dir' is not found."/>
+
+    <PropertyGroup Condition="'$(Hxb-Build-Artifacts-Dir)' == ''">
+      <Hxb-Build-Artifacts-Dir>$(Hxb-Setup-Workspace-Dir)\Hxb-Artifacts</Hxb-Build-Artifacts-Dir>
+      <Hxb-Build-Artifacts-Dir Condition="'$(Hxb-In-Configuration)' != ''">$(Hxb-Build-Artifacts-Dir)\$(Hxb-In-Configuration)</Hxb-Build-Artifacts-Dir>
+      <Hxb-Build-Artifacts-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Artifacts-Dir)\$(Hxb-In-Platform)</Hxb-Build-Artifacts-Dir>
+    </PropertyGroup>
 
     <Heleonix.Build.Tasks.FileSystemSearch StartDir="$(Hxb-Setup-Workspace-Dir)"
                                            Direction="Up"
@@ -75,12 +74,7 @@ SOFTWARE.
     </PropertyGroup>
 
     <PropertyGroup>
-      <Hxb-Build-Verbosity>Normal</Hxb-Build-Verbosity>
-    </PropertyGroup>
-
-    <PropertyGroup>
-      <Hxb-Build-Artifacts-Dir>$(Hxb-Setup-Workspace-Dir)\Hxb-Artifacts\$(Hxb-In-Configuration)</Hxb-Build-Artifacts-Dir>
-      <Hxb-Build-Artifacts-Dir Condition="'$(Hxb-In-Platform)' != ''">$(Hxb-Build-Artifacts-Dir)\$(Hxb-In-Platform)</Hxb-Build-Artifacts-Dir>
+      <Hxb-Build-Verbosity Condition="'$(Hxb-Build-Verbosity)' == ''">Normal</Hxb-Build-Verbosity>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -112,11 +106,9 @@ SOFTWARE.
     <Message Text="$Hxb-In-Overrides: $(Hxb-In-Overrides)"/>
     <Message Text="$Hxb-In-Platform: $(Hxb-In-Platform)"/>
     <Message Text="$Hxb-In-Version: $(Hxb-In-Version)"/>
-
     <Message Text="$Hxb-Setup-Workspace-Dir: $(Hxb-Setup-Workspace-Dir)"/>
     <Message Text="$Hxb-Setup-CI: $(Hxb-Setup-CI)"/>
     <Message Text="$Hxb-Setup-Workspace-Flows: $(Hxb-Setup-Workspace-Flows)"/>
-
     <Message Text="$Hxb-Build-Version: $(Hxb-Build-Version)"/>
     <Message Text="$Hxb-Build-Version-Informational: $(Hxb-Build-Version-Informational)"/>
     <Message Text="$Hxb-Build-Artifacts-Dir: $(Hxb-Build-Artifacts-Dir)"/>

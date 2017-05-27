@@ -45,7 +45,7 @@ namespace Heleonix.Build.Tests.Tasks
         [Test]
         public static void Execute()
         {
-            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null);
+            MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
             var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-ReportGenerator");
 

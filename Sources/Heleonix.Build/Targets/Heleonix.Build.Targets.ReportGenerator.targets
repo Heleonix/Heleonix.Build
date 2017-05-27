@@ -26,14 +26,15 @@ SOFTWARE.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <Import Project="..\Heleonix.Build.Intellisense.proj" Condition="1 == 0"/>
 
-  <Target Name="Hxb-ReportGenerator">
+  <Target Name="Hxb-ReportGenerator" DependsOnTargets="Hxb-ArrangeRebuild">
     <PropertyGroup>
       <Hxb-ReportGenerator-In-ReportTypes Condition="'$(Hxb-ReportGenerator-In-ReportTypes)' == ''">Badges;Html</Hxb-ReportGenerator-In-ReportTypes>
+      <Hxb-ReportGenerator-In-Artifacts-Dir Condition="'$(Hxb-ReportGenerator-In-Artifacts-Dir)' == ''">$(Hxb-Build-Artifacts-Dir)\Hxb-ReportGenerator</Hxb-ReportGenerator-In-Artifacts-Dir>
     </PropertyGroup>
 
     <ItemGroup>
-      <Hxb-ReportGenerator-In-Results Condition="!Exists('@(Hxb-ReportGenerator-In-Results)')"
-                                      Include="$(Hxb-Build-Artifacts-Dir)\Hxb-OpenCover\OpenCover.xml"/>
+      <Hxb-ReportGenerator-In-Results Condition="'@(Hxb-ReportGenerator-In-Results)' == ''"
+                                      Include="$(Hxb-OpenCover-In-Artifacts-Dir)\OpenCover.xml"/>
     </ItemGroup>
 
     <PropertyGroup>
@@ -42,15 +43,11 @@ SOFTWARE.
       <_Hxb-ReportGenerator-Verbosity Condition="'$(Hxb-Build-Verbosity)' == 'Detailed'">Verbose</_Hxb-ReportGenerator-Verbosity>
     </PropertyGroup>
 
-    <PropertyGroup>
-      <Hxb-ReportGenerator-Out-Artifacts-Dir>$(Hxb-Build-Artifacts-Dir)\Hxb-ReportGenerator</Hxb-ReportGenerator-Out-Artifacts-Dir>
-    </PropertyGroup>
-
-    <RemoveDir Directories="$(Hxb-ReportGenerator-Out-Artifacts-Dir)"/>
+    <RemoveDir Directories="$(Hxb-ReportGenerator-In-Artifacts-Dir)"/>
 
     <Heleonix.Build.Tasks.ReportGenerator ReportGeneratorExeFile="@(Hxb-System-ReportGeneratorExe)"
                                           ResultsFiles="@(Hxb-ReportGenerator-In-Results)"
-                                          ReportDir="$(Hxb-ReportGenerator-Out-Artifacts-Dir)"
+                                          ReportDir="$(Hxb-ReportGenerator-In-Artifacts-Dir)"
                                           ReportTypes="$(Hxb-ReportGenerator-In-ReportTypes)"
                                           Verbosity="$(_Hxb-ReportGenerator-Verbosity)"/>
 

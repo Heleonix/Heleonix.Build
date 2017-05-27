@@ -175,7 +175,6 @@ namespace Heleonix.Build
         public static int Execute(string exePath, string arguments, string workingDirectory)
             => Execute(exePath, arguments, false, workingDirectory, int.MaxValue).ExitCode;
 
-
         /// <summary>
         /// Executes an executable by the specified <paramref name="exePath"/>.
         /// </summary>
