@@ -44,7 +44,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the Nuget executable path.
         /// </summary>
         public static string NugetExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
-            "packages", "NuGet.CommandLine.3.5.0", "tools", "NuGet.exe");
+            "packages", "NuGet.CommandLine.4.1.0", "tools", "NuGet.exe");
 
         /// <summary>
         /// Gets the ReportUnit executable path.
