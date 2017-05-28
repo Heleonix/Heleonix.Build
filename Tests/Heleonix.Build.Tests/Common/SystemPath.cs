@@ -53,7 +53,7 @@ namespace Heleonix.Build.Tests.Common
             "packages", "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
 
         public static string ReportGeneratorExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
-            "packages", "ReportGenerator.2.4.5.0", "tools", "ReportGenerator.exe");
+            "packages", "ReportGenerator.2.5.8", "tools", "ReportGenerator.exe");
 
         /// <summary>
         /// Gets the main project path.
@@ -64,7 +64,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the NUnit console executable path.
         /// </summary>
         public static string NUnitConsoleExe => Path.Combine(CurrentDir, "..", "..", "..", "..",
-            "packages", "NUnit.ConsoleRunner.3.4.0", "tools", "nunit3-console.exe");
+            "packages", "NUnit.ConsoleRunner.3.6.1", "tools", "nunit3-console.exe");
 
         /// <summary>
         /// Gets the OpenCover executable path.
