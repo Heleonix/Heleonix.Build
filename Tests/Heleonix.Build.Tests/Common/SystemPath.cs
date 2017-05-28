@@ -38,7 +38,7 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the current directory path.
         /// </summary>
-        public static string CurrentDir => AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
+        public static string CurrentDir => Path.GetDirectoryName(typeof(SystemPath).Assembly.Location);
 
         /// <summary>
         /// Gets the Nuget executable path.
