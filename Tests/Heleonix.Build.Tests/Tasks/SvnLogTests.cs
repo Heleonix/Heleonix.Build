@@ -90,15 +90,9 @@ namespace Heleonix.Build.Tests.Tasks
             }
             finally
             {
-                if (Directory.Exists(repositoryDir))
-                {
-                    ExeHelper.Execute("cmd", Invariant($"/C rmdir /s /q {repositoryDir}"));
-                }
+                ExeHelper.Execute("cmd", Invariant($"/C rmdir /s /q {repositoryDir}"));
 
-                if (Directory.Exists(workingCopyDir))
-                {
-                    ExeHelper.Execute("cmd", Invariant($"/C rmdir /s /q {workingCopyDir}"));
-                }
+                ExeHelper.Execute("cmd", Invariant($"/C rmdir /s /q {workingCopyDir}"));
             }
         }
 

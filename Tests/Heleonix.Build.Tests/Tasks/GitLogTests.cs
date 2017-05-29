@@ -23,10 +23,12 @@ SOFTWARE.
 */
 
 using System;
+using System.IO;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Tasks
 {
@@ -43,30 +45,58 @@ namespace Heleonix.Build.Tests.Tasks
         [Test]
         public static void Execute()
         {
-            var task = new GitLog
+            var repositoryDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
+
+            Directory.CreateDirectory(repositoryDir);
+
+            File.Create(Path.Combine(repositoryDir, "File1.txt")).Close();
+
+            var result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("init"), false,
+                repositoryDir, int.MaxValue).ExitCode;
+
+            Assert.That(result, Is.Zero);
+
+            result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("add ."), false,
+                repositoryDir, int.MaxValue).ExitCode;
+
+            Assert.That(result, Is.Zero);
+
+            result = ExeHelper.Execute(SystemPath.GitExe,
+                ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."), false, repositoryDir,
+                int.MaxValue).ExitCode;
+
+            Assert.That(result, Is.Zero);
+
+            try
             {
-                BuildEngine = new FakeBuildEngine(),
-                GitExeFile = new TaskItem(SystemPath.GitExe),
-                RepositoryFileDir = new TaskItem(LibSimulatorPath.SolutionDir),
-                MaxCount = 1
-            };
+                var task = new GitLog
+                {
+                    BuildEngine = new FakeBuildEngine(),
+                    GitExeFile = new TaskItem(SystemPath.GitExe),
+                    RepositoryFileDir = new TaskItem(repositoryDir),
+                    MaxCount = 1
+                };
 
-            var succeeded = task.Execute();
+                var succeeded = task.Execute();
 
-            Assert.That(succeeded, Is.True);
-            Assert.That(task.Commits, Has.Length.EqualTo(task.MaxCount));
-            Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
-            Assert.That(task.Commits[0]
-                .ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision"),
+                Assert.That(succeeded, Is.True);
+                Assert.That(task.Commits, Has.Length.EqualTo(task.MaxCount));
+                Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
+                Assert.That(task.Commits[0].ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision"),
                     StringComparison.Ordinal), Is.True);
-            Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
-            Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.Not.Empty);
-            Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.Not.Empty);
-            Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
-            Assert.That(task.Commits[0].GetMetadata("CommitterName"), Is.Not.Empty);
-            Assert.That(task.Commits[0].GetMetadata("CommitterEmail"), Is.Not.Empty);
-            Assert.That(task.Commits[0].GetMetadata("CommitterDate"), Is.Not.Empty);
-            Assert.That(task.Commits[0].GetMetadata("Message"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("CommitterName"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("CommitterEmail"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("CommitterDate"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("Message"), Is.EqualTo("Commit 1.\r\n"));
+            }
+            finally
+            {
+                ExeHelper.Execute("cmd", Invariant($"/C rmdir /s /q {repositoryDir}"));
+            }
         }
 
         #endregion
