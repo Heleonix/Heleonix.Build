@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
@@ -61,11 +62,14 @@ namespace Heleonix.Build.Tests.Tasks
 
             Assert.That(result, Is.Zero);
 
-            result = ExeHelper.Execute(SystemPath.GitExe,
-                ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."), false, repositoryDir,
-                int.MaxValue).ExitCode;
+            var exeResult = ExeHelper.Execute(SystemPath.GitExe,
+                ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."), true, repositoryDir,
+                int.MaxValue);
 
-            Assert.That(result, Is.Zero);
+            Trace.TraceError(exeResult.Output);
+            Console.WriteLine(exeResult.Output);
+
+            Assert.That(exeResult.ExitCode, Is.Zero);
 
             try
             {

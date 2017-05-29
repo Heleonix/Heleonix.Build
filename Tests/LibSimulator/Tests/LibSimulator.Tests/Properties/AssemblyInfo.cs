@@ -26,6 +26,6 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Heleonix.Build.Tests.Simulator.Tests")]
+[assembly: AssemblyTitle("LibSimulator.Tests")]
 [assembly: Guid("2c70b11c-97bd-4abe-becf-86bb9808f571")]
 [assembly: CLSCompliant(false)]
