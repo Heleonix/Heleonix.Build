@@ -93,15 +93,6 @@ SOFTWARE.
     <!--Copy the solution file-->
     <Heleonix.Build.Tasks.FileCopy Files="@(Hxb-Rebuild-In-Sln)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
 
-    <!--Copy possible AssemblyInfo files, like shared assembly info etc.-->
-    <ItemGroup>
-      <_Hxb-Rebuild-AssemblyInfo Include="$(_Hxb-Find-Sln-Out-SlnDir)\**\*AssemblyInfo.*"
-                                 Exclude="$(_Hxb-Find-Sln-Out-SlnDir)\packages\**\*AssemblyInfo.*">
-        <WithSubDirsFrom>$(Hxb-Setup-Workspace-Dir)</WithSubDirsFrom>
-      </_Hxb-Rebuild-AssemblyInfo>
-    </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hxb-Rebuild-AssemblyInfo)" Destinations="$(Hxb-Rebuild-In-Artifacts-Dir)" Overwrite="true"/>
-
     <!--Copy relevant projects files-->
     <ItemGroup>
       <_Hxb-Rebuild-Proj Include="$(_Hxb-Find-Sln-Out-SlnDir)\**\*.*proj"
