@@ -71,7 +71,9 @@ namespace Heleonix.Build.Tests.Tasks
                 ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."), true, repositoryDir,
                 int.MaxValue);
 
-            TestContext.WriteLine(exeResult.Output);
+            TestContext.WriteLine("output: " + exeResult.Output);
+            TestContext.WriteLine("error: " + exeResult.Error);
+            TestContext.WriteLine("commit: " + exeResult.ExitCode);
 
             Assert.That(exeResult.ExitCode, Is.Zero);
 
