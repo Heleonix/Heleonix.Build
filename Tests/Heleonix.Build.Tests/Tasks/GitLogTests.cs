@@ -50,15 +50,21 @@ namespace Heleonix.Build.Tests.Tasks
 
             Directory.CreateDirectory(repositoryDir);
 
+            Trace.WriteLine("dir: " + repositoryDir);
+
             File.Create(Path.Combine(repositoryDir, "File1.txt")).Close();
 
             var result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("init"), false,
                 repositoryDir, int.MaxValue).ExitCode;
 
+            Trace.WriteLine("init result: " + result);
+
             Assert.That(result, Is.Zero);
 
             result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("add ."), false,
                 repositoryDir, int.MaxValue).ExitCode;
+
+            Trace.WriteLine("add result: " + result);
 
             Assert.That(result, Is.Zero);
 
@@ -66,7 +72,6 @@ namespace Heleonix.Build.Tests.Tasks
                 ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."), true, repositoryDir,
                 int.MaxValue);
 
-            Trace.TraceError(exeResult.Output);
             Console.WriteLine(exeResult.Output);
 
             Assert.That(exeResult.ExitCode, Is.Zero);
