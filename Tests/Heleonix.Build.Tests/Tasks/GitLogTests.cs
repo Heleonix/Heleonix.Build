@@ -61,6 +61,11 @@ namespace Heleonix.Build.Tests.Tasks
 
             Assert.That(result, Is.Zero);
 
+            result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("config user.email")
+                .AddValue("Heleonix.sln@gmail.com"), false, repositoryDir, int.MaxValue).ExitCode;
+
+            Assert.That(result, Is.Zero);
+
             result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("add ."), false,
                 repositoryDir, int.MaxValue).ExitCode;
 
