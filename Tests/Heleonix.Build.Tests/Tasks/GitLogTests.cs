@@ -75,9 +75,6 @@ namespace Heleonix.Build.Tests.Tasks
                 ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."), true, repositoryDir,
                 int.MaxValue);
 
-            TestContext.WriteLine("error: " + exeResult.Error);
-            TestContext.WriteLine("commit: " + exeResult.ExitCode);
-
             Assert.That(exeResult.ExitCode, Is.Zero);
 
             try
@@ -98,8 +95,8 @@ namespace Heleonix.Build.Tests.Tasks
                 Assert.That(task.Commits[0].ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision"),
                     StringComparison.Ordinal), Is.True);
                 Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.Not.Empty);
+                Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.EqualTo("Heleonix"));
+                Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.EqualTo("Heleonix.sln@gmail.com"));
                 Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
                 Assert.That(task.Commits[0].GetMetadata("CommitterName"), Is.Not.Empty);
                 Assert.That(task.Commits[0].GetMetadata("CommitterEmail"), Is.Not.Empty);
