@@ -27,7 +27,7 @@ namespace LibSimulator
     /// <summary>
     /// A class.
     /// </summary>
-    public static class Calculator
+    public class Calculator
     {
         #region Methods
 
@@ -38,6 +38,22 @@ namespace LibSimulator
         /// <param name="right">The right value.</param>
         /// <returns>Addition of two numbers.</returns>
         public static int Add(int left, int right) => left + right;
+
+        /// <summary>
+        /// Subtracts two numbers.
+        /// </summary>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
+        /// <returns>Subtraction of two numbers.</returns>
+        public static int Subtract(int left, int right) => left - right;
+
+        /// <summary>
+        /// Finds minimal of two numbers.
+        /// </summary>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
+        /// <returns>Minimal of two numbers.</returns>
+        public static int Min(int left, int right) => left < right ? left : right;
 
         #endregion
     }

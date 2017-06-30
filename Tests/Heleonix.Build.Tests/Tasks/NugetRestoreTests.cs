@@ -25,6 +25,7 @@ SOFTWARE.
 using System.IO;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
@@ -40,8 +41,9 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="NugetRestore.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true, true, true)]
+        [TestCase(false, false, false)]
+        public static void Execute(bool shouldExeSucceed, bool specifyPackagesDir, bool specifySourcePath)
         {
             var packagesDir = Path.Combine(LibSimulatorPath.SolutionDir, "packages");
 
@@ -58,16 +60,22 @@ namespace Heleonix.Build.Tests.Tasks
                     NugetExeFile = new TaskItem(SystemPath.NugetExe),
                     MSBuildDir = new TaskItem(Path.GetDirectoryName(MSBuildHelper.MSBuildExe)),
                     SolutionFile = new TaskItem(LibSimulatorPath.SolutionFile),
-                    Verbosity = "detailed",
-                    PackagesDir = new TaskItem(packagesDir)
+                    Verbosity = shouldExeSucceed ? "detailed" : "InvalidVerbosity",
+                    PackagesDir = specifyPackagesDir ? new TaskItem(packagesDir) : null,
+                    SourcesPaths = specifySourcePath
+                        ? new ITaskItem[] { new TaskItem("https://nuget.org/api/v2/") }
+                        : null
                 };
 
                 var succeeded = task.Execute();
 
-                Assert.That(succeeded, Is.True);
+                if (shouldExeSucceed)
+                {
+                    Assert.That(succeeded, Is.True);
 
-                Assert.That(Directory.Exists(packagesDir), Is.True);
-                Assert.That(Directory.GetDirectories(packagesDir), Is.Not.Empty);
+                    Assert.That(Directory.Exists(packagesDir), Is.True);
+                    Assert.That(Directory.GetDirectories(packagesDir), Is.Not.Empty);
+                }
             }
             finally
             {

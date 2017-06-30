@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Linq;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
@@ -41,36 +42,38 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [TestCase("Union", null, "A,B,C,D,F", ExpectedResult = "A,B,C,D,F")]
-        [TestCase("Union", "A,B,C,D,F", null, ExpectedResult = "A,B,C,D,F")]
-        [TestCase("Union", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,B,C,D,F,M,N,E")]
-        [TestCase("Intersection", null, "A,B,C,D,F", ExpectedResult = "")]
-        [TestCase("Intersection", "A,B,C,D,F", null, ExpectedResult = "")]
-        [TestCase("Intersection", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "B,C,D")]
-        [TestCase("RelativeComplement", null, "A,B,C,D,F", ExpectedResult = "")]
-        [TestCase("RelativeComplement", "A,B,C,D,F", null, ExpectedResult = "A,B,C,D,F")]
-        [TestCase("RelativeComplement", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,F")]
-        [TestCase("SymmetricDifference", null, "A,B,C,D,F", ExpectedResult = "A,B,C,D,F")]
-        [TestCase("SymmetricDifference", "A,B,C,D,F", null, ExpectedResult = "A,B,C,D,F")]
-        [TestCase("SymmetricDifference", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "A,F,M,N,E")]
-        [TestCase("Intersection", null, "A,B,C,D,F", ExpectedResult = "")]
-        [TestCase("Intersection", "A,B,C,D,F", null, ExpectedResult = "")]
-        [TestCase("Intersection", "A,B,C,D,F", "M,N,D,B,C,E", ExpectedResult = "B,C,D")]
-        public static string Execute(string operation, string left, string right)
+        [TestCase("Union", null, "A,B,C,D,F", "Identity", ExpectedResult = "A,B,C,D,F")]
+        [TestCase("Union", "A,B,C,D,F", null, "Identity", ExpectedResult = "A,B,C,D,F")]
+        [TestCase("Union", "A,B,C,D,F", "M,N,D,B,C,E", "Identity", ExpectedResult = "A,B,C,D,F,M,N,E")]
+        [TestCase("Intersection", null, "A,B,C,D,F", "Identity", ExpectedResult = "")]
+        [TestCase("Intersection", "A,B,C,D,F", null, "Identity", ExpectedResult = "")]
+        [TestCase("Intersection", "A,B,C,D,F", "M,N,D,B,C,E", "Identity", ExpectedResult = "B,C,D")]
+        [TestCase("RelativeComplement", null, "A,B,C,D,F", "Identity", ExpectedResult = "")]
+        [TestCase("RelativeComplement", "A,B,C,D,F", null, "Identity", ExpectedResult = "A,B,C,D,F")]
+        [TestCase("RelativeComplement", "A,B,C,D,F", "M,N,D,B,C,E", "Identity", ExpectedResult = "A,F")]
+        [TestCase("SymmetricDifference", null, "A,B,C,D,F", "Identity", ExpectedResult = "A,B,C,D,F")]
+        [TestCase("SymmetricDifference", "A,B,C,D,F", null, "Identity", ExpectedResult = "A,B,C,D,F")]
+        [TestCase("SymmetricDifference", "A,B,C,D,F", "M,N,D,B,C,E", "Identity", ExpectedResult = "A,F,M,N,E")]
+        [TestCase("Intersection", null, "A,B,C,D,F", "Identity", ExpectedResult = "")]
+        [TestCase("Intersection", "A,B,C,D,F", null, "Identity", ExpectedResult = "")]
+        [TestCase("Intersection", "A,B,C,D,F", "M,N,D,B,C,E", null, ExpectedResult = "B,C,D")]
+        [TestCase("InvalidOperation", null, null, null, ExpectedResult = "")]
+        public static string Execute(string operation, string left, string right, string metadataName)
         {
             var task = new ItemSet
             {
                 BuildEngine = new FakeBuildEngine(),
                 Operation = operation,
+                MetadataName = metadataName,
                 Left = left?.Split(',').Select(l => new TaskItem(l) as ITaskItem).ToArray(),
                 Right = right?.Split(',').Select(r => new TaskItem(r) as ITaskItem).ToArray()
             };
 
             var succeeded = task.Execute();
 
-            Assert.That(succeeded, Is.True);
+            Assert.That(succeeded, Is.EqualTo(operation != "InvalidOperation"));
 
-            return string.Join(",", task.Result.Select(r => r.ItemSpec));
+            return string.Join(",", task.Result?.Select(r => r.ItemSpec) ?? Array.Empty<string>());
         }
 
         #endregion

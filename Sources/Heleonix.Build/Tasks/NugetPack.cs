@@ -115,7 +115,7 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var projectDir = Path.GetDirectoryName(ProjectFile.ItemSpec) ?? string.Empty;
+            var projectDir = Path.GetDirectoryName(ProjectFile.ItemSpec);
 
             var tempOutputDir = Path.Combine(projectDir, Path.GetRandomFileName());
 
@@ -166,7 +166,7 @@ namespace Heleonix.Build.Tasks
 
             var destPackageDir = PackageDir?.ItemSpec ?? projectDir;
 
-            var destPackage = Path.Combine(destPackageDir, Path.GetFileName(srcPackage) ?? string.Empty);
+            var destPackage = Path.Combine(destPackageDir, Path.GetFileName(srcPackage));
 
             if (!Directory.Exists(destPackageDir))
             {
@@ -175,25 +175,11 @@ namespace Heleonix.Build.Tasks
 
             File.Copy(srcPackage, destPackage);
 
-            try
-            {
-                Directory.Delete(tempOutputDir, true);
-            }
-            catch (Exception ex)
-            {
-                Log.LogWarningFromException(ex);
-            }
+            Directory.Delete(tempOutputDir, true);
 
-            try
+            if (!string.Equals(nuspecFilePath, destNuspecFilePath, StringComparison.OrdinalIgnoreCase))
             {
-                if (!string.Equals(nuspecFilePath, destNuspecFilePath, StringComparison.OrdinalIgnoreCase))
-                {
-                    File.Delete(destNuspecFilePath);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.LogWarningFromException(ex);
+                File.Delete(destNuspecFilePath);
             }
 
             PackageFile = new TaskItem(destPackage);

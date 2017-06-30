@@ -44,11 +44,6 @@ namespace Heleonix.Build.Tests.Common
         #region Properties
 
         /// <summary>
-        /// Gets the SNK pair file path.
-        /// </summary>
-        public static string SnkPairFile => Path.Combine(SystemPath.CurrentDir, "SnkPair.snk");
-
-        /// <summary>
         /// Gets the out file path.
         /// </summary>
         public static string OutFile => Path.Combine(OutDir, Path.GetFileName(SolutionDir) + ".dll");

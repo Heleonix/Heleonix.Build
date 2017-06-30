@@ -214,27 +214,27 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            var tempAnalysisResults = Path.Combine(
-                Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty, Path.GetRandomFileName());
+            var tempAnalysisResults = Path.Combine(Path.GetDirectoryName(AnalysisResultFile.ItemSpec),
+                Path.ChangeExtension(Path.GetFileName(AnalysisResultFile.ItemSpec), ".tmp"));
 
             var args = ArgsBuilder.By("/", ":")
                 .AddKey("verbose", IsVerbose)
                 .AddArgument("types", TargetsTypes)
-                .AddPath("project", ProjectFile?.ItemSpec)
-                .AddPaths("rule", RulesFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile?.ItemSpec == null)
-                .AddPaths("file", TargetsFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile?.ItemSpec == null)
+                .AddPath("project", ProjectFile?.ItemSpec, ProjectFile != null)
+                .AddPaths("rule", RulesFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
+                .AddPaths("file", TargetsFilesDirs?.Select(i => i.ItemSpec), true, ProjectFile == null)
                 .AddPath("out", tempAnalysisResults)
                 .AddPaths("directory", DependenciesDirs?.Select(i => i.ItemSpec), true)
                 .AddKey("ignoregeneratedcode")
-                .AddPath("ruleset", "=" + RulesetFile?.ItemSpec, RulesetFile?.ItemSpec != null)
+                .AddPath("ruleset", "=" + RulesetFile?.ItemSpec, RulesetFile != null)
                 .AddKey("searchgac")
                 .AddPath("dictionary", DictionaryFile?.ItemSpec)
                 .AddKey("summary");
 
             // FxCopCmd does not create a directory for analysis result file.
-            if (!Directory.Exists(Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty))
+            if (!Directory.Exists(Path.GetDirectoryName(AnalysisResultFile.ItemSpec)))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultFile.ItemSpec) ?? string.Empty);
+                Directory.CreateDirectory(Path.GetDirectoryName(AnalysisResultFile.ItemSpec));
             }
 
             var result = ExeHelper.Execute(FxCopCmdFile.ItemSpec, args, true);
@@ -316,7 +316,7 @@ namespace Heleonix.Build.Tasks
             }
             finally
             {
-                if (File.Exists(tempAnalysisResults))
+                if (File.Exists(tempAnalysisResults) && results != null)
                 {
                     // Overwrite existing report.
                     if (File.Exists(AnalysisResultFile.ItemSpec))
@@ -326,8 +326,6 @@ namespace Heleonix.Build.Tasks
 
                     if (AnalysisResultsXslFile != null && File.Exists(AnalysisResultsXslFile.ItemSpec))
                     {
-                        results = results ?? XDocument.Load(tempAnalysisResults);
-
                         using (var outStream = File.Create(Path.ChangeExtension(AnalysisResultFile.ItemSpec, ".html")))
                         {
                             var transform = new XslCompiledTransform();

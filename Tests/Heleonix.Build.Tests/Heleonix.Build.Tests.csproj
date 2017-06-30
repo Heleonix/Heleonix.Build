@@ -41,8 +41,14 @@
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="Moq, Version=4.7.12.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Moq.4.7.12\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -81,9 +87,10 @@
     <Compile Include="Targets\FxCopTests.cs" />
     <Compile Include="Targets\RebuildTests.cs" />
     <Compile Include="Targets\InitializeTests.cs" />
+    <Compile Include="Tasks\BaseTaskTests.cs" />
     <Compile Include="Tasks\DirectoryCleanTests.cs" />
     <Compile Include="Tasks\FileSystemSearchTests.cs" />
-    <Compile Include="Tasks\FileCopy.cs" />
+    <Compile Include="Tasks\FileCopyTests.cs" />
     <Compile Include="Tasks\FileUpdateTests.cs" />
     <Compile Include="Tasks\FxCopTests.cs" />
     <Compile Include="Tasks\GitLogTests.cs" />
@@ -103,12 +110,19 @@
     <None Include="..\..\Heleonix.licenseheader">
       <Link>Heleonix.licenseheader</Link>
     </None>
+    <None Include="Common\FxCopProject.FxCop">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Common\SnkPair.snk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Common\FxCopReport.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sources\Heleonix.Build\Heleonix.Build.csproj">
       <Project>{0be0703a-9609-4103-a813-d2fb206cab6b}</Project>

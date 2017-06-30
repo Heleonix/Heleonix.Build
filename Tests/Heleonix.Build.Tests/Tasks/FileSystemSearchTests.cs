@@ -27,6 +27,7 @@ using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Tasks
 {
@@ -40,34 +41,50 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [TestCase("Down")]
-        [TestCase("Up")]
-        public static void Execute(string direction)
+        [TestCase(true, "All", "Down", @".*\.md2$|.*dir1.?$", ExpectedResult = "1,3,4")]
+        [TestCase(true, "All", "Up", @".*\.md2$|.*dir1.?$", ExpectedResult = "1,3,4")]
+        [TestCase(true, "Directories", "Up", @".*\.md2$|.*dir1.?$", ExpectedResult = "0,3,3")]
+        [TestCase(true, "Directories", "Down", @".*\.md2$|.*dir1.?$", ExpectedResult = "0,3,3")]
+        [TestCase(true, "Directories", "Down", null, ExpectedResult = "0,7,7")]
+        [TestCase(true, "Directories", "", @".*\.md2$|.*dir1.?$", ExpectedResult = "0,3,3")]
+        [TestCase(true, "", "Up", @".*\.md2$|.*dir1.?$", ExpectedResult = "1,3,4")]
+        [TestCase(true, "Files", "", @".*\.md2$|.*dir1.?$", ExpectedResult = "1,0,1")]
+        [TestCase(true, "InvalidValue", "Up", @".*\.md2$|.*dir1.?$", ExpectedResult = "0,0,0")]
+        [TestCase(false, null, null, null, ExpectedResult = "0,0,0")]
+        public static string Execute(bool startDirectoryExists, string types, string direction, string pathRegExp)
         {
-            var startDir = Directory.CreateDirectory(Path.Combine(
-                    SystemPath.CurrentDir, Path.GetRandomFileName()))
-                .FullName;
-            File.WriteAllText(Path.Combine(startDir, "file1.txt"), @"Some 1 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "file2.md2"), @"Some 2 text to search.");
-            Directory.CreateDirectory(Path.Combine(startDir, "dir1"));
-            Directory.CreateDirectory(Path.Combine(startDir, "dir2"));
-            File.WriteAllText(Path.Combine(startDir, "dir1", "file11.txt"), @"Some 11 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "dir1", "file12.md2"), @"Some 12 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "dir2", "file21.txt"), @"Some 21 text to search.");
-            File.WriteAllText(Path.Combine(startDir, "dir2", "file22.md2"), @"Some 22 text to search.");
-            Directory.CreateDirectory(Path.Combine(startDir, "dir1", "dir11"));
-            var startUpDir = Directory.CreateDirectory(Path.Combine(startDir, "dir1", "dir12")).FullName;
-            Directory.CreateDirectory(Path.Combine(startDir, "dir2", "dir21"));
-            Directory.CreateDirectory(Path.Combine(startDir, "dir2", "dir22"));
+            string startDir = null;
+            string startUpDir = null;
+
+            if (startDirectoryExists)
+            {
+                startDir = Directory.CreateDirectory(
+                    Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName())).FullName;
+                File.WriteAllText(Path.Combine(startDir, "file1.txt"), @"Some 1 text to search.");
+                File.WriteAllText(Path.Combine(startDir, "file2.md2"), @"Some 2 text to search.");
+                Directory.CreateDirectory(Path.Combine(startDir, "dir1"));
+                Directory.CreateDirectory(Path.Combine(startDir, "dir2"));
+                File.WriteAllText(Path.Combine(startDir, "dir1", "file11.txt"), @"Some 11 text to search.");
+                File.WriteAllText(Path.Combine(startDir, "dir1", "file12.md2"), @"Some 12 text to search.");
+                File.WriteAllText(Path.Combine(startDir, "dir2", "file21.txt"), @"Some 21 text to search.");
+                File.WriteAllText(Path.Combine(startDir, "dir2", "file22.md2"), @"Some 22 text to search.");
+                Directory.CreateDirectory(Path.Combine(startDir, "dir1", "dir11"));
+
+                startUpDir = Directory.CreateDirectory(Path.Combine(startDir, "dir1", "dir12")).FullName;
+                Directory.CreateDirectory(Path.Combine(startDir, "dir2", "dir21"));
+                Directory.CreateDirectory(Path.Combine(startDir, "dir2", "dir22"));
+            }
 
             var task = new FileSystemSearch
             {
                 BuildEngine = new FakeBuildEngine(),
-                StartDir = new TaskItem(direction == "Up" ? startUpDir : startDir),
-                PathRegExp = @".*\.md2$|.*dir1.?$",
+                StartDir = startDirectoryExists
+                    ? new TaskItem(direction == "Up" ? startUpDir : startDir)
+                    : new TaskItem("Non;existent;directory"),
+                PathRegExp = pathRegExp,
                 ContentRegExp = @".*1.*",
                 Direction = direction,
-                Types = "All"
+                Types = types
             };
 
             try
@@ -75,13 +92,15 @@ namespace Heleonix.Build.Tests.Tasks
                 var succeeded = task.Execute();
 
                 Assert.That(succeeded, Is.True);
-                Assert.That(task.FoundFiles, Has.Length.EqualTo(1));
-                Assert.That(task.FoundDirs, Has.Length.EqualTo(3));
-                Assert.That(task.FoundItems, Has.Length.EqualTo(4));
+
+                return Invariant($"{task.FoundFiles.Length},{task.FoundDirs.Length},{task.FoundItems.Length}");
             }
             finally
             {
-                Directory.Delete(startDir, true);
+                if (startDirectoryExists)
+                {
+                    Directory.Delete(startDir, true);
+                }
             }
         }
 

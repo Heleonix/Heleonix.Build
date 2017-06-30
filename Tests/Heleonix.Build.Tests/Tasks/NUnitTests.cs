@@ -44,16 +44,31 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="NUnit.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true, true, false, null, null, false)]
+        [TestCase(false, false, true, null, null, false)]
+        [TestCase(true, true, false, "Invalid", null, true)]
+        [TestCase(false, false, false, null, "name != 'Add(3,2)'", false)]
+        public static void Execute(bool shouldSeparateArtifactsDirExist, bool specifyOutFiles, bool failOnFailedTests,
+            string traceLevel, string testsFilter, bool useTestListFile)
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
             var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-NUnit");
 
-            var errorsOutput = Path.Combine(artifactsDir, Path.GetRandomFileName());
-            var testsOutput = Path.Combine(artifactsDir, Path.GetRandomFileName());
-            var result = Path.Combine(artifactsDir, Path.GetRandomFileName());
+            Directory.CreateDirectory(artifactsDir);
+
+            var errorsOutput = Path.Combine(artifactsDir, Path.GetRandomFileName())
+                               + (shouldSeparateArtifactsDirExist ? "\\Errors.txt" : null);
+            var testsOutput = Path.Combine(artifactsDir, Path.GetRandomFileName())
+                              + (shouldSeparateArtifactsDirExist ? "\\Output.txt" : null);
+            var result = Path.Combine(artifactsDir, Path.GetRandomFileName())
+                         + (shouldSeparateArtifactsDirExist ? "\\Results.txt" : null);
+            var testListFile = Path.Combine(artifactsDir, "tests.txt");
+
+            if (useTestListFile)
+            {
+                File.Create(testListFile).Close();
+            }
 
             var task = new Build.Tasks.NUnit
             {
@@ -64,9 +79,13 @@ namespace Heleonix.Build.Tests.Tasks
                     new TaskItem(LibSimulatorPath.TestsOutFile)
                 },
                 AgentsNumber = 3,
-                ErrorsOutputFile = new TaskItem(errorsOutput),
-                TestsOutputFile = new TaskItem(testsOutput),
-                TestsResultFile = new TaskItem(result)
+                ErrorsOutputFile = specifyOutFiles ? new TaskItem(errorsOutput) : null,
+                TestsOutputFile = specifyOutFiles ? new TaskItem(testsOutput) : null,
+                TestsResultFile = specifyOutFiles ? new TaskItem(result) : null,
+                FailOnFailedTests = failOnFailedTests,
+                TraceLevel = traceLevel,
+                TestsFilter = testsFilter,
+                TestsListFile = useTestListFile ? new TaskItem(testListFile) : null
             };
 
             var succeeded = task.Execute();
@@ -77,47 +96,48 @@ namespace Heleonix.Build.Tests.Tasks
 
             try
             {
-                Assert.That(succeeded, Is.True);
-                Assert.That(errorsExists, Is.True);
-                Assert.That(testsOutputExists, Is.True);
-                Assert.That(resultExists, Is.True);
+                if (traceLevel != "Invalid")
+                {
+                    Assert.That(succeeded, Is.Not.EqualTo(failOnFailedTests));
+                    Assert.That(errorsExists, Is.EqualTo(specifyOutFiles));
+                    Assert.That(testsOutputExists, Is.EqualTo(specifyOutFiles));
+                    Assert.That(resultExists, Is.EqualTo(specifyOutFiles));
+                }
 
-                var testRun = XDocument.Load(result).Element("test-run");
+                if (failOnFailedTests || traceLevel == "Invalid")
+                {
+                    return;
+                }
 
-                Assert.That(task.TestCases, Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value,
-                    NumberFormatInfo.InvariantInfo)));
-                Assert.That(task.Total, Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value,
-                    NumberFormatInfo.InvariantInfo)));
-                Assert.That(task.Passed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value,
-                    NumberFormatInfo.InvariantInfo)));
-                Assert.That(task.Failed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value,
-                    NumberFormatInfo.InvariantInfo)));
-                Assert.That(task.Inconclusive, Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value,
-                    NumberFormatInfo.InvariantInfo)));
-                Assert.That(task.Skipped, Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value,
-                    NumberFormatInfo.InvariantInfo)));
-                Assert.That(task.Asserts, Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value,
-                    NumberFormatInfo.InvariantInfo)));
-                Assert.That(task.StartTime, Is.EqualTo(testRun.Attribute("start-time").Value));
-                Assert.That(task.EndTime, Is.EqualTo(testRun.Attribute("end-time").Value));
-                Assert.That(task.Duration, Is.EqualTo(Convert.ToSingle(
-                    testRun.Attribute("duration").Value, NumberFormatInfo.InvariantInfo)));
+                if (specifyOutFiles)
+                {
+                    var testRun = XDocument.Load(result).Element("test-run");
+
+                    Assert.That(task.TestCases, Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value,
+                        NumberFormatInfo.InvariantInfo)));
+                    Assert.That(task.Total, Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value,
+                        NumberFormatInfo.InvariantInfo)));
+                    Assert.That(task.Passed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value,
+                        NumberFormatInfo.InvariantInfo)));
+                    Assert.That(task.Failed, Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value,
+                        NumberFormatInfo.InvariantInfo)));
+                    Assert.That(task.Inconclusive, Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value,
+                        NumberFormatInfo.InvariantInfo)));
+                    Assert.That(task.Skipped, Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value,
+                        NumberFormatInfo.InvariantInfo)));
+                    Assert.That(task.Asserts, Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value,
+                        NumberFormatInfo.InvariantInfo)));
+                    Assert.That(task.StartTime, Is.EqualTo(testRun.Attribute("start-time").Value));
+                    Assert.That(task.EndTime, Is.EqualTo(testRun.Attribute("end-time").Value));
+                    Assert.That(task.Duration, Is.EqualTo(Convert.ToSingle(
+                        testRun.Attribute("duration").Value, NumberFormatInfo.InvariantInfo)));
+                }
             }
             finally
             {
-                if (errorsExists)
+                if (Directory.Exists(artifactsDir))
                 {
-                    File.Delete(errorsOutput);
-                }
-
-                if (testsOutputExists)
-                {
-                    File.Delete(testsOutput);
-                }
-
-                if (resultExists)
-                {
-                    File.Delete(result);
+                    Directory.Delete(artifactsDir, true);
                 }
             }
         }

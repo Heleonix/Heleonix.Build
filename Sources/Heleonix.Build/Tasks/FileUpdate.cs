@@ -70,6 +70,8 @@ namespace Heleonix.Build.Tasks
             if (!System.IO.File.Exists(File.ItemSpec))
             {
                 Log.LogMessage(Resources.FileUpdate_FileNotFound, File.ItemSpec);
+
+                return;
             }
 
             var input = System.IO.File.ReadAllText(File.ItemSpec);

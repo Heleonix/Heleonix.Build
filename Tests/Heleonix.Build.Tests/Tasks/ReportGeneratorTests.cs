@@ -42,8 +42,9 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true, true)]
+        [TestCase(false, false)]
+        public static void Execute(bool shouldReportDirExist, bool shouldSucceed)
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
@@ -75,6 +76,11 @@ namespace Heleonix.Build.Tests.Tasks
 
             var reportDir = Path.Combine(artifactsDir, Path.GetRandomFileName());
 
+            if (shouldReportDirExist)
+            {
+                Directory.CreateDirectory(reportDir);
+            }
+
             try
             {
                 Assert.That(succeeded, Is.True);
@@ -86,15 +92,19 @@ namespace Heleonix.Build.Tests.Tasks
                     Verbosity = "Error",
                     ResultsFiles = new ITaskItem[] { new TaskItem(coverageResults) },
                     ReportDir = new TaskItem(reportDir),
-                    ReportTypes = "Badges;Html;HtmlSummary"
+                    ReportTypes = shouldSucceed ? "Badges;Html;HtmlSummary" : "InvalidReportType"
                 };
 
                 succeeded = task.Execute();
 
-                Assert.That(succeeded, Is.True);
-                Assert.That(File.Exists(Path.Combine(reportDir, "index.htm")), Is.True);
-                Assert.That(File.Exists(Path.Combine(reportDir, "summary.htm")), Is.True);
-                Assert.That(Directory.GetFiles(reportDir, "*.png"), Has.Length.GreaterThan(0));
+                Assert.That(succeeded, Is.EqualTo(shouldSucceed));
+
+                if (succeeded)
+                {
+                    Assert.That(File.Exists(Path.Combine(reportDir, "index.htm")), Is.True);
+                    Assert.That(File.Exists(Path.Combine(reportDir, "summary.htm")), Is.True);
+                    Assert.That(Directory.GetFiles(reportDir, "*.png"), Has.Length.GreaterThan(0));
+                }
             }
             finally
             {

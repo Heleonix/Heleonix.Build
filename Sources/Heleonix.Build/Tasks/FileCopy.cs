@@ -102,6 +102,9 @@ namespace Heleonix.Build.Tasks
             {
                 Log.LogMessage(Resources.FileCopy_NoFilesToCopy);
 
+                FailedFiles = Array.Empty<ITaskItem>();
+                CopiedFiles = Array.Empty<ITaskItem>();
+
                 return;
             }
 
@@ -110,6 +113,7 @@ namespace Heleonix.Build.Tasks
                 Log.LogMessage(Resources.FileCopy_NoDestination);
 
                 FailedFiles = Files.ToArray();
+                CopiedFiles = Array.Empty<ITaskItem>();
 
                 return;
             }
@@ -119,13 +123,9 @@ namespace Heleonix.Build.Tasks
                 Log.LogError(Resources.FileCopy_SingleDestinationIsFile);
 
                 FailedFiles = Files.ToArray();
+                CopiedFiles = Array.Empty<ITaskItem>();
 
                 return;
-            }
-
-            if (!Directory.Exists(Destinations[0].ItemSpec))
-            {
-                Directory.CreateDirectory(Destinations[0].ItemSpec);
             }
 
             var failedFiles = new List<ITaskItem>();
@@ -133,17 +133,15 @@ namespace Heleonix.Build.Tasks
 
             for (var i = 0; i < Files.Length; i++)
             {
-                if (string.IsNullOrEmpty(Files[i]?.ItemSpec) || !File.Exists(Files[i].ItemSpec))
+                if (!File.Exists(Files[i].ItemSpec))
                 {
-                    Log.LogMessage(Resources.FileCopy_FileNotFound, Files[i]?.ItemSpec ?? string.Empty);
+                    Log.LogMessage(Resources.FileCopy_FileNotFound, Files[i].ItemSpec);
 
                     continue;
                 }
 
                 try
                 {
-                    Log.LogMessage(Resources.FileCopy_CopyingFile, Files[i].ItemSpec);
-
                     var destinationPath = Destinations.Length == 1
                         ? Destinations[0].ItemSpec
                         : Destinations[i].ItemSpec;
@@ -154,8 +152,6 @@ namespace Heleonix.Build.Tasks
 
                     if (!string.IsNullOrEmpty(subDirsFrom))
                     {
-                        Log.LogMessage(Resources.FileCopy_WithSubDirsFrom, subDirsFrom);
-
                         subDirsFrom = new Uri(subDirsFrom).LocalPath.TrimEnd(Path.DirectorySeparatorChar);
 
                         if (filePath.StartsWith(subDirsFrom, StringComparison.OrdinalIgnoreCase))
@@ -177,8 +173,6 @@ namespace Heleonix.Build.Tasks
                     {
                         destinationPath = Path.Combine(destinationPath, Path.GetFileName(filePath));
                     }
-
-                    Log.LogMessage(Resources.FileCopy_ToDestination, destinationPath);
 
                     if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
                     {

@@ -45,6 +45,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Calculator.cs" />
+    <Compile Include="FullyCoveredType.cs" />
     <Compile Include="NotCoveredByTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

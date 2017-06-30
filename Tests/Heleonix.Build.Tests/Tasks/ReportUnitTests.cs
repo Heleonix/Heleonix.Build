@@ -79,7 +79,6 @@ namespace Heleonix.Build.Tests.Tasks
                 succeeded = task.Execute();
 
                 Assert.That(succeeded, Is.True);
-                Assert.That(File.Exists(report), Is.True);
             }
             finally
             {

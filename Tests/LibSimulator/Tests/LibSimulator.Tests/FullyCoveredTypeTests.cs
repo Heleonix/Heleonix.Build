@@ -22,43 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Text.RegularExpressions;
-using Heleonix.Build.Tasks;
-using Heleonix.Build.Tests.Common;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
-namespace Heleonix.Build.Tests.Tasks
+namespace LibSimulator.Tests
 {
     /// <summary>
-    /// Tests the <see cref="ItemFilter"/>.
+    /// Tests the <see cref="FullyCoveredType"/>.
     /// </summary>
-    public static class ItemFilterTests
+    public static class FullyCoveredTypeTests
     {
         #region Tests
 
         /// <summary>
-        /// Tests the <see cref="ItemFilter.Execute"/>.
+        /// Tests the <see cref="FullyCoveredType.Method"/>.
         /// </summary>
-        [TestCase(@"^.+\.Tests\.dll$", false, "FullPath")]
-        [TestCase(@"^.+\.Tests\.dll$", true, null)]
-        public static void Execute(string regex, bool negative, string metadataName)
+        [Test]
+        public static void Method()
         {
-            var task = new ItemFilter
-            {
-                BuildEngine = new FakeBuildEngine(),
-                Inputs = new[] { new TaskItem("Product.Tests.dll"), new TaskItem("Product.dll") as ITaskItem },
-                RegExp = regex,
-                MetadataName = metadataName,
-                Negative = negative,
-                RegExpOptions = RegexOptions.IgnoreCase.ToString()
-            };
-
-            var succeeded = task.Execute();
-
-            Assert.That(succeeded, Is.True);
-            Assert.That(task.Outputs, Has.Length.EqualTo(1));
+            FullyCoveredType.Method();
         }
 
         #endregion

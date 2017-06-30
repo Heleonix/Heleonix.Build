@@ -34,6 +34,18 @@ namespace LibSimulator.Tests
         #region Tests
 
         /// <summary>
+        /// Tests the <see cref="Calculator.Min"/>.
+        /// </summary>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
+        /// <returns></returns>
+        [TestCase(1, 2, ExpectedResult = 1)]
+        public static int Min(int left, int right)
+        {
+            return Calculator.Min(left, right);
+        }
+
+        /// <summary>
         /// Tests the <see cref="Calculator.Add"/>.
         /// </summary>
         /// <param name="left">The left value.</param>

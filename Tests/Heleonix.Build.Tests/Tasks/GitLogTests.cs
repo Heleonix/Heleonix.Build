@@ -42,8 +42,9 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true, 1)]
+        [TestCase(false, 0)]
+        public static void Execute(bool successfulExitCode, int maxCount)
         {
             var repositoryDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
@@ -56,26 +57,29 @@ namespace Heleonix.Build.Tests.Tasks
 
             Assert.That(result, Is.Zero);
 
-            result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("config user.name")
-                .AddValue("Heleonix"), false, repositoryDir, int.MaxValue).ExitCode;
+            if (successfulExitCode)
+            {
+                result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("config user.name")
+                    .AddValue("Heleonix"), false, repositoryDir, int.MaxValue).ExitCode;
 
-            Assert.That(result, Is.Zero);
+                Assert.That(result, Is.Zero);
 
-            result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("config user.email")
-                .AddValue("Heleonix.sln@gmail.com"), false, repositoryDir, int.MaxValue).ExitCode;
+                result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("config user.email")
+                    .AddValue("Heleonix.sln@gmail.com"), false, repositoryDir, int.MaxValue).ExitCode;
 
-            Assert.That(result, Is.Zero);
+                Assert.That(result, Is.Zero);
 
-            result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("add ."), false,
-                repositoryDir, int.MaxValue).ExitCode;
+                result = ExeHelper.Execute(SystemPath.GitExe, ArgsBuilder.By("-", " ").AddValue("add ."), false,
+                    repositoryDir, int.MaxValue).ExitCode;
 
-            Assert.That(result, Is.Zero);
+                Assert.That(result, Is.Zero);
 
-            var exeResult = ExeHelper.Execute(SystemPath.GitExe,
-                ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."), true, repositoryDir,
-                int.MaxValue);
+                var exeResult = ExeHelper.Execute(SystemPath.GitExe,
+                    ArgsBuilder.By("-", " ").AddValue("commit").AddPath("m", "Commit 1."),
+                    true, repositoryDir, int.MaxValue);
 
-            Assert.That(exeResult.ExitCode, Is.Zero);
+                Assert.That(exeResult.ExitCode, Is.Zero);
+            }
 
             try
             {
@@ -84,24 +88,28 @@ namespace Heleonix.Build.Tests.Tasks
                     BuildEngine = new FakeBuildEngine(),
                     GitExeFile = new TaskItem(SystemPath.GitExe),
                     RepositoryFileDir = new TaskItem(repositoryDir),
-                    MaxCount = 1
+                    MaxCount = maxCount
                 };
 
                 var succeeded = task.Execute();
 
-                Assert.That(succeeded, Is.True);
-                Assert.That(task.Commits, Has.Length.EqualTo(task.MaxCount));
-                Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
-                Assert.That(task.Commits[0].ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision"),
-                    StringComparison.Ordinal), Is.True);
-                Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.EqualTo("Heleonix"));
-                Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.EqualTo("Heleonix.sln@gmail.com"));
-                Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("CommitterName"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("CommitterEmail"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("CommitterDate"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("Message"), Is.EqualTo("Commit 1.\r\n"));
+                Assert.That(succeeded, Is.EqualTo(successfulExitCode));
+
+                if (successfulExitCode)
+                {
+                    Assert.That(task.Commits, Has.Length.EqualTo(1));
+                    Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
+                    Assert.That(task.Commits[0].ItemSpec.StartsWith(task.Commits[0].GetMetadata("Revision"),
+                        StringComparison.Ordinal), Is.True);
+                    Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.EqualTo("Heleonix"));
+                    Assert.That(task.Commits[0].GetMetadata("AuthorEmail"), Is.EqualTo("Heleonix.sln@gmail.com"));
+                    Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("CommitterName"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("CommitterEmail"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("CommitterDate"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("Message"), Is.EqualTo("Commit 1.\r\n"));
+                }
             }
             finally
             {

@@ -24,11 +24,8 @@ SOFTWARE.
 
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("LibSimulator")]
-[assembly: Guid("60efea6a-b136-448d-b4e1-3ad490dee3e4")]
-[assembly: CLSCompliant(true)]
-
-[assembly: InternalsVisibleTo("LibSimulator.Tests")]
+[assembly: Guid("2c70b11c-97bd-4abe-becf-86bb91321471")]
+[assembly: CLSCompliant(false)]

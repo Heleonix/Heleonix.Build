@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSimulator", "Tests\LibSi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSimulator.Tests", "Tests\LibSimulator\Tests\LibSimulator.Tests\LibSimulator.Tests.csproj", "{2C70B11C-97BD-4ABE-BECF-86BB9808F571}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heleonix.Build.Tests.ExeMock", "Tests\Heleonix.Build.Tests.ExeMock\Heleonix.Build.Tests.ExeMock.csproj", "{A604F2A2-356A-4A55-A15D-1A4214D69B40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{2C70B11C-97BD-4ABE-BECF-86BB9808F571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C70B11C-97BD-4ABE-BECF-86BB9808F571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C70B11C-97BD-4ABE-BECF-86BB9808F571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,5 +79,6 @@ Global
 		{673DF392-1FCD-42CB-8CD5-EB945084C4D1} = {064520BF-4D56-4301-B6E5-9D6D8073E217}
 		{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4} = {66C53829-3C54-4944-B831-FB18B2D8B460}
 		{2C70B11C-97BD-4ABE-BECF-86BB9808F571} = {673DF392-1FCD-42CB-8CD5-EB945084C4D1}
+		{A604F2A2-356A-4A55-A15D-1A4214D69B40} = {BCD3B29C-0736-4E40-9807-A43829322796}
 	EndGlobalSection
 EndGlobal

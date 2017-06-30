@@ -50,7 +50,7 @@ namespace Heleonix.Build.Tests.Targets
 
             yield return new TargetTestCase(new Dictionary<string, ITaskItem[]>
                 {
-                    { "Hxb-Rebuild-In-SnkPairFile", new[] { new TaskItem(LibSimulatorPath.SnkPairFile) as ITaskItem } }
+                    { "Hxb-Rebuild-In-SnkPairFile", new[] { new TaskItem(SystemPath.SnkPairFile) as ITaskItem } }
                 },
                 true);
         }

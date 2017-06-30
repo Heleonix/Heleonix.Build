@@ -41,8 +41,9 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true)]
+        [TestCase(false)]
+        public static void Execute(bool shouldSucceed)
         {
             var repositoryDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
             var workingCopyDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
@@ -53,21 +54,18 @@ namespace Heleonix.Build.Tests.Tasks
                     .AddPath("create", repositoryDir));
 
                 ExeHelper.Execute(SystemPath.SvnExe, ArgsBuilder.By(string.Empty, "")
-                    .AddValue("checkout")
-                    .AddPath("file:///" + repositoryDir)
-                    .AddPath(workingCopyDir));
+                    .AddValue("checkout").AddPath("file:///" + repositoryDir).AddPath(workingCopyDir));
 
                 var workingCopyFilePath = Path.Combine(workingCopyDir, Path.GetRandomFileName());
 
                 File.Create(workingCopyFilePath).Close();
 
                 ExeHelper.Execute(SystemPath.SvnExe, ArgsBuilder.By(string.Empty, " ")
-                    .AddValue("add")
-                    .AddPath(workingCopyFilePath), false, workingCopyDir, int.MaxValue);
+                    .AddValue("add").AddPath(workingCopyFilePath), false, workingCopyDir, int.MaxValue);
 
                 ExeHelper.Execute(SystemPath.SvnExe, ArgsBuilder.By(string.Empty, " ")
                     .AddValue("commit")
-                    .AddPath("-m", "Commit 1."), false, workingCopyDir, int.MaxValue);
+                    .AddPath("-m", shouldSucceed ? "Commit 1." : null), false, workingCopyDir, int.MaxValue);
 
                 var task = new SvnLog
                 {
@@ -79,14 +77,18 @@ namespace Heleonix.Build.Tests.Tasks
 
                 var succeeded = task.Execute();
 
-                Assert.That(succeeded, Is.True);
-                Assert.That(task.Commits, Has.Length.EqualTo(task.MaxCount));
-                Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
-                Assert.That(task.Commits[0].ItemSpec, Is.EqualTo(task.Commits[0].GetMetadata("Revision")));
-                Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
-                Assert.That(task.Commits[0].GetMetadata("Message"), Is.EqualTo("Commit 1."));
+                Assert.That(succeeded, Is.EqualTo(shouldSucceed));
+
+                if (succeeded)
+                {
+                    Assert.That(task.Commits, Has.Length.EqualTo(task.MaxCount));
+                    Assert.That(task.Commits[0].ItemSpec, Is.Not.Empty);
+                    Assert.That(task.Commits[0].ItemSpec, Is.EqualTo(task.Commits[0].GetMetadata("Revision")));
+                    Assert.That(task.Commits[0].GetMetadata("Revision"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("AuthorName"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("AuthorDate"), Is.Not.Empty);
+                    Assert.That(task.Commits[0].GetMetadata("Message"), Is.EqualTo("Commit 1."));
+                }
             }
             finally
             {

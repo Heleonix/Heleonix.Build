@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Heleonix.Build
@@ -29,6 +30,7 @@ namespace Heleonix.Build
     /// <summary>
     /// Represents the executable result.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class ExeResult
     {
         #region Properties

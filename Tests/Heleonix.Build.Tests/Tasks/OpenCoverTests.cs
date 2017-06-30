@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
@@ -41,67 +42,72 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="OpenCover.Execute"/>.
         /// </summary>
-        [TestCase(40, ExpectedResult = true)]
-        [TestCase(90, ExpectedResult = false)]
-        public static bool Execute(int minClassCoverage)
+        [TestCase(nameof(Build.Tasks.NUnit), null, 28, true, false, false, "Coverage.xml")]
+        [TestCase(nameof(Build.Tasks.NUnit), null, 0, true, true, false, "Coverage.xml")]
+        [TestCase(nameof(Build.Tasks.NUnit), null, 90, false, false, false, "Coverage.xml")]
+        [TestCase("InvalidType", null, 0, true, false, null, "Coverage.xml")]
+        [TestCase(nameof(Build.Tasks.NUnit), null, 28, true, false, true, "Coverage.xml")]
+        [TestCase(nameof(Build.Tasks.NUnit), "name != 'Add(3,2)'", 0, true, false, false, "Coverage.xml")]
+        [TestCase(nameof(Build.Tasks.NUnit), null, 0, true, false, false, null)]
+        public static void Execute(string type, string testsFilter, int minCoverage, bool shouldPassCoverage,
+            bool shouldExeFail, bool usePdbSearchDirs, string coverageResultsFile)
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
             var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-OpenCover");
-            var coverageResults = Path.Combine(artifactsDir, Path.GetRandomFileName());
-            var errorsOutput = Path.Combine(artifactsDir, "Errors.txt");
-            var testsOutput = Path.Combine(artifactsDir, "Output.txt");
-            var testsResult = Path.Combine(artifactsDir, "NUnit.xml");
+            var targetArtifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-NUnit");
+            var errorsOutput = Path.Combine(targetArtifactsDir, "Errors.txt");
+            var testsOutput = Path.Combine(targetArtifactsDir, "Output.txt");
+            var testsResult = Path.Combine(targetArtifactsDir, "NUnit.xml");
 
             var task = new OpenCover
             {
                 BuildEngine = new FakeBuildEngine(),
                 OpenCoverExeFile = new TaskItem(SystemPath.OpenCoverExe),
-                Target = new TaskItem(SystemPath.NUnitConsoleExe, new Dictionary<string, string>
+                Target = new TaskItem(shouldExeFail ? "``" : SystemPath.NUnitConsoleExe, new Dictionary<string, string>
                 {
                     { nameof(Build.Tasks.NUnit.NUnitProjectFileOrTestsFiles), LibSimulatorPath.TestsOutFile },
-                    { "Type", nameof(Build.Tasks.NUnit) },
+                    { "Type", type },
                     { nameof(Build.Tasks.NUnit.ErrorsOutputFile), errorsOutput },
                     { nameof(Build.Tasks.NUnit.TestsOutputFile), testsOutput },
-                    { nameof(Build.Tasks.NUnit.TestsResultFile), testsResult }
+                    { nameof(Build.Tasks.NUnit.TestsResultFile), testsResult },
+                    { nameof(Build.Tasks.NUnit.TestsFilter), testsFilter }
                 }),
-                CoverageResultFile = new TaskItem(coverageResults),
-                MinClassCoverage = minClassCoverage,
-                Register = "path64"
+                CoverageResultFile =
+                    coverageResultsFile != null ? new TaskItem(Path.Combine(artifactsDir, coverageResultsFile)) : null,
+                MinClassCoverage = minCoverage,
+                MinBranchCoverage = minCoverage,
+                MinLineCoverage = minCoverage,
+                MinMethodCoverage = minCoverage,
+                Register = "path64",
+                PdbSearchDirs = usePdbSearchDirs ? new ITaskItem[] { new TaskItem(LibSimulatorPath.OutDir) } : null
             };
 
             task.Execute();
 
-            var coverageResultsExists = File.Exists(coverageResults);
-
             try
             {
-                Assert.That(coverageResultsExists, Is.True);
+                if (!shouldExeFail && type != "InvalidType" && coverageResultsFile != null)
+                {
+                    Assert.That(File.Exists(task.CoverageResultFile.ItemSpec), Is.True);
+                }
+
+                if (shouldPassCoverage)
+                {
+                    Assert.That(task.ClassCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                    Assert.That(task.MethodCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                    Assert.That(task.BranchCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                    Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                }
             }
             finally
             {
-                if (coverageResultsExists)
+                if (type != "InvalidType" && coverageResultsFile != null)
                 {
-                    File.Delete(coverageResults);
-                }
-
-                if (File.Exists(errorsOutput))
-                {
-                    File.Delete(errorsOutput);
-                }
-
-                if (File.Exists(testsOutput))
-                {
-                    File.Delete(testsOutput);
-                }
-
-                if (File.Exists(testsResult))
-                {
-                    File.Delete(testsResult);
+                    Directory.Delete(artifactsDir, true);
+                    Directory.Delete(targetArtifactsDir, true);
                 }
             }
-
-            return task.ClassCoverage >= minClassCoverage;
         }
 
         #endregion

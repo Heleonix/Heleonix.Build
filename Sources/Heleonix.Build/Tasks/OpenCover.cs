@@ -235,9 +235,10 @@ namespace Heleonix.Build.Tasks
                 .AddKey("mergebyhash")
                 .AddPath("output", CoverageResultFile.ItemSpec)
                 .AddKey("skipautoprops")
-                .AddPath("searchdirs", directorySeparatorReplacer + string.Join(Path.DirectorySeparatorChar + "\";",
-                                           PdbSearchDirs?.Select(i => i.ItemSpec) ?? Enumerable.Empty<string>())
-                                       + directorySeparatorReplacer,
+                .AddPath("searchdirs", PdbSearchDirs != null
+                        ? directorySeparatorReplacer + string.Join(Path.DirectorySeparatorChar + "\";",
+                              PdbSearchDirs.Select(i => i.ItemSpec)) + directorySeparatorReplacer
+                        : null,
                     PdbSearchDirs != null)
                 .AddKey("showunvisited", ShowUnvisited)
                 .AddKey("returntargetcode")
@@ -245,20 +246,17 @@ namespace Heleonix.Build.Tasks
                 .AddKey("register", Register == "auto")
                 .AddArgument("register", Register, Register != "auto");
 
+            var coverageResultDir = Path.GetDirectoryName(CoverageResultFile.ItemSpec);
+
             // OpenCover does not create a directory for coverage result file.
-            if (!Directory.Exists(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty))
+            if (!Directory.Exists(coverageResultDir))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(CoverageResultFile.ItemSpec) ?? string.Empty);
+                Directory.CreateDirectory(coverageResultDir);
             }
 
             var result = ExeHelper.Execute(OpenCoverExeFile.ItemSpec, args, true);
 
             Log.LogMessage(result.Output);
-
-            if (!string.IsNullOrEmpty(result.Error))
-            {
-                Log.LogError(result.Error);
-            }
 
             if (!File.Exists(CoverageResultFile.ItemSpec))
             {
@@ -272,14 +270,7 @@ namespace Heleonix.Build.Tasks
                 Log.LogWarning(Resources.OpenCover_TargetFailed, result.ExitCode);
             }
 
-            var summary = XDocument.Load(CoverageResultFile.ItemSpec).Element("CoverageSession")?.Element("Summary");
-
-            if (summary == null)
-            {
-                Log.LogMessage(Resources.OpenCover_SummaryNotFound);
-
-                return;
-            }
+            var summary = XDocument.Load(CoverageResultFile.ItemSpec).Element("CoverageSession").Element("Summary");
 
             TotalLines = Convert.ToInt64(summary.Attribute("numSequencePoints").Value, NumberFormatInfo.InvariantInfo);
             VisitedLines = Convert.ToInt64(summary.Attribute("visitedSequencePoints").Value,

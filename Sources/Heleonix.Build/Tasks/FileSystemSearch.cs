@@ -62,8 +62,7 @@ namespace Heleonix.Build.Tasks
                 if (Direction == "Up")
                 {
                     var dirs = Directory.GetDirectories(currentDir)
-                        .Where(d =>
-                            pathRegExp?.IsMatch(d) ?? true)
+                        .Where(d => pathRegExp?.IsMatch(d) ?? true)
                         .Select(d => new TaskItem(d));
 
                     foreach (var dir in dirs)
@@ -200,6 +199,10 @@ namespace Heleonix.Build.Tasks
             if (!Directory.Exists(StartDir.ItemSpec))
             {
                 Log.LogMessage(Resources.FileSystemSearch_StartingDirectoryNotFound, StartDir.ItemSpec);
+
+                FoundFiles = Array.Empty<ITaskItem>();
+                FoundDirs = Array.Empty<ITaskItem>();
+                FoundItems = Array.Empty<ITaskItem>();
 
                 return;
             }

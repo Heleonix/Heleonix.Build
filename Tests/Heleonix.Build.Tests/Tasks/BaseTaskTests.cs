@@ -22,43 +22,49 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Text.RegularExpressions;
+using System;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Heleonix.Build.Tests.Tasks
 {
     /// <summary>
-    /// Tests the <see cref="ItemFilter"/>.
+    /// Tests te <see cref="BaseTask"/>.
     /// </summary>
-    public static class ItemFilterTests
+    public static class BaseTaskTests
     {
         #region Tests
 
         /// <summary>
-        /// Tests the <see cref="ItemFilter.Execute"/>.
+        /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [TestCase(@"^.+\.Tests\.dll$", false, "FullPath")]
-        [TestCase(@"^.+\.Tests\.dll$", true, null)]
-        public static void Execute(string regex, bool negative, string metadataName)
+        [TestCase(true)]
+        [TestCase(false)]
+        public static void Execute(bool throwException)
         {
-            var task = new ItemFilter
+            var mock = new Mock<BaseTask> { CallBase = true };
+
+            mock.Object.BuildEngine = new FakeBuildEngine();
+
+            if (throwException)
             {
-                BuildEngine = new FakeBuildEngine(),
-                Inputs = new[] { new TaskItem("Product.Tests.dll"), new TaskItem("Product.dll") as ITaskItem },
-                RegExp = regex,
-                MetadataName = metadataName,
-                Negative = negative,
-                RegExpOptions = RegexOptions.IgnoreCase.ToString()
-            };
+                mock.Protected().Setup("ExecuteInternal").Throws<InvalidOperationException>();
+            }
+            else
+            {
+                mock.Protected().Setup("ExecuteInternal");
+            }
 
-            var succeeded = task.Execute();
+            var result = mock.Object.Execute();
 
-            Assert.That(succeeded, Is.True);
-            Assert.That(task.Outputs, Has.Length.EqualTo(1));
+            Assert.That(result, Is.Not.EqualTo(throwException));
+
+            mock.Protected().Verify("ExecuteInternal", Times.Once());
+
+            Assert.That(mock.Object.Log.HasLoggedErrors, Is.EqualTo(throwException));
         }
 
         #endregion

@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Heleonix.Build
@@ -32,6 +33,7 @@ namespace Heleonix.Build
     /// <summary>
     /// Provides functionality for working with executables.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class ExeHelper
     {
         #region Methods

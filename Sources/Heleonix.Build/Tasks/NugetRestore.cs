@@ -99,8 +99,9 @@ namespace Heleonix.Build.Tasks
                 .AddPath("MSBuildPath", MSBuildDir.ItemSpec)
                 .AddArgument("NoCache", NoCache, NoCache)
                 .AddPath("PackagesDirectory",
-                    PackagesDir?.ItemSpec ?? Path.Combine(Path.GetDirectoryName(SolutionFile.ItemSpec)
-                                                          ?? "." + Path.DirectorySeparatorChar, "packages"))
+                    PackagesDir != null
+                        ? PackagesDir.ItemSpec
+                        : Path.Combine(Path.GetDirectoryName(SolutionFile.ItemSpec), "packages"))
                 .AddPaths("Source", SourcesPaths?.Select(sp => sp.ItemSpec), false)
                 .AddArgument("Verbosity", Verbosity)
                 .AddKey("NonInteractive");

@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Globalization;
 using System.IO;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
@@ -41,37 +42,100 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [TestCase(true, FxCop.IssueTypes.Any)]
-        [TestCase(false, FxCop.IssueTypes.Any)]
-        [TestCase(false, FxCop.IssueTypes.None)]
-        public static void Execute(bool useXsl, FxCop.IssueTypes failOn)
+        [TestCase(null, true, true, true, false, false, false, false, false, false, FxCop.IssueTypes.Any)]
+        [TestCase(null, true, true, true, false, false, true, true, true, true, FxCop.IssueTypes.Any)]
+        [TestCase(null, false, true, true, false, true, false, false, false, false, FxCop.IssueTypes.Any)]
+        [TestCase(null, true, false, false, false, false, false, false, false, false, FxCop.IssueTypes.Any)]
+        [TestCase(null, true, false, false, false, false, false, false, false, false, FxCop.IssueTypes.None)]
+        [TestCase("```", true, false, false, false, false, false, false, false, false, FxCop.IssueTypes.None)]
+        [TestCase(null, true, false, false, true, false, false, false, false, false, FxCop.IssueTypes.Any)]
+        [TestCase(null, true, false, false, true, false, false, false, false, false, FxCop.IssueTypes.None)]
+        [TestCase(null, true, false, false, true, false, false, false, false, false, FxCop.IssueTypes.CriticalErrors)]
+        [TestCase(null, true, false, false, true, false, false, false, false, false, FxCop.IssueTypes.Errors)]
+        [TestCase(null, true, false, false, true, false, false, false, false, false, FxCop.IssueTypes.CriticalWarnings)]
+        [TestCase(null, true, false, false, true, false, false, false, false, false, FxCop.IssueTypes.Warnings)]
+        [TestCase(null, true, false, false, true, false, false, false, false, false, FxCop.IssueTypes.Informational)]
+        [TestCase("FullyCoveredType", true, false, false, false, false, false, false, false, false,
+            FxCop.IssueTypes.Any)]
+        public static void Execute(string targetTypes, bool useTargetsFiles, bool shouldReportAlreadyExist, bool useXsl,
+            bool simulateAllViolations, bool useProjectFile, bool useDictionaryFile, bool useRulesDir,
+            bool useRulesetFile, bool useDependenciesDir, FxCop.IssueTypes failOn)
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
-            var analysisResults = Path.Combine(LibSimulatorPath.GetArtifactsDir("Hxb-FxCop"), Path.GetRandomFileName());
+            var artifactsDir = LibSimulatorPath.GetArtifactsDir("Hxb-FxCop");
+
+            var analysisResults = Path.Combine(artifactsDir, Path.GetRandomFileName());
+            var exeMock = Path.Combine(artifactsDir, Path.GetFileName(SystemPath.ExeMock));
+            var projectFile = Path.Combine(artifactsDir, Path.GetFileName(SystemPath.FxCopProjectFile));
+
+            if (shouldReportAlreadyExist)
+            {
+                if (!Directory.Exists(artifactsDir))
+                {
+                    Directory.CreateDirectory(artifactsDir);
+                }
+
+                File.Copy(SystemPath.FxCopReportFile, analysisResults, true);
+            }
+
+            if (simulateAllViolations)
+            {
+                if (!Directory.Exists(artifactsDir))
+                {
+                    Directory.CreateDirectory(artifactsDir);
+                }
+
+                File.Copy(SystemPath.FxCopReportFile, Path.ChangeExtension(analysisResults, ".tmp"), true);
+
+                File.Copy(SystemPath.ExeMock, exeMock, true);
+
+                using (var cfg = File.CreateText(Path.ChangeExtension(exeMock, ".mock")))
+                {
+                    cfg.WriteLine(0);
+                }
+            }
+
+            if (useProjectFile)
+            {
+                var projectContent = string.Format(CultureInfo.InvariantCulture,
+                    File.ReadAllText(SystemPath.FxCopProjectFile), LibSimulatorPath.OutDir,
+                    LibSimulatorPath.OutFile, SystemPath.FxCopRulesDir);
+
+                File.WriteAllText(projectFile, projectContent);
+            }
 
             var task = new FxCop
             {
                 BuildEngine = new FakeBuildEngine(),
-                FxCopCmdFile = new TaskItem(SystemPath.FxCopExe),
+                FxCopCmdFile = new TaskItem(simulateAllViolations ? exeMock : SystemPath.FxCopExe),
                 AnalysisResultFile = new TaskItem(analysisResults),
-                TargetsFilesDirs = new ITaskItem[] { new TaskItem(LibSimulatorPath.OutFile) },
+                TargetsFilesDirs = useTargetsFiles ? new ITaskItem[] { new TaskItem(LibSimulatorPath.OutFile) } : null,
                 AnalysisResultsXslFile = useXsl
                     ? new TaskItem(Path.Combine(Path.GetDirectoryName(SystemPath.FxCopExe) ?? string.Empty, "Xml",
                         "CodeAnalysisReport.xsl"))
                     : null,
-                FailOn = failOn.ToString()
+                FailOn = failOn.ToString(),
+                TargetsTypes = targetTypes,
+                DictionaryFile = useDictionaryFile ? new TaskItem(SystemPath.FxCopDictionaryFile) : null,
+                RulesFilesDirs = useRulesDir ? new ITaskItem[] { new TaskItem(SystemPath.FxCopRulesDir) } : null,
+                RulesetFile = useRulesetFile ? new TaskItem(SystemPath.FxCopRulesetFile) : null,
+                DependenciesDirs =
+                    useDependenciesDir ? new ITaskItem[] { new TaskItem(LibSimulatorPath.OutDir) } : null,
+                ProjectFile = useProjectFile ? new TaskItem(projectFile) : null
             };
 
             var succeeded = task.Execute();
 
             var analysisResultsExists = File.Exists(analysisResults);
-            var analysisResultsHtml = Path.ChangeExtension(analysisResults, ".html");
-            var analysisResultsHtmlExists = File.Exists(analysisResultsHtml);
 
             try
             {
-                if (failOn.HasFlag(FxCop.IssueTypes.None))
+                if (targetTypes == "```")
+                {
+                    Assert.That(succeeded, Is.False);
+                }
+                else if (targetTypes == "FullyCoveredType" || failOn.HasFlag(FxCop.IssueTypes.None))
                 {
                     Assert.That(succeeded, Is.True);
                 }
@@ -80,18 +144,13 @@ namespace Heleonix.Build.Tests.Tasks
                     Assert.That(succeeded, Is.False);
                 }
 
-                Assert.That(analysisResultsExists, Is.True);
+                Assert.That(analysisResultsExists, Is.EqualTo(targetTypes == null || simulateAllViolations));
             }
             finally
             {
-                if (analysisResultsExists)
+                if (Directory.Exists(artifactsDir))
                 {
-                    File.Delete(analysisResults);
-                }
-
-                if (analysisResultsHtmlExists)
-                {
-                    File.Delete(analysisResultsHtml);
+                    Directory.Delete(artifactsDir, true);
                 }
             }
         }

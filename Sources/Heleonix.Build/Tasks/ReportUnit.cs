@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using Heleonix.Build.Properties;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
@@ -68,17 +67,6 @@ namespace Heleonix.Build.Tasks
             var result = ExeHelper.Execute(ReportUnitExeFile.ItemSpec, args, true);
 
             Log.LogMessage(result.Output);
-
-            if (!string.IsNullOrEmpty(result.Error))
-            {
-                Log.LogError(result.Error);
-            }
-
-            if (result.ExitCode != 0)
-            {
-                Log.LogError(Resources.ReportUnit_Failed, nameof(ReportUnit), TestsResultFile.ItemSpec,
-                    result.ExitCode);
-            }
         }
 
         #endregion

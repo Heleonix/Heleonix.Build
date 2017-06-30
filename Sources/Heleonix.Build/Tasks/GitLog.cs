@@ -128,9 +128,9 @@ namespace Heleonix.Build.Tasks
 
             using (var outputReader = new StringReader(result.Output))
             {
-                var line = string.Empty;
+                string line;
 
-                while (line != null)
+                do
                 {
                     line = outputReader.ReadLine();
 
@@ -157,16 +157,13 @@ namespace Heleonix.Build.Tasks
                         line = outputReader.ReadLine();
                     }
 
-                    if (textBuilder.ToString().EndsWith(Environment.NewLine, StringComparison.Ordinal))
-                    {
-                        textBuilder.Remove(textBuilder.Length - Environment.NewLine.Length,
-                            Environment.NewLine.Length);
-                    }
+                    textBuilder.Replace(Environment.NewLine, string.Empty,
+                        textBuilder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
 
                     commit.SetMetadata("Message", textBuilder.ToString());
 
                     commits.Add(commit);
-                }
+                } while (line != null);
             }
 
             Commits = commits.ToArray();

@@ -42,8 +42,10 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        public static void Execute(bool directoriesExist, bool throwException)
         {
             var directoriesToClean = new[]
             {
@@ -51,19 +53,18 @@ namespace Heleonix.Build.Tests.Tasks
                 Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName())
             };
 
-            foreach (var directoryToClean in directoriesToClean)
+            if (directoriesExist)
             {
-                Directory.CreateDirectory(directoryToClean);
-                Directory.CreateDirectory(Path.Combine(directoryToClean, Path.GetRandomFileName()));
-                File.Create(Path.Combine(directoryToClean, Path.GetRandomFileName())).Close();
-                File.Create(Path.Combine(Directory.CreateDirectory(Path.Combine(directoryToClean,
-                            Path.GetRandomFileName()))
-                        .FullName, Path.GetRandomFileName()))
-                    .Close();
-                File.Create(Path.Combine(Directory.CreateDirectory(Path.Combine(directoryToClean,
-                            Path.GetRandomFileName()))
-                        .FullName, Path.GetRandomFileName()))
-                    .Close();
+                foreach (var directoryToClean in directoriesToClean)
+                {
+                    Directory.CreateDirectory(directoryToClean);
+                    Directory.CreateDirectory(Path.Combine(directoryToClean, Path.GetRandomFileName()));
+                    File.Create(Path.Combine(directoryToClean, Path.GetRandomFileName())).Close();
+                    File.Create(Path.Combine(Directory.CreateDirectory(Path.Combine(directoryToClean,
+                        Path.GetRandomFileName())).FullName, Path.GetRandomFileName())).Close();
+                    File.Create(Path.Combine(Directory.CreateDirectory(Path.Combine(directoryToClean,
+                        Path.GetRandomFileName())).FullName, Path.GetRandomFileName())).Close();
+                }
             }
 
             try
@@ -74,23 +75,34 @@ namespace Heleonix.Build.Tests.Tasks
                     Dirs = directoriesToClean.Select(d => new TaskItem(d) as ITaskItem).ToArray()
                 };
 
+                if (throwException)
+                {
+                    task.Dirs = task.Dirs.Select(d => (ITaskItem) null).ToArray();
+                }
+
                 var succeeded = task.Execute();
 
-                Assert.That(succeeded, Is.True);
-                Assert.That(task.CleanedDirs, Has.Length.EqualTo(directoriesToClean.Length));
-                Assert.That(task.FailedDirs, Has.Length.Zero);
+                Assert.That(succeeded, Is.Not.EqualTo(throwException));
+                Assert.That(task.CleanedDirs, Has.Length.EqualTo(directoriesExist ? directoriesToClean.Length : 0));
+                Assert.That(task.FailedDirs, Has.Length.EqualTo(throwException ? directoriesToClean.Length : 0));
 
-                foreach (var directoryToClean in directoriesToClean)
+                if (directoriesExist)
                 {
-                    Assert.That(Directory.GetFiles(directoryToClean), Has.Length.Zero);
-                    Assert.That(Directory.GetDirectories(directoryToClean), Has.Length.Zero);
+                    foreach (var directoryToClean in directoriesToClean)
+                    {
+                        Assert.That(Directory.GetFiles(directoryToClean), Has.Length.Zero);
+                        Assert.That(Directory.GetDirectories(directoryToClean), Has.Length.Zero);
+                    }
                 }
             }
             finally
             {
-                foreach (var dir in directoriesToClean)
+                if (directoriesExist)
                 {
-                    Directory.Delete(dir, true);
+                    foreach (var dir in directoriesToClean)
+                    {
+                        Directory.Delete(dir, true);
+                    }
                 }
             }
         }

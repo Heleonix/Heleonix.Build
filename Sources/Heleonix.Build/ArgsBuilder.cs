@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using static System.FormattableString;
@@ -32,6 +33,7 @@ namespace Heleonix.Build
     /// <summary>
     /// Builder for arguments to be passed to executable commands.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public sealed class ArgsBuilder
     {
         #region Fields

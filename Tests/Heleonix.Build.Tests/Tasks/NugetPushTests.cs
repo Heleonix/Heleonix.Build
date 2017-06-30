@@ -42,14 +42,23 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="NugetPush.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(false, false, true)]
+        [TestCase(true, true, false)]
+        public static void Execute(bool shouldExeSucceed, bool specifySource, bool specifyConfig)
         {
             var nugetPackage = Directory.GetFiles(Path.Combine(SystemPath.NugetExe, "..", "..")).First();
-
             var tempSource = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
+            var configFile = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
             Directory.CreateDirectory(tempSource);
+
+            using (var file = File.CreateText(configFile))
+            {
+                file.WriteLine(
+                    "<?xml version=\"1.0\" encoding=\"utf - 8\"?>"
+                    + Invariant($"<configuration><packageSources><add key=\"Hxb-Test\" value = \"{tempSource}\"/>")
+                    + "</packageSources></configuration>");
+            }
 
             try
             {
@@ -61,21 +70,26 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new FakeBuildEngine(),
                     NugetExeFile = new TaskItem(SystemPath.NugetExe),
-                    SourcePath = new TaskItem(tempSource),
+                    SourcePath = specifySource ? new TaskItem(tempSource) : null,
                     PackageFile = new TaskItem(nugetPackage),
-                    Verbosity = "detailed"
+                    Verbosity = shouldExeSucceed ? "detailed" : "InvalidVerbosity",
+                    ConfigFile = specifyConfig ? new TaskItem(configFile) : null
                 };
 
                 var succeeded = task.Execute();
 
-                Assert.That(succeeded, Is.True);
+                if (shouldExeSucceed)
+                {
+                    Assert.That(succeeded, Is.True);
 
-                Assert.That(File.Exists(Path.Combine(tempSource,
-                    Path.GetFileName(nugetPackage) ?? string.Empty)), Is.True);
+                    Assert.That(File.Exists(Path.Combine(tempSource,
+                        Path.GetFileName(nugetPackage) ?? string.Empty)), Is.True);
+                }
             }
             finally
             {
                 Directory.Delete(tempSource, true);
+                File.Delete(configFile);
             }
         }
 

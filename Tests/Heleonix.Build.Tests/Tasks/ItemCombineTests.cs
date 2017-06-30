@@ -28,6 +28,7 @@ using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
+using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Tasks
 {
@@ -41,25 +42,28 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [TestCase("Pairing", "A,B,C", "M,N,D,B,C", ExpectedResult = "A-M,B-N,C-D")]
-        [TestCase("Pairing", "A,B,C,D,F", "M,N,D", ExpectedResult = "A-M,B-N,C-D")]
-        [TestCase("CrossProduct", "A,B,C", "M,N,D", ExpectedResult = "A-M,A-N,A-D,B-M,B-N,B-D,C-M,C-N,C-D")]
-        public static string Execute(string operation, string left, string right)
+        [TestCase("Pairing", "A,B,C", "M,N,D,B,C", null, ExpectedResult = "A-M,B-N,C-D")]
+        [TestCase("Pairing", "A,B,C,D,F", "M,N,D", null, ExpectedResult = "A-M,B-N,C-D")]
+        [TestCase("CrossProduct", "A,B,C", "M,N,D", "Identity", ExpectedResult = "A-M,A-N,A-D,B-M,B-N,B-D,C-M,C-N,C-D")]
+        [TestCase("InvalidOperation", null, null, null, ExpectedResult = "")]
+        public static string Execute(string operation, string left, string right, string sourceMetadataName)
         {
             var task = new ItemCombine
             {
                 BuildEngine = new FakeBuildEngine(),
                 Operation = operation,
                 TargetMetadataName = "Right",
+                SourceMetadataName = sourceMetadataName,
                 Left = left?.Split(',').Select(l => new TaskItem(l) as ITaskItem).ToArray(),
                 Right = right?.Split(',').Select(r => new TaskItem(r) as ITaskItem).ToArray()
             };
 
             var succeeded = task.Execute();
 
-            Assert.That(succeeded, Is.True);
+            Assert.That(succeeded, Is.EqualTo(operation != "InvalidOperation"));
 
-            return string.Join(",", task.Result.Select(r => r.ItemSpec + "-" + r.GetMetadata("Right")));
+            return string.Join(",", task.Result?.Select(r => Invariant($"{r.ItemSpec}-{r.GetMetadata("Right")}"))
+                                    ?? new string[0]);
         }
 
         #endregion

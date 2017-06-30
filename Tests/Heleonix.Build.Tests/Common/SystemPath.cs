@@ -98,6 +98,21 @@ namespace Heleonix.Build.Tests.Common
         }
 
         /// <summary>
+        /// Gets the FxCop dictionary file.
+        /// </summary>
+        public static string FxCopDictionaryFile => Path.Combine(FxCopDir, "CustomDictionary.xml");
+
+        /// <summary>
+        /// Gets the FxCop rules directory.
+        /// </summary>
+        public static string FxCopRulesDir => Path.Combine(FxCopDir, "Rules");
+
+        /// <summary>
+        /// Gets the FxCop rule sets file.
+        /// </summary>
+        public static string FxCopRulesetFile => Path.Combine(FxCopDir, "..", "Rule Sets", "AllRules.ruleset");
+
+        /// <summary>
         /// Gets the Git executable path.
         /// </summary>
         public static string GitExe => "git.exe";
@@ -111,6 +126,32 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the SvnAdmin executable path.
         /// </summary>
         public static string SvnAdminExe => "svnadmin.exe";
+
+        /// <summary>
+        /// Gets the executable mock path.
+        /// </summary>
+        public static string ExeMock => Path.Combine(CurrentDir, "..", "..", "..", "Heleonix.Build.Tests.ExeMock",
+            "bin", MSBuildHelper.CurrentConfiguration, "Heleonix.Build.Tests.ExeMock.exe");
+
+        /// <summary>
+        /// Gets the SNK pair file path.
+        /// </summary>
+        public static string SnkPairFile => Path.Combine(CurrentDir, "Common", "SnkPair.snk");
+
+        /// <summary>
+        /// Gets the FxCop report file path.
+        /// </summary>
+        public static string FxCopReportFile => Path.Combine(CurrentDir, "Common", "FxCopReport.xml");
+
+        /// <summary>
+        /// Gets the FxCop project file path.
+        /// </summary>
+        public static string FxCopProjectFile => Path.Combine(CurrentDir, "Common", "FxCopProject.FxCop");
+
+        /// <summary>
+        /// Gets the FxCop directory.
+        /// </summary>
+        private static string FxCopDir => Path.GetDirectoryName(FxCopExe);
 
         #endregion
     }

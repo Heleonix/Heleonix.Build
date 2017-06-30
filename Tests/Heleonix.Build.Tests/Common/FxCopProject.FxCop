@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="10.0" Name="FxCop Project">
+  <ProjectOptions>
+    <PlatformAssembliesLocation>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6</PlatformAssembliesLocation>
+    <SaveMessages>
+      <Project Status="Active, Excluded" NewOnly="False" />
+      <Report Status="Active" NewOnly="False" />
+    </SaveMessages>
+    <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+    <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+    <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+    <SourceLookup>True</SourceLookup>
+    <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+    <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+    <Spelling Locale="en-US" />
+    <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+    <SearchGlobalAssemblyCache>True</SearchGlobalAssemblyCache>
+    <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+    <IgnoreGeneratedCode>True</IgnoreGeneratedCode>
+  </ProjectOptions>
+  <Targets>
+    <AssemblyReferenceDirectories>
+      <Directory>{0}</Directory>
+    </AssemblyReferenceDirectories>
+    <Target Name="{1}" Analyze="True" AnalyzeAllChildren="True"/>
+  </Targets>
+  <Rules>
+    <RuleFiles>
+      <RuleFile Name="{2}\DataflowRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\MaintainabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\ReliabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\SecurityTransparencyRules.dll" Enabled="True" AllRulesEnabled="True" />
+      <RuleFile Name="{2}\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+    </RuleFiles>
+    <Groups />
+    <Settings />
+  </Rules>
+  <FxCopReport Version="1.35" />
+</FxCopProject>

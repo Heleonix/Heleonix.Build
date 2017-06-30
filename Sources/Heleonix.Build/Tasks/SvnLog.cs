@@ -128,9 +128,9 @@ namespace Heleonix.Build.Tasks
                 var commit = new TaskItem { ItemSpec = logEntryNode.Attribute("revision").Value };
 
                 commit.SetMetadata("Revision", commit.ItemSpec);
-                commit.SetMetadata("AuthorName", logEntryNode.Element("author")?.Value);
-                commit.SetMetadata("AuthorDate", logEntryNode.Element("date")?.Value);
-                commit.SetMetadata("Message", logEntryNode.Element("msg")?.Value);
+                commit.SetMetadata("AuthorName", logEntryNode.Element("author").Value);
+                commit.SetMetadata("AuthorDate", logEntryNode.Element("date").Value);
+                commit.SetMetadata("Message", logEntryNode.Element("msg").Value);
 
                 commits.Add(commit);
             }

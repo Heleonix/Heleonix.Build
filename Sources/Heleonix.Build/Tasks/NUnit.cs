@@ -51,8 +51,8 @@ namespace Heleonix.Build.Tasks
                 .AddPath("result", item.GetMetadata(nameof(TestsResultFile)))
                 .AddKey("noresult", item.GetMetadata(nameof(TestsResultFile)) == null)
                 .AddPath("testlist", item.GetMetadata(nameof(TestsListFile)))
-                .AddArgument("where", item.GetMetadata(nameof(TestsFilter)))
-                .AddArgument("params", item.GetMetadata(nameof(TestsParameters)))
+                .AddPath("where", item.GetMetadata(nameof(TestsFilter)))
+                .AddPath("params", item.GetMetadata(nameof(TestsParameters)))
                 .AddArgument("agents", item.GetMetadata(nameof(AgentsNumber)))
                 .AddKey("stoponerror", item.GetMetadata(nameof(StopOnErrorOrFailedTest)) == "true")
                 .AddKey("teamcity", item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "true")
@@ -86,23 +86,23 @@ namespace Heleonix.Build.Tasks
         {
             // NUnit does not create a directory for tests result file.
             if (!string.IsNullOrEmpty(testsResultFile) &&
-                !Directory.Exists(Path.GetDirectoryName(testsResultFile) ?? string.Empty))
+                !Directory.Exists(Path.GetDirectoryName(testsResultFile)))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(testsResultFile) ?? string.Empty);
+                Directory.CreateDirectory(Path.GetDirectoryName(testsResultFile));
             }
 
             // NUnit does not create a directory for tests output file.
             if (!string.IsNullOrEmpty(testsOutputFile) &&
-                !Directory.Exists(Path.GetDirectoryName(testsOutputFile) ?? string.Empty))
+                !Directory.Exists(Path.GetDirectoryName(testsOutputFile)))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(testsOutputFile) ?? string.Empty);
+                Directory.CreateDirectory(Path.GetDirectoryName(testsOutputFile));
             }
 
             // NUnit does not create a directory for errors output file.
             if (!string.IsNullOrEmpty(errorsOutputFile) &&
-                !Directory.Exists(Path.GetDirectoryName(errorsOutputFile) ?? string.Empty))
+                !Directory.Exists(Path.GetDirectoryName(errorsOutputFile)))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(errorsOutputFile) ?? string.Empty);
+                Directory.CreateDirectory(Path.GetDirectoryName(errorsOutputFile));
             }
         }
 
@@ -309,12 +309,14 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
+            Prepare(TestsResultFile?.ItemSpec, TestsOutputFile?.ItemSpec, ErrorsOutputFile?.ItemSpec);
+
             var args = ArgsBuilder.By("--", "=")
                 .AddPaths(NUnitProjectFileOrTestsFiles.Select(i => i.ItemSpec))
                 .AddPath("result", TestsResultFile?.ItemSpec)
                 .AddKey("noresult", TestsResultFile == null)
                 .AddPath("testlist", TestsListFile?.ItemSpec)
-                .AddArgument("where", TestsFilter)
+                .AddPath("where", TestsFilter)
                 .AddArgument("params", TestsParameters)
                 .AddArgument("agents", AgentsNumber, AgentsNumber > 0)
                 .AddKey("stoponerror", StopOnErrorOrFailedTest)
@@ -327,8 +329,6 @@ namespace Heleonix.Build.Tasks
                 .AddArgument("process", ProcessIsolation)
                 .AddArgument("domain", DomainIsolation)
                 .AddKey("shadowcopy", ShadowCopy);
-
-            Prepare(TestsResultFile?.ItemSpec, TestsOutputFile?.ItemSpec, ErrorsOutputFile?.ItemSpec);
 
             var result = ExeHelper.Execute(NUnitConsoleExeFile.ItemSpec, args, true);
 
@@ -365,13 +365,6 @@ namespace Heleonix.Build.Tasks
             }
 
             var testRun = XDocument.Load(TestsResultFile.ItemSpec).Element("test-run");
-
-            if (testRun == null)
-            {
-                Log.LogMessage(Resources.NUnit_NoTestsWereRun);
-
-                return;
-            }
 
             TestCases = Convert.ToInt32(testRun.Attribute("testcasecount").Value, NumberFormatInfo.InvariantInfo);
             Total = Convert.ToInt32(testRun.Attribute("total").Value, NumberFormatInfo.InvariantInfo);

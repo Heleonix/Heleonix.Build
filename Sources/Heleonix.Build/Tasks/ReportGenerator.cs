@@ -110,11 +110,6 @@ namespace Heleonix.Build.Tasks
 
             Log.LogMessage(result.Output);
 
-            if (!string.IsNullOrEmpty(result.Error))
-            {
-                Log.LogError(result.Error);
-            }
-
             if (result.ExitCode != 0)
             {
                 Log.LogError(Resources.ReportGenerator_Failed, nameof(ReportGenerator),

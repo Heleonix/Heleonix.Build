@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 using System.IO;
-using System.Text.RegularExpressions;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
 using Microsoft.Build.Utilities;
@@ -41,15 +40,21 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="BaseTask.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true, "CultureInvariant", "Ver(0.0.0.0)", "(1.2.3.4)", "\\(.*\\)", ExpectedResult = "Ver(1.2.3.4)")]
+        [TestCase(false, null, null, null, null, ExpectedResult = "")]
+        [TestCase(true, null, "Ver(0.0.0.0)", "(1.2.3.4)", "\\(.*\\)", ExpectedResult = "Ver(1.2.3.4)")]
+        [TestCase(true, "", "Ver(0.0.0.0)", "(1.2.3.4)", "\\(.*\\)", ExpectedResult = "Ver(1.2.3.4)")]
+        [TestCase(true, null, "Ver(0.0.0.0)", null, "\\(.*\\)", ExpectedResult = "Ver")]
+        [TestCase(true, "CultureInvariant", "Ver(0.0.0.0)", "(1.2.3.4)", "\\(.*\\)", ExpectedResult = "Ver(1.2.3.4)")]
+        [TestCase(true, "CultureInvariant", "Ver(0.0.0.0)", null, "\\(.*\\)", ExpectedResult = "Ver")]
+        public static string Execute(bool fileExists, string options, string text, string replacement, string regex)
         {
             var input = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
 
-            File.WriteAllText(input,
-                @"[assembly: System.Reflection.AssemblyVersion(""1.0.0.0"")]
-[assembly: System.Reflection.AssemblyFileVersion(""1.0.0.0"")]
-[assembly: System.Reflection.AssemblyInformationalVersion(""1.0.0.0"")]");
+            if (fileExists)
+            {
+                File.WriteAllText(input, text);
+            }
 
             try
             {
@@ -57,20 +62,23 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new FakeBuildEngine(),
                     File = new TaskItem(input),
-                    RegExp = "\\(.*\\)",
-                    Replacement = "(1.2.3.4)"
+                    RegExp = regex,
+                    Replacement = replacement,
+                    RegExpOptions = options
                 };
 
                 var succeeded = task.Execute();
 
-                var result = File.ReadAllText(input);
-
                 Assert.That(succeeded, Is.True);
-                Assert.That(Regex.Matches(result, "\\(.*\\)"), Has.Count.EqualTo(3));
+
+                return fileExists ? File.ReadAllText(input) : string.Empty;
             }
             finally
             {
-                File.Delete(input);
+                if (fileExists)
+                {
+                    File.Delete(input);
+                }
             }
         }
 

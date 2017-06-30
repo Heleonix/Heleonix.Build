@@ -40,32 +40,69 @@ namespace Heleonix.Build.Tests.Tasks
         /// <summary>
         /// Tests the <see cref="NugetPack.Execute"/>.
         /// </summary>
-        [Test]
-        public static void Execute()
+        [TestCase(true, true, false)]
+        [TestCase(true, false, true)]
+        [TestCase(false, false, false)]
+        public static void Execute(bool shouldSucceed, bool isNuspecFileInSeparateDir, bool shouldHavePackageDir)
         {
             MSBuildHelper.ExecuteMSBuild(LibSimulatorPath.SolutionFile, "Build", null, LibSimulatorPath.SolutionDir);
 
-            var task = new NugetPack
+            var nuspecFile = Path.Combine(Path.GetDirectoryName(LibSimulatorPath.ProjectFile),
+                Path.ChangeExtension(LibSimulatorPath.ProjectFile, ".nuspec"));
+
+            var packageDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
+            var separateNuspecDir = Path.Combine(SystemPath.CurrentDir, Path.GetRandomFileName());
+            var separateNuspecFile = Path.Combine(separateNuspecDir, Path.GetFileName(nuspecFile));
+
+            if (isNuspecFileInSeparateDir)
             {
-                BuildEngine = new FakeBuildEngine(),
-                NugetExeFile = new TaskItem(SystemPath.NugetExe),
-                MSBuildDir = new TaskItem(Path.GetDirectoryName(MSBuildHelper.MSBuildExe)),
-                NuspecFile = new TaskItem(Path.Combine(Path.GetDirectoryName(LibSimulatorPath.ProjectFile),
-                    Path.ChangeExtension(LibSimulatorPath.ProjectFile, ".nuspec"))),
-                ProjectFile = new TaskItem(LibSimulatorPath.ProjectFile),
-                Configuration = MSBuildHelper.CurrentConfiguration,
-                Verbosity = "detailed"
-            };
+                Directory.CreateDirectory(separateNuspecDir);
 
-            var succeeded = task.Execute();
+                File.Copy(nuspecFile, separateNuspecFile);
+            }
 
-            Assert.That(succeeded, Is.True);
+            try
+            {
+                var task = new NugetPack
+                {
+                    BuildEngine = new FakeBuildEngine(),
+                    NugetExeFile = new TaskItem(SystemPath.NugetExe),
+                    MSBuildDir = new TaskItem(Path.GetDirectoryName(MSBuildHelper.MSBuildExe)),
+                    NuspecFile = new TaskItem(isNuspecFileInSeparateDir ? separateNuspecFile : nuspecFile),
+                    ProjectFile = new TaskItem(LibSimulatorPath.ProjectFile),
+                    PackageDir = shouldHavePackageDir ? new TaskItem(packageDir) : null,
+                    Configuration = MSBuildHelper.CurrentConfiguration,
+                    Verbosity = shouldSucceed ? "detailed" : "InvalidVerbocity"
+                };
 
-            var packageExists = File.Exists(task.PackageFile.ItemSpec);
+                var succeeded = task.Execute();
 
-            File.Delete(task.PackageFile.ItemSpec);
+                if (shouldSucceed)
+                {
+                    Assert.That(succeeded, Is.True);
 
-            Assert.That(packageExists, Is.True);
+                    var packageExists = File.Exists(task.PackageFile.ItemSpec);
+
+                    File.Delete(task.PackageFile.ItemSpec);
+
+                    Assert.That(packageExists, Is.True);
+                }
+            }
+            finally
+            {
+                if (shouldHavePackageDir)
+                {
+                    Directory.Delete(packageDir, true);
+                }
+
+                if (isNuspecFileInSeparateDir)
+                {
+                    // Restore original nuspec file because it was deleted by the task.
+                    File.Copy(separateNuspecFile, nuspecFile);
+
+                    Directory.Delete(separateNuspecDir, true);
+                }
+            }
         }
 
         #endregion
