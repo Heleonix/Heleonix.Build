@@ -81,18 +81,18 @@ SOFTWARE.
       <Hxb-Build-Version>$(Hxb-In-Version)</Hxb-Build-Version>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'Jenkins'">
-      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(BRANCH_NAME)'))</Hxb-Build-Version>
+      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('$(BRANCH_NAME)', '\d*\.\d*\.\d*%24'))</Hxb-Build-Version>
       <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'TeamCity'">
-      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(teamcity_build_branch)'))</Hxb-Build-Version>
+      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('$(teamcity_build_branch)', '\d*\.\d*\.\d*%24'))</Hxb-Build-Version>
       <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(BUILD_NUMBER)' != ''">$(Hxb-Build-Version).$(BUILD_NUMBER)</Hxb-Build-Version>
     </PropertyGroup>
     <ItemGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'GoCD'">
       <_Hxb-Initialize-CurrentBranchSourceName Include="$(GO_SCM_CURRENT_BRANCH_SOURCE_NAME)"/>
     </ItemGroup>
     <PropertyGroup Condition="'$(Hxb-In-Version)' == '' And '$(Hxb-Setup-CI)' == 'GoCD'">
-      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('\d*\.\d*\.\d*$', '$(%(_Hxb-Initialize-CurrentBranchSourceName.Identity))'))</Hxb-Build-Version>
+      <Hxb-Build-Version>$([System.Text.RegularExpressions.Regex]::Match('$(%(_Hxb-Initialize-CurrentBranchSourceName.Identity))', '\d*\.\d*\.\d*%24'))</Hxb-Build-Version>
       <Hxb-Build-Version Condition="'$(Hxb-Build-Version)' != '' And '$(GO_PIPELINE_COUNTER)' != ''">$(Hxb-Build-Version).$(GO_PIPELINE_COUNTER)</Hxb-Build-Version>
     </PropertyGroup>
     <PropertyGroup>
