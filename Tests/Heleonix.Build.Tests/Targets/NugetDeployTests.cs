@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 using Heleonix.Build.Tests.Common;
 using Heleonix.Build.Tests.Targets.Common;
+using Heleonix.Utilities.Execution;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;

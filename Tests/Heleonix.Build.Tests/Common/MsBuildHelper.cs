@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.IO;
+using Heleonix.Utilities.Execution;
 using static System.FormattableString;
 
 namespace Heleonix.Build.Tests.Common

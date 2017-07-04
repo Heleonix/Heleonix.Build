@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Utilities.Execution;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tests.Targets.Common

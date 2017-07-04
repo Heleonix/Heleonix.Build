@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using Heleonix.Build.Tasks;
 using Heleonix.Build.Tests.Common;
+using Heleonix.Utilities.Execution;
 using Microsoft.Build.Utilities;
 using NUnit.Framework;
 using static System.FormattableString;

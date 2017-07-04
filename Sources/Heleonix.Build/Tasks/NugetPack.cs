@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Heleonix.Build.Properties;
+using Heleonix.Utilities.Execution;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 

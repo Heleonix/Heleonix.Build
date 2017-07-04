@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using Heleonix.Build.Properties;
+using Heleonix.Utilities.Execution;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks

@@ -25,6 +25,7 @@ SOFTWARE.
 using System.IO;
 using System.Linq;
 using Heleonix.Build.Properties;
+using Heleonix.Utilities.Execution;
 using Microsoft.Build.Framework;
 
 namespace Heleonix.Build.Tasks
