@@ -3,7 +3,7 @@
     <Version>1.0.0</Version>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
 
-    <Description>The build framework for applications. Supports .NET Core and .NET Standard projects</Description>
+    <Description>The MSBuild-based build framework for applications on CI and CD systems.</Description>
     <PackageTags>Heleonix build msbuild continuous integration delivery ci cd teamcity gocd jenkins task target</PackageTags>
 
     <Authors>Heleonix - Hennadii Lutsyshyn</Authors>
