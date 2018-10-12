@@ -1,0 +1,70 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_OpenCover">
+    <Message Text="> STARTING..."/>
+
+    <PropertyGroup>
+      <_Hx_OpenCover_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_OpenCover</_Hx_OpenCover_ArtifactDir>
+    </PropertyGroup>
+
+    <Message Text="> 1/2: Creating the artifacts directory"/>
+    <RemoveDir Directories="$(_Hx_OpenCover_ArtifactDir)"/>
+    <MakeDir Directories="$(_Hx_OpenCover_ArtifactDir)"/>
+
+    <MSBuild
+      Condition="'$(Hx_OpenCover_Filters)' == ''"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="Hx_Internal_FindNetSourceBinaries"
+      Properties="Hx_Internal_FindNetSourceBinaries_WSDir=$(Hx_WS_Dir);Hx_Internal_FindNetSourceBinaries_Configuration=$(Hx_Input_Configuration)">
+      <Output TaskParameter="TargetOutputs" ItemName="_Hx_OpenCover_SourceBinaryFiles"/>
+    </MSBuild>
+
+    <PropertyGroup>
+      <Hx_OpenCover_Filters Condition="'$(Hx_OpenCover_Filters)' == ''">@(_Hx_OpenCover_SourceBinaryFiles->'+[%(Filename)]*', ' ')</Hx_OpenCover_Filters>
+      <Hx_OpenCover_MinClassCoverage Condition="'$(Hx_OpenCover_MinClassCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinClassCoverage>
+      <Hx_OpenCover_MinBranchCoverage Condition="'$(Hx_OpenCover_MinBranchCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinBranchCoverage>
+      <Hx_OpenCover_MinMethodCoverage Condition="'$(Hx_OpenCover_MinMethodCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinMethodCoverage>
+      <Hx_OpenCover_MinLineCoverage Condition="'$(Hx_OpenCover_MinLineCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinLineCoverage>
+      <Hx_OpenCover_ShowUnvisited Condition="'$(Hx_OpenCover_ShowUnvisited)' == ''">true</Hx_OpenCover_ShowUnvisited>
+      <Hx_OpenCover_ExcludeByAttributeFilters Condition="'$(Hx_OpenCover_ExcludeByAttributeFilters)' == ''">*.ExcludeFromCodeCoverage*;*.CompilerGenerated*</Hx_OpenCover_ExcludeByAttributeFilters>
+      <Hx_OpenCover_Register Condition="'$(Hx_OpenCover_Register)' == ''">path64</Hx_OpenCover_Register>
+      <Hx_OpenCover_CoverageResultFile Condition="'$(Hx_OpenCover_CoverageResultFile)' == ''">OpenCover.xml</Hx_OpenCover_CoverageResultFile>
+    </PropertyGroup>
+
+    <MSBuild
+      Condition="'@(Hx_OpenCover_TargetExe)' == ''"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="Hx_Internal_FindNetTestBinaries"
+      Properties="Hx_Internal_FindNetTestBinaries_WSDir=$(Hx_WS_Dir);Hx_Internal_FindNetTestBinaries_Configuration=$(Hx_Input_Configuration)">
+      <Output TaskParameter="TargetOutputs" ItemName="_Hx_OpenCover_TestBinaryFiles"/>
+    </MSBuild>
+
+    <ItemGroup>
+      <Hx_OpenCover_TargetExe Condition="'@(Hx_OpenCover_TargetExe)' == ''" Include="@(Hx_System_NUnitConsoleExe)">
+        <Type>NUnit</Type>
+        <NUnitProjectFileOrTestFiles>@(_Hx_OpenCover_TestBinaryFiles)</NUnitProjectFileOrTestFiles>
+        <ErrorOutputFile>$(Hx_Build_ArtifactDir)/Hx_NUnit/Errors.txt</ErrorOutputFile>
+        <TestOutputFile>$(Hx_Build_ArtifactDir)/Hx_NUnit/Output.txt</TestOutputFile>
+        <TestResultFile>$(Hx_Build_ArtifactDir)/Hx_NUnit/NUnit.xml</TestResultFile>
+      </Hx_OpenCover_TargetExe>
+    </ItemGroup>
+
+    <Message Text="> 2/2: Running OpenCover with %(Hx_OpenCover_TargetExe.Type)"/>
+    <Heleonix.Build.Tasks.OpenCover OpenCoverExe="@(Hx_System_OpenCoverConsoleExe)"
+                                    CoverageResultFile="$(_Hx_OpenCover_ArtifactDir)/$(Hx_OpenCover_CoverageResultFile)"
+                                    ExcludeByAttributeFilters="$(Hx_OpenCover_ExcludeByAttributeFilters)"
+                                    Filters="$(Hx_OpenCover_Filters)"
+                                    Target="@(Hx_OpenCover_TargetExe)"
+                                    PdbSearchDirs="@(Hx_OpenCover_PdbSearchDirs)"
+                                    MinClassCoverage="$(Hx_OpenCover_MinClassCoverage)"
+                                    MinMethodCoverage="$(Hx_OpenCover_MinMethodCoverage)"
+                                    MinBranchCoverage="$(Hx_OpenCover_MinBranchCoverage)"
+                                    MinLineCoverage="$(Hx_OpenCover_MinLineCoverage)"
+                                    MaxVisitCount="$(Hx_OpenCover_MaxVisitCount)"
+                                    ShowUnvisited="$(Hx_OpenCover_ShowUnvisited)"
+                                    Register="$(Hx_OpenCover_Register)"/>
+
+    <Message Text="> DONE!"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

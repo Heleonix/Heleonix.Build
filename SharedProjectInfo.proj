@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+
+    <Description>The build framework for applications. Supports .NET Core and .NET Standard projects</Description>
+    <PackageTags>Heleonix build msbuild continuous integration delivery ci cd teamcity gocd jenkins task target</PackageTags>
+
+    <Authors>Heleonix - Hennadii Lutsyshyn</Authors>
+    <Copyright>Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn</Copyright>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Heleonix/Heleonix.Build</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Heleonix/Heleonix.Build/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Heleonix/Heleonix.Build</PackageProjectUrl>
+    <PackageIconUrl>https://s.gravatar.com/avatar/22d1d9391b9f682a589d324d403ec0d8?s=256</PackageIconUrl>
+
+    <IsPackable>true</IsPackable>
+    <IsTool>false</IsTool>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSource>false</IncludeSource>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <ContentTargetFolders>.\</ContentTargetFolders>
+    <BuildOutputTargetFolder>.\</BuildOutputTargetFolder>
+  </PropertyGroup>
+</Project>
