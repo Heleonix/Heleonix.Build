@@ -1,0 +1,38 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_Net_Validate">
+    <Message Text="> STARTING..."/>
+
+    <PropertyGroup>
+      <Hx_Net_Validate_RegExpOptions Condition="'$(Hx_Net_Validate_RegExpOptions)' == ''">IgnoreCase</Hx_Net_Validate_RegExpOptions>
+    </PropertyGroup>
+
+    <MSBuild
+      Condition="'@(Hx_Net_Validate_Files)' == ''"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="Hx_Internal_FindNetProjects"
+      Properties="Hx_Internal_FindNetProjects_WSDir=$(Hx_WS_Dir)">
+      <Output TaskParameter="TargetOutputs" ItemName="_Hx_Net_Validate_ProjectFiles"/>
+    </MSBuild>
+
+    <ItemGroup Condition="'@(Hx_Net_Validate_Files)' == ''">
+      <Hx_Net_Validate_Files Include="%(_Hx_Net_Validate_ProjectFiles.FullPath)">
+        <CodecrackerCSharp>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(codecracker.CSharp)</CodecrackerCSharp>
+        <FxCopAnalyzers>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(Microsoft.CodeAnalysis.FxCopAnalyzers)</FxCopAnalyzers>
+        <RoslynSecurityGuard>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(RoslynSecurityGuard)</RoslynSecurityGuard>
+        <SonarAnalyzerCSharp>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(SonarAnalyzer.CSharp)</SonarAnalyzerCSharp>
+        <StyleCopAnalyzers>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(StyleCop.Analyzers)</StyleCopAnalyzers>
+      </Hx_Net_Validate_Files>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Hx_Validate_Files Include="@(Hx_Net_Validate_Files)"/>
+    </ItemGroup>
+    <PropertyGroup>
+      <Hx_Validate_RegExpOptions>$(Hx_Net_Validate_RegExpOptions)</Hx_Validate_RegExpOptions>
+    </PropertyGroup>
+
+    <Message Text="> DONE!"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

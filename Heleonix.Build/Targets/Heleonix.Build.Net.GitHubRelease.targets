@@ -1,0 +1,38 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_Net_GitHubRelease">
+    <Message Text="> STARTING..."/>
+
+    <Message
+      Condition="'$(Hx_Net_GitHubRelease_TagName)' == ''"
+      Text="> 1/1: Tag name was not specified. Searchnig for a version to use it as a tag name"/>
+    <Heleonix.Build.Tasks.FileSystemSearch
+      Condition="'$(Hx_Net_GitHubRelease_TagName)' == ''"
+      StartDir="$(Hx_WS_Dir)"
+      PathRegExp="`..*proj$"
+      ContentRegExp="(?&lt;=&lt;%5Cs*Version%5Cs*&gt;).+(?=(-.+)?&lt;)"
+      Types="Files">
+      <Output TaskParameter="FoundFiles" PropertyName="_Hx_Net_GitHubRelease_VersioningFile"/>
+    </Heleonix.Build.Tasks.FileSystemSearch>
+    <Heleonix.Build.Tasks.FileRead
+      Condition="'$(Hx_Net_GitHubRelease_TagName)' == ''"
+      File="$(_Hx_Net_GitHubRelease_VersioningFile)"
+      RegExp="(?&lt;=&lt;%5Cs*Version%5Cs*&gt;).+(?=(-.+)?&lt;)">
+      <Output TaskParameter="Matches" ItemName="_Hx_Net_GitHubRelease_Version"/>
+    </Heleonix.Build.Tasks.FileRead>
+    <PropertyGroup>
+      <Hx_Net_GitHubRelease_TagName Condition="'$(Hx_Net_GitHubRelease_TagName)' == ''">v%(_Hx_Net_GitHubRelease_Version.Match)</Hx_Net_GitHubRelease_TagName>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <Hx_GitHubRelease_OwnerName>$(Hx_Net_GitHubRelease_OwnerName)</Hx_GitHubRelease_OwnerName>
+      <Hx_GitHubRelease_RepositoryName>$(Hx_Net_GitHubRelease_RepositoryName)</Hx_GitHubRelease_RepositoryName>
+      <Hx_GitHubRelease_Token>$(Hx_Net_GitHubRelease_Token)</Hx_GitHubRelease_Token>
+      <Hx_GitHubRelease_TagName>$(Hx_Net_GitHubRelease_TagName)</Hx_GitHubRelease_TagName>
+      <Hx_GitHubRelease_TagSource>$(Hx_Net_GitHubRelease_TagSource)</Hx_GitHubRelease_TagSource>
+    </PropertyGroup>
+
+    <Message Text="> DONE!"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

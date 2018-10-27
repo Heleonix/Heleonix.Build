@@ -1,45 +1,41 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{307CE3F5-439B-46C9-803D-727CFFDF9AA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heleonix.Build", "Heleonix.Build\Heleonix.Build.csproj", "{FE372189-CC03-41CC-8D34-9A40934DA118}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BCD3B29C-0736-4E40-9807-A43829322796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heleonix.Build.Tests", "Heleonix.Build.Tests\Heleonix.Build.Tests.csproj", "{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heleonix.Build", "Sources\Heleonix.Build\Heleonix.Build.csproj", "{0BE0703A-9609-4103-A813-D2FB206CAB6B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{634094BF-6A72-43A2-AF01-4714A579E1E0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D3867A28-EAAF-46F0-B5E1-15CB358D27DB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9168B3E0-883B-4E3E-8DA4-157D663159E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandardSimulator", "NetStandardSimulator", "{B5349607-60ED-4D67-A3DE-6B1467D1B563}"
+	ProjectSection(SolutionItems) = preProject
+		NetStandardSimulator\.gitignore = NetStandardSimulator\.gitignore
+		NetStandardSimulator\LICENSE = NetStandardSimulator\LICENSE
+		NetStandardSimulator\NetStandardSimulator.sln = NetStandardSimulator\NetStandardSimulator.sln
+		NetStandardSimulator\README.md = NetStandardSimulator\README.md
+		NetStandardSimulator\SharedProjectInfo.proj = NetStandardSimulator\SharedProjectInfo.proj
+		NetStandardSimulator\stylecop.json = NetStandardSimulator\stylecop.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetStandardSimulator", "NetStandardSimulator\NetStandardSimulator\NetStandardSimulator.csproj", "{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetStandardSimulator.Tests", "NetStandardSimulator\NetStandardSimulator.Tests\NetStandardSimulator.Tests.csproj", "{F43D7D4F-D798-4FEE-BBB7-3060D985A105}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{F7636552-43A8-47A1-9974-800C2129C6A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F5EF5D7B-514C-4CF2-9B5C-F98229A5BB36}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBAD7833-D38E-471E-B3B0-0E287D2789CA}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		Build.proj = Build.proj
-		Heleonix.licenseheader = Heleonix.licenseheader
 		LICENSE = LICENSE
 		README.md = README.md
-		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+		SharedProjectInfo.proj = SharedProjectInfo.proj
+		stylecop.json = stylecop.json
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heleonix.Build.Tests", "Tests\Heleonix.Build.Tests\Heleonix.Build.Tests.csproj", "{5E249BED-579E-441A-8E8B-0F0503F66532}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2C70B11C-97BD-4ABE-BECF-86BB9808F571} = {2C70B11C-97BD-4ABE-BECF-86BB9808F571}
-		{0BE0703A-9609-4103-A813-D2FB206CAB6B} = {0BE0703A-9609-4103-A813-D2FB206CAB6B}
-		{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4} = {60EFEA6A-B136-448D-B4E1-3AD490DEE3E4}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibSimulator", "LibSimulator", "{064520BF-4D56-4301-B6E5-9D6D8073E217}"
-	ProjectSection(SolutionItems) = preProject
-		Tests\LibSimulator\Build.proj = Tests\LibSimulator\Build.proj
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{66C53829-3C54-4944-B831-FB18B2D8B460}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{673DF392-1FCD-42CB-8CD5-EB945084C4D1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSimulator", "Tests\LibSimulator\Sources\LibSimulator\LibSimulator.csproj", "{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSimulator.Tests", "Tests\LibSimulator\Tests\LibSimulator.Tests\LibSimulator.Tests.csproj", "{2C70B11C-97BD-4ABE-BECF-86BB9808F571}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heleonix.Build.Tests.ExeMock", "Tests\Heleonix.Build.Tests.ExeMock\Heleonix.Build.Tests.ExeMock.csproj", "{A604F2A2-356A-4A55-A15D-1A4214D69B40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,38 +43,36 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0BE0703A-9609-4103-A813-D2FB206CAB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BE0703A-9609-4103-A813-D2FB206CAB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BE0703A-9609-4103-A813-D2FB206CAB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BE0703A-9609-4103-A813-D2FB206CAB6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E249BED-579E-441A-8E8B-0F0503F66532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E249BED-579E-441A-8E8B-0F0503F66532}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E249BED-579E-441A-8E8B-0F0503F66532}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E249BED-579E-441A-8E8B-0F0503F66532}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C70B11C-97BD-4ABE-BECF-86BB9808F571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C70B11C-97BD-4ABE-BECF-86BB9808F571}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C70B11C-97BD-4ABE-BECF-86BB9808F571}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C70B11C-97BD-4ABE-BECF-86BB9808F571}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A604F2A2-356A-4A55-A15D-1A4214D69B40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE372189-CC03-41CC-8D34-9A40934DA118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE372189-CC03-41CC-8D34-9A40934DA118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE372189-CC03-41CC-8D34-9A40934DA118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE372189-CC03-41CC-8D34-9A40934DA118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F43D7D4F-D798-4FEE-BBB7-3060D985A105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F43D7D4F-D798-4FEE-BBB7-3060D985A105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F43D7D4F-D798-4FEE-BBB7-3060D985A105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F43D7D4F-D798-4FEE-BBB7-3060D985A105}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0BE0703A-9609-4103-A813-D2FB206CAB6B} = {307CE3F5-439B-46C9-803D-727CFFDF9AA4}
-		{5E249BED-579E-441A-8E8B-0F0503F66532} = {BCD3B29C-0736-4E40-9807-A43829322796}
-		{064520BF-4D56-4301-B6E5-9D6D8073E217} = {BCD3B29C-0736-4E40-9807-A43829322796}
-		{66C53829-3C54-4944-B831-FB18B2D8B460} = {064520BF-4D56-4301-B6E5-9D6D8073E217}
-		{673DF392-1FCD-42CB-8CD5-EB945084C4D1} = {064520BF-4D56-4301-B6E5-9D6D8073E217}
-		{60EFEA6A-B136-448D-B4E1-3AD490DEE3E4} = {66C53829-3C54-4944-B831-FB18B2D8B460}
-		{2C70B11C-97BD-4ABE-BECF-86BB9808F571} = {673DF392-1FCD-42CB-8CD5-EB945084C4D1}
-		{A604F2A2-356A-4A55-A15D-1A4214D69B40} = {BCD3B29C-0736-4E40-9807-A43829322796}
+		{FE372189-CC03-41CC-8D34-9A40934DA118} = {634094BF-6A72-43A2-AF01-4714A579E1E0}
+		{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6} = {9168B3E0-883B-4E3E-8DA4-157D663159E7}
+		{B5349607-60ED-4D67-A3DE-6B1467D1B563} = {9168B3E0-883B-4E3E-8DA4-157D663159E7}
+		{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4} = {F7636552-43A8-47A1-9974-800C2129C6A8}
+		{F43D7D4F-D798-4FEE-BBB7-3060D985A105} = {F5EF5D7B-514C-4CF2-9B5C-F98229A5BB36}
+		{F7636552-43A8-47A1-9974-800C2129C6A8} = {B5349607-60ED-4D67-A3DE-6B1467D1B563}
+		{F5EF5D7B-514C-4CF2-9B5C-F98229A5BB36} = {B5349607-60ED-4D67-A3DE-6B1467D1B563}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DADF4FE8-717D-467C-948E-0F170CDA33E6}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,25 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--For unit test project only, in which files are located as below:
+        bin/<Configuration>/<TFM>/Heleonix.Build.dll
+        bin/<Configuration>/<TFM>/Tasks/Heleonix.Build.tasks-->
+    <TaskAssembly>$(MSBuildThisFileDirectory)../Heleonix.Build.dll</TaskAssembly>
+    <!--For production mode-->
+    <TaskAssembly Condition="!Exists('$(TaskAssembly)') And '$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)../netstandard2.0/Heleonix.Build.dll</TaskAssembly>
+    <TaskAssembly Condition="!Exists('$(TaskAssembly)') And '$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)../net461/Heleonix.Build.dll</TaskAssembly>
+  </PropertyGroup>
+  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileCopy" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileRead" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileValidate" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitHubRelease" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitLog" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportGenerator" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="$(TaskAssembly)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.SvnLog" AssemblyFile="$(TaskAssembly)"/>
+</Project>

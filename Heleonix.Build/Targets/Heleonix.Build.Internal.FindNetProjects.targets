@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_Internal_FindNetProjects" Outputs="@(_Hx_Internal_FindNetProjects_ProjectFiles)">
+    <Message Text="> STARTING..."/>
+
+    <Message Text="> 1/1: Searching net projects"/>
+    <Heleonix.Build.Tasks.FileSystemSearch
+      StartDir="$(Hx_Internal_FindNetProjects_WSDir)"
+      PathRegExp=":.*`..*proj$"
+      ContentRegExp="Project%5Cs+Sdk"
+      Types="Files">
+      <Output TaskParameter="FoundFiles" ItemName="_Hx_Internal_FindNetProjects_ProjectFiles"/>
+    </Heleonix.Build.Tasks.FileSystemSearch>
+
+    <Message Text="> DONE!"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>
