@@ -6,7 +6,7 @@
       <_Hx_Net_Build_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_Net_Build</_Hx_Net_Build_ArtifactDir>
     </PropertyGroup>
 
-    <Message Text="> 1/10: Creating the artifacts directory"/>
+    <Message Text="> 1/11: Creating the artifacts directory"/>
     <RemoveDir Directories="$(_Hx_Net_Build_ArtifactDir)"/>
     <MakeDir Directories="$(_Hx_Net_Build_ArtifactDir)"/>
 
@@ -22,10 +22,10 @@
       <_Hx_Net_Build_SlnDir>@(Hx_Net_Build_SlnFile->DirectoryName())</_Hx_Net_Build_SlnDir>
     </PropertyGroup>
 
-    <Message Text="> 2/10: Deleting files"/>
+    <Message Text="> 2/11: Deleting files"/>
     <Delete Files="@(Hx_Net_Build_DeleteFiles)"/>
 
-    <Message Text="> 3/10: Deleting directories"/>
+    <Message Text="> 3/11: Deleting directories"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(_Hx_Net_Build_SlnDir)"
       PathRegExp=":(bin|obj):$(Hx_Input_Configuration)$"
@@ -34,13 +34,19 @@
     </Heleonix.Build.Tasks.FileSystemSearch>
     <RemoveDir Directories="@(Hx_Net_Build_DeleteDirs)"/>
 
-    <Message Text="> 4/10: Cleaning directories"/>
+    <Message Text="> 4/11: Cleaning directories"/>
     <Heleonix.Build.Tasks.DirectoryClean Dirs="@(Hx_Net_Build_CleanDirs)"/>
 
-    <Message Text="> 5/10: Cleaning solution"/>
+    <Message Text="> 5/11: Cleaning solution"/>
     <MSBuild Targets="Clean" Projects="@(Hx_Net_Build_SlnFile)" Properties="Configuration=$(Hx_Input_Configuration)"/>
 
-    <Message Text="> 6/10: Building solution"/>
+    <Message Text="> 6/11: Restoring solution"/>
+    <MSBuild
+      Targets="Restore"
+      Projects="@(Hx_Net_Build_SlnFile)"
+      Properties="IsRestoring=true"/>
+    
+    <Message Text="> 7/11: Building solution"/>
     <PropertyGroup>
       <_Hx_Net_Build_SigningProps Condition="Exists('@(Hx_Net_Build_SnkFile)')">SignAssembly=true;AssemblyOriginatorKeyFile=&quot;@(Hx_Net_Build_SnkFile)&quot;</_Hx_Net_Build_SigningProps>
     </PropertyGroup>
@@ -49,7 +55,7 @@
       Projects="@(Hx_Net_Build_SlnFile)"
       Properties="Configuration=$(Hx_Input_Configuration);$(_Hx_Net_Build_SigningProps)"/>
 
-    <Message Text="> 7/10: Publishing all target frameworks in all projects"/>
+    <Message Text="> 8/11: Publishing all target frameworks in all projects"/>
     <MSBuild
       Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_FindNetProjects"
@@ -67,7 +73,7 @@
       Projects="%(_Hx_Net_Build_TFMProjectFiles.FullPath)"
       Properties="TargetFramework=%(Match)"/>
 
-    <Message Text="> 8/10: Copying all binaries from 'bin/$(Hx_Input_Configuration)/**/*' to the artifacts directory"/>
+    <Message Text="> 9/11: Copying all binaries from 'bin/$(Hx_Input_Configuration)/**/*' to the artifacts directory"/>
     <ItemGroup>
       <_Hx_Net_Build_Outputs Include="$(Hx_WS_Dir)/**/bin/$(Hx_Input_Configuration)/**/*">
         <WithSubDirsFrom>$(Hx_WS_Dir)</WithSubDirsFrom>
@@ -75,7 +81,7 @@
     </ItemGroup>
     <Heleonix.Build.Tasks.FileCopy Files="@(_Hx_Net_Build_Outputs)" Destinations="$(_Hx_Net_Build_ArtifactDir)" Overwrite="true"/>
 
-    <Message Text="> 9/10: Copying other required files to the artifacts directory"/>
+    <Message Text="> 10/11: Copying other required files to the artifacts directory"/>
     <ItemGroup>
       <_Hx_Net_Build_WorkspaceBuildProjFile Include="$(Hx_WS_BuildProjFile)">
         <WithSubDirsFrom>$(Hx_WS_Dir)</WithSubDirsFrom>
@@ -83,7 +89,7 @@
     </ItemGroup>
     <Heleonix.Build.Tasks.FileCopy Files="@(_Hx_Net_Build_WorkspaceBuildProjFile)" Destinations="$(_Hx_Net_Build_ArtifactDir)" Overwrite="true"/>
 
-    <Message Text="> 10/10: Copying custom output files to the artifacts directory"/>
+    <Message Text="> 11/11: Copying custom output files to the artifacts directory"/>
     <ItemGroup>
       <Hx_Net_Build_CustomOutputFiles>
         <WithSubDirsFrom>$(Hx_WS_Dir)</WithSubDirsFrom>
