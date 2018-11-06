@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <Version>1.1.0</Version>
-    <PackageReleaseNotes>Fixed paths to system files; added restore step in the Hx_Net_Build target</PackageReleaseNotes>
+    <Version>1.2.0</Version>
+    <PackageReleaseNotes>Fixed the Hx_Net_Build target via usage of the MSBuild.exe to restore and build solutions.</PackageReleaseNotes>
 
     <Description>The MSBuild-based build framework for applications on CI and CD systems.</Description>
     <PackageTags>Heleonix build msbuild continuous integration delivery ci cd teamcity gocd jenkins task target</PackageTags>
