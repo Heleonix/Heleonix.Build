@@ -2,26 +2,22 @@
   <Target Name="Hx_NugetDeploy">
     <Message Text="> STARTING..."/>
 
-    <PropertyGroup>
-      <_Hx_NugetDeploy_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NugetDeploy</_Hx_NugetDeploy_ArtifactDir>
-    </PropertyGroup>
-
     <Message Text="> 1/4: Creating the artifacts directory"/>
-    <RemoveDir Directories="$(_Hx_NugetDeploy_ArtifactDir)"/>
-    <MakeDir Directories="$(_Hx_NugetDeploy_ArtifactDir)"/>
+    <RemoveDir Directories="$(Hx_Internal_NugetDeploy_ArtifactDir)"/>
+    <MakeDir Directories="$(Hx_Internal_NugetDeploy_ArtifactDir)"/>
 
     <Message Text="> 2/4: Searching packages"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'@(Hx_NugetDeploy_PackageFiles)' == ''"
       StartDir="$(Hx_WS_Dir)"
-      PathRegExp=":bin:$(Hx_Input_Configuration):.+`.nupkg$"
+      PathRegExp="$(Hx_Internal_Net_Build_ArtifactDir)/.+/bin/$(Hx_Input_Configuration)/.+`.nupkg$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="Hx_NugetDeploy_PackageFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
 
     <Message Text="> 3/4: Copying packages to the artifacts directory"/>
     <Copy SourceFiles="@(Hx_NugetDeploy_PackageFiles)"
-          DestinationFolder="$(_Hx_NugetDeploy_ArtifactDir)"/>
+          DestinationFolder="$(Hx_Internal_NugetDeploy_ArtifactDir)"/>
 
     <Message Text="> 4/4: Publishing packages"/>
     <Heleonix.Build.Tasks.NugetPush NugetExe="@(Hx_System_NugetExe)"

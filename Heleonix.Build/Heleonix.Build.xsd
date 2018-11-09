@@ -129,11 +129,6 @@ Example custom task with single required parameter
       <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_WS_VCSType" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A type of the version control system: Git, Svn.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
 
   <xs:element name="Hx_WS_BuildProjFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
@@ -169,6 +164,39 @@ Example custom task with single required parameter
   <xs:element name="Hx_Build_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the root artifacts directory, where targets produce their artifacts.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--Endregion-->
+
+  <!--Region Internal-->
+  <xs:element name="Hx_Internal_Net_Build_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the Net_Build artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Internal_NugetDeploy_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the NugetDeploy artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Internal_NUnit_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the NUnit artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Internal_OpenCover_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the OpenCover artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Internal_ReportGenerator_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportGenerator artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Internal_ReportUnit_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportUnit artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
@@ -928,9 +956,9 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hx_Internal_FindNetSourceBinaries-->
-  <xs:element name="Hx_Internal_FindNetSourceBinaries_WSDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_Internal_FindNetSourceBinaries_StartDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the workspace directory.</xs:documentation>
+      <xs:documentation>A path to the start directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_Internal_FindNetSourceBinaries_Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
@@ -941,9 +969,9 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hx_Internal_FindNetTestBinaries-->
-  <xs:element name="Hx_Internal_FindNetTestBinaries_WSDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_Internal_FindNetTestBinaries_StartDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the workspace directory.</xs:documentation>
+      <xs:documentation>A path to the start directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_Internal_FindNetTestBinaries_Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">

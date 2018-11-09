@@ -12,7 +12,4 @@
   <PropertyGroup>
     <Hx_System_GitHubAPIUrl>http://localhost:33333</Hx_System_GitHubAPIUrl>
   </PropertyGroup>
-  <PropertyGroup>
-    <Hx_WS_VCSType>Git</Hx_WS_VCSType>
-  </PropertyGroup>
 </Project>

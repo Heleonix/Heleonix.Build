@@ -29,6 +29,11 @@ namespace Heleonix.Build.Tests.Targets
             var nunitArtifactsDir = NetStandardSimulatorPathHelper.GetArtifactDir("Hx_NUnit");
             IDictionary<string, string> properties = null;
 
+            Arrange(() =>
+            {
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+            });
+
             Act(() =>
             {
                 succeeded = MSBuildHelper.RunTestTarget(
@@ -41,6 +46,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 Directory.Delete(artifactDir, true);
                 Directory.Delete(nunitArtifactsDir, true);
+                Directory.Delete(NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build"), true);
             });
 
             When("target is executed", () =>

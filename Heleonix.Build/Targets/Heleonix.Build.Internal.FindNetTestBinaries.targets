@@ -4,8 +4,8 @@
 
     <Message Text="> 1/1: Searching net test binaries"/>
     <Heleonix.Build.Tasks.FileSystemSearch
-      StartDir="$(Hx_Internal_FindNetTestBinaries_WSDir)"
-      PathRegExp=":(.+):bin:$(Hx_Internal_FindNetTestBinaries_Configuration):.+:publish:`1`.(?&lt;=`.Tests`.)(dll|exe)$"
+      StartDir="$(Hx_Internal_FindNetTestBinaries_StartDir)"
+      PathRegExp="/(.+)/bin/$(Hx_Internal_FindNetTestBinaries_Configuration)/.+/publish/`1`.(?&lt;=`.Tests`.)(dll|exe)$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="_Hx_Internal_FindNetTestBinaries_BinaryFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>

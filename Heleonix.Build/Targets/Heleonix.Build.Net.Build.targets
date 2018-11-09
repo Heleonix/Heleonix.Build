@@ -2,13 +2,9 @@
   <Target Name="Hx_Net_Build">
     <Message Text="> STARTING..."/>
 
-    <PropertyGroup>
-      <_Hx_Net_Build_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_Net_Build</_Hx_Net_Build_ArtifactDir>
-    </PropertyGroup>
-
     <Message Text="> 1/10: Creating the artifacts directory"/>
-    <RemoveDir Directories="$(_Hx_Net_Build_ArtifactDir)"/>
-    <MakeDir Directories="$(_Hx_Net_Build_ArtifactDir)"/>
+    <RemoveDir Directories="$(Hx_Internal_Net_Build_ArtifactDir)"/>
+    <MakeDir Directories="$(Hx_Internal_Net_Build_ArtifactDir)"/>
 
     <MSBuild
       Condition="'@(Hx_Net_Build_SlnFile)' == ''"
@@ -28,7 +24,7 @@
     <Message Text="> 3/10: Deleting directories"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(_Hx_Net_Build_SlnDir)"
-      PathRegExp=":(bin|obj):$(Hx_Input_Configuration)$"
+      PathRegExp="/(bin|obj)/$(Hx_Input_Configuration)$"
       Types="Directories">
       <Output TaskParameter="FoundDirs" ItemName="Hx_Net_Build_DeleteDirs"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
@@ -70,7 +66,7 @@
         <WithSubDirsFrom>$(Hx_WS_Dir)</WithSubDirsFrom>
       </_Hx_Net_Build_Outputs>
     </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hx_Net_Build_Outputs)" Destinations="$(_Hx_Net_Build_ArtifactDir)" Overwrite="true"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hx_Net_Build_Outputs)" Destinations="$(Hx_Internal_Net_Build_ArtifactDir)" Overwrite="true"/>
 
     <Message Text="> 9/10: Copying other required files to the artifacts directory"/>
     <ItemGroup>
@@ -78,7 +74,7 @@
         <WithSubDirsFrom>$(Hx_WS_Dir)</WithSubDirsFrom>
       </_Hx_Net_Build_WorkspaceBuildProjFile>
     </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(_Hx_Net_Build_WorkspaceBuildProjFile)" Destinations="$(_Hx_Net_Build_ArtifactDir)" Overwrite="true"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(_Hx_Net_Build_WorkspaceBuildProjFile)" Destinations="$(Hx_Internal_Net_Build_ArtifactDir)" Overwrite="true"/>
 
     <Message Text="> 10/10: Copying custom output files to the artifacts directory"/>
     <ItemGroup>
@@ -86,7 +82,7 @@
         <WithSubDirsFrom>$(Hx_WS_Dir)</WithSubDirsFrom>
       </Hx_Net_Build_CustomOutputFiles>
     </ItemGroup>
-    <Heleonix.Build.Tasks.FileCopy Files="@(Hx_Net_Build_CustomOutputFiles)" Destinations="$(_Hx_Net_Build_ArtifactDir)" Overwrite="true"/>
+    <Heleonix.Build.Tasks.FileCopy Files="@(Hx_Net_Build_CustomOutputFiles)" Destinations="$(Hx_Internal_Net_Build_ArtifactDir)" Overwrite="true"/>
 
     <Message Text="> DONE!"/>
 
