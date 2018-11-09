@@ -20,8 +20,6 @@
     <Hx_WS_Dir Condition="'$(GO_PIPELINE_COUNTER)' != ''">$(MSBuildStartupDirectory)</Hx_WS_Dir>
     <Hx_WS_Dir Condition="'$(JENKINS_URL)' != ''">$(WORKSPACE)</Hx_WS_Dir>
     <Hx_WS_Dir Condition="'$(TEAMCITY_VERSION)' != ''">$(system_agent_work_dir)</Hx_WS_Dir>
-    <Hx_WS_VCSType Condition="Exists('$(Hx_WS_Dir)/.git')">Git</Hx_WS_VCSType>
-    <Hx_WS_VCSType Condition="Exists('$(Hx_WS_Dir)/.svn')">Svn</Hx_WS_VCSType>
     <Hx_WS_BuildProjFile>$(Hx_WS_Dir)/*.hxbproj"</Hx_WS_BuildProjFile>
   </PropertyGroup>
 
@@ -30,7 +28,6 @@
 
     <Error Condition="'$(Hx_Input_Targets)' == ''" Text="'$Hx_Input_Targets' is not defined."/>
     <Error Condition="'$(Hx_WS_CIType)' == ''" Text="'$Hx_WS_CIType' is not defined."/>
-    <Error Condition="'$(Hx_WS_VCSType)' == ''" Text="'$Hx_WS_VSCType' is not defined."/>
     <Error Condition="!Exists('$(Hx_WS_Dir)')" Text="'$Hx_WS_Dir' is not found."/>
 
     <PropertyGroup>
@@ -40,6 +37,15 @@
 
     <PropertyGroup>
       <Hx_Build_ArtifactDir Condition="'$(Hx_Build_ArtifactDir)' == ''">$(Hx_WS_Dir)/Hx_Artifacts</Hx_Build_ArtifactDir>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <Hx_Internal_Net_Build_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_Net_Build</Hx_Internal_Net_Build_ArtifactDir>
+      <Hx_Internal_NugetDeploy_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NugetDeploy</Hx_Internal_NugetDeploy_ArtifactDir>
+      <Hx_Internal_NUnit_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NUnit</Hx_Internal_NUnit_ArtifactDir>
+      <Hx_Internal_OpenCover_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_OpenCover</Hx_Internal_OpenCover_ArtifactDir>
+      <Hx_Internal_ReportGenerator_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportGenerator</Hx_Internal_ReportGenerator_ArtifactDir>
+      <Hx_Internal_ReportUnit_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportUnit</Hx_Internal_ReportUnit_ArtifactDir>
     </PropertyGroup>
 
     <Message Text="> 1/1: Primary initialization:"/>
@@ -52,7 +58,6 @@
     <Message Text="@Hx_System_SvnExe: @(Hx_System_SvnExe)"/>
     <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
     <Message Text="$Hx_WS_CIType: $(Hx_WS_CIType)"/>
-    <Message Text="$Hx_WS_VCSType: $(Hx_WS_VCSType)"/>
     <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>
     <Message Text="$Hx_Input_Configuration: $(Hx_Input_Configuration)"/>
     <Message Text="$Hx_Input_Verbosity: $(Hx_Input_Verbosity)"/>

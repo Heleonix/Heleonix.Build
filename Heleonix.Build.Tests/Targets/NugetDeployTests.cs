@@ -34,6 +34,8 @@ namespace Heleonix.Build.Tests.Targets
 
             Arrange(() =>
             {
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+
                 sourceDir = PathHelper.GetRandomFileInCurrentDir();
 
                 Directory.CreateDirectory(sourceDir);
@@ -59,6 +61,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 Directory.Delete(sourceDir, true);
                 Directory.Delete(artifactDir, true);
+                Directory.Delete(NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build"), true);
             });
 
             When("target is executed", () =>

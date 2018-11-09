@@ -42,6 +42,23 @@ namespace Heleonix.Build.Tests.Common
         public static string SourceProjectFile => Path.Combine(SourceProjectDir, "NetStandardSimulator.csproj");
 
         /// <summary>
+        /// Gets the source binary directories.
+        /// </summary>
+        public static IEnumerable<string> SourcePublishDirs =>
+            Directory
+            .GetDirectories(Path.Combine(
+                SourceProjectDir,
+                "bin",
+                PathHelper.Configuration))
+            .Select(dir => Path.Combine(dir, "publish"));
+
+        /// <summary>
+        /// Gets the source binaries.
+        /// </summary>
+        public static IEnumerable<string> SourceBinaries =>
+            SourcePublishDirs.Select(dir => Path.Combine(dir, "NetStandardSimulator.dll"));
+
+        /// <summary>
         /// Gets the path to the Nuget package file.
         /// </summary>
         public static string NupkgFile =>

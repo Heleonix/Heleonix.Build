@@ -123,7 +123,7 @@ namespace Heleonix.Build.Tasks
                         : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.PathRegExpOptions);
             var pathRegExp = string.IsNullOrEmpty(this.PathRegExp)
                 ? null
-                : new Regex(this.PathRegExp.Replace('`', '\\').Replace(":", pathReplacement), options);
+                : new Regex(this.PathRegExp.Replace("\\", pathReplacement).Replace('`', '\\').Replace("/", pathReplacement), options);
 
             options = string.IsNullOrEmpty(this.ContentRegExpOptions)
                         ? RegexOptions.IgnoreCase
@@ -141,7 +141,7 @@ namespace Heleonix.Build.Tasks
                 this.StartDir.ItemSpec,
                 this.Types,
                 this.Direction,
-                this.PathRegExp,
+                this.PathRegExp + $" (Transformed: {pathRegExp})",
                 this.ContentRegExp);
 
             this.Search(

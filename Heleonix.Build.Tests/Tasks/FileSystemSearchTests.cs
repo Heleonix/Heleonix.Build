@@ -127,7 +127,7 @@ namespace Heleonix.Build.Tests.Tasks
                         {
                             Arrange(() =>
                             {
-                                pathRegExp = @"^.*aaa\.txt$";
+                                pathRegExp = @"^.*aaa`.txt$";
                                 pathRegExpOptions = RegexOptions.IgnoreCase.ToString();
                                 contentRegExp = ".*111aaa.*";
                                 contentRegExpOptions = RegexOptions.IgnoreCase.ToString();
@@ -179,7 +179,7 @@ namespace Heleonix.Build.Tests.Tasks
                         Arrange(() =>
                         {
                             startDir = new TaskItem(Path.Combine(rootDir, "1", "11", "111"));
-                            pathRegExp = @"^.*a\.txt$";
+                            pathRegExp = @"^.*a`.txt$";
                             direction = "Up";
                         });
 
