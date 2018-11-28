@@ -87,7 +87,7 @@ namespace Heleonix.Build.Tests.Common
         /// <param name="target">The target.</param>
         /// <param name="properties">The properties.</param>
         /// <param name="workingDirectory">The working directory.</param>
-        private static void Execute(string projectPath, string target, string properties, string workingDirectory)
+        public static void Execute(string projectPath, string target, string properties, string workingDirectory)
         {
             var props = ArgsBuilder.By(string.Empty, "=", string.Empty, string.Empty, ";")
                 .AddValue(properties)

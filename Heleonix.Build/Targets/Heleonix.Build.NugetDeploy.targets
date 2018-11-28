@@ -9,8 +9,8 @@
     <Message Text="> 2/4: Searching packages"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'@(Hx_NugetDeploy_PackageFiles)' == ''"
-      StartDir="$(Hx_WS_Dir)"
-      PathRegExp="$(Hx_Internal_Net_Build_ArtifactDir)/.+/bin/$(Hx_Input_Configuration)/.+`.nupkg$"
+      StartDir="$(Hx_Internal_Net_Build_ArtifactDir)"
+      PathRegExp=".+/bin/$(Hx_Input_Configuration)/.+`.nupkg$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="Hx_NugetDeploy_PackageFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>

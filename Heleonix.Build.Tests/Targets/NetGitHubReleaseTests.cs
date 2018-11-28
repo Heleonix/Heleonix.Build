@@ -32,6 +32,8 @@ namespace Heleonix.Build.Tests.Targets
 
             Arrange(() =>
             {
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+
                 properties = new Dictionary<string, string>
                 {
                     { "Hx_Net_GithubRelease_Token", "111111111" }
@@ -61,8 +63,8 @@ namespace Heleonix.Build.Tests.Targets
             Teardown(() =>
             {
                 server.Wait();
-
                 server.Dispose();
+                Directory.Delete(NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build"), true);
             });
 
             When("target is executed", () =>

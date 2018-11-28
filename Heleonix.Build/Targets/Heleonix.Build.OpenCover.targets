@@ -15,6 +15,7 @@
     </MSBuild>
 
     <PropertyGroup>
+      <Hx_OpenCover_ContinueOnError Condition="'$(Hx_OpenCover_ContinueOnError)' == ''">ErrorAndContinue</Hx_OpenCover_ContinueOnError>
       <Hx_OpenCover_Filters Condition="'$(Hx_OpenCover_Filters)' == ''">@(_Hx_OpenCover_SourceBinaryFiles->'+[%(Filename)]*', ' ')</Hx_OpenCover_Filters>
       <Hx_OpenCover_MinClassCoverage Condition="'$(Hx_OpenCover_MinClassCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinClassCoverage>
       <Hx_OpenCover_MinBranchCoverage Condition="'$(Hx_OpenCover_MinBranchCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinBranchCoverage>
@@ -45,19 +46,21 @@
     </ItemGroup>
 
     <Message Text="> 2/2: Running OpenCover with %(Hx_OpenCover_TargetExe.Type)"/>
-    <Heleonix.Build.Tasks.OpenCover OpenCoverExe="@(Hx_System_OpenCoverConsoleExe)"
-                                    CoverageResultFile="$(Hx_Internal_OpenCover_ArtifactDir)/$(Hx_OpenCover_CoverageResultFile)"
-                                    ExcludeByAttributeFilters="$(Hx_OpenCover_ExcludeByAttributeFilters)"
-                                    Filters="$(Hx_OpenCover_Filters)"
-                                    Target="@(Hx_OpenCover_TargetExe)"
-                                    PdbSearchDirs="@(Hx_OpenCover_PdbSearchDirs)"
-                                    MinClassCoverage="$(Hx_OpenCover_MinClassCoverage)"
-                                    MinMethodCoverage="$(Hx_OpenCover_MinMethodCoverage)"
-                                    MinBranchCoverage="$(Hx_OpenCover_MinBranchCoverage)"
-                                    MinLineCoverage="$(Hx_OpenCover_MinLineCoverage)"
-                                    MaxVisitCount="$(Hx_OpenCover_MaxVisitCount)"
-                                    ShowUnvisited="$(Hx_OpenCover_ShowUnvisited)"
-                                    Register="$(Hx_OpenCover_Register)"/>
+    <Heleonix.Build.Tasks.OpenCover
+      ContinueOnError="$(Hx_OpenCover_ContinueOnError)"
+      OpenCoverExe="@(Hx_System_OpenCoverConsoleExe)"
+      CoverageResultFile="$(Hx_Internal_OpenCover_ArtifactDir)/$(Hx_OpenCover_CoverageResultFile)"
+      ExcludeByAttributeFilters="$(Hx_OpenCover_ExcludeByAttributeFilters)"
+      Filters="$(Hx_OpenCover_Filters)"
+      Target="@(Hx_OpenCover_TargetExe)"
+      PdbSearchDirs="@(Hx_OpenCover_PdbSearchDirs)"
+      MinClassCoverage="$(Hx_OpenCover_MinClassCoverage)"
+      MinMethodCoverage="$(Hx_OpenCover_MinMethodCoverage)"
+      MinBranchCoverage="$(Hx_OpenCover_MinBranchCoverage)"
+      MinLineCoverage="$(Hx_OpenCover_MinLineCoverage)"
+      MaxVisitCount="$(Hx_OpenCover_MaxVisitCount)"
+      ShowUnvisited="$(Hx_OpenCover_ShowUnvisited)"
+      Register="$(Hx_OpenCover_Register)"/>
 
     <Message Text="> DONE!"/>
 

@@ -89,6 +89,20 @@ namespace Heleonix.Build.Tests.Targets
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Errors.txt")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
                     });
+
+                    And("should continue on error", () =>
+                    {
+                        properties.Add("Hx_OpenCover_ContinueOnError", "true");
+
+                        Should("succeed", () =>
+                        {
+                            Assert.That(succeeded, Is.True);
+                            Assert.That(File.Exists(Path.Combine(artifactDir, "OpenCover.xml")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Errors.txt")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
+                        });
+                    });
                 });
             });
         }

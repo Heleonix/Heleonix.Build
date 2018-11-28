@@ -34,6 +34,12 @@ namespace Heleonix.Build.Tests.Tasks
             ITaskItem configFile = null;
             string sourceDir = null;
 
+            MSBuildHelper.Execute(
+                NetStandardSimulatorPathHelper.SolutionFile,
+                $"Build",
+                $"Configuration={PathHelper.Configuration}",
+                NetStandardSimulatorPathHelper.SolutionDir);
+
             Arrange(() =>
             {
                 sourceDir = PathHelper.GetRandomFileInCurrentDir();

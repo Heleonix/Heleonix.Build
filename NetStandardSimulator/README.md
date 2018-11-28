@@ -1,3 +1,0 @@
-# NetStandardSimulator
-
-NetStandard simulator

@@ -49,24 +49,24 @@ namespace Heleonix.Build.Tests.Targets
 
             When("target is executed", () =>
             {
-                Should("succeed", () =>
+                Should("fail", () =>
                 {
-                    Assert.That(succeeded, Is.True);
+                    Assert.That(succeeded, Is.False);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "NUnit.xml")), Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "Errors.txt")), Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "Output.txt")), Is.True);
                 });
 
-                And("should fail on failed tests", () =>
+                And("should continue on error", () =>
                 {
                     properties = new Dictionary<string, string>
                     {
-                        { "Hx_NUnit_FailOnFailedTests", "true" }
+                        { "Hx_NUnit_ContinueOnError", "true" }
                     };
 
-                    Should("fail", () =>
+                    Should("succeed", () =>
                     {
-                        Assert.That(succeeded, Is.False);
+                        Assert.That(succeeded, Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "NUnit.xml")), Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "Errors.txt")), Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "Output.txt")), Is.True);

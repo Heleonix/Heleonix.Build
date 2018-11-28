@@ -47,6 +47,9 @@ namespace Heleonix.Build.Tests.Targets
                         PathHelper.Configuration);
 
                     Assert.That(succeeded, Is.True);
+                    Assert.That(File.Exists(Path.Combine(artifactDir, "SharedProjectInfo.proj")));
+                    Assert.That(File.Exists(Path.Combine(artifactDir, "NetStandardSimulator", "NetStandardSimulator.csproj")));
+                    Assert.That(File.Exists(Path.Combine(artifactDir, "NetStandardSimulator.Tests", "NetStandardSimulator.Tests.csproj")));
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, "NetStandardSimulator.1.0.0.nupkg")));
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, "NetStandardSimulator.1.0.0.symbols.nupkg")));
 

@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
             string targetType = null;
             string targetExe = null;
             string outputDir = null;
-            var minCoverage = 0;
+            var minCoverage = 0.0f;
             ITaskItem[] pdbSearchDirs = null;
 
             MSBuildHelper.Publish(

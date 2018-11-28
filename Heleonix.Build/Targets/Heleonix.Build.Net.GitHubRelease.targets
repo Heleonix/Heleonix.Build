@@ -7,7 +7,7 @@
       Text="> 1/1: Tag name was not specified. Searchnig for a version to use it as a tag name"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'$(Hx_Net_GitHubRelease_TagName)' == ''"
-      StartDir="$(Hx_WS_Dir)"
+      StartDir="$(Hx_Internal_Net_Build_ArtifactDir)"
       PathRegExp="`..*proj$"
       ContentRegExp="(?&lt;=&lt;%5Cs*Version%5Cs*&gt;).+(?=(-.+)?&lt;)"
       Types="Files">

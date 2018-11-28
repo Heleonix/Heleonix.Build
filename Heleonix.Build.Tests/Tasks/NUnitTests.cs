@@ -32,7 +32,6 @@ namespace Heleonix.Build.Tests.Tasks
         {
             NUnit task = null;
             var succeeded = false;
-            var failOnFailedTests = false;
             string traceLevel = null;
             ITaskItem testListFile = null;
             string outputDir = null;
@@ -61,7 +60,6 @@ namespace Heleonix.Build.Tests.Tasks
                     ErrorOutputFile = new TaskItem(Path.Combine(outputDir, "Errors.txt")),
                     TestOutputFile = new TaskItem(Path.Combine(outputDir, "Output.txt")),
                     TestResultFile = new TaskItem(Path.Combine(outputDir, "Results.txt")),
-                    FailOnFailedTests = failOnFailedTests,
                     TraceLevel = traceLevel,
                     TestListFile = testListFile
                 };
@@ -76,90 +74,42 @@ namespace Heleonix.Build.Tests.Tasks
 
             When("all parameters are valid", () =>
             {
-                And("should not fail on failed tests", () =>
+                Should("should fail on failed tests", () =>
                 {
-                    failOnFailedTests = false;
+                    Assert.That(succeeded, Is.False);
 
-                    Should("succeed", () =>
-                    {
-                        Assert.That(succeeded, Is.True);
+                    var testRun = XDocument.Load(Path.Combine(outputDir, "Results.txt")).Element("test-run");
 
-                        var testRun = XDocument.Load(Path.Combine(outputDir, "Results.txt")).Element("test-run");
-
-                        Assert.That(
-                            task.TestCases,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Total,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Passed,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Failed,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Inconclusive,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Skipped,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Asserts,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.StartTime,
-                            Is.EqualTo(testRun.Attribute("start-time").Value));
-                        Assert.That(
-                            task.EndTime,
-                            Is.EqualTo(testRun.Attribute("end-time").Value));
-                        Assert.That(
-                            task.Duration,
-                            Is.EqualTo(Convert.ToSingle(testRun.Attribute("duration").Value, NumberFormatInfo.InvariantInfo)));
-                    });
-                });
-
-                And("should fail on failed tests", () =>
-                {
-                    failOnFailedTests = true;
-
-                    Should("fail", () =>
-                    {
-                        Assert.That(succeeded, Is.False);
-
-                        var testRun = XDocument.Load(Path.Combine(outputDir, "Results.txt")).Element("test-run");
-
-                        Assert.That(
-                            task.TestCases,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Total,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Passed,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Failed,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Inconclusive,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Skipped,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.Asserts,
-                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value, NumberFormatInfo.InvariantInfo)));
-                        Assert.That(
-                            task.StartTime,
-                            Is.EqualTo(testRun.Attribute("start-time").Value));
-                        Assert.That(
-                            task.EndTime,
-                            Is.EqualTo(testRun.Attribute("end-time").Value));
-                        Assert.That(
-                            task.Duration,
-                            Is.EqualTo(Convert.ToSingle(testRun.Attribute("duration").Value, NumberFormatInfo.InvariantInfo)));
-                    });
+                    Assert.That(
+                        task.TestCases,
+                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value, NumberFormatInfo.InvariantInfo)));
+                    Assert.That(
+                        task.Total,
+                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value, NumberFormatInfo.InvariantInfo)));
+                    Assert.That(
+                        task.Passed,
+                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value, NumberFormatInfo.InvariantInfo)));
+                    Assert.That(
+                        task.Failed,
+                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value, NumberFormatInfo.InvariantInfo)));
+                    Assert.That(
+                        task.Inconclusive,
+                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value, NumberFormatInfo.InvariantInfo)));
+                    Assert.That(
+                        task.Skipped,
+                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value, NumberFormatInfo.InvariantInfo)));
+                    Assert.That(
+                        task.Asserts,
+                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value, NumberFormatInfo.InvariantInfo)));
+                    Assert.That(
+                        task.StartTime,
+                        Is.EqualTo(testRun.Attribute("start-time").Value));
+                    Assert.That(
+                        task.EndTime,
+                        Is.EqualTo(testRun.Attribute("end-time").Value));
+                    Assert.That(
+                        task.Duration,
+                        Is.EqualTo(Convert.ToSingle(testRun.Attribute("duration").Value, NumberFormatInfo.InvariantInfo)));
                 });
             });
 

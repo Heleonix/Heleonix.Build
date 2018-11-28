@@ -17,14 +17,7 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the solution dir.
         /// </summary>
-        public static string SolutionDir =>
-            Path.Combine(
-                Path.GetDirectoryName(
-                    Path.GetDirectoryName(
-                        Path.GetDirectoryName(
-                            Path.GetDirectoryName(
-                                PathHelper.CurrentDir)))),
-                "NetStandardSimulator");
+        public static string SolutionDir => Path.Combine(PathHelper.CurrentDir, "NetStandardSimulator");
 
         /// <summary>
         /// Gets the solution file.

@@ -589,11 +589,6 @@ Example custom task with single required parameter
               <xs:documentation>The agents number.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="StopOnErrorOrFailedTest">
-            <xs:annotation>
-              <xs:documentation>Indicates whether to stop on first error or first failed test.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
           <xs:attribute name="UseTeamCityServiceMessages">
             <xs:annotation>
               <xs:documentation>A value indicating whether to use TeamCity service messages.</xs:documentation>
@@ -627,11 +622,6 @@ Example custom task with single required parameter
           <xs:attribute name="ShadowCopy">
             <xs:annotation>
               <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="FailOnFailedTests">
-            <xs:annotation>
-              <xs:documentation>Indicates whether to fail the task on failed tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="TestCases">
@@ -1136,12 +1126,6 @@ Example custom task with single required parameter
       <xs:documentation>The agents number.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_NUnit_StopOnErrorOrFailedTest" type="msb:StringPropertyType"
-              substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>Indicates whether to stop on first error or first failed test.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hx_NUnit_UseTeamCityServiceMessages" type="msb:StringPropertyType"
               substitutionGroup="msb:Property">
     <xs:annotation>
@@ -1168,9 +1152,9 @@ Example custom task with single required parameter
       <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_NUnit_FailOnFailedTests" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NUnit_ContinueOnError" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>Indicates whether to fail the task on failed tests.</xs:documentation>
+      <xs:documentation>The ContinuOnError property for all MSBuild tasks.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
@@ -1236,6 +1220,11 @@ Example custom task with single required parameter
   <xs:element name="Hx_OpenCover_MaxVisitCount" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_ContinueOnError" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The ContinuOnError property for all MSBuild tasks.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
