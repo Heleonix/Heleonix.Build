@@ -8,7 +8,7 @@
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'$(Hx_Net_GitHubRelease_TagName)' == ''"
       StartDir="$(Hx_Internal_Net_Build_ArtifactDir)"
-      PathRegExp="`..*proj$"
+      PathRegExp="`.props$"
       ContentRegExp="(?&lt;=&lt;%5Cs*Version%5Cs*&gt;).+(?=(-.+)?&lt;)"
       Types="Files">
       <Output TaskParameter="FoundFiles" PropertyName="_Hx_Net_GitHubRelease_VersioningFile"/>

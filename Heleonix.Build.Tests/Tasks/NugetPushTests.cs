@@ -34,7 +34,7 @@ namespace Heleonix.Build.Tests.Tasks
             ITaskItem configFile = null;
             string sourceDir = null;
 
-            MSBuildHelper.Execute(
+            MSBuildHelper.RunTarget(
                 NetStandardSimulatorPathHelper.SolutionFile,
                 $"Build",
                 $"Configuration={PathHelper.Configuration}",

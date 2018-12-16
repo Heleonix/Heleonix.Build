@@ -9,8 +9,16 @@
     <MSBuild
       Condition="'@(Hx_Net_Validate_Files)' == ''"
       Projects="$(MSBuildProjectFullPath)"
+      Targets="Hx_Internal_FindNetSln"
+      Properties="Hx_Internal_FindNetSln_WSDir=$(Hx_WS_Dir)">
+      <Output TaskParameter="TargetOutputs" PropertyName="_Hx_Net_Validate_SlnFile"/>
+    </MSBuild>
+
+    <MSBuild
+      Condition="'@(Hx_Net_Validate_Files)' == ''"
+      Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_FindNetProjects"
-      Properties="Hx_Internal_FindNetProjects_WSDir=$(Hx_WS_Dir)">
+      Properties="Hx_Internal_FindNetProjects_SlnFile=$(_Hx_Net_Validate_SlnFile)">
       <Output TaskParameter="TargetOutputs" ItemName="_Hx_Net_Validate_ProjectFiles"/>
     </MSBuild>
 

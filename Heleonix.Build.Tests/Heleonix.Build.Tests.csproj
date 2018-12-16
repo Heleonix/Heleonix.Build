@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../SharedProjectInfo.proj" />
+  <Import Project="../SharedProjectInfo.props" />
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="NetStandardSimulator\SharedProjectInfo.props" />
     <None Remove="NetStandardSimulator\stylecop.json" />
   </ItemGroup>
 
@@ -116,7 +117,7 @@
     <Content Include="NetStandardSimulator\NetStandardSimulator.sln">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="NetStandardSimulator\SharedProjectInfo.proj">
+    <Content Include="NetStandardSimulator\SharedProjectInfo.props">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

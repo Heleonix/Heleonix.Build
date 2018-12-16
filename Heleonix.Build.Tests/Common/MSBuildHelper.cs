@@ -28,7 +28,7 @@ namespace Heleonix.Build.Tests.Common
         {
             foreach (var tf in targetFrameworks)
             {
-                Execute(projectPath, nameof(Publish), $"TargetFramework={tf}", workingDirectory);
+                RunTarget(projectPath, nameof(Publish), $"TargetFramework={tf}", workingDirectory);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Heleonix.Build.Tests.Common
                     $"Hx_Input_Configuration={PathHelper.Configuration};" +
                     $"Hx_Input_Targets={target}";
 
-                Execute(PathHelper.BuildProjectFile, null, msBuildProperties, workspace);
+                RunTarget(PathHelper.BuildProjectFile, null, msBuildProperties, workspace);
 
                 return true;
             }
@@ -81,13 +81,13 @@ namespace Heleonix.Build.Tests.Common
         }
 
         /// <summary>
-        /// Executes the ms build.
+        /// Runs an MS Build target.
         /// </summary>
         /// <param name="projectPath">The project path.</param>
         /// <param name="target">The target.</param>
         /// <param name="properties">The properties.</param>
         /// <param name="workingDirectory">The working directory.</param>
-        public static void Execute(string projectPath, string target, string properties, string workingDirectory)
+        public static void RunTarget(string projectPath, string target, string properties, string workingDirectory)
         {
             var props = ArgsBuilder.By(string.Empty, "=", string.Empty, string.Empty, ";")
                 .AddValue(properties)

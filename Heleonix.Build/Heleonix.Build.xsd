@@ -938,9 +938,9 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hx_Internal_FindNetProjects-->
-  <xs:element name="Hx_Internal_FindNetProjects_WSDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_Internal_FindNetProjects_SlnFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the workspace directory.</xs:documentation>
+      <xs:documentation>A path to the solution file to read projects from.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
