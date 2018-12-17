@@ -100,6 +100,9 @@ namespace Heleonix.Build.Tests.Common
 
             var result = ExeHelper.Execute("MSBuild.exe", args, true, workingDirectory, int.MaxValue);
 
+            Console.WriteLine($"--------- Target: {target}, Project Path: {projectPath} ---------");
+            Console.WriteLine(result.Output);
+
             if (result.ExitCode != 0)
             {
                 throw new InvalidOperationException($"MSBuild Failed: {result.Output}");
