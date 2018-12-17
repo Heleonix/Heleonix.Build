@@ -6,7 +6,9 @@
 namespace Heleonix.Build.Tests.Common
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// The path helper.
@@ -21,7 +23,8 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the current configuration: Debug, Release.
         /// </summary>
-        public static string Configuration => Path.GetFileName(Path.GetDirectoryName(CurrentDir));
+        public static string Configuration => typeof(PathHelper).Assembly.GetCustomAttributes(false)
+                    .OfType<DebuggableAttribute>().Any(da => da.IsJITTrackingEnabled) ? "Debug" : "Release";
 
         /// <summary>
         /// Gets the OpenCover coverage results file.

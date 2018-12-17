@@ -6,7 +6,7 @@
 
     <Heleonix.Build.Tasks.FileRead
       File="$(Hx_Internal_FindNetProjects_SlnFile)"
-      RegExp="(?&lt;=Project.+=\s*&quot;.+&quot;\s*,\s*&quot;)(.+)(?=&quot;\s*,\s*&quot;.+&quot;\s*EndProject)">
+      RegExp="(?&lt;=Project.+=\s*&quot;.+&quot;\s*,\s*&quot;)(.+proj)(?=&quot;\s*,\s*&quot;.+&quot;\s*EndProject)">
       <Output TaskParameter="Matches" ItemName="_Hx_Internal_FindNetProjects_ParsedProjectFiles"/>
     </Heleonix.Build.Tasks.FileRead>
 
