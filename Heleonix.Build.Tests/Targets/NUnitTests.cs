@@ -25,32 +25,32 @@ namespace Heleonix.Build.Tests.Targets
         public static void Execute()
         {
             var succeeded = false;
-            var artifactDir = NetStandardSimulatorPathHelper.GetArtifactDir("Hx_NUnit");
             IDictionary<string, string> properties = null;
+            NetStandardSimulatorHelper simulatorHelper = null;
 
             Arrange(() =>
             {
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+                simulatorHelper = new NetStandardSimulatorHelper();
+
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
             });
 
             Act(() =>
             {
-                succeeded = MSBuildHelper.RunTestTarget(
-                    "Hx_NUnit",
-                    NetStandardSimulatorPathHelper.SolutionDir,
-                    properties);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_NUnit", simulatorHelper.SolutionDir, properties);
             });
 
             Teardown(() =>
             {
-                Directory.Delete(artifactDir, true);
-                Directory.Delete(NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build"), true);
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>
             {
                 Should("fail", () =>
                 {
+                    var artifactDir = simulatorHelper.GetArtifactDir("Hx_NUnit");
+
                     Assert.That(succeeded, Is.False);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "NUnit.xml")), Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "Errors.txt")), Is.True);
@@ -66,6 +66,8 @@ namespace Heleonix.Build.Tests.Targets
 
                     Should("succeed", () =>
                     {
+                        var artifactDir = simulatorHelper.GetArtifactDir("Hx_NUnit");
+
                         Assert.That(succeeded, Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "NUnit.xml")), Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "Errors.txt")), Is.True);

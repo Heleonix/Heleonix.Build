@@ -6,7 +6,6 @@
   <Import Project="Targets/Heleonix.Build.Initialize.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetSln.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetProjects.targets"/>
-  <Import Project="Targets/Heleonix.Build.Internal.FindNetSourceBinaries.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetTestBinaries.targets"/>
   <Import Project="Targets/Heleonix.Build.Net.Build.targets"/>
   <Import Project="Targets/Heleonix.Build.Net.GitHubRelease.targets"/>

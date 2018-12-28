@@ -29,10 +29,13 @@ namespace Heleonix.Build.Tests.Targets
             Task server = null;
             var succeeded = false;
             IDictionary<string, string> properties = null;
+            NetStandardSimulatorHelper simulatorHelper = null;
 
             Arrange(() =>
             {
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+                simulatorHelper = new NetStandardSimulatorHelper();
+
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
 
                 properties = new Dictionary<string, string>
                 {
@@ -56,7 +59,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 succeeded = MSBuildHelper.RunTestTarget(
                     "Hx_Net_GitHubRelease",
-                    NetStandardSimulatorPathHelper.SolutionDir,
+                    simulatorHelper.SolutionDir,
                     properties);
             });
 
@@ -64,7 +67,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 server.Wait();
                 server.Dispose();
-                Directory.Delete(NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build"), true);
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>

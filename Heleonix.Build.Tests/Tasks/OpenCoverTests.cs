@@ -36,11 +36,12 @@ namespace Heleonix.Build.Tests.Tasks
             string outputDir = null;
             var minCoverage = 0.0f;
             ITaskItem[] pdbSearchDirs = null;
+            var simulatorHelper = new NetStandardSimulatorHelper();
 
             MSBuildHelper.Publish(
-                NetStandardSimulatorPathHelper.TestProjectFile,
-                NetStandardSimulatorPathHelper.TestProjectTargetFrameworks,
-                NetStandardSimulatorPathHelper.TestProjectDir);
+                simulatorHelper.TestProjectFile,
+                simulatorHelper.TestProjectTargetFrameworks,
+                simulatorHelper.TestProjectDir);
 
             Arrange(() =>
             {
@@ -58,7 +59,7 @@ namespace Heleonix.Build.Tests.Tasks
                     { "Type", targetType },
                     {
                         "NUnitProjectFileOrTestFiles",
-                        string.Join(";", NetStandardSimulatorPathHelper.TestBinaries)
+                        string.Join(";", simulatorHelper.TestBinaries)
                     },
                     { "ErrorOutputFile", Path.Combine(outputDir, "Errors.txt") },
                     { "TestOutputFile", Path.Combine(outputDir, "Output.txt") },
@@ -129,7 +130,7 @@ namespace Heleonix.Build.Tests.Tasks
 
                             And("PDB search dirs are specified", () =>
                             {
-                                pdbSearchDirs = NetStandardSimulatorPathHelper.TestPublishDirs
+                                pdbSearchDirs = simulatorHelper.TestPublishDirs
                                 .Select(dir => new TaskItem(dir)).ToArray();
 
                                 Should("succeed", () =>
@@ -165,6 +166,8 @@ namespace Heleonix.Build.Tests.Tasks
                     });
                 });
             });
+
+            simulatorHelper.Clear();
         }
     }
 }

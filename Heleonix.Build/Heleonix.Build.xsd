@@ -945,19 +945,6 @@ Example custom task with single required parameter
   </xs:element>
   <!--Endregion-->
 
-  <!--Region Target: Hx_Internal_FindNetSourceBinaries-->
-  <xs:element name="Hx_Internal_FindNetSourceBinaries_StartDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A path to the start directory.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_Internal_FindNetSourceBinaries_Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A configuration, i.e. "Release", "Debug" etc.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <!--Endregion-->
-
   <!--Region Target: Hx_Internal_FindNetTestBinaries-->
   <xs:element name="Hx_Internal_FindNetTestBinaries_StartDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>

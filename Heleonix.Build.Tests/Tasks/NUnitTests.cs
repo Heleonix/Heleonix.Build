@@ -35,11 +35,12 @@ namespace Heleonix.Build.Tests.Tasks
             string traceLevel = null;
             ITaskItem testListFile = null;
             string outputDir = null;
+            var simulatorHelper = new NetStandardSimulatorHelper();
 
             MSBuildHelper.Publish(
-                NetStandardSimulatorPathHelper.TestProjectFile,
-                NetStandardSimulatorPathHelper.TestProjectTargetFrameworks,
-                NetStandardSimulatorPathHelper.TestProjectDir);
+                simulatorHelper.TestProjectFile,
+                simulatorHelper.TestProjectTargetFrameworks,
+                simulatorHelper.TestProjectDir);
 
             Arrange(() =>
             {
@@ -56,7 +57,7 @@ namespace Heleonix.Build.Tests.Tasks
                     NUnitConsoleExe = new TaskItem(PathHelper.NUnitConsoleExe),
                     AgentsNumber = 3,
                     NUnitProjectFileOrTestFiles =
-                        NetStandardSimulatorPathHelper.TestBinaries.Select(file => new TaskItem(file)).ToArray(),
+                        simulatorHelper.TestBinaries.Select(file => new TaskItem(file)).ToArray(),
                     ErrorOutputFile = new TaskItem(Path.Combine(outputDir, "Errors.txt")),
                     TestOutputFile = new TaskItem(Path.Combine(outputDir, "Output.txt")),
                     TestResultFile = new TaskItem(Path.Combine(outputDir, "Results.txt")),
@@ -122,6 +123,8 @@ namespace Heleonix.Build.Tests.Tasks
                     Assert.That(succeeded, Is.False);
                 });
             });
+
+            simulatorHelper.Clear();
         }
     }
 }

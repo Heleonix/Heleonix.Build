@@ -28,10 +28,12 @@ namespace Heleonix.Build.Tests.Targets
         {
             var succeeded = false;
             IDictionary<string, ITaskItem[]> items = null;
-            var artifactDir = NetStandardSimulatorPathHelper.GetArtifactDir("Hx_ReportUnit");
+            NetStandardSimulatorHelper simulatorHelper = null;
 
             Arrange(() =>
             {
+                simulatorHelper = new NetStandardSimulatorHelper();
+
                 items = new Dictionary<string, ITaskItem[]>
                 {
                     {
@@ -43,22 +45,20 @@ namespace Heleonix.Build.Tests.Targets
 
             Act(() =>
             {
-                succeeded = MSBuildHelper.RunTestTarget(
-                    "Hx_ReportUnit",
-                    NetStandardSimulatorPathHelper.SolutionDir,
-                    null,
-                    items);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_ReportUnit", simulatorHelper.SolutionDir, null, items);
             });
 
             Teardown(() =>
             {
-                Directory.Delete(artifactDir, true);
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>
             {
                 Should("succeed", () =>
                 {
+                    var artifactDir = simulatorHelper.GetArtifactDir("Hx_ReportUnit");
+
                     Assert.That(succeeded, Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "ReportUnit.html")), Is.True);
                 });

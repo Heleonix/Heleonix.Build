@@ -31,7 +31,6 @@
     <None Remove="Targets\Heleonix.Build.GitHubRelease.targets" />
     <None Remove="Targets\Heleonix.Build.Internal.FindNetProjects.targets" />
     <None Remove="Targets\Heleonix.Build.Internal.FindNetSln.targets" />
-    <None Remove="Targets\Heleonix.Build.Internal.FindNetSourceBinaries.targets" />
     <None Remove="Targets\Heleonix.Build.Internal.FindNetTestBinaries.targets" />
     <None Remove="Targets\Heleonix.Build.Net.GitHubRelease.targets" />
     <None Remove="Targets\Heleonix.Build.Net.Validate.targets" />
@@ -47,9 +46,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Targets\Heleonix.Build.Internal.FindNetTestBinaries.targets">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Targets\Heleonix.Build.Internal.FindNetSourceBinaries.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Targets\Heleonix.Build.Internal.FindNetSln.targets">

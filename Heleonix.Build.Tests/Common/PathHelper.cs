@@ -37,6 +37,11 @@ namespace Heleonix.Build.Tests.Common
         public static string NUnitTestResultFile => Path.Combine(CurrentDir, "NUnitTestResult.xml");
 
         /// <summary>
+        /// Gets the Nuget package file.
+        /// </summary>
+        public static string NugetPackageFile => Path.Combine(CurrentDir, "Heleonix.Build.1.3.0.nupkg");
+
+        /// <summary>
         /// Gets the OpenCover coverage results file.
         /// </summary>
         public static string CustomBuildProj => Path.Combine(CurrentDir, "Custom.hxbproj");

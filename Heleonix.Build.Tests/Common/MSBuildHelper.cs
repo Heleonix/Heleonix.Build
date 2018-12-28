@@ -62,11 +62,8 @@ namespace Heleonix.Build.Tests.Common
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-#pragma warning disable S1481 // Unused local variables should be removed
-                var a = ex;
-#pragma warning restore S1481 // Unused local variables should be removed
                 return false;
             }
             finally
@@ -99,9 +96,6 @@ namespace Heleonix.Build.Tests.Common
                 .AddArgument("p", props);
 
             var result = ExeHelper.Execute("MSBuild.exe", args, true, workingDirectory, int.MaxValue);
-
-            Console.WriteLine($"--------- Target: {target}, Project Path: {projectPath} ---------");
-            Console.WriteLine(result.Output);
 
             if (result.ExitCode != 0)
             {

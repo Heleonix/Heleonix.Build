@@ -7,16 +7,20 @@
     <MakeDir Directories="$(Hx_Internal_OpenCover_ArtifactDir)"/>
 
     <MSBuild
-      Condition="'$(Hx_OpenCover_Filters)' == ''"
+      Condition="'@(Hx_OpenCover_TargetExe)' == '' Or '$(Hx_OpenCover_Filters)' == ''"
       Projects="$(MSBuildProjectFullPath)"
-      Targets="Hx_Internal_FindNetSourceBinaries"
-      Properties="Hx_Internal_FindNetSourceBinaries_StartDir=$(Hx_Internal_Net_Build_ArtifactDir);Hx_Internal_FindNetSourceBinaries_Configuration=$(Hx_Input_Configuration)">
-      <Output TaskParameter="TargetOutputs" ItemName="_Hx_OpenCover_SourceBinaryFiles"/>
+      Targets="Hx_Internal_FindNetTestBinaries"
+      Properties="Hx_Internal_FindNetTestBinaries_StartDir=$(Hx_Internal_Net_Build_ArtifactDir);Hx_Internal_FindNetTestBinaries_Configuration=$(Hx_Input_Configuration)">
+      <Output TaskParameter="TargetOutputs" ItemName="_Hx_OpenCover_TestBinaryFiles"/>
     </MSBuild>
+
+    <ItemGroup Condition="'$(Hx_OpenCover_Filters)' == ''">
+      <_Hx_OpenCover_TestBinaryFileNames Include="@(_Hx_OpenCover_TestBinaryFiles->'%(Filename)')" KeepDuplicates="false"/>
+    </ItemGroup>
 
     <PropertyGroup>
       <Hx_OpenCover_ContinueOnError Condition="'$(Hx_OpenCover_ContinueOnError)' == ''">ErrorAndContinue</Hx_OpenCover_ContinueOnError>
-      <Hx_OpenCover_Filters Condition="'$(Hx_OpenCover_Filters)' == ''">@(_Hx_OpenCover_SourceBinaryFiles->'+[%(Filename)]*', ' ')</Hx_OpenCover_Filters>
+      <Hx_OpenCover_Filters Condition="'$(Hx_OpenCover_Filters)' == ''">@(_Hx_OpenCover_TestBinaryFileNames->'+[%(Filename)]*', ' ')</Hx_OpenCover_Filters>
       <Hx_OpenCover_MinClassCoverage Condition="'$(Hx_OpenCover_MinClassCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinClassCoverage>
       <Hx_OpenCover_MinBranchCoverage Condition="'$(Hx_OpenCover_MinBranchCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinBranchCoverage>
       <Hx_OpenCover_MinMethodCoverage Condition="'$(Hx_OpenCover_MinMethodCoverage)' == '' And '$(Hx_WS_CIType)' != 'Dev'">100</Hx_OpenCover_MinMethodCoverage>
@@ -26,14 +30,6 @@
       <Hx_OpenCover_Register Condition="'$(Hx_OpenCover_Register)' == ''">path64</Hx_OpenCover_Register>
       <Hx_OpenCover_CoverageResultFile Condition="'$(Hx_OpenCover_CoverageResultFile)' == ''">OpenCover.xml</Hx_OpenCover_CoverageResultFile>
     </PropertyGroup>
-
-    <MSBuild
-      Condition="'@(Hx_OpenCover_TargetExe)' == ''"
-      Projects="$(MSBuildProjectFullPath)"
-      Targets="Hx_Internal_FindNetTestBinaries"
-      Properties="Hx_Internal_FindNetTestBinaries_StartDir=$(Hx_Internal_Net_Build_ArtifactDir);Hx_Internal_FindNetTestBinaries_Configuration=$(Hx_Input_Configuration)">
-      <Output TaskParameter="TargetOutputs" ItemName="_Hx_OpenCover_TestBinaryFiles"/>
-    </MSBuild>
 
     <ItemGroup>
       <Hx_OpenCover_TargetExe Condition="'@(Hx_OpenCover_TargetExe)' == ''" Include="@(Hx_System_NUnitConsoleExe)">

@@ -34,12 +34,6 @@ namespace Heleonix.Build.Tests.Tasks
             ITaskItem configFile = null;
             string sourceDir = null;
 
-            MSBuildHelper.RunTarget(
-                NetStandardSimulatorPathHelper.SolutionFile,
-                $"Build",
-                $"Configuration={PathHelper.Configuration}",
-                NetStandardSimulatorPathHelper.SolutionDir);
-
             Arrange(() =>
             {
                 sourceDir = PathHelper.GetRandomFileInCurrentDir();
@@ -72,7 +66,7 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 Arrange(() =>
                 {
-                    packageFile = new TaskItem(NetStandardSimulatorPathHelper.NupkgFile);
+                    packageFile = new TaskItem(PathHelper.NugetPackageFile);
                 });
 
                 And("config file is specified and sourceURL is not specified", () =>
@@ -107,7 +101,7 @@ namespace Heleonix.Build.Tests.Tasks
                     {
                         Assert.That(succeeded, Is.True);
                         Assert.That(
-                            File.Exists(Path.Combine(sourceDir, Path.GetFileName(NetStandardSimulatorPathHelper.NupkgFile))),
+                            File.Exists(Path.Combine(sourceDir, Path.GetFileName(PathHelper.NugetPackageFile))),
                             Is.True);
                     });
                 });
@@ -124,7 +118,7 @@ namespace Heleonix.Build.Tests.Tasks
                     {
                         Assert.That(succeeded, Is.True);
                         Assert.That(
-                            File.Exists(Path.Combine(sourceDir, Path.GetFileName(NetStandardSimulatorPathHelper.NupkgFile))),
+                            File.Exists(Path.Combine(sourceDir, Path.GetFileName(PathHelper.NugetPackageFile))),
                             Is.True);
                     });
                 });
@@ -141,7 +135,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     Assert.That(succeeded, Is.False);
                     Assert.That(
-                        File.Exists(Path.Combine(sourceDir, Path.GetFileName(NetStandardSimulatorPathHelper.NupkgFile))),
+                        File.Exists(Path.Combine(sourceDir, Path.GetFileName(PathHelper.NugetPackageFile))),
                         Is.False);
                 });
             });
