@@ -9,13 +9,14 @@
     <Exec
       Condition="'$(Hx_GitHubRelease_OwnerName)' == '' Or '$(Hx_GitHubRelease_RepositoryName)' == ''"
       Command="&quot;@(Hx_System_GitExe)&quot; config --get remote.origin.url"
-      ConsoleToMsBuild="true">
+      ConsoleToMsBuild="true"
+      WorkingDirectory="$(Hx_WS_Dir)">
       <Output TaskParameter="ConsoleOutput" PropertyName="_Hx_GitHubRelease_RepositoryUrl" />
     </Exec>
     <!--
         Extracts owner and repository from urls in the following formats:
-        https://github.com/Heleonix/Heleonix.Testing.git
-        git@github.com:Heleonix/Heleonix.Testing.git
+        https://github.com/Heleonix/Heleonix.Build.git
+        git@github.com:Heleonix/Heleonix.Build.git
     -->
     <PropertyGroup Condition="'$(_Hx_GitHubRelease_RepositoryUrl)' != ''">
       <Hx_GitHubRelease_RepositoryName>$([System.Text.RegularExpressions.Regex]::Match($(_Hx_GitHubRelease_RepositoryUrl), '(?&lt;=/)[^/]+(?=.git$)'))</Hx_GitHubRelease_RepositoryName>
