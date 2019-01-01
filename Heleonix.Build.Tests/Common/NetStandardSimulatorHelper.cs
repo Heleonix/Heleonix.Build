@@ -8,6 +8,7 @@ namespace Heleonix.Build.Tests.Common
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Xml.Linq;
 
     /// <summary>
     /// Provides paths for the NET Standard Simulator.
@@ -108,20 +109,24 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the source project target frameworks.
         /// </summary>
         public IEnumerable<string> SourceProjectTargetFrameworks =>
-                    Directory
-                    .GetDirectories(Path.Combine(this.SourceProjectDir, "bin", PathHelper.Configuration))
-                    .Select(dir => Path.GetFileName(dir));
+            XDocument.Load(this.SourceProjectFile)
+            .Root
+            .Element("PropertyGroup")
+            .Element("TargetFrameworks")
+            .Value.Split(';');
 
         /// <summary>
         /// Gets the test project target frameworks.
         /// </summary>
         public IEnumerable<string> TestProjectTargetFrameworks =>
-                    Directory
-                    .GetDirectories(Path.Combine(this.TestProjectDir, "bin", PathHelper.Configuration))
-                    .Select(dir => Path.GetFileName(dir));
+            XDocument.Load(this.TestProjectFile)
+            .Root
+            .Element("PropertyGroup")
+            .Element("TargetFrameworks")
+            .Value.Split(';');
 
         /// <summary>
-        /// Gets an artifacts directory path for the specified targed in the artifacts directory.
+        /// Gets an artifacts directory path for the specified target in the artifacts directory.
         /// </summary>
         /// <param name="target">A name of a target.</param>
         /// <returns>An artifacts directory path for the specified targed in the artifacts directory.</returns>
