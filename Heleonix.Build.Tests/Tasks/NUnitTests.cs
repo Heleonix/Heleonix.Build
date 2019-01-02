@@ -37,7 +37,8 @@ namespace Heleonix.Build.Tests.Tasks
             string outputDir = null;
             var simulatorHelper = new NetStandardSimulatorHelper();
 
-            MSBuildHelper.RunTarget(simulatorHelper.SolutionFile, "Rebuild", null, simulatorHelper.SolutionDir);
+            MSBuildHelper.RunTarget(simulatorHelper.SolutionFile, "Restore", null, simulatorHelper.SolutionDir);
+            MSBuildHelper.RunTarget(simulatorHelper.SolutionFile, $"Build", null, simulatorHelper.SolutionDir);
             MSBuildHelper.Publish(
                 simulatorHelper.TestProjectFile,
                 simulatorHelper.TestProjectTargetFrameworks,
