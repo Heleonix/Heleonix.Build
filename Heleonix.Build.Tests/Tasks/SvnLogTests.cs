@@ -112,7 +112,31 @@ namespace Heleonix.Build.Tests.Tasks
                     repositoryFileOrDir = new TaskItem(workingCopyDir);
                 });
 
-                Should("succeed", () =>
+                Should("fail", () =>
+                {
+                    Assert.That(succeeded, Is.False);
+                    Assert.That(task.Commits, Has.Length.Zero);
+                });
+            });
+
+            When("there are no repository in the specified file or directory", () =>
+            {
+                string dir = null;
+
+                Arrange(() =>
+                {
+                    dir = PathHelper.GetRandomFileInCurrentDir();
+                    Directory.CreateDirectory(dir);
+
+                    repositoryFileOrDir = new TaskItem(dir);
+                });
+
+                Teardown(() =>
+                {
+                    Directory.Delete(dir);
+                });
+
+                Should("fail", () =>
                 {
                     Assert.That(succeeded, Is.False);
                     Assert.That(task.Commits, Has.Length.Zero);

@@ -19,8 +19,8 @@ namespace Heleonix.Build.Tasks
         /// <summary>
         /// Gets or sets directories to clean.
         /// </summary>
-        [Required]
 #pragma warning disable CA1819 // Properties should not return arrays
+        [Required]
         public ITaskItem[] Dirs { get; set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
@@ -68,7 +68,7 @@ namespace Heleonix.Build.Tasks
                 }
                 catch (Exception ex)
                 {
-                    this.Log.LogErrorFromException(ex);
+                    this.Log.LogWarningFromException(ex);
                 }
             }
 

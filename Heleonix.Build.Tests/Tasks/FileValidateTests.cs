@@ -47,16 +47,6 @@ namespace Heleonix.Build.Tests.Tasks
                 succeeded = task.Execute();
             });
 
-            When("files are not specified", () =>
-            {
-                files = null;
-
-                Should("succeed", () =>
-                {
-                    Assert.That(succeeded, Is.True);
-                });
-            });
-
             When("files are specified", () =>
             {
                 files = new ITaskItem[3]

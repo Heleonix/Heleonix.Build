@@ -9,6 +9,7 @@ namespace Heleonix.Build.Tests.Tasks
     using Heleonix.Build.Tasks;
     using Heleonix.Build.Tests.Common;
     using Heleonix.Testing.NUnit.Aaa;
+    using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
     using NUnit.Framework;
     using static Heleonix.Testing.NUnit.Aaa.AaaSpec;
@@ -27,18 +28,16 @@ namespace Heleonix.Build.Tests.Tasks
         {
             ReportUnit task = null;
             var succeeded = false;
-            string testResultFile = null;
-            string reportFile = null;
+            ITaskItem testResultFile = null;
+            ITaskItem reportFile = null;
 
             Arrange(() =>
             {
-                reportFile = Path.ChangeExtension(PathHelper.GetRandomFileInCurrentDir(), "html");
-
                 task = new ReportUnit
                 {
                     BuildEngine = new TestBuildEngine(),
                     ReportUnitExe = new TaskItem(PathHelper.ReportUnitExe),
-                    TestResultFile = new TaskItem(testResultFile),
+                    TestResultFile = testResultFile,
                     ReportFile = new TaskItem(reportFile)
                 };
             });
@@ -50,31 +49,52 @@ namespace Heleonix.Build.Tests.Tasks
 
             Teardown(() =>
             {
-                if (File.Exists(reportFile))
+                if (File.Exists(reportFile.ItemSpec))
                 {
-                    File.Delete(reportFile);
+                    File.Delete(reportFile.ItemSpec);
                 }
             });
 
-            When("test result file does not exist", () =>
+            When("report file is not specified", () =>
             {
-                testResultFile = "NON_EXISTENT_TEST_RESULT_FILE";
+                reportFile = new TaskItem();
 
-                Should("fail", () =>
+                And("test result file is not specified", () =>
                 {
-                    Assert.That(succeeded, Is.True);
-                    Assert.That(File.Exists(reportFile), Is.False);
+                    testResultFile = new TaskItem();
+
+                    Should("fail and not generate a report file", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+                        Assert.That(File.Exists(reportFile.ItemSpec), Is.False);
+                    });
                 });
             });
 
-            When("test result file exists", () =>
+            When("report file is specified", () =>
             {
-                testResultFile = PathHelper.NUnitTestResultFile;
+                reportFile = new TaskItem(Path.ChangeExtension(PathHelper.GetRandomFileInCurrentDir(), "html"));
 
-                Should("succeed", () =>
+                And("test result file is specified", () =>
                 {
-                    Assert.That(succeeded, Is.True);
-                    Assert.That(File.Exists(reportFile), Is.True);
+                    testResultFile = new TaskItem(PathHelper.NUnitTestResultFile);
+
+                    Should("succeed", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+                        Assert.That(File.Exists(reportFile.ItemSpec), Is.True);
+                    });
+                });
+
+                And("test result file does not exist", () =>
+                {
+                    testResultFile = new TaskItem("NON_EXISTENT_TEST_RESULT_FILE");
+
+                    Should("succeed without generating a report file", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+                        Assert.That(File.Exists(reportFile.ItemSpec), Is.False);
+                    });
                 });
             });
         }

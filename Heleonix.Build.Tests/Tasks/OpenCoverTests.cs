@@ -34,7 +34,8 @@ namespace Heleonix.Build.Tests.Tasks
             string targetType = null;
             string targetExe = null;
             string outputDir = null;
-            var minCoverage = 0.0f;
+            string testFilter = null;
+            var minCoverage = 0;
             ITaskItem[] pdbSearchDirs = null;
             var simulatorHelper = new NetStandardSimulatorHelper();
 
@@ -59,10 +60,8 @@ namespace Heleonix.Build.Tests.Tasks
                 var targetMetadata = new Dictionary<string, string>
                 {
                     { "Type", targetType },
-                    {
-                        "NUnitProjectFileOrTestFiles",
-                        string.Join(";", simulatorHelper.TestBinaries)
-                    },
+                    { "TestFilter", testFilter },
+                    { "NUnitProjectFileOrTestFiles", string.Join(";", simulatorHelper.TestBinaries) },
                     { "ErrorOutputFile", Path.Combine(outputDir, "Errors.txt") },
                     { "TestOutputFile", Path.Combine(outputDir, "Output.txt") },
                     { "TestResultFile", Path.Combine(outputDir, "Results.txt") }
@@ -100,7 +99,7 @@ namespace Heleonix.Build.Tests.Tasks
                 });
             });
 
-            When("target type is NUnit", () =>
+            When("target type is 'NUnit'", () =>
             {
                 targetType = nameof(NUnit);
 
@@ -121,7 +120,7 @@ namespace Heleonix.Build.Tests.Tasks
                         {
                             minCoverage = 0;
 
-                            Should("succeed and provide coverage greater that or equal to minimal coverage", () =>
+                            Should("succeed and provide coverage greater than or equal to minimal coverage", () =>
                             {
                                 Assert.That(succeeded, Is.True);
                                 Assert.That(task.ClassCoverage, Is.GreaterThanOrEqualTo(minCoverage));
@@ -148,6 +147,20 @@ namespace Heleonix.Build.Tests.Tasks
                                 Should("succeed", () =>
                                 {
                                     Assert.That(succeeded, Is.True);
+                                });
+                            });
+
+                            And("target exit code is 0", () =>
+                            {
+                                testFilter = "method == PlusOne";
+
+                                Should("succeed and provide coverage greater than or equal to minimal coverage", () =>
+                                {
+                                    Assert.That(succeeded, Is.True);
+                                    Assert.That(task.ClassCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.MethodCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.BranchCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
                                 });
                             });
                         });

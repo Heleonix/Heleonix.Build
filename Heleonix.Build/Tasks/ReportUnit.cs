@@ -5,7 +5,6 @@
 
 namespace Heleonix.Build.Tasks
 {
-    using Heleonix.Build.Properties;
     using Heleonix.Execution;
     using Microsoft.Build.Framework;
 
@@ -44,11 +43,6 @@ namespace Heleonix.Build.Tasks
             var result = ExeHelper.Execute(this.ReportUnitExe.ItemSpec, args, true);
 
             this.Log.LogMessage(result.Output);
-
-            if (result.ExitCode != 0)
-            {
-                this.Log.LogError(Resources.ReportUnit_Failed, nameof(ReportUnit), this.TestResultFile, result.ExitCode);
-            }
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Heleonix.Build.Tasks
         /// <summary>
         /// Gets or sets the file path.
         /// </summary>
+        [Required]
         public ITaskItem File { get; set; }
 
         /// <summary>
@@ -45,9 +46,9 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            if (this.File == null || !System.IO.File.Exists(this.File.ItemSpec))
+            if (!System.IO.File.Exists(this.File.ItemSpec))
             {
-                this.Log.LogMessage(Resources.FileRead_FileNotFound, this.File?.ItemSpec);
+                this.Log.LogError(Resources.FileRead_FileNotFound, this.File.ItemSpec);
 
                 this.Matches = Array.Empty<ITaskItem>();
 

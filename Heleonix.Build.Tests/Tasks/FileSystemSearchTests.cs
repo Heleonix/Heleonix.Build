@@ -55,11 +55,6 @@ namespace Heleonix.Build.Tests.Tasks
                 succeeded = task.Execute();
             });
 
-            Teardown(() =>
-            {
-                Directory.Delete(rootDir, true);
-            });
-
             When("directories exist", () =>
             {
                 Arrange(() =>
@@ -103,17 +98,74 @@ namespace Heleonix.Build.Tests.Tasks
                     }
                 });
 
-                And("type of items to search is not specified", () =>
+                Teardown(() =>
                 {
-                    And("search direction is not specified", () =>
+                    Directory.Delete(rootDir, true);
+                });
+
+                And("start directory exist", () =>
+                {
+                    Arrange(() =>
                     {
-                        Arrange(() =>
+                        startDir = new TaskItem(rootDir);
+                    });
+
+                    And("type of items to search is not specified", () =>
+                    {
+                        And("search direction is not specified", () =>
                         {
-                            startDir = new TaskItem(rootDir);
+                            And("search options are not specified", () =>
+                            {
+                                Should("find all directories and files", () =>
+                                {
+                                    Assert.That(succeeded, Is.True);
+                                    Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
+                                    Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
+                                    Assert.That(task.FoundItems, Has.Length.EqualTo(15));
+                                });
+                            });
+
+                            And("search options are specified", () =>
+                            {
+                                Arrange(() =>
+                                {
+                                    pathRegExp = @"^.*aaa`.txt$";
+                                    pathRegExpOptions = RegexOptions.IgnoreCase.ToString();
+                                    contentRegExp = ".*111aaa.*";
+                                    contentRegExpOptions = RegexOptions.IgnoreCase.ToString();
+                                });
+
+                                Teardown(() =>
+                                {
+                                    pathRegExp = null;
+                                    pathRegExpOptions = null;
+                                    contentRegExp = null;
+                                    contentRegExpOptions = null;
+                                });
+
+                                Should("find the only 111aaa.txt file", () =>
+                                {
+                                    Assert.That(succeeded, Is.True);
+                                    Assert.That(task.FoundFiles, Has.Length.EqualTo(1));
+                                    Assert.That(task.FoundFiles[0].ItemSpec, Is.EqualTo(Path.Combine(rootDir, "1", "11", "111", "111aaa.txt")));
+                                    Assert.That(task.FoundDirs, Has.Length.EqualTo(0));
+                                    Assert.That(task.FoundItems, Has.Length.EqualTo(1));
+                                });
+                            });
                         });
 
-                        And("search options are not specified", () =>
+                        And("search direction is Down", () =>
                         {
+                            Arrange(() =>
+                            {
+                                direction = "Down";
+                            });
+
+                            Teardown(() =>
+                            {
+                                direction = null;
+                            });
+
                             Should("find all directories and files", () =>
                             {
                                 Assert.That(succeeded, Is.True);
@@ -123,46 +175,118 @@ namespace Heleonix.Build.Tests.Tasks
                             });
                         });
 
-                        And("search options are specified", () =>
+                        And("search direction is Up", () =>
                         {
                             Arrange(() =>
                             {
-                                pathRegExp = @"^.*aaa`.txt$";
-                                pathRegExpOptions = RegexOptions.IgnoreCase.ToString();
-                                contentRegExp = ".*111aaa.*";
-                                contentRegExpOptions = RegexOptions.IgnoreCase.ToString();
+                                direction = "Up";
+                                startDir = new TaskItem(Path.Combine(rootDir, "1", "11", "111"));
                             });
 
                             Teardown(() =>
                             {
-                                pathRegExp = null;
-                                pathRegExpOptions = null;
-                                contentRegExp = null;
-                                contentRegExpOptions = null;
+                                direction = null;
+                                startDir = null;
                             });
 
-                            Should("find the only 111aaa.txt file", () =>
+                            And("search options are specified", () =>
                             {
-                                Assert.That(succeeded, Is.True);
-                                Assert.That(task.FoundFiles, Has.Length.EqualTo(1));
-                                Assert.That(task.FoundFiles[0].ItemSpec, Is.EqualTo(Path.Combine(rootDir, "1", "11", "111", "111aaa.txt")));
-                                Assert.That(task.FoundDirs, Has.Length.EqualTo(0));
-                                Assert.That(task.FoundItems, Has.Length.EqualTo(1));
+                                Arrange(() =>
+                                {
+                                    pathRegExp = @"(^.*/111$)|(^.*/111[a-z]+`.txt$)";
+                                });
+
+                                Teardown(() =>
+                                {
+                                    pathRegExp = null;
+                                });
+
+                                Should("find all directories and files", () =>
+                                {
+                                    Assert.That(succeeded, Is.True);
+                                    Assert.That(task.FoundFiles, Has.Length.EqualTo(2));
+                                    Assert.That(task.FoundDirs, Has.Length.EqualTo(1));
+                                    Assert.That(task.FoundItems, Has.Length.EqualTo(3));
+                                });
+                            });
+
+                            And("search options are not specified", () =>
+                            {
+                                Arrange(() =>
+                                {
+                                    pathRegExp = null;
+                                });
+
+                                Should("find all directories and files", () =>
+                                {
+                                    Assert.That(succeeded, Is.True);
+                                    Assert.That(
+                                        task.FoundFiles[0].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "1", "11", "111", "111aaa.txt")));
+                                    Assert.That(
+                                        task.FoundFiles[1].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "1", "11", "111", "111bbb.txt")));
+                                    Assert.That(
+                                        task.FoundFiles[2].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "1", "1a.txt")));
+                                    Assert.That(
+                                        task.FoundFiles[3].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "1", "1b.txt")));
+                                    Assert.That(
+                                        task.FoundDirs[0].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "1", "11", "111")));
+                                    Assert.That(
+                                        task.FoundDirs[1].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "1", "11")));
+                                    Assert.That(
+                                        task.FoundDirs[2].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "1")));
+                                    Assert.That(
+                                        task.FoundDirs[3].ItemSpec,
+                                        Is.EqualTo(Path.Combine(rootDir, "2")));
+                                    Assert.That(task.FoundItems, Has.Length.GreaterThan(8));
+                                });
                             });
                         });
                     });
 
-                    And("search direction is Down", () =>
+                    And("type of items to search is Files", () =>
                     {
                         Arrange(() =>
                         {
-                            startDir = new TaskItem(rootDir);
-                            direction = "Down";
+                            types = "Files";
                         });
 
-                        Teardown(() =>
+                        Should("find all files", () =>
                         {
-                            direction = null;
+                            Assert.That(succeeded, Is.True);
+                            Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
+                            Assert.That(task.FoundDirs, Has.Length.EqualTo(0));
+                            Assert.That(task.FoundItems, Has.Length.EqualTo(8));
+                        });
+                    });
+
+                    And("type of items to search is Directories", () =>
+                    {
+                        Arrange(() =>
+                        {
+                            types = "Directories";
+                        });
+
+                        Should("find all directories", () =>
+                        {
+                            Assert.That(succeeded, Is.True);
+                            Assert.That(task.FoundFiles, Has.Length.EqualTo(0));
+                            Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
+                            Assert.That(task.FoundItems, Has.Length.EqualTo(7));
+                        });
+                    });
+
+                    And("type of items to search is All", () =>
+                    {
+                        Arrange(() =>
+                        {
+                            types = "All";
                         });
 
                         Should("find all directories and files", () =>
@@ -173,80 +297,21 @@ namespace Heleonix.Build.Tests.Tasks
                             Assert.That(task.FoundItems, Has.Length.EqualTo(15));
                         });
                     });
-
-                    And("search direction is Up", () =>
-                    {
-                        Arrange(() =>
-                        {
-                            startDir = new TaskItem(Path.Combine(rootDir, "1", "11", "111"));
-                            pathRegExp = @"^.*a`.txt$";
-                            direction = "Up";
-                        });
-
-                        Teardown(() =>
-                        {
-                            pathRegExp = null;
-                            direction = null;
-                        });
-
-                        Should("find all directories and files", () =>
-                        {
-                            Assert.That(succeeded, Is.True);
-                            Assert.That(task.FoundFiles, Has.Length.EqualTo(2));
-                            Assert.That(task.FoundDirs, Has.Length.EqualTo(0));
-                            Assert.That(task.FoundItems, Has.Length.EqualTo(2));
-                        });
-                    });
                 });
 
-                And("type of items to search is Files", () =>
+                And("start directory does not exist", () =>
                 {
                     Arrange(() =>
                     {
-                        startDir = new TaskItem(rootDir);
-                        types = "Files";
+                        startDir = new TaskItem(Path.Combine(rootDir, Path.GetRandomFileName()));
                     });
 
-                    Should("find all files", () =>
+                    Should("succeed fithout any found items", () =>
                     {
                         Assert.That(succeeded, Is.True);
-                        Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
-                        Assert.That(task.FoundDirs, Has.Length.EqualTo(0));
-                        Assert.That(task.FoundItems, Has.Length.EqualTo(8));
-                    });
-                });
-
-                And("type of items to search is Directories", () =>
-                {
-                    Arrange(() =>
-                    {
-                        startDir = new TaskItem(rootDir);
-                        types = "Directories";
-                    });
-
-                    Should("find all directories", () =>
-                    {
-                        Assert.That(succeeded, Is.True);
-                        Assert.That(task.FoundFiles, Has.Length.EqualTo(0));
-                        Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
-                        Assert.That(task.FoundItems, Has.Length.EqualTo(7));
-                    });
-                });
-
-                And("type of items to search is All", () =>
-                {
-                    Arrange(() =>
-                    {
-                        startDir = new TaskItem(rootDir);
-                        types = "All";
-                    });
-
-                    Should("find all directories and files", () =>
-                    {
-                        Assert.That(succeeded, Is.True);
-                        Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
-                        Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
-                        Assert.That(task.FoundItems, Has.Length.EqualTo(15));
+                        Assert.That(task.FoundFiles, Has.Length.Zero);
+                        Assert.That(task.FoundDirs, Has.Length.Zero);
+                        Assert.That(task.FoundItems, Has.Length.Zero);
                     });
                 });
             });

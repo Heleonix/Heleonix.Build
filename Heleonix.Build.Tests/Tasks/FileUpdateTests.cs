@@ -55,9 +55,9 @@ namespace Heleonix.Build.Tests.Tasks
 
             When("file to update does not exist", () =>
             {
-                Should("succeed", () =>
+                Should("fail", () =>
                 {
-                    Assert.That(succeeded, Is.True);
+                    Assert.That(succeeded, Is.False);
                 });
             });
 

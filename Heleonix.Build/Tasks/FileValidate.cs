@@ -22,6 +22,7 @@ namespace Heleonix.Build.Tasks
         /// Gets or sets file paths with regex patterns in custom metadata to validate.
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
+        [Required]
         public ITaskItem[] Files { get; set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
@@ -35,13 +36,6 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            if (this.Files == null)
-            {
-                this.Log.LogMessage(Resources.FileValidate_NoFilesSpecified);
-
-                return;
-            }
-
             var regExpOptions = string.IsNullOrEmpty(this.RegExpOptions)
                 ? RegexOptions.None
                 : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);

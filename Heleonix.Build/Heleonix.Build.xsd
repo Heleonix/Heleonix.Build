@@ -230,14 +230,14 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="Files">
+          <xs:attribute name="Files" use="required">
             <xs:annotation>
               <xs:documentation>Files to copy.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Destinations" use="required">
+          <xs:attribute name="DestinationDirs" use="required">
             <xs:annotation>
-              <xs:documentation>Destinations to copy files to.</xs:documentation>
+              <xs:documentation>Destination directories to copy files to.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Overwrite">
@@ -325,7 +325,7 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="File">
+          <xs:attribute name="File" use="required">
             <xs:annotation>
               <xs:documentation>The file path.</xs:documentation>
             </xs:annotation>
@@ -356,7 +356,7 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="Files">
+          <xs:attribute name="Files" use="required">
             <xs:annotation>
               <xs:documentation>File paths with regex patterns in custom metadata to validate.</xs:documentation>
             </xs:annotation>
@@ -431,7 +431,7 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="File">
+          <xs:attribute name="File" use="required">
             <xs:annotation>
               <xs:documentation>The file path.</xs:documentation>
             </xs:annotation>
@@ -1141,7 +1141,7 @@ Example custom task with single required parameter
   </xs:element>
   <xs:element name="Hx_NUnit_ContinueOnError" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>The ContinuOnError property for all MSBuild tasks.</xs:documentation>
+      <xs:documentation>The ContinuOnError property for all MSBuild tasks, default value is ErrorAndContinue.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
