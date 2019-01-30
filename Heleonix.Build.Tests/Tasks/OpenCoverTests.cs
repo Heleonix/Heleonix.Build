@@ -111,10 +111,16 @@ namespace Heleonix.Build.Tests.Tasks
                     {
                         Assert.That(succeeded, Is.False);
                     });
+                });
 
-                    And("target exe is specified", () =>
+                And("target exe is specified", () =>
+                {
+                    targetExe = PathHelper.NUnitConsoleExe;
+
+                    And("PDB search dirs are specified", () =>
                     {
-                        targetExe = PathHelper.NUnitConsoleExe;
+                        pdbSearchDirs = simulatorHelper.TestPublishDirs
+                            .Select(dir => new TaskItem(dir)).ToArray();
 
                         And("source code should pass coverage threshold", () =>
                         {
@@ -127,27 +133,6 @@ namespace Heleonix.Build.Tests.Tasks
                                 Assert.That(task.MethodCoverage, Is.GreaterThanOrEqualTo(minCoverage));
                                 Assert.That(task.BranchCoverage, Is.GreaterThanOrEqualTo(minCoverage));
                                 Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
-                            });
-
-                            And("PDB search dirs are specified", () =>
-                            {
-                                pdbSearchDirs = simulatorHelper.TestPublishDirs
-                                .Select(dir => new TaskItem(dir)).ToArray();
-
-                                Should("succeed", () =>
-                                {
-                                    Assert.That(succeeded, Is.True);
-                                });
-                            });
-
-                            And("PDB search dirs are not specified", () =>
-                            {
-                                pdbSearchDirs = null;
-
-                                Should("succeed", () =>
-                                {
-                                    Assert.That(succeeded, Is.True);
-                                });
                             });
 
                             And("target exit code is 0", () =>

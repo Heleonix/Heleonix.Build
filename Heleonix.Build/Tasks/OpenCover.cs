@@ -38,6 +38,14 @@ namespace Heleonix.Build.Tasks
         [Required]
         public ITaskItem CoverageResultFile { get; set; }
 
+#pragma warning disable CA1819 // Properties should not return arrays
+        /// <summary>
+        /// Gets or sets the PDB search directories path.
+        /// </summary>
+        [Required]
+        public ITaskItem[] PdbSearchDirs { get; set; }
+#pragma warning restore CA1819 // Properties should not return arrays
+
         /// <summary>
         /// Gets or sets the minimum class coverage, in range: 0% - 100%.
         /// </summary>
@@ -67,13 +75,6 @@ namespace Heleonix.Build.Tasks
         /// Gets or sets the filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.
         /// </summary>
         public string Filters { get; set; }
-
-#pragma warning disable CA1819 // Properties should not return arrays
-        /// <summary>
-        /// Gets or sets the PDB search directories path.
-        /// </summary>
-        public ITaskItem[] PdbSearchDirs { get; set; }
-#pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// Gets or sets a value indicating whether show unvisited methods and classes after coverage finishes and results are presented.
@@ -213,9 +214,9 @@ namespace Heleonix.Build.Tasks
                 .AddKey("skipautoprops")
                 .AddPaths(
                     "searchdirs",
-                    this.PdbSearchDirs?.Select(i => i.ItemSpec),
+                    this.PdbSearchDirs.Select(i => i.ItemSpec),
                     false,
-                    this.PdbSearchDirs != null)
+                    this.PdbSearchDirs.Length > 0)
                 .AddKey("showunvisited", this.ShowUnvisited)
                 .AddKey("returntargetcode")
                 .AddArgument("threshold", this.MaxVisitCount, this.MaxVisitCount > 0)

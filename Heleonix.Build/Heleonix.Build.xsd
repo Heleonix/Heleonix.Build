@@ -700,6 +700,11 @@ Example custom task with single required parameter
               <xs:documentation>The coverage results output file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="PdbSearchDirs" use="required">
+            <xs:annotation>
+              <xs:documentation>The PDB search directories path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="MinClassCoverage">
             <xs:annotation>
               <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
@@ -728,11 +733,6 @@ Example custom task with single required parameter
           <xs:attribute name="Filters">
             <xs:annotation>
               <xs:documentation>The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="PdbSearchDirs">
-            <xs:annotation>
-              <xs:documentation>The PDB search directories path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ShowUnvisited">
