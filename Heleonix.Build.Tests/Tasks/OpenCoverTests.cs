@@ -103,24 +103,24 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 targetType = nameof(NUnit);
 
-                And("target exe is not specified", () =>
+                And("PDB search dirs are specified", () =>
                 {
-                    targetExe = "HX_NO_TARGET";
+                    pdbSearchDirs = simulatorHelper.TestPublishDirs
+                        .Select(dir => new TaskItem(dir)).ToArray();
 
-                    Should("fail", () =>
+                    And("target exe is invalid", () =>
                     {
-                        Assert.That(succeeded, Is.False);
+                        targetExe = "HX_NO_TARGET";
+
+                        Should("fail", () =>
+                        {
+                            Assert.That(succeeded, Is.False);
+                        });
                     });
-                });
 
-                And("target exe is specified", () =>
-                {
-                    targetExe = PathHelper.NUnitConsoleExe;
-
-                    And("PDB search dirs are specified", () =>
+                    And("target exe is specified", () =>
                     {
-                        pdbSearchDirs = simulatorHelper.TestPublishDirs
-                            .Select(dir => new TaskItem(dir)).ToArray();
+                        targetExe = PathHelper.NUnitConsoleExe;
 
                         And("source code should pass coverage threshold", () =>
                         {
