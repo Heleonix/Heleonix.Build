@@ -24,22 +24,29 @@ namespace Heleonix.Build.Tests.Targets
         public static void Execute()
         {
             var succeeded = false;
-            var artifactDir = NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build");
+            NetStandardSimulatorHelper simulatorHelper = null;
+
+            Arrange(() =>
+            {
+                simulatorHelper = new NetStandardSimulatorHelper();
+            });
 
             Act(() =>
             {
-                succeeded = MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
             });
 
             Teardown(() =>
             {
-                Directory.Delete(artifactDir, true);
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>
             {
                 Should("succeed", () =>
                 {
+                    var artifactDir = simulatorHelper.GetArtifactDir("Hx_Net_Build");
+
                     var sourceProjectOutputDir = Path.Combine(
                         artifactDir,
                         "NetStandardSimulator",
@@ -47,10 +54,11 @@ namespace Heleonix.Build.Tests.Targets
                         PathHelper.Configuration);
 
                     Assert.That(succeeded, Is.True);
+                    Assert.That(File.Exists(Path.Combine(artifactDir, "SharedProjectInfo.props")));
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, "NetStandardSimulator.1.0.0.nupkg")));
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, "NetStandardSimulator.1.0.0.symbols.nupkg")));
 
-                    foreach (var tfm in NetStandardSimulatorPathHelper.SourceProjectTargetFrameworks)
+                    foreach (var tfm in simulatorHelper.SourceProjectTargetFrameworks)
                     {
                         Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "NetStandardSimulator.dll")));
                         Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "NetStandardSimulator.xml")));
@@ -67,7 +75,7 @@ namespace Heleonix.Build.Tests.Targets
                         "bin",
                         PathHelper.Configuration);
 
-                    foreach (var tfm in NetStandardSimulatorPathHelper.TestProjectTargetFrameworks)
+                    foreach (var tfm in simulatorHelper.TestProjectTargetFrameworks)
                     {
                         Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "NetStandardSimulator.Tests.dll")));
                         Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "NetStandardSimulator.Tests.xml")));

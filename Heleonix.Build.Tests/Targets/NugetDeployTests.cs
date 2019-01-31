@@ -30,11 +30,13 @@ namespace Heleonix.Build.Tests.Targets
             string sourceDir = null;
             var succeeded = false;
             IDictionary<string, ITaskItem[]> items = null;
-            var artifactDir = NetStandardSimulatorPathHelper.GetArtifactDir("Hx_NugetDeploy");
+            NetStandardSimulatorHelper simulatorHelper = null;
 
             Arrange(() =>
             {
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+                simulatorHelper = new NetStandardSimulatorHelper();
+
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
 
                 sourceDir = PathHelper.GetRandomFileInCurrentDir();
 
@@ -50,24 +52,21 @@ namespace Heleonix.Build.Tests.Targets
 
             Act(() =>
             {
-                succeeded = MSBuildHelper.RunTestTarget(
-                    "Hx_NugetDeploy",
-                    NetStandardSimulatorPathHelper.SolutionDir,
-                    null,
-                    items);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_NugetDeploy", simulatorHelper.SolutionDir, null, items);
             });
 
             Teardown(() =>
             {
                 Directory.Delete(sourceDir, true);
-                Directory.Delete(artifactDir, true);
-                Directory.Delete(NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build"), true);
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>
             {
                 Should("succeed", () =>
                 {
+                    var artifactDir = simulatorHelper.GetArtifactDir("Hx_NugetDeploy");
+
                     Assert.That(succeeded, Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "NetStandardSimulator.1.0.0.nupkg")), Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "NetStandardSimulator.1.0.0.symbols.nupkg")), Is.True);

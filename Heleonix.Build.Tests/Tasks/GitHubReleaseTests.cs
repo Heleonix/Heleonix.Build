@@ -31,6 +31,7 @@ namespace Heleonix.Build.Tests.Tasks
             var isDraft = false;
             var isPrerelease = false;
             Task server = null;
+            string tagName = null;
 
             Arrange(() =>
             {
@@ -50,8 +51,8 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new TestBuildEngine(),
                     ReleasesApiUrl = "http://localhost:33333/repos/heleonix/heleonix.build/releases",
-                    Name = "v1.0.0",
-                    TagName = "v1.0.0",
+                    Name = tagName,
+                    TagName = tagName,
                     TagSource = "master",
                     Token = "111111111",
                     UserAgent = "heleonix/heleonix.build",
@@ -72,13 +73,58 @@ namespace Heleonix.Build.Tests.Tasks
                 server.Dispose();
             });
 
-            When("it is draft release", () =>
+            When("creation should succeed", () =>
             {
-                isDraft = true;
+                tagName = "v1.0.0";
 
-                Should("succeed", () =>
+                And("it is draft release", () =>
                 {
-                    Assert.That(succeeded, Is.True);
+                    isDraft = true;
+
+                    Should("succeed", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+                    });
+                });
+
+                And("it is no draft release", () =>
+                {
+                    isDraft = false;
+
+                    Should("succeed", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+                    });
+                });
+
+                And("it is pre-release", () =>
+                {
+                    isPrerelease = true;
+
+                    Should("succeed", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+                    });
+                });
+
+                And("it is no pre-release", () =>
+                {
+                    isPrerelease = false;
+
+                    Should("succeed", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+                    });
+                });
+            });
+
+            When("creation should fail", () =>
+            {
+                tagName = "v2.0.0";
+
+                Should("fail", () =>
+                {
+                    Assert.That(succeeded, Is.False);
                 });
             });
         }

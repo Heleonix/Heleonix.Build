@@ -3,13 +3,20 @@
     <Message Text="> STARTING..."/>
 
     <Message Text="> 1/1: Searching net projects"/>
-    <Heleonix.Build.Tasks.FileSystemSearch
-      StartDir="$(Hx_Internal_FindNetProjects_WSDir)"
-      PathRegExp=":.*`..*proj$"
-      ContentRegExp="Project%5Cs+Sdk"
-      Types="Files">
-      <Output TaskParameter="FoundFiles" ItemName="_Hx_Internal_FindNetProjects_ProjectFiles"/>
-    </Heleonix.Build.Tasks.FileSystemSearch>
+
+    <Heleonix.Build.Tasks.FileRead
+      File="$(Hx_Internal_FindNetProjects_SlnFile)"
+      RegExp="(?&lt;=Project.+=\s*&quot;.+&quot;\s*,\s*&quot;)(.+proj)(?=&quot;\s*,\s*&quot;.+&quot;\s*EndProject)">
+      <Output TaskParameter="Matches" ItemName="_Hx_Internal_FindNetProjects_ParsedProjectFiles"/>
+    </Heleonix.Build.Tasks.FileRead>
+
+    <PropertyGroup>
+      <_Hx_Internal_FindNetProjects_SlnDir>$([System.IO.Path]::GetDirectoryName('$(Hx_Internal_FindNetProjects_SlnFile)'))</_Hx_Internal_FindNetProjects_SlnDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_Hx_Internal_FindNetProjects_ProjectFiles Include="@(_Hx_Internal_FindNetProjects_ParsedProjectFiles->'$(_Hx_Internal_FindNetProjects_SlnDir)/%(Match)')"/>
+    </ItemGroup>
 
     <Message Text="> DONE!"/>
 

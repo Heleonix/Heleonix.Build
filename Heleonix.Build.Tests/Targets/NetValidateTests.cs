@@ -5,10 +5,6 @@
 
 namespace Heleonix.Build.Tests.Targets
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Threading.Tasks;
     using Heleonix.Build.Tests.Common;
     using Heleonix.Testing.NUnit.Aaa;
     using NUnit.Framework;
@@ -27,10 +23,21 @@ namespace Heleonix.Build.Tests.Targets
         public static void Execute()
         {
             var succeeded = false;
+            NetStandardSimulatorHelper simulatorHelper = null;
+
+            Arrange(() =>
+            {
+                simulatorHelper = new NetStandardSimulatorHelper();
+            });
 
             Act(() =>
             {
-                succeeded = MSBuildHelper.RunTestTarget("Hx_Net_Validate", NetStandardSimulatorPathHelper.SolutionDir);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_Net_Validate", simulatorHelper.SolutionDir);
+            });
+
+            Teardown(() =>
+            {
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>

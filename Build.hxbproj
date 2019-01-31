@@ -1,0 +1,15 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_Hx_Custom_NugetPackagesDir>$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))/.nuget/packages</_Hx_Custom_NugetPackagesDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Hx_System_NUnitConsoleExe Include="$(_Hx_Custom_NugetPackagesDir)/NUnit.ConsoleRunner/3.8.0/tools/nunit3-console.exe"/>
+    <Hx_System_ReportUnitExe Include="$(_Hx_Custom_NugetPackagesDir)/ReportUnit/1.2.1/tools/ReportUnit.exe"/>
+    <Hx_System_OpenCoverConsoleExe Include="$(_Hx_Custom_NugetPackagesDir)/OpenCover/4.6.519/tools/OpenCover.Console.exe"/>
+    <Hx_System_ReportGeneratorExe Include="$(_Hx_Custom_NugetPackagesDir)/ReportGenerator/3.1.2/tools/ReportGenerator.exe"/>
+    <Hx_System_NugetExe Include="$(_Hx_Custom_NugetPackagesDir)/NuGet.CommandLine/4.7.1/tools/NuGet.exe"/>
+  </ItemGroup>
+  <PropertyGroup>
+    <Hx_System_GitHubAPIUrl>http://localhost:33333</Hx_System_GitHubAPIUrl>
+  </PropertyGroup>
+</Project>

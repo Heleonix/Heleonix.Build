@@ -21,15 +21,15 @@ namespace Heleonix.Build.Tests.Common
         /// </summary>
         /// <param name="url">A url to launch server on.</param>
         /// <param name="isSuccess">Determines if request shoul succeed.</param>
-        /// <param name="success">A success response.</param>
-        /// <param name="fail">A fail response.</param>
+        /// <param name="onSuccess">A success response.</param>
+        /// <param name="onFail">A fail response.</param>
         /// <returns>A task to manage launched server.</returns>
 #pragma warning disable CA1054 // Uri parameters should not be strings
         public static Task LaunchHttpServer(
             string url,
             Predicate<HttpListenerRequest> isSuccess,
-            (string ContentType, string Content, HttpStatusCode StatusCode) success,
-            (string ContentType, string Content, HttpStatusCode StatusCode) fail)
+            (string ContentType, string Content, HttpStatusCode StatusCode) onSuccess,
+            (string ContentType, string Content, HttpStatusCode StatusCode) onFail)
 #pragma warning restore CA1054 // Uri parameters should not be strings
         {
             return Task.Run(() =>
@@ -44,10 +44,12 @@ namespace Heleonix.Build.Tests.Common
 
                     var response = context.Response;
 
-                    var(contentType, content, statusCode) =
+#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
+                    var (contentType, content, statusCode) =
+#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
                         isSuccess != null && isSuccess(context.Request)
-                            ? success
-                            : fail;
+                            ? onSuccess
+                            : onFail;
 
                     var buffer = Encoding.UTF8.GetBytes(content);
 

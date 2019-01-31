@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../SharedProjectInfo.proj" />
+  <Import Project="../SharedProjectInfo.props" />
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
@@ -26,15 +26,54 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="NUnitTestResult.xml" />
-    <None Remove="OpenCover.xml" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator.Tests\CalculatorTests.cs" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator.Tests\FullyCoveredTypeTests.cs" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator.Tests\TokenizerTests.cs" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator\Calculator.cs" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator\FullyCoveredType.cs" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator\NotCovered.cs" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator\Properties\AssemblyProperties.cs" />
+    <Compile Remove="NetStandardSimulator\NetStandardSimulator\Tokenizer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Heleonix.Build.1.3.0.nupkg" />
+    <None Remove="NetStandardSimulator\SharedProjectInfo.props" />
+    <None Remove="NetStandardSimulator\stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Content Include="Heleonix.Build.1.3.0.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator.Tests\CalculatorTests.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator.Tests\FullyCoveredTypeTests.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator.Tests\TokenizerTests.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator\Calculator.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator\FullyCoveredType.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator\NotCovered.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator\Properties\AssemblyProperties.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\NetStandardSimulator\Tokenizer.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\stylecop.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="NUnitTestResult.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -62,6 +101,27 @@
 
   <ItemGroup>
     <Content Include="Custom.hxbproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NetStandardSimulator\NetStandardSimulator\NetStandardSimulator.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NetStandardSimulator\NetStandardSimulator.Tests\NetStandardSimulator.Tests.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NetStandardSimulator\NetStandardSimulator.sln">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetStandardSimulator\SharedProjectInfo.props">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

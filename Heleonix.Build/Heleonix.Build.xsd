@@ -230,14 +230,14 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="Files">
+          <xs:attribute name="Files" use="required">
             <xs:annotation>
               <xs:documentation>Files to copy.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Destinations" use="required">
+          <xs:attribute name="DestinationDirs" use="required">
             <xs:annotation>
-              <xs:documentation>Destinations to copy files to.</xs:documentation>
+              <xs:documentation>Destination directories to copy files to.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Overwrite">
@@ -325,7 +325,7 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="File">
+          <xs:attribute name="File" use="required">
             <xs:annotation>
               <xs:documentation>The file path.</xs:documentation>
             </xs:annotation>
@@ -356,7 +356,7 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="Files">
+          <xs:attribute name="Files" use="required">
             <xs:annotation>
               <xs:documentation>File paths with regex patterns in custom metadata to validate.</xs:documentation>
             </xs:annotation>
@@ -431,7 +431,7 @@ Example custom task with single required parameter
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="File">
+          <xs:attribute name="File" use="required">
             <xs:annotation>
               <xs:documentation>The file path.</xs:documentation>
             </xs:annotation>
@@ -589,11 +589,6 @@ Example custom task with single required parameter
               <xs:documentation>The agents number.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="StopOnErrorOrFailedTest">
-            <xs:annotation>
-              <xs:documentation>Indicates whether to stop on first error or first failed test.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
           <xs:attribute name="UseTeamCityServiceMessages">
             <xs:annotation>
               <xs:documentation>A value indicating whether to use TeamCity service messages.</xs:documentation>
@@ -627,11 +622,6 @@ Example custom task with single required parameter
           <xs:attribute name="ShadowCopy">
             <xs:annotation>
               <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="FailOnFailedTests">
-            <xs:annotation>
-              <xs:documentation>Indicates whether to fail the task on failed tests.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="TestCases">
@@ -710,6 +700,11 @@ Example custom task with single required parameter
               <xs:documentation>The coverage results output file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="PdbSearchDirs" use="required">
+            <xs:annotation>
+              <xs:documentation>The PDB search directories path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="MinClassCoverage">
             <xs:annotation>
               <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
@@ -738,11 +733,6 @@ Example custom task with single required parameter
           <xs:attribute name="Filters">
             <xs:annotation>
               <xs:documentation>The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="PdbSearchDirs">
-            <xs:annotation>
-              <xs:documentation>The PDB search directories path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ShowUnvisited">
@@ -948,22 +938,9 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Target: Hx_Internal_FindNetProjects-->
-  <xs:element name="Hx_Internal_FindNetProjects_WSDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_Internal_FindNetProjects_SlnFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the workspace directory.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <!--Endregion-->
-
-  <!--Region Target: Hx_Internal_FindNetSourceBinaries-->
-  <xs:element name="Hx_Internal_FindNetSourceBinaries_StartDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A path to the start directory.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_Internal_FindNetSourceBinaries_Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A configuration, i.e. "Release", "Debug" etc.</xs:documentation>
+      <xs:documentation>A path to the solution file to read projects from.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
@@ -1136,12 +1113,6 @@ Example custom task with single required parameter
       <xs:documentation>The agents number.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_NUnit_StopOnErrorOrFailedTest" type="msb:StringPropertyType"
-              substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>Indicates whether to stop on first error or first failed test.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hx_NUnit_UseTeamCityServiceMessages" type="msb:StringPropertyType"
               substitutionGroup="msb:Property">
     <xs:annotation>
@@ -1168,9 +1139,9 @@ Example custom task with single required parameter
       <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_NUnit_FailOnFailedTests" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NUnit_ContinueOnError" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>Indicates whether to fail the task on failed tests.</xs:documentation>
+      <xs:documentation>The ContinuOnError property for all MSBuild tasks, default value is ErrorAndContinue.</xs:documentation>
     </xs:annotation>
   </xs:element>
 
@@ -1236,6 +1207,11 @@ Example custom task with single required parameter
   <xs:element name="Hx_OpenCover_MaxVisitCount" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_ContinueOnError" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The ContinuOnError property for all MSBuild tasks.</xs:documentation>
     </xs:annotation>
   </xs:element>
 

@@ -97,6 +97,26 @@ namespace Heleonix.Build.Tests.Tasks
                         Assert.That(task.CleanedDirs, Has.Length.Zero);
                     });
                 });
+
+                And("an error occurs while cleaning a directory", () =>
+                {
+                    Directory.CreateDirectory(directories[0].ItemSpec);
+                    var stream = File.Create(Path.Combine(directories[0].ItemSpec, "1.txt"));
+
+                    Teardown(() =>
+                    {
+                        stream.Close();
+
+                        Directory.Delete(directories[0].ItemSpec, true);
+                    });
+
+                    Should("succeed and not invalid clean directories", () =>
+                    {
+                        Assert.That(succeeded, Is.True);
+
+                        Assert.That(task.CleanedDirs, Has.Length.Zero);
+                    });
+                });
             });
         }
     }

@@ -33,6 +33,7 @@ namespace Heleonix.Build.Tasks
         /// Destination: D:\Destination
         /// Result: file is copied into D:\Destination\SubDir2\SubDir3\file.txt
         /// </example>
+        [Required]
         public ITaskItem[] Files { get; set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
@@ -41,13 +42,11 @@ namespace Heleonix.Build.Tasks
         /// Gets or sets destinations to copy files to.
         /// </summary>
         /// <remarks>
-        /// If number of destinations equals to number of files, then copying proceeds as follows:
-        /// in case destinations are files, then sources are copied as destination files;
-        /// in case destinations are directories, then files are copied into those directories.
+        /// If number of destinations equals to number of files, then files are copied into those directories.
         /// If destination is a single directory, then files are copied into that directory.
         /// </remarks>
         [Required]
-        public ITaskItem[] Destinations { get; set; }
+        public ITaskItem[] DestinationDirs { get; set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
@@ -70,15 +69,6 @@ namespace Heleonix.Build.Tasks
         {
             var copiedFiles = new List<ITaskItem>();
 
-            if (this.Files == null)
-            {
-                this.Log.LogMessage(Resources.FileCopy_FileNotFound, "[]");
-
-                this.CopiedFiles = copiedFiles.ToArray();
-
-                return;
-            }
-
             for (var i = 0; i < this.Files.Length; i++)
             {
                 if (!File.Exists(this.Files[i].ItemSpec))
@@ -90,9 +80,9 @@ namespace Heleonix.Build.Tasks
 
                 try
                 {
-                    var destinationPath = this.Destinations.Length == 1
-                        ? this.Destinations[0].ItemSpec
-                        : this.Destinations[i].ItemSpec;
+                    var destinationPath = this.DestinationDirs.Length == 1
+                        ? this.DestinationDirs[0].ItemSpec
+                        : this.DestinationDirs[i].ItemSpec;
 
                     var filePath = new Uri(this.Files[i].ItemSpec).LocalPath.TrimEnd(Path.DirectorySeparatorChar);
 
@@ -106,25 +96,24 @@ namespace Heleonix.Build.Tasks
                         {
                             destinationPath = Path.Combine(
                                 destinationPath,
-                                filePath.Replace(subDirsFrom, string.Empty).TrimStart(Path.DirectorySeparatorChar));
+                                Path.GetDirectoryName(filePath).Replace(subDirsFrom, string.Empty).TrimStart(Path.DirectorySeparatorChar));
                         }
                         else
                         {
-                            this.Log.LogError(Resources.FileCopy_WithSubDirsFromIsInvalid, subDirsFrom, filePath);
+                            this.Log.LogWarning(Resources.FileCopy_WithSubDirsFromIsInvalid, subDirsFrom, filePath);
 
                             continue;
                         }
                     }
 
-                    if (!Path.HasExtension(destinationPath))
+                    if (!Directory.Exists(destinationPath))
                     {
-                        destinationPath = Path.Combine(destinationPath, Path.GetFileName(filePath));
+                        Directory.CreateDirectory(destinationPath);
                     }
 
-                    if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
-                    }
+                    destinationPath = Path.Combine(destinationPath, Path.GetFileName(filePath));
+
+                    this.Log.LogMessage(Resources.FileCopy_CopyingFile, filePath, destinationPath);
 
 #pragma warning disable SG0018 // Path traversal
                     File.Copy(filePath, destinationPath, this.Overwrite);

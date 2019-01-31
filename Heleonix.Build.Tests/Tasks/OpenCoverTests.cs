@@ -34,13 +34,17 @@ namespace Heleonix.Build.Tests.Tasks
             string targetType = null;
             string targetExe = null;
             string outputDir = null;
+            string testFilter = null;
             var minCoverage = 0;
             ITaskItem[] pdbSearchDirs = null;
+            var simulatorHelper = new NetStandardSimulatorHelper();
 
+            MSBuildHelper.RunTarget(simulatorHelper.SolutionFile, "Restore", null, simulatorHelper.SolutionDir);
+            MSBuildHelper.RunTarget(simulatorHelper.SolutionFile, $"Build", null, simulatorHelper.SolutionDir);
             MSBuildHelper.Publish(
-                NetStandardSimulatorPathHelper.TestProjectFile,
-                NetStandardSimulatorPathHelper.TestProjectTargetFrameworks,
-                NetStandardSimulatorPathHelper.TestProjectDir);
+                simulatorHelper.TestProjectFile,
+                simulatorHelper.TestProjectTargetFrameworks,
+                simulatorHelper.TestProjectDir);
 
             Arrange(() =>
             {
@@ -56,10 +60,8 @@ namespace Heleonix.Build.Tests.Tasks
                 var targetMetadata = new Dictionary<string, string>
                 {
                     { "Type", targetType },
-                    {
-                        "NUnitProjectFileOrTestFiles",
-                        string.Join(";", NetStandardSimulatorPathHelper.TestBinaries)
-                    },
+                    { "TestFilter", testFilter },
+                    { "NUnitProjectFileOrTestFiles", string.Join(";", simulatorHelper.TestBinaries) },
                     { "ErrorOutputFile", Path.Combine(outputDir, "Errors.txt") },
                     { "TestOutputFile", Path.Combine(outputDir, "Output.txt") },
                     { "TestResultFile", Path.Combine(outputDir, "Results.txt") }
@@ -97,7 +99,7 @@ namespace Heleonix.Build.Tests.Tasks
                 });
             });
 
-            When("target type is NUnit", () =>
+            When("target type is 'NUnit'", () =>
             {
                 targetType = nameof(NUnit);
 
@@ -109,16 +111,22 @@ namespace Heleonix.Build.Tests.Tasks
                     {
                         Assert.That(succeeded, Is.False);
                     });
+                });
 
-                    And("target exe is specified", () =>
+                And("target exe is specified", () =>
+                {
+                    targetExe = PathHelper.NUnitConsoleExe;
+
+                    And("PDB search dirs are specified", () =>
                     {
-                        targetExe = PathHelper.NUnitConsoleExe;
+                        pdbSearchDirs = simulatorHelper.TestPublishDirs
+                            .Select(dir => new TaskItem(dir)).ToArray();
 
                         And("source code should pass coverage threshold", () =>
                         {
                             minCoverage = 0;
 
-                            Should("succeed and provide coverage greater that or equal to minimal coverage", () =>
+                            Should("succeed and provide coverage greater than or equal to minimal coverage", () =>
                             {
                                 Assert.That(succeeded, Is.True);
                                 Assert.That(task.ClassCoverage, Is.GreaterThanOrEqualTo(minCoverage));
@@ -127,24 +135,17 @@ namespace Heleonix.Build.Tests.Tasks
                                 Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
                             });
 
-                            And("PDB search dirs are specified", () =>
+                            And("target exit code is 0", () =>
                             {
-                                pdbSearchDirs = NetStandardSimulatorPathHelper.TestPublishDirs
-                                .Select(dir => new TaskItem(dir)).ToArray();
+                                testFilter = "method == PlusOne";
 
-                                Should("succeed", () =>
+                                Should("succeed and provide coverage greater than or equal to minimal coverage", () =>
                                 {
                                     Assert.That(succeeded, Is.True);
-                                });
-                            });
-
-                            And("PDB search dirs are not specified", () =>
-                            {
-                                pdbSearchDirs = null;
-
-                                Should("succeed", () =>
-                                {
-                                    Assert.That(succeeded, Is.True);
+                                    Assert.That(task.ClassCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.MethodCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.BranchCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
                                 });
                             });
                         });
@@ -165,6 +166,8 @@ namespace Heleonix.Build.Tests.Tasks
                     });
                 });
             });
+
+            simulatorHelper.Clear();
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Heleonix.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copying file: &apos;{0}&apos;..
+        ///   Looks up a localized string similar to Copying file: from &apos;{0}&apos; to &apos;{1}&apos;..
         /// </summary>
         internal static string FileCopy_CopyingFile {
             get {
@@ -97,34 +97,7 @@ namespace Heleonix.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Single destination is an existing file, but must be a folder..
-        /// </summary>
-        internal static string FileCopy_SingleDestinationIsFile {
-            get {
-                return ResourceManager.GetString("FileCopy_SingleDestinationIsFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To destination: &apos;{0}&apos;..
-        /// </summary>
-        internal static string FileCopy_ToDestination {
-            get {
-                return ResourceManager.GetString("FileCopy_ToDestination", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to \tWith sub directories from: &apos;{0}&apos;..
-        /// </summary>
-        internal static string FileCopy_WithSubDirsFrom {
-            get {
-                return ResourceManager.GetString("FileCopy_WithSubDirsFrom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A directory &apos;{0}&apos; to cory from was specified, but it does not belong to the file &apos;{1}&apos;..
+        ///   Looks up a localized string similar to A directory &apos;{0}&apos; to cory from was specified, but it does not belong to the file &apos;{1}&apos;. Skipping..
         /// </summary>
         internal static string FileCopy_WithSubDirsFromIsInvalid {
             get {
@@ -133,7 +106,7 @@ namespace Heleonix.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file &apos;{0}&apos; is not found. Stopping..
+        ///   Looks up a localized string similar to The file &apos;{0}&apos; is not found..
         /// </summary>
         internal static string FileRead_FileNotFound {
             get {
@@ -192,15 +165,6 @@ namespace Heleonix.Build.Properties {
         internal static string FileValidate_FileNotFound {
             get {
                 return ResourceManager.GetString("FileValidate_FileNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No files specified to be validated..
-        /// </summary>
-        internal static string FileValidate_NoFilesSpecified {
-            get {
-                return ResourceManager.GetString("FileValidate_NoFilesSpecified", resourceCulture);
             }
         }
         
@@ -309,15 +273,6 @@ namespace Heleonix.Build.Properties {
         internal static string NUnit_Inconclusive {
             get {
                 return ResourceManager.GetString("NUnit_Inconclusive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No tests were run..
-        /// </summary>
-        internal static string NUnit_NoTestsWereRun {
-            get {
-                return ResourceManager.GetString("NUnit_NoTestsWereRun", resourceCulture);
             }
         }
         
@@ -457,15 +412,6 @@ namespace Heleonix.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Summary was not found..
-        /// </summary>
-        internal static string OpenCover_SummaryNotFound {
-            get {
-                return ResourceManager.GetString("OpenCover_SummaryNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Target failed. Target&apos;s exit code: {0}..
         /// </summary>
         internal static string OpenCover_TargetFailed {
@@ -556,38 +502,11 @@ namespace Heleonix.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operation &apos;{0}&apos; is not recognized..
-        /// </summary>
-        internal static string OperationIsNotRecognized {
-            get {
-                return ResourceManager.GetString("OperationIsNotRecognized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; is null. Stopping..
-        /// </summary>
-        internal static string ParamIsNull {
-            get {
-                return ResourceManager.GetString("ParamIsNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {0} failed for &apos;{1}&apos;. Exit code: {2}..
         /// </summary>
         internal static string ReportGenerator_Failed {
             get {
                 return ResourceManager.GetString("ReportGenerator_Failed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} failed for &apos;{1}&apos;. Exit code: {2}..
-        /// </summary>
-        internal static string ReportUnit_Failed {
-            get {
-                return ResourceManager.GetString("ReportUnit_Failed", resourceCulture);
             }
         }
         

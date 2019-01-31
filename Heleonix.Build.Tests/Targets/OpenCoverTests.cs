@@ -25,28 +25,24 @@ namespace Heleonix.Build.Tests.Targets
         public static void Execute()
         {
             var succeeded = false;
-            var artifactDir = NetStandardSimulatorPathHelper.GetArtifactDir("Hx_OpenCover");
-            var nunitArtifactsDir = NetStandardSimulatorPathHelper.GetArtifactDir("Hx_NUnit");
+            NetStandardSimulatorHelper simulatorHelper = null;
             IDictionary<string, string> properties = null;
 
             Arrange(() =>
             {
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", NetStandardSimulatorPathHelper.SolutionDir);
+                simulatorHelper = new NetStandardSimulatorHelper();
+
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
             });
 
             Act(() =>
             {
-                succeeded = MSBuildHelper.RunTestTarget(
-                    "Hx_OpenCover",
-                    NetStandardSimulatorPathHelper.SolutionDir,
-                    properties);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_OpenCover", simulatorHelper.SolutionDir, properties);
             });
 
             Teardown(() =>
             {
-                Directory.Delete(artifactDir, true);
-                Directory.Delete(nunitArtifactsDir, true);
-                Directory.Delete(NetStandardSimulatorPathHelper.GetArtifactDir("Hx_Net_Build"), true);
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>
@@ -55,14 +51,17 @@ namespace Heleonix.Build.Tests.Targets
                 {
                     properties = new Dictionary<string, string>
                     {
-                        { "Hx_OpenCover_MinClassCoverage", "0" },
-                        { "Hx_OpenCover_MinBranchCoverage", "0" },
-                        { "Hx_OpenCover_MinMethodCoverage", "0" },
-                        { "Hx_OpenCover_MinLineCoverage", "0" }
+                        { "Hx_OpenCover_MinClassCoverage", "57" },
+                        { "Hx_OpenCover_MinBranchCoverage", "55" },
+                        { "Hx_OpenCover_MinMethodCoverage", "57" },
+                        { "Hx_OpenCover_MinLineCoverage", "40" }
                     };
 
                     Should("succeed", () =>
                     {
+                        var artifactDir = simulatorHelper.GetArtifactDir("Hx_OpenCover");
+                        var nunitArtifactsDir = simulatorHelper.GetArtifactDir("Hx_NUnit");
+
                         Assert.That(succeeded, Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "OpenCover.xml")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
@@ -83,11 +82,31 @@ namespace Heleonix.Build.Tests.Targets
 
                     Should("fail", () =>
                     {
+                        var artifactDir = simulatorHelper.GetArtifactDir("Hx_OpenCover");
+                        var nunitArtifactsDir = simulatorHelper.GetArtifactDir("Hx_NUnit");
+
                         Assert.That(succeeded, Is.False);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "OpenCover.xml")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Errors.txt")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
+                    });
+
+                    And("should continue on error", () =>
+                    {
+                        properties.Add("Hx_OpenCover_ContinueOnError", "true");
+
+                        Should("succeed", () =>
+                        {
+                            var artifactDir = simulatorHelper.GetArtifactDir("Hx_OpenCover");
+                            var nunitArtifactsDir = simulatorHelper.GetArtifactDir("Hx_NUnit");
+
+                            Assert.That(succeeded, Is.True);
+                            Assert.That(File.Exists(Path.Combine(artifactDir, "OpenCover.xml")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Errors.txt")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
+                        });
                     });
                 });
             });

@@ -38,25 +38,33 @@ namespace Heleonix.Build.Tasks
         [Required]
         public ITaskItem CoverageResultFile { get; set; }
 
+#pragma warning disable CA1819 // Properties should not return arrays
+        /// <summary>
+        /// Gets or sets the PDB search directories path.
+        /// </summary>
+        [Required]
+        public ITaskItem[] PdbSearchDirs { get; set; }
+#pragma warning restore CA1819 // Properties should not return arrays
+
         /// <summary>
         /// Gets or sets the minimum class coverage, in range: 0% - 100%.
         /// </summary>
-        public float MinClassCoverage { get; set; }
+        public int MinClassCoverage { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum method coverage, in range: 0% - 100%.
         /// </summary>
-        public float MinMethodCoverage { get; set; }
+        public int MinMethodCoverage { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum branch coverage, in range: 0% - 100%.
         /// </summary>
-        public float MinBranchCoverage { get; set; }
+        public int MinBranchCoverage { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum line coverage, in range: 0% - 100%.
         /// </summary>
-        public float MinLineCoverage { get; set; }
+        public int MinLineCoverage { get; set; }
 
         /// <summary>
         /// Gets or sets the filters to exclude code from coverage by attribute in format: Name*;*Attribute.
@@ -67,13 +75,6 @@ namespace Heleonix.Build.Tasks
         /// Gets or sets the filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.
         /// </summary>
         public string Filters { get; set; }
-
-#pragma warning disable CA1819 // Properties should not return arrays
-        /// <summary>
-        /// Gets or sets the PDB search directories path.
-        /// </summary>
-        public ITaskItem[] PdbSearchDirs { get; set; }
-#pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// Gets or sets a value indicating whether show unvisited methods and classes after coverage finishes and results are presented.
@@ -163,25 +164,25 @@ namespace Heleonix.Build.Tasks
         /// Gets or sets the class coverage, in range: 0% - 100% [Output].
         /// </summary>
         [Output]
-        public float ClassCoverage { get; set; }
+        public int ClassCoverage { get; set; }
 
         /// <summary>
         /// Gets or sets the method coverage, in range: 0% - 100% [Output].
         /// </summary>
         [Output]
-        public float MethodCoverage { get; set; }
+        public int MethodCoverage { get; set; }
 
         /// <summary>
         /// Gets or sets the line coverage, in range: 0% - 100% [Output].
         /// </summary>
         [Output]
-        public float LineCoverage { get; set; }
+        public int LineCoverage { get; set; }
 
         /// <summary>
         /// Gets or sets the branch coverage, in range: 0% - 100% [Output].
         /// </summary>
         [Output]
-        public float BranchCoverage { get; set; }
+        public int BranchCoverage { get; set; }
 
         /// <summary>
         /// Executes the OpenCover.
@@ -213,9 +214,9 @@ namespace Heleonix.Build.Tasks
                 .AddKey("skipautoprops")
                 .AddPaths(
                     "searchdirs",
-                    this.PdbSearchDirs?.Select(i => i.ItemSpec),
+                    this.PdbSearchDirs.Select(i => i.ItemSpec),
                     false,
-                    this.PdbSearchDirs != null)
+                    this.PdbSearchDirs.Length > 0)
                 .AddKey("showunvisited", this.ShowUnvisited)
                 .AddKey("returntargetcode")
                 .AddArgument("threshold", this.MaxVisitCount, this.MaxVisitCount > 0)
@@ -275,12 +276,12 @@ namespace Heleonix.Build.Tasks
             this.MaxCyclomaticComplexity = Convert.ToInt32(
                 summary.Attribute("maxCyclomaticComplexity").Value,
                 NumberFormatInfo.InvariantInfo);
-            this.ClassCoverage = (float)this.VisitedClasses / this.TotalClasses * 100;
-            this.MethodCoverage = (float)this.VisitedMethods / this.TotalMethods * 100;
-            this.LineCoverage = Convert.ToSingle(
+            this.ClassCoverage = (int)((float)this.VisitedClasses / this.TotalClasses * 100);
+            this.MethodCoverage = (int)((float)this.VisitedMethods / this.TotalMethods * 100);
+            this.LineCoverage = (int)Convert.ToSingle(
                 summary.Attribute("sequenceCoverage").Value,
                 NumberFormatInfo.InvariantInfo);
-            this.BranchCoverage = Convert.ToSingle(
+            this.BranchCoverage = (int)Convert.ToSingle(
                 summary.Attribute("branchCoverage").Value,
                 NumberFormatInfo.InvariantInfo);
 

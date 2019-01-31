@@ -29,9 +29,14 @@ namespace Heleonix.Build.Tests.Targets
             Task server = null;
             var succeeded = false;
             IDictionary<string, string> properties = null;
+            NetStandardSimulatorHelper simulatorHelper = null;
 
             Arrange(() =>
             {
+                simulatorHelper = new NetStandardSimulatorHelper();
+
+                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
+
                 properties = new Dictionary<string, string>
                 {
                     { "Hx_Net_GithubRelease_Token", "111111111" }
@@ -54,15 +59,15 @@ namespace Heleonix.Build.Tests.Targets
             {
                 succeeded = MSBuildHelper.RunTestTarget(
                     "Hx_Net_GitHubRelease",
-                    NetStandardSimulatorPathHelper.SolutionDir,
+                    simulatorHelper.SolutionDir,
                     properties);
             });
 
             Teardown(() =>
             {
                 server.Wait();
-
                 server.Dispose();
+                simulatorHelper.Clear();
             });
 
             When("target is executed", () =>

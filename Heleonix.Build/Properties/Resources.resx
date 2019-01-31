@@ -159,9 +159,6 @@
   <data name="NUnit_Inconclusive" xml:space="preserve">
     <value>Inconclusive: {0}.</value>
   </data>
-  <data name="NUnit_NoTestsWereRun" xml:space="preserve">
-    <value>No tests were run.</value>
-  </data>
   <data name="NUnit_Passed" xml:space="preserve">
     <value>Passed: {0}.</value>
   </data>
@@ -207,9 +204,6 @@
   <data name="OpenCover_MinMethodCoverageFailed" xml:space="preserve">
     <value>Minimum method coverage failed.</value>
   </data>
-  <data name="OpenCover_SummaryNotFound" xml:space="preserve">
-    <value>Summary was not found.</value>
-  </data>
   <data name="OpenCover_TargetFailed" xml:space="preserve">
     <value>Target failed. Target's exit code: {0}.</value>
   </data>
@@ -240,16 +234,7 @@
   <data name="OpenCover_VisitedMethods" xml:space="preserve">
     <value>Visited methods: {0}.</value>
   </data>
-  <data name="OperationIsNotRecognized" xml:space="preserve">
-    <value>Operation '{0}' is not recognized.</value>
-  </data>
-  <data name="ParamIsNull" xml:space="preserve">
-    <value>'{0}' is null. Stopping.</value>
-  </data>
   <data name="ReportGenerator_Failed" xml:space="preserve">
-    <value>{0} failed for '{1}'. Exit code: {2}.</value>
-  </data>
-  <data name="ReportUnit_Failed" xml:space="preserve">
     <value>{0} failed for '{1}'. Exit code: {2}.</value>
   </data>
   <data name="TaskFailed" xml:space="preserve">
@@ -258,26 +243,14 @@
   <data name="TaskFailedWithExitCode" xml:space="preserve">
     <value>{0} failed. Exit code: {1}.</value>
   </data>
-  <data name="FileCopy_SingleDestinationIsFile" xml:space="preserve">
-    <value>Single destination is an existing file, but must be a folder.</value>
-  </data>
   <data name="FileCopy_FileNotFound" xml:space="preserve">
     <value>The file to copy '{0}' not found.</value>
   </data>
   <data name="FileCopy_WithSubDirsFromIsInvalid" xml:space="preserve">
-    <value>A directory '{0}' to cory from was specified, but it does not belong to the file '{1}'.</value>
-  </data>
-  <data name="FileCopy_CopyingFile" xml:space="preserve">
-    <value>Copying file: '{0}'.</value>
-  </data>
-  <data name="FileCopy_WithSubDirsFrom" xml:space="preserve">
-    <value>\tWith sub directories from: '{0}'.</value>
-  </data>
-  <data name="FileCopy_ToDestination" xml:space="preserve">
-    <value>To destination: '{0}'.</value>
+    <value>A directory '{0}' to cory from was specified, but it does not belong to the file '{1}'. Skipping.</value>
   </data>
   <data name="FileRead_FileNotFound" xml:space="preserve">
-    <value>The file '{0}' is not found. Stopping.</value>
+    <value>The file '{0}' is not found.</value>
   </data>
   <data name="SvnLog_ThereAreNoCommitsYet" xml:space="preserve">
     <value>There are no commits yet.</value>
@@ -291,9 +264,6 @@
   <data name="FileValidate_FileNotFound" xml:space="preserve">
     <value>A file '{0}' to validate not found.</value>
   </data>
-  <data name="FileValidate_NoFilesSpecified" xml:space="preserve">
-    <value>No files specified to be validated.</value>
-  </data>
   <data name="FileValidate_ValidatingFile" xml:space="preserve">
     <value>Validating file '{0}' with patterns: {1}.</value>
   </data>
@@ -302,5 +272,8 @@
   </data>
   <data name="FileSystemSearch_FoundItem" xml:space="preserve">
     <value>Found {0}.</value>
+  </data>
+  <data name="FileCopy_CopyingFile" xml:space="preserve">
+    <value>Copying file: from '{0}' to '{1}'.</value>
   </data>
 </root>

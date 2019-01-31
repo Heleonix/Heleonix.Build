@@ -81,12 +81,7 @@ namespace Heleonix.Build.Tasks
         public int AgentsNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether indicates whether to stop on first error or first failed test.
-        /// </summary>
-        public bool StopOnErrorOrFailedTest { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether indicates whether to use TeamCity service messages.
+        /// Gets or sets a value indicating whether to use TeamCity service messages.
         /// </summary>
         public bool UseTeamCityServiceMessages { get; set; }
 
@@ -145,14 +140,9 @@ namespace Heleonix.Build.Tasks
         public string DomainIsolation { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether tells .NET to copy loaded assemblies to the shadow copy directory.
+        /// Gets or sets a value indicating whether to copy loaded assemblies to the shadow copy directory.
         /// </summary>
         public bool ShadowCopy { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether indicates whether to fail the task on failed tests.
-        /// </summary>
-        public bool FailOnFailedTests { get; set; }
 
         /// <summary>
         /// Gets or sets the count of test cases [Output].
@@ -228,7 +218,7 @@ namespace Heleonix.Build.Tasks
                 .AddPath("where", item.GetMetadata(nameof(TestFilter)))
                 .AddPath("params", item.GetMetadata(nameof(TestParameters)))
                 .AddArgument("agents", item.GetMetadata(nameof(AgentsNumber)))
-                .AddKey("stoponerror", item.GetMetadata(nameof(StopOnErrorOrFailedTest)) == "true")
+                .AddKey("stoponerror", false)
                 .AddKey("teamcity", item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "true")
                 .AddArgument("trace", item.GetMetadata(nameof(TraceLevel)))
                 .AddPath("output", item.GetMetadata(nameof(TestOutputFile)))
@@ -280,7 +270,7 @@ namespace Heleonix.Build.Tasks
                 .AddPath("where", this.TestFilter)
                 .AddArgument("params", this.TestParameters)
                 .AddArgument("agents", this.AgentsNumber, this.AgentsNumber > 0)
-                .AddKey("stoponerror", this.StopOnErrorOrFailedTest)
+                .AddKey("stoponerror", false)
                 .AddKey("teamcity", this.UseTeamCityServiceMessages)
                 .AddArgument("trace", this.TraceLevel)
                 .AddPath("output", this.TestOutputFile.ItemSpec)
@@ -309,14 +299,7 @@ namespace Heleonix.Build.Tasks
 
             if (result.ExitCode > 0)
             {
-                if (this.FailOnFailedTests)
-                {
-                    this.Log.LogError(Resources.NUnit_FinishedWithFailedTests, nameof(NUnit), result.ExitCode);
-                }
-                else
-                {
-                    this.Log.LogWarning(Resources.NUnit_FinishedWithFailedTests, nameof(NUnit), result.ExitCode);
-                }
+                this.Log.LogError(Resources.NUnit_FinishedWithFailedTests, nameof(NUnit), result.ExitCode);
             }
 
             var testRun = XDocument.Load(this.TestResultFile.ItemSpec).Element("test-run");

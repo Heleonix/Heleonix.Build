@@ -64,6 +64,12 @@
     <Message Text="$Hx_Input_Targets: $(Hx_Input_Targets)"/>
     <Message Text="$Hx_Input_BuildProjFile: $(Hx_Input_BuildProjFile)"/>
     <Message Text="$Hx_Build_ArtifactDir: $(Hx_Build_ArtifactDir)"/>
+    <Message Text="$Hx_Internal_Net_Build_ArtifactDir: $(Hx_Internal_Net_Build_ArtifactDir)"/>
+    <Message Text="$Hx_Internal_NugetDeploy_ArtifactDir: $(Hx_Internal_NugetDeploy_ArtifactDir)"/>
+    <Message Text="$Hx_Internal_NUnit_ArtifactDir: $(Hx_Internal_NUnit_ArtifactDir)"/>
+    <Message Text="$Hx_Internal_OpenCover_ArtifactDir: $(Hx_Internal_OpenCover_ArtifactDir)"/>
+    <Message Text="$Hx_Internal_ReportGenerator_ArtifactDir: $(Hx_Internal_ReportGenerator_ArtifactDir)"/>
+    <Message Text="$Hx_Internal_ReportUnit_ArtifactDir: $(Hx_Internal_ReportUnit_ArtifactDir)"/>
 
     <Message Text="> DONE!"/>
 
