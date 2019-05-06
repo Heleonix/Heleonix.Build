@@ -43,7 +43,7 @@ namespace Heleonix.Build.Tests.Targets
                 };
 
                 server = CommunicationHelper.LaunchHttpServer(
-                    "http://localhost:33333/repos/heleonix/heleonix.build/releases/",
+                    "http://localhost:33333/repos/Heleonix/NetStandardSimulator/releases/",
                     request =>
                     {
                         using (var reader = new StreamReader(request.InputStream))

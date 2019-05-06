@@ -81,16 +81,6 @@ Example custom task with single required parameter
     </xs:annotation>
   </xs:element>
 
-  <xs:element name="Hx_System_GitExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The Git executable.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_System_SvnExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The Svn executable.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hx_System_NUnitConsoleExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the NUnit console executable.</xs:documentation>
