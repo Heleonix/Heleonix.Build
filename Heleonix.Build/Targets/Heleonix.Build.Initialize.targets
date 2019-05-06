@@ -5,8 +5,6 @@
     <Hx_System_OpenCoverConsoleExe Include="$(MSBuildThisFileDirectory)../../OpenCover.*/tools/OpenCover.Console.exe"/>
     <Hx_System_ReportGeneratorExe Include="$(MSBuildThisFileDirectory)../../ReportGenerator.*/tools/ReportGenerator.exe"/>
     <Hx_System_NugetExe Include="$(MSBuildThisFileDirectory)../../NuGet.CommandLine.*/tools/NuGet.exe"/>
-    <Hx_System_GitExe Include="C:/Program Files/Git/cmd/git.exe"/>
-    <Hx_System_SvnExe Include="C:/Program Files/TortoiseSVN/bin/svn.exe"/>
   </ItemGroup>
   <PropertyGroup>
     <Hx_System_GitHubAPIUrl>https://api.github.com</Hx_System_GitHubAPIUrl>
@@ -54,8 +52,6 @@
     <Message Text="@Hx_System_OpenCoverConsoleExe: @(Hx_System_OpenCoverConsoleExe)"/>
     <Message Text="@Hx_System_ReportGeneratorExe: @(Hx_System_ReportGeneratorExe)"/>
     <Message Text="@Hx_System_NugetExe: @(Hx_System_NugetExe)"/>
-    <Message Text="@Hx_System_GitExe: @(Hx_System_GitExe)"/>
-    <Message Text="@Hx_System_SvnExe: @(Hx_System_SvnExe)"/>
     <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
     <Message Text="$Hx_WS_CIType: $(Hx_WS_CIType)"/>
     <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>

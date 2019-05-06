@@ -69,7 +69,7 @@ namespace Heleonix.Build.Tests.Targets
 
                     Assert.That(succeeded, Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "NetStandardSimulator.1.0.0.nupkg")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(artifactDir, "NetStandardSimulator.1.0.0.symbols.nupkg")), Is.True);
+                    Assert.That(File.Exists(Path.Combine(artifactDir, "NetStandardSimulator.1.0.0.snupkg")), Is.True);
                     Assert.That(File.Exists(Path.Combine(sourceDir, "NetStandardSimulator.1.0.0.nupkg")), Is.True);
                 });
             });

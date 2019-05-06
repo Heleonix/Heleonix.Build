@@ -6,23 +6,6 @@
       <Hx_GitHubRelease_TagSource Condition="'$(Hx_GitHubRelease_TagSource)' == ''">master</Hx_GitHubRelease_TagSource>
     </PropertyGroup>
 
-    <Exec
-      Condition="'$(Hx_GitHubRelease_OwnerName)' == '' Or '$(Hx_GitHubRelease_RepositoryName)' == ''"
-      Command="&quot;@(Hx_System_GitExe)&quot; config --get remote.origin.url"
-      ConsoleToMsBuild="true"
-      WorkingDirectory="$(Hx_WS_Dir)">
-      <Output TaskParameter="ConsoleOutput" PropertyName="_Hx_GitHubRelease_RepositoryUrl" />
-    </Exec>
-    <!--
-        Extracts owner and repository from urls in the following formats:
-        https://github.com/Heleonix/Heleonix.Build.git
-        git@github.com:Heleonix/Heleonix.Build.git
-    -->
-    <PropertyGroup Condition="'$(_Hx_GitHubRelease_RepositoryUrl)' != ''">
-      <Hx_GitHubRelease_RepositoryName>$([System.Text.RegularExpressions.Regex]::Match($(_Hx_GitHubRelease_RepositoryUrl), '(?&lt;=/)[^/]+(?=.git$)'))</Hx_GitHubRelease_RepositoryName>
-      <Hx_GitHubRelease_OwnerName>$([System.Text.RegularExpressions.Regex]::Match($(_Hx_GitHubRelease_RepositoryUrl), '[^/:]+(?=/[^/]+.git$)'))</Hx_GitHubRelease_OwnerName>
-    </PropertyGroup>
-
     <PropertyGroup>
       <_Hx_GitHubRelease_PrereleaseSuffix>$([System.Text.RegularExpressions.Regex]::Match($(Hx_GitHubRelease_TagName), '[-+][a-zA-Z0-9.]+'))</_Hx_GitHubRelease_PrereleaseSuffix>
       <_Hx_GitHubRelease_IsPrerelease Condition="'$(_Hx_GitHubRelease_PrereleaseSuffix)' != ''">true</_Hx_GitHubRelease_IsPrerelease>

@@ -25,6 +25,7 @@
     <!--<IncludeContentInPack>true</IncludeContentInPack>-->
     <!--<ContentTargetFolders></ContentTargetFolders>-->
     <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <IncludeSource>false</IncludeSource>
     <NoPackageAnalysis>true</NoPackageAnalysis>
 
