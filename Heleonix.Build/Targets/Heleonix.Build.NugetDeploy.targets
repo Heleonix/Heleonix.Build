@@ -10,7 +10,7 @@
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'@(Hx_NugetDeploy_PackageFiles)' == ''"
       StartDir="$(Hx_Internal_Net_Build_ArtifactDir)"
-      PathRegExp=".+/bin/$(Hx_Input_Configuration)/.+`.s?nupkg$"
+      PathRegExp=".+/bin/$(Hx_Input_Configuration)/[^/]+`.s?nupkg$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="Hx_NugetDeploy_PackageFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>

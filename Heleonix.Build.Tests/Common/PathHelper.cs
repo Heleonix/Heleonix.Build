@@ -39,7 +39,7 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the Nuget package file.
         /// </summary>
-        public static string NugetPackageFile => Path.Combine(CurrentDir, "Heleonix.Build.1.3.0.nupkg");
+        public static string NugetPackageFile => Path.Combine(CurrentDir, "NetStandardSimulator.1.0.0.nupkg");
 
         /// <summary>
         /// Gets the OpenCover coverage results file.

@@ -61,10 +61,10 @@
       Projects="%(_Hx_Net_Build_TFMProjectFiles.FullPath)"
       Properties="TargetFramework=%(Match);Configuration=$(Hx_Input_Configuration)"/>
 
-    <Message Text="> 8/8: Copying all binaries, .*props, .*targets, .*hxbproj and custom output files to the artifacts directory"/>
+    <Message Text="> 8/8: Copying all binaries, all *.props and *.targets (except those in 'bin' and '*.Tests' folders), *.hxbproj and custom output files to the artifacts directory"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(Hx_WS_Dir)"
-      PathRegExp="(`.props$)|(`.targets$)"
+      PathRegExp="(?&lt;!/(bin|[^/]+`.Tests)/.+)`.(props|targets)$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="_Hx_Net_Build_PropsAndTargetsFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
