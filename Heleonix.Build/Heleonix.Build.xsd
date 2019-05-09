@@ -270,7 +270,7 @@ Example custom task with single required parameter
             <xs:annotation>
               <xs:documentation>
                 The .NET regular expression to include found paths.
-                Use ` instead of \ to escape symbols; use : instead of / and \ for path separators.
+                Use ` instead of \ to escape symbols; use only / for path separators.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

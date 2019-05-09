@@ -55,7 +55,7 @@ namespace Heleonix.Build.Tasks
 
         /// <summary>
         /// Gets or sets the .NET regular expression to include found paths.
-        /// Use ` instead of \ to escape symbols; use : instead of / and \ for path separators.
+        /// Use ` instead of \ to escape symbols; use only / for path separators.
         /// </summary>
         public string PathRegExp { get; set; }
 
