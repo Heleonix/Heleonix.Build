@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_Hx_Custom_NugetPackagesDir>$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))/.nuget/packages</_Hx_Custom_NugetPackagesDir>
+    <_Hx_Custom_NugetPackagesDir>$(NUGET_PACKAGES)</_Hx_Custom_NugetPackagesDir>
   </PropertyGroup>
   <ItemGroup>
     <Hx_System_NUnitConsoleExe Include="$(_Hx_Custom_NugetPackagesDir)/NUnit.ConsoleRunner/3.8.0/tools/nunit3-console.exe"/>
