@@ -40,7 +40,7 @@ namespace Heleonix.Build.Tests.Tasks
                     BuildEngine = new TestBuildEngine(),
                     File = file,
                     RegExp = regExp,
-                    RegExpOptions = regExpOptions
+                    RegExpOptions = regExpOptions,
                 };
             });
 

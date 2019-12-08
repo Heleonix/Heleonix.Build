@@ -38,7 +38,7 @@ namespace Heleonix.Build.Tests.Tasks
                     BuildEngine = new TestBuildEngine(),
                     ReportUnitExe = new TaskItem(PathHelper.ReportUnitExe),
                     TestResultFile = testResultFile,
-                    ReportFile = new TaskItem(reportFile)
+                    ReportFile = new TaskItem(reportFile),
                 };
             });
 

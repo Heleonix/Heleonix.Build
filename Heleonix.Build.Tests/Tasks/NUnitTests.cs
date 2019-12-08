@@ -70,7 +70,7 @@ namespace Heleonix.Build.Tests.Tasks
                     TestResultFile = new TaskItem(Path.Combine(outputDir, "Results.txt")),
                     TestListFile = testListFile,
                     TraceLevel = traceLevel,
-                    TestFilter = testFilter
+                    TestFilter = testFilter,
                 };
 
                 succeeded = task.Execute();

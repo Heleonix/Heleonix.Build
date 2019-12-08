@@ -57,7 +57,7 @@ namespace Heleonix.Build.Tests.Tasks
                     Token = "111111111",
                     UserAgent = "heleonix/heleonix.build",
                     IsDraft = isDraft,
-                    IsPrerelease = isPrerelease
+                    IsPrerelease = isPrerelease,
                 };
             });
 

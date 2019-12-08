@@ -35,7 +35,7 @@
     <Heleonix.Build.Tasks.DirectoryClean Dirs="@(Hx_Net_Build_CleanDirs)"/>
 
     <Message Text="> 5/8: Cleaning solution"/>
-    <MSBuild Targets="Clean" Projects="@(Hx_Net_Build_SlnFile)" Properties="Configuration=$(Hx_Input_Configuration)"/>
+    <Exec Command="&quot;$(MSBuildBinPath)/MSBuild.exe&quot; &quot;@(Hx_Net_Build_SlnFile)&quot; /t:Restore /t:Clean /p:Configuration=$(Hx_Input_Configuration)"/>
 
     <Message Text="> 6/8: Building solution"/>
     <PropertyGroup>

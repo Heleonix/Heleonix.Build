@@ -16,6 +16,11 @@ namespace NetStandardSimulator
         /// <param name="source">String to split.</param>
         /// <param name="separator">Separator to split by.</param>
         /// <returns>Splitted array.</returns>
-        public static string[] Split(string source, char separator) => source.Split(separator);
+        public static string[] Split(string source, char separator)
+        {
+#pragma warning disable CA1062 // Validate arguments of public methods
+            return source.Split(separator);
+#pragma warning restore CA1062 // Validate arguments of public methods
+        }
     }
 }

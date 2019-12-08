@@ -64,7 +64,7 @@ namespace Heleonix.Build.Tests.Tasks
                     { "NUnitProjectFileOrTestFiles", string.Join(";", simulatorHelper.TestBinaries) },
                     { "ErrorOutputFile", Path.Combine(outputDir, "Errors.txt") },
                     { "TestOutputFile", Path.Combine(outputDir, "Output.txt") },
-                    { "TestResultFile", Path.Combine(outputDir, "Results.txt") }
+                    { "TestResultFile", Path.Combine(outputDir, "Results.txt") },
                 };
 
                 task = new OpenCover
@@ -78,7 +78,7 @@ namespace Heleonix.Build.Tests.Tasks
                     MinBranchCoverage = minCoverage,
                     MinLineCoverage = minCoverage,
                     MinMethodCoverage = minCoverage,
-                    PdbSearchDirs = pdbSearchDirs
+                    PdbSearchDirs = pdbSearchDirs,
                 };
 
                 succeeded = task.Execute();

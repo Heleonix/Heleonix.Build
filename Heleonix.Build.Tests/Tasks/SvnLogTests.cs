@@ -57,7 +57,7 @@ namespace Heleonix.Build.Tests.Tasks
                     BuildEngine = new TestBuildEngine(),
                     RepositoryFileOrDir = repositoryFileOrDir,
                     MaxCount = 1,
-                    SvnExe = new TaskItem(PathHelper.SvnExe)
+                    SvnExe = new TaskItem(PathHelper.SvnExe),
                 };
 
                 succeeded = task.Execute();

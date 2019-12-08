@@ -9,7 +9,7 @@ namespace NetStandardSimulator.Tests
     using NUnit.Framework;
 
     /// <summary>
-    /// Tests the <see cref="Calculator"/>
+    /// Tests the <see cref="Calculator"/>.
     /// </summary>
     public static class CalculatorTests
     {
@@ -20,7 +20,9 @@ namespace NetStandardSimulator.Tests
         /// <param name="right">The right value.</param>
         /// <returns>Returns minimal value.</returns>
         [TestCase(1, 2, ExpectedResult = 1)]
+#pragma warning disable S2699 // Tests should include assertions
         public static int Min(int left, int right)
+#pragma warning restore S2699 // Tests should include assertions
         {
             return Calculator.Min(left, right);
         }
@@ -35,7 +37,9 @@ namespace NetStandardSimulator.Tests
         [TestCase(2, 2, ExpectedResult = 4)]
         [TestCase(3, 2, ExpectedResult = 10)]
         [TestCase(3, 2, ExpectedResult = 20)]
+#pragma warning disable S2699 // Tests should include assertions
         public static int Add(int left, int right)
+#pragma warning restore S2699 // Tests should include assertions
         {
             return Calculator.Add(left, right);
         }

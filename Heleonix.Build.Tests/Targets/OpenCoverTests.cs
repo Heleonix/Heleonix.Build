@@ -54,7 +54,7 @@ namespace Heleonix.Build.Tests.Targets
                         { "Hx_OpenCover_MinClassCoverage", "57" },
                         { "Hx_OpenCover_MinBranchCoverage", "55" },
                         { "Hx_OpenCover_MinMethodCoverage", "57" },
-                        { "Hx_OpenCover_MinLineCoverage", "40" }
+                        { "Hx_OpenCover_MinLineCoverage", "40" },
                     };
 
                     Should("succeed", () =>
@@ -77,7 +77,7 @@ namespace Heleonix.Build.Tests.Targets
                         { "Hx_OpenCover_MinClassCoverage", "100" },
                         { "Hx_OpenCover_MinBranchCoverage", "100" },
                         { "Hx_OpenCover_MinMethodCoverage", "100" },
-                        { "Hx_OpenCover_MinLineCoverage", "100" }
+                        { "Hx_OpenCover_MinLineCoverage", "100" },
                     };
 
                     Should("fail", () =>

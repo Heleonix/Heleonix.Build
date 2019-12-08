@@ -39,7 +39,7 @@ namespace Heleonix.Build.Tests.Targets
                     {
                         "Hx_ReportGenerator_CoverageResultFiles",
                         new ITaskItem[] { new TaskItem(PathHelper.OpenCoverResultFile) }
-                    }
+                    },
                 };
             });
 

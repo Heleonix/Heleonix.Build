@@ -16,7 +16,7 @@ namespace NetStandardSimulator.Tests
         /// Tests the <see cref="Tokenizer.Split"/>.
         /// </summary>
         /// <param name="source">A source string to split.</param>
-        /// <returns>Splitted strings.></returns>
+        /// <returns>Splitted strings.</returns>
         [TestCase("1,2,3", ExpectedResult = new[] { "1", "2", "3" })]
         public static string[] Split(string source) => Tokenizer.Split(source, ',');
     }

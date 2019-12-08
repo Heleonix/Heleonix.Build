@@ -41,7 +41,7 @@ namespace Heleonix.Build.Tests.Tasks
                     ReportGeneratorExe = new TaskItem(PathHelper.ReportGeneratorExe),
                     ReportDir = new TaskItem(reportDir),
                     ReportTypes = reportTypes,
-                    ResultFiles = new ITaskItem[] { new TaskItem(PathHelper.OpenCoverResultFile) }
+                    ResultFiles = new ITaskItem[] { new TaskItem(PathHelper.OpenCoverResultFile) },
                 };
             });
 

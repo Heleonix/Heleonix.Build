@@ -26,7 +26,9 @@ namespace Heleonix.Build.Tests.Common
         /// <param name="workingDirectory">The working directory.</param>
         public static void Publish(string projectPath, IEnumerable<string> targetFrameworks, string workingDirectory)
         {
+#pragma warning disable CA1062 // Validate arguments of public methods
             foreach (var tf in targetFrameworks)
+#pragma warning restore CA1062 // Validate arguments of public methods
             {
                 RunTarget(projectPath, nameof(Publish), $"TargetFramework={tf}", workingDirectory);
             }
@@ -62,7 +64,9 @@ namespace Heleonix.Build.Tests.Common
 
                 return true;
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return false;
             }
