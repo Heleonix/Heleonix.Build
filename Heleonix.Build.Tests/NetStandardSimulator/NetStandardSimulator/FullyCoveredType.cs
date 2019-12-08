@@ -14,7 +14,7 @@ namespace NetStandardSimulator
         /// The fully covered method.
         /// </summary>
         /// <param name="a">A parameter to add 1 to.</param>
-        /// <returns>a + 1</returns>
+        /// <returns>a + 1.</returns>
         public static int PlusOne(int a)
         {
             return a + 1;

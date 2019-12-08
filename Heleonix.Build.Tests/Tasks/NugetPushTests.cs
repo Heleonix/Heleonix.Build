@@ -51,7 +51,7 @@ namespace Heleonix.Build.Tests.Tasks
                     ConfigFile = configFile,
                     PackageFile = packageFile,
                     SourceURL = sourceURL,
-                    NugetExe = new TaskItem(PathHelper.NugetExe)
+                    NugetExe = new TaskItem(PathHelper.NugetExe),
                 };
 
                 succeeded = task.Execute();

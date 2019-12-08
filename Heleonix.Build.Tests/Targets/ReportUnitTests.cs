@@ -39,7 +39,7 @@ namespace Heleonix.Build.Tests.Targets
                     {
                         "Hx_ReportUnit_TestResultFile",
                         new ITaskItem[] { new TaskItem(PathHelper.NUnitTestResultFile) }
-                    }
+                    },
                 };
             });
 

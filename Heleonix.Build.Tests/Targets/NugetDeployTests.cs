@@ -46,7 +46,7 @@ namespace Heleonix.Build.Tests.Targets
 
                 items = new Dictionary<string, ITaskItem[]>
                 {
-                    { "Hx_NugetDeploy_SourceURL", new ITaskItem[] { new TaskItem(sourceDir) } }
+                    { "Hx_NugetDeploy_SourceURL", new ITaskItem[] { new TaskItem(sourceDir) } },
                 };
             });
 

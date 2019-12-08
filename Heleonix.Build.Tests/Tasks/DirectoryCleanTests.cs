@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Tasks
                 task = new DirectoryClean
                 {
                     BuildEngine = new TestBuildEngine(),
-                    Dirs = directories
+                    Dirs = directories,
                 };
             });
 
@@ -51,7 +51,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
                     new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
-                    new TaskItem(PathHelper.GetRandomFileInCurrentDir())
+                    new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
                 };
 
                 And("directories to clean exist", () =>

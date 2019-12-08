@@ -38,7 +38,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new TestBuildEngine(),
                     Files = files,
-                    DestinationDirs = destinationDirs
+                    DestinationDirs = destinationDirs,
                 };
 
                 succeeded = task.Execute();
@@ -50,7 +50,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     new TaskItem(Path.Combine(PathHelper.CurrentDir, "1", "11", "111", "1111", "file1.txt")),
                     new TaskItem(Path.Combine(PathHelper.CurrentDir, "2", "22", "222", "2222", "file2.txt")),
-                    new TaskItem(Path.Combine(PathHelper.CurrentDir, "2", "22", "222", "2222", "NOT_EXIST.txt"))
+                    new TaskItem(Path.Combine(PathHelper.CurrentDir, "2", "22", "222", "2222", "NOT_EXIST.txt")),
                 };
 
                 And("some files exist", () =>
@@ -87,7 +87,7 @@ namespace Heleonix.Build.Tests.Tasks
                         {
                             destinationDirs = new[]
                             {
-                                new TaskItem(Path.Combine(PathHelper.GetRandomFileInCurrentDir(), "dir"))
+                                new TaskItem(Path.Combine(PathHelper.GetRandomFileInCurrentDir(), "dir")),
                             };
                         });
 

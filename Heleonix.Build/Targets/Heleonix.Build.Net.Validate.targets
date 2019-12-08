@@ -26,7 +26,7 @@
       <Hx_Net_Validate_Files Include="%(_Hx_Net_Validate_ProjectFiles.FullPath)">
         <CodecrackerCSharp>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(codecracker.CSharp)</CodecrackerCSharp>
         <FxCopAnalyzers>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(Microsoft.CodeAnalysis.FxCopAnalyzers)</FxCopAnalyzers>
-        <RoslynSecurityGuard>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(RoslynSecurityGuard)</RoslynSecurityGuard>
+        <SecurityCodeScan>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(SecurityCodeScan)</SecurityCodeScan>
         <SonarAnalyzerCSharp>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(SonarAnalyzer.CSharp)</SonarAnalyzerCSharp>
         <StyleCopAnalyzers>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(StyleCop.Analyzers)</StyleCopAnalyzers>
       </Hx_Net_Validate_Files>

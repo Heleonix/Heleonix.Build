@@ -38,7 +38,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     BuildEngine = new TestBuildEngine(),
                     Files = files,
-                    RegExpOptions = regExpOptions
+                    RegExpOptions = regExpOptions,
                 };
             });
 
@@ -53,7 +53,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
                     new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
-                    new TaskItem(PathHelper.GetRandomFileInCurrentDir())
+                    new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
                 };
 
                 foreach (var file in files)

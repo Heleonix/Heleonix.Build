@@ -54,7 +54,7 @@ namespace Heleonix.Build.Tests.Tasks
                     BuildEngine = new TestBuildEngine(),
                     RepositoryFileOrDir = repositoryFileOrDir,
                     MaxCount = 1,
-                    GitExe = new TaskItem(PathHelper.GitExe)
+                    GitExe = new TaskItem(PathHelper.GitExe),
                 };
             });
 

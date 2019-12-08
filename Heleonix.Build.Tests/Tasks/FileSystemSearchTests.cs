@@ -49,7 +49,7 @@ namespace Heleonix.Build.Tests.Tasks
                     PathRegExp = pathRegExp,
                     PathRegExpOptions = pathRegExpOptions,
                     ContentRegExp = contentRegExp,
-                    ContentRegExpOptions = contentRegExpOptions
+                    ContentRegExpOptions = contentRegExpOptions,
                 };
 
                 succeeded = task.Execute();
@@ -66,14 +66,17 @@ namespace Heleonix.Build.Tests.Tasks
                     {
                         f.Write("1a");
                     }
+
                     using (var f = File.CreateText(Path.Combine(rootDir, "1", "1b.txt")))
                     {
                         f.Write("1b");
                     }
+
                     using (var f = File.CreateText(Path.Combine(rootDir, "1", "11", "111", "111aaa.txt")))
                     {
                         f.Write("111aaa");
                     }
+
                     using (var f = File.CreateText(Path.Combine(rootDir, "1", "11", "111", "111bbb.txt")))
                     {
                         f.Write("111bbb");
@@ -84,14 +87,17 @@ namespace Heleonix.Build.Tests.Tasks
                     {
                         f.Write("2a");
                     }
+
                     using (var f = File.CreateText(Path.Combine(rootDir, "2", "2b.txt")))
                     {
                         f.Write("2b");
                     }
+
                     using (var f = File.CreateText(Path.Combine(rootDir, "2", "22", "222", "222aaa.txt")))
                     {
                         f.Write("222aaa");
                     }
+
                     using (var f = File.CreateText(Path.Combine(rootDir, "2", "22", "222", "222bbb.txt")))
                     {
                         f.Write("222bbb");

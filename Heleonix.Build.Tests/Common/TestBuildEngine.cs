@@ -9,7 +9,7 @@ namespace Heleonix.Build.Tests.Common
     using Microsoft.Build.Framework;
 
     /// <summary>
-    /// Fakes the <see cref="IBuildEngine"/>
+    /// Fakes the <see cref="IBuildEngine"/>.
     /// </summary>
     /// <seealso cref="IBuildEngine" />
     public class TestBuildEngine : IBuildEngine

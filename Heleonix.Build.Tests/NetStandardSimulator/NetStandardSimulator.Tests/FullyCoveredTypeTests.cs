@@ -16,7 +16,9 @@ namespace NetStandardSimulator
         /// Tests the <see cref="FullyCoveredType.PlusOne"/>.
         /// </summary>
         [Test]
+#pragma warning disable S2699 // Tests should include assertions
         public static void PlusOne()
+#pragma warning restore S2699 // Tests should include assertions
         {
             FullyCoveredType.PlusOne(12);
         }

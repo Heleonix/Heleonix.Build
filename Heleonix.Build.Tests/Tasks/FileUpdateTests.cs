@@ -44,7 +44,7 @@ namespace Heleonix.Build.Tests.Tasks
                     File = file,
                     RegExp = regExp,
                     RegExpOptions = regExpOptions,
-                    Replacement = replacement
+                    Replacement = replacement,
                 };
             });
 

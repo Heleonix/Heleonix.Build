@@ -61,7 +61,7 @@ namespace Heleonix.Build.Tests.Targets
                 {
                     properties = new Dictionary<string, string>
                     {
-                        { "Hx_NUnit_ContinueOnError", "true" }
+                        { "Hx_NUnit_ContinueOnError", "true" },
                     };
 
                     Should("succeed", () =>

@@ -31,7 +31,7 @@ namespace Heleonix.Build.Tasks
         /// File path: C:\Files\SubDir1\SubDir2\SubDir3\file.txt
         /// WithSubDirsFrom: C:\Files\SubDir1
         /// Destination: D:\Destination
-        /// Result: file is copied into D:\Destination\SubDir2\SubDir3\file.txt
+        /// Result: file is copied into D:\Destination\SubDir2\SubDir3\file.txt.
         /// </example>
         [Required]
         public ITaskItem[] Files { get; set; }
@@ -121,7 +121,9 @@ namespace Heleonix.Build.Tasks
 
                     copiedFiles.Add(new TaskItem(destinationPath));
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception e)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     this.Log.LogWarningFromException(e);
                 }
