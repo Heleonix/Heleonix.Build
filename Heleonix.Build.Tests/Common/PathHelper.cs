@@ -50,9 +50,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the Nuget executable path.
         /// </summary>
         public static string NugetExe => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".nuget",
-            "packages",
+            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
             "NuGet.CommandLine",
             "4.7.1",
             "tools",
@@ -62,9 +60,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the ReportUnit executable path.
         /// </summary>
         public static string ReportUnitExe => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".nuget",
-            "packages",
+            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
             "ReportUnit",
             "1.2.1",
             "tools",
@@ -77,9 +73,7 @@ namespace Heleonix.Build.Tests.Common
         /// The report generator executable.
         /// </value>
         public static string ReportGeneratorExe => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".nuget",
-            "packages",
+            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
             "ReportGenerator",
             "3.1.2",
             "tools",
@@ -94,9 +88,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the NUnit console executable path.
         /// </summary>
         public static string NUnitConsoleExe => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".nuget",
-            "packages",
+            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
             "NUnit.ConsoleRunner",
             "3.8.0",
             "tools",
@@ -106,9 +98,7 @@ namespace Heleonix.Build.Tests.Common
         /// Gets the OpenCover executable path.
         /// </summary>
         public static string OpenCoverExe => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".nuget",
-            "packages",
+            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
             "OpenCover",
             "4.6.519",
             "tools",
