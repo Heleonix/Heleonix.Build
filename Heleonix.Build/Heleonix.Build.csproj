@@ -104,7 +104,7 @@
   <ItemGroup>
     <PackageReference Include="Heleonix.Execution" Version="1.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.8.166" PrivateAssets="all" />
-    <PackageReference Include="NuGet.CommandLine" Version="4.7.1" />
+    <PackageReference Include="NuGet.CommandLine" Version="4.9.5" />
     <PackageReference Include="NUnit.ConsoleRunner" Version="3.8.0" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
     <PackageReference Include="ReportGenerator" Version="3.1.2" />
