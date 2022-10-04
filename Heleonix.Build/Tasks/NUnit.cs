@@ -1,5 +1,5 @@
 ﻿// <copyright file="NUnit.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -44,12 +44,6 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         [Required]
         public ITaskItem TestOutputFile { get; set; }
-
-        /// <summary>
-        /// Gets or sets the errors output file path.
-        /// </summary>
-        [Required]
-        public ITaskItem ErrorOutputFile { get; set; }
 
         /// <summary>
         /// Gets or sets the tests list file path.
@@ -222,7 +216,6 @@ namespace Heleonix.Build.Tasks
                 .AddKey("teamcity", item.GetMetadata(nameof(UseTeamCityServiceMessages)) == "true")
                 .AddArgument("trace", item.GetMetadata(nameof(TraceLevel)))
                 .AddPath("output", item.GetMetadata(nameof(TestOutputFile)))
-                .AddPath("err", item.GetMetadata(nameof(ErrorOutputFile)))
                 .AddArgument("framework", item.GetMetadata(nameof(Framework)))
                 .AddArgument("config", item.GetMetadata(nameof(Configuration)))
                 .AddArgument("process", item.GetMetadata(nameof(ProcessIsolation)))
@@ -236,10 +229,7 @@ namespace Heleonix.Build.Tasks
         /// <param name="target">The target.</param>
         internal static void Prepare(ITaskItem target)
         {
-            Prepare(
-                target.GetMetadata(nameof(TestResultFile)),
-                target.GetMetadata(nameof(TestOutputFile)),
-                target.GetMetadata(nameof(ErrorOutputFile)));
+            Prepare(target.GetMetadata(nameof(TestResultFile)), target.GetMetadata(nameof(TestOutputFile)));
         }
 
         /// <summary>
@@ -247,13 +237,11 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         /// <param name="testResultFile">The NUnit tests result file path.</param>
         /// <param name="testOutputFile">The tests output file path.</param>
-        /// <param name="errorOutputFile">The errors output file path.</param>
-        internal static void Prepare(string testResultFile, string testOutputFile, string errorOutputFile)
+        internal static void Prepare(string testResultFile, string testOutputFile)
         {
             // NUnit does not create directories for these files.
             Directory.CreateDirectory(Path.GetDirectoryName(testResultFile));
             Directory.CreateDirectory(Path.GetDirectoryName(testOutputFile));
-            Directory.CreateDirectory(Path.GetDirectoryName(errorOutputFile));
         }
 
         /// <summary>
@@ -261,7 +249,7 @@ namespace Heleonix.Build.Tasks
         /// </summary>
         protected override void ExecuteInternal()
         {
-            Prepare(this.TestResultFile.ItemSpec, this.TestOutputFile.ItemSpec, this.ErrorOutputFile.ItemSpec);
+            Prepare(this.TestResultFile.ItemSpec, this.TestOutputFile.ItemSpec);
 
             var args = ArgsBuilder.By("--", "=")
                 .AddPaths(this.NUnitProjectFileOrTestFiles.Select(i => i.ItemSpec))
@@ -274,7 +262,6 @@ namespace Heleonix.Build.Tasks
                 .AddKey("teamcity", this.UseTeamCityServiceMessages)
                 .AddArgument("trace", this.TraceLevel)
                 .AddPath("output", this.TestOutputFile.ItemSpec)
-                .AddPath("err", this.ErrorOutputFile.ItemSpec)
                 .AddArgument("framework", this.Framework)
                 .AddArgument("config", this.Configuration)
                 .AddArgument("process", this.ProcessIsolation)

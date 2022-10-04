@@ -1,5 +1,5 @@
 ﻿// <copyright file="MSBuildHelper.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -100,9 +100,6 @@ namespace Heleonix.Build.Tests.Common
                 .AddArgument("p", props);
 
             var result = ExeHelper.Execute("MSBuild.exe", args, true, workingDirectory, int.MaxValue);
-
-            Console.WriteLine($"--------- Target: {target}, Project Path: {projectPath} ---------");
-            Console.WriteLine(result.Output);
 
             if (result.ExitCode != 0)
             {

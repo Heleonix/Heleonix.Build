@@ -1,5 +1,5 @@
 // <copyright file="FileValidateTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -51,9 +51,9 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 files = new ITaskItem[3]
                 {
-                    new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
-                    new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
-                    new TaskItem(PathHelper.GetRandomFileInCurrentDir()),
+                    new TaskItem(PathHelper.GenerateRandomFileInCurrentDir()),
+                    new TaskItem(PathHelper.GenerateRandomFileInCurrentDir()),
+                    new TaskItem(PathHelper.GenerateRandomFileInCurrentDir()),
                 };
 
                 foreach (var file in files)

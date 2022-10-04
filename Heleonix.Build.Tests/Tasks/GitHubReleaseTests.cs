@@ -1,10 +1,11 @@
 // <copyright file="GitHubReleaseTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
 namespace Heleonix.Build.Tests.Tasks
 {
+    using System;
     using System.IO;
     using System.Net;
     using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace Heleonix.Build.Tests.Tasks
                     {
                         using (var reader = new StreamReader(request.InputStream))
                         {
-                            return reader.ReadToEnd().Contains("\"v1.0.0\"");
+                            return reader.ReadToEnd().Contains("\"v1.0.0\"", StringComparison.Ordinal);
                         }
                     },
                     ("application/json", "{ \"name\": \"v1.0.0\" }", HttpStatusCode.Created),

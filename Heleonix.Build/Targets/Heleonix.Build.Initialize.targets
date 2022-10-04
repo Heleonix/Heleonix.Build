@@ -7,6 +7,8 @@
     <Hx_System_NugetExe Include="$(MSBuildThisFileDirectory)../../NuGet.CommandLine.*/tools/NuGet.exe"/>
   </ItemGroup>
   <PropertyGroup>
+    <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' == 'Core'">dotnet msbuild</Hx_System_MSBuildExe>
+    <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' != 'Core'">"$(MSBuildBinPath)/MSBuild.exe"</Hx_System_MSBuildExe>
     <Hx_System_GitHubAPIUrl>https://api.github.com</Hx_System_GitHubAPIUrl>
   </PropertyGroup>
 
@@ -38,12 +40,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-      <Hx_Internal_Net_Build_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_Net_Build</Hx_Internal_Net_Build_ArtifactDir>
-      <Hx_Internal_NugetDeploy_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NugetDeploy</Hx_Internal_NugetDeploy_ArtifactDir>
-      <Hx_Internal_NUnit_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NUnit</Hx_Internal_NUnit_ArtifactDir>
-      <Hx_Internal_OpenCover_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_OpenCover</Hx_Internal_OpenCover_ArtifactDir>
-      <Hx_Internal_ReportGenerator_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportGenerator</Hx_Internal_ReportGenerator_ArtifactDir>
-      <Hx_Internal_ReportUnit_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportUnit</Hx_Internal_ReportUnit_ArtifactDir>
+      <Hx_NetBuild_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NetBuild</Hx_NetBuild_ArtifactDir>
+      <Hx_NugetDeploy_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NugetDeploy</Hx_NugetDeploy_ArtifactDir>
+      <Hx_NUnit_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_NUnit</Hx_NUnit_ArtifactDir>
+      <Hx_OpenCover_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_OpenCover</Hx_OpenCover_ArtifactDir>
+      <Hx_ReportGenerator_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportGenerator</Hx_ReportGenerator_ArtifactDir>
+      <Hx_ReportUnit_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportUnit</Hx_ReportUnit_ArtifactDir>
     </PropertyGroup>
 
     <Message Text="> 1/1: Primary initialization:"/>
@@ -60,12 +62,6 @@
     <Message Text="$Hx_Input_Targets: $(Hx_Input_Targets)"/>
     <Message Text="$Hx_Input_BuildProjFile: $(Hx_Input_BuildProjFile)"/>
     <Message Text="$Hx_Build_ArtifactDir: $(Hx_Build_ArtifactDir)"/>
-    <Message Text="$Hx_Internal_Net_Build_ArtifactDir: $(Hx_Internal_Net_Build_ArtifactDir)"/>
-    <Message Text="$Hx_Internal_NugetDeploy_ArtifactDir: $(Hx_Internal_NugetDeploy_ArtifactDir)"/>
-    <Message Text="$Hx_Internal_NUnit_ArtifactDir: $(Hx_Internal_NUnit_ArtifactDir)"/>
-    <Message Text="$Hx_Internal_OpenCover_ArtifactDir: $(Hx_Internal_OpenCover_ArtifactDir)"/>
-    <Message Text="$Hx_Internal_ReportGenerator_ArtifactDir: $(Hx_Internal_ReportGenerator_ArtifactDir)"/>
-    <Message Text="$Hx_Internal_ReportUnit_ArtifactDir: $(Hx_Internal_ReportUnit_ArtifactDir)"/>
 
     <Message Text="> DONE!"/>
 

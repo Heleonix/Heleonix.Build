@@ -1,5 +1,5 @@
 ﻿// <copyright file="OpenCoverTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -32,7 +32,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 simulatorHelper = new NetStandardSimulatorHelper();
 
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
+                MSBuildHelper.RunTestTarget("Hx_NetBuild", simulatorHelper.SolutionDir);
             });
 
             Act(() =>
@@ -52,8 +52,8 @@ namespace Heleonix.Build.Tests.Targets
                     properties = new Dictionary<string, string>
                     {
                         { "Hx_OpenCover_MinClassCoverage", "57" },
-                        { "Hx_OpenCover_MinBranchCoverage", "55" },
-                        { "Hx_OpenCover_MinMethodCoverage", "57" },
+                        { "Hx_OpenCover_MinBranchCoverage", "53" },
+                        { "Hx_OpenCover_MinMethodCoverage", "54" },
                         { "Hx_OpenCover_MinLineCoverage", "40" },
                     };
 
@@ -65,7 +65,6 @@ namespace Heleonix.Build.Tests.Targets
                         Assert.That(succeeded, Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "OpenCover.xml")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
-                        Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Errors.txt")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
                     });
                 });
@@ -88,7 +87,6 @@ namespace Heleonix.Build.Tests.Targets
                         Assert.That(succeeded, Is.False);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "OpenCover.xml")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
-                        Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Errors.txt")), Is.True);
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
                     });
 
@@ -104,7 +102,6 @@ namespace Heleonix.Build.Tests.Targets
                             Assert.That(succeeded, Is.True);
                             Assert.That(File.Exists(Path.Combine(artifactDir, "OpenCover.xml")), Is.True);
                             Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
-                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Errors.txt")), Is.True);
                             Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
                         });
                     });

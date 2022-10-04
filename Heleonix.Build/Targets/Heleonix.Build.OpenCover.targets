@@ -3,14 +3,14 @@
     <Message Text="> STARTING..."/>
 
     <Message Text="> 1/2: Creating the artifacts directory"/>
-    <RemoveDir Directories="$(Hx_Internal_OpenCover_ArtifactDir)"/>
-    <MakeDir Directories="$(Hx_Internal_OpenCover_ArtifactDir)"/>
+    <RemoveDir Directories="$(Hx_OpenCover_ArtifactDir)"/>
+    <MakeDir Directories="$(Hx_OpenCover_ArtifactDir)"/>
 
     <MSBuild
       Condition="'@(Hx_OpenCover_TargetExe)' == '' Or '$(Hx_OpenCover_Filters)' == ''"
       Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_FindNetTestBinaries"
-      Properties="Hx_Internal_FindNetTestBinaries_StartDir=$(Hx_Internal_Net_Build_ArtifactDir);Hx_Internal_FindNetTestBinaries_Configuration=$(Hx_Input_Configuration)">
+      Properties="Hx_Internal_FindNetTestBinaries_StartDir=$(Hx_NetBuild_ArtifactDir);Hx_Internal_FindNetTestBinaries_Configuration=$(Hx_Input_Configuration)">
       <Output TaskParameter="TargetOutputs" ItemName="_Hx_OpenCover_TestBinaryFiles"/>
     </MSBuild>
 
@@ -35,9 +35,8 @@
       <Hx_OpenCover_TargetExe Condition="'@(Hx_OpenCover_TargetExe)' == ''" Include="@(Hx_System_NUnitConsoleExe)">
         <Type>NUnit</Type>
         <NUnitProjectFileOrTestFiles>@(_Hx_OpenCover_TestBinaryFiles)</NUnitProjectFileOrTestFiles>
-        <ErrorOutputFile>$(Hx_Internal_NUnit_ArtifactDir)/Errors.txt</ErrorOutputFile>
-        <TestOutputFile>$(Hx_Internal_NUnit_ArtifactDir)/Output.txt</TestOutputFile>
-        <TestResultFile>$(Hx_Internal_NUnit_ArtifactDir)/NUnit.xml</TestResultFile>
+        <TestOutputFile>$(Hx_NUnit_ArtifactDir)/Output.txt</TestOutputFile>
+        <TestResultFile>$(Hx_NUnit_ArtifactDir)/NUnit.xml</TestResultFile>
       </Hx_OpenCover_TargetExe>
     </ItemGroup>
 
@@ -45,7 +44,7 @@
     <Heleonix.Build.Tasks.OpenCover
       ContinueOnError="$(Hx_OpenCover_ContinueOnError)"
       OpenCoverExe="@(Hx_System_OpenCoverConsoleExe)"
-      CoverageResultFile="$(Hx_Internal_OpenCover_ArtifactDir)/$(Hx_OpenCover_CoverageResultFile)"
+      CoverageResultFile="$(Hx_OpenCover_ArtifactDir)/$(Hx_OpenCover_CoverageResultFile)"
       ExcludeByAttributeFilters="$(Hx_OpenCover_ExcludeByAttributeFilters)"
       Filters="$(Hx_OpenCover_Filters)"
       Target="@(Hx_OpenCover_TargetExe)"

@@ -2,7 +2,7 @@
   <Import Project="../SharedProjectInfo.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
@@ -11,14 +11,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <DocumentationFile>bin\Debug\netstandard2.0\Heleonix.Build.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Heleonix.Build.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
@@ -32,8 +30,8 @@
     <None Remove="Targets\Heleonix.Build.Internal.FindNetProjects.targets" />
     <None Remove="Targets\Heleonix.Build.Internal.FindNetSln.targets" />
     <None Remove="Targets\Heleonix.Build.Internal.FindNetTestBinaries.targets" />
-    <None Remove="Targets\Heleonix.Build.Net.GitHubRelease.targets" />
-    <None Remove="Targets\Heleonix.Build.Net.Validate.targets" />
+    <None Remove="Targets\Heleonix.Build.NetGitHubRelease.targets" />
+    <None Remove="Targets\Heleonix.Build.NetValidate.targets" />
     <None Remove="Targets\Heleonix.Build.Validate.targets" />
   </ItemGroup>
 
@@ -57,10 +55,10 @@
     <Content Include="Targets\Heleonix.Build.Validate.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Targets\Heleonix.Build.Net.Validate.targets">
+    <Content Include="Targets\Heleonix.Build.NetValidate.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Targets\Heleonix.Build.Net.GitHubRelease.targets">
+    <Content Include="Targets\Heleonix.Build.NetGitHubRelease.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Targets\Heleonix.Build.GitHubRelease.targets">
@@ -84,7 +82,7 @@
     <Content Include="Targets\Heleonix.Build.OpenCover.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Targets\Heleonix.Build.Net.Build.targets">
+    <Content Include="Targets\Heleonix.Build.NetBuild.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Targets\Heleonix.Build.ReportGenerator.targets">
@@ -102,18 +100,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Heleonix.Execution" Version="1.0.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.8.166" PrivateAssets="all" />
-    <PackageReference Include="NuGet.CommandLine" Version="4.7.1" />
-    <PackageReference Include="NUnit.ConsoleRunner" Version="3.8.0" />
-    <PackageReference Include="OpenCover" Version="4.6.519" />
-    <PackageReference Include="ReportGenerator" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.3.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NuGet.CommandLine" Version="6.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NUnit.ConsoleRunner" Version="3.15.2" />
+    <PackageReference Include="OpenCover" Version="4.7.1221" />
+    <PackageReference Include="ReportGenerator" Version="5.1.10" />
     <PackageReference Include="ReportUnit" Version="1.2.1" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.16.0.8981" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
+    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.45.0.54064" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="SecurityCodeScan" Version="3.2.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
   </ItemGroup>
 
   <ItemGroup>
@@ -133,6 +147,8 @@
 
   <PropertyGroup>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);BundleDependencies</TargetsForTfmSpecificBuildOutput>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <Target Name="BundleDependencies">

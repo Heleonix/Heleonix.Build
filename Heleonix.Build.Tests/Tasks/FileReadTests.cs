@@ -1,5 +1,5 @@
 // <copyright file="FileReadTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -51,7 +51,7 @@ namespace Heleonix.Build.Tests.Tasks
 
             When("file to read is specified", () =>
             {
-                file = new TaskItem(PathHelper.GetRandomFileInCurrentDir());
+                file = new TaskItem(PathHelper.GenerateRandomFileInCurrentDir());
 
                 Should("fail", () =>
                 {

@@ -1,5 +1,5 @@
 // <copyright file="FileCopyTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -46,11 +46,13 @@ namespace Heleonix.Build.Tests.Tasks
 
             When("files are specified", () =>
             {
+                var rootDir = PathHelper.GenerateRandomFileInCurrentDir();
+
                 files = new[]
                 {
-                    new TaskItem(Path.Combine(PathHelper.CurrentDir, "1", "11", "111", "1111", "file1.txt")),
-                    new TaskItem(Path.Combine(PathHelper.CurrentDir, "2", "22", "222", "2222", "file2.txt")),
-                    new TaskItem(Path.Combine(PathHelper.CurrentDir, "2", "22", "222", "2222", "NOT_EXIST.txt")),
+                    new TaskItem(Path.Combine(rootDir,  "1", "11", "111", "1111", "file1.txt")),
+                    new TaskItem(Path.Combine(rootDir,  "2", "22", "222", "2222", "file2.txt")),
+                    new TaskItem(Path.Combine(rootDir,  "2", "22", "222", "2222", "NOT_EXIST.txt")),
                 };
 
                 And("some files exist", () =>
@@ -70,14 +72,9 @@ namespace Heleonix.Build.Tests.Tasks
 
                     Teardown(() =>
                     {
-                        if (Directory.Exists(Path.Combine(PathHelper.CurrentDir, "1")))
+                        if (Directory.Exists(rootDir))
                         {
-                            Directory.Delete(Path.Combine(PathHelper.CurrentDir, "1"), true);
-                        }
-
-                        if (Directory.Exists(Path.Combine(PathHelper.CurrentDir, "2")))
-                        {
-                            Directory.Delete(Path.Combine(PathHelper.CurrentDir, "2"), true);
+                            Directory.Delete(rootDir, true);
                         }
                     });
 
@@ -87,7 +84,7 @@ namespace Heleonix.Build.Tests.Tasks
                         {
                             destinationDirs = new[]
                             {
-                                new TaskItem(Path.Combine(PathHelper.GetRandomFileInCurrentDir(), "dir")),
+                                new TaskItem(Path.Combine(rootDir, Path.GetRandomFileName(), "dir")),
                             };
                         });
 
@@ -101,8 +98,8 @@ namespace Heleonix.Build.Tests.Tasks
 
                         And("sub directories to copy files to are specified", () =>
                         {
-                            files[0].SetMetadata("WithSubDirsFrom", Path.Combine(PathHelper.CurrentDir, "1", "11"));
-                            files[1].SetMetadata("WithSubDirsFrom", Path.Combine(PathHelper.CurrentDir, "2", "22"));
+                            files[0].SetMetadata("WithSubDirsFrom", Path.Combine(rootDir, "1", "11"));
+                            files[1].SetMetadata("WithSubDirsFrom", Path.Combine(rootDir, "2", "22"));
 
                             Should("succeed", () =>
                             {
@@ -155,11 +152,55 @@ namespace Heleonix.Build.Tests.Tasks
                             files[0].SetMetadata("WithSubDirsFrom", Path.Combine("Q", Path.GetRandomFileName()));
                             files[1].SetMetadata("WithSubDirsFrom", Path.Combine("Q", Path.GetRandomFileName()));
 
+                            Teardown(() =>
+                            {
+                                files[0].RemoveMetadata("WithSubDirsFrom");
+                                files[1].RemoveMetadata("WithSubDirsFrom");
+                            });
+
                             Should("not copy files with invalid sub directories", () =>
                             {
                                 Assert.That(succeeded, Is.True);
                                 Assert.That(task.CopiedFiles, Has.Length.Zero);
                             });
+                        });
+                    });
+
+                    And("destination is multiple directories", () =>
+                    {
+                        Arrange(() =>
+                        {
+                            destinationDirs = new[]
+                            {
+                                new TaskItem(Path.Combine(rootDir, Path.GetRandomFileName(), "dir1")),
+                                new TaskItem(Path.Combine(rootDir, Path.GetRandomFileName(), "dir2")),
+                            };
+                        });
+
+                        Teardown(() =>
+                        {
+                            foreach (var dir in destinationDirs)
+                            {
+                                if (Directory.Exists(dir.ItemSpec))
+                                {
+                                    Directory.Delete(dir.ItemSpec, true);
+                                }
+                            }
+                        });
+
+                        Should("copy each file into the separate directory", () =>
+                        {
+                            Assert.That(succeeded, Is.True);
+                            Assert.That(
+                                    task.CopiedFiles[0].ItemSpec,
+                                    Is.EqualTo(Path.Combine(
+                                        destinationDirs[0].ItemSpec,
+                                        Path.GetFileName(task.CopiedFiles[0].ItemSpec))));
+                            Assert.That(
+                                task.CopiedFiles[1].ItemSpec,
+                                Is.EqualTo(Path.Combine(
+                                    destinationDirs[1].ItemSpec,
+                                    Path.GetFileName(task.CopiedFiles[1].ItemSpec))));
                         });
                     });
                 });

@@ -3,20 +3,20 @@
     <Message Text="> STARTING..."/>
 
     <Message Text="> 1/2: Creating the artifacts directory"/>
-    <RemoveDir Directories="$(Hx_Internal_ReportUnit_ArtifactDir)"/>
-    <MakeDir Directories="$(Hx_Internal_ReportUnit_ArtifactDir)"/>
+    <RemoveDir Directories="$(Hx_ReportUnit_ArtifactDir)"/>
+    <MakeDir Directories="$(Hx_ReportUnit_ArtifactDir)"/>
 
     <ItemGroup>
       <Hx_ReportUnit_TestResultFile
         Condition="'@(Hx_ReportUnit_TestResultFile)' == ''"
-        Include="$(Hx_Internal_NUnit_ArtifactDir)/NUnit.xml"/>
+        Include="$(Hx_NUnit_ArtifactDir)/NUnit.xml"/>
     </ItemGroup>
 
     <Message Text="> 2/2: Generating report"/>
     <Heleonix.Build.Tasks.ReportUnit
       ReportUnitExe="@(Hx_System_ReportUnitExe)"
       TestResultFile="@(Hx_ReportUnit_TestResultFile)"
-      ReportFile="$(Hx_Internal_ReportUnit_ArtifactDir)/ReportUnit.html"/>
+      ReportFile="$(Hx_ReportUnit_ArtifactDir)/ReportUnit.html"/>
 
     <Message Text="> DONE!"/>
 

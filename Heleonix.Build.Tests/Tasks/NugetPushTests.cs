@@ -1,5 +1,5 @@
 // <copyright file="NugetPushTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Tasks
 
             Arrange(() =>
             {
-                sourceDir = PathHelper.GetRandomFileInCurrentDir();
+                sourceDir = PathHelper.GenerateRandomFileInCurrentDir();
 
                 Directory.CreateDirectory(sourceDir);
 
@@ -73,7 +73,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     Arrange(() =>
                     {
-                        configFile = new TaskItem(PathHelper.GetRandomFileInCurrentDir());
+                        configFile = new TaskItem(PathHelper.GenerateRandomFileInCurrentDir());
 
                         using (var file = File.CreateText(configFile.ItemSpec))
                         {
@@ -128,7 +128,7 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 Arrange(() =>
                 {
-                    packageFile = new TaskItem(PathHelper.GetRandomFileInCurrentDir());
+                    packageFile = new TaskItem(PathHelper.GenerateRandomFileInCurrentDir());
                 });
 
                 Should("fail", () =>

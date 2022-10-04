@@ -7,7 +7,7 @@
     <PackageTags>netstandard simulator</PackageTags>
 
     <Authors>Heleonix - Hennadii Lutsyshyn</Authors>
-    <Copyright>Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn</Copyright>
+    <Copyright>Copyright (c) Heleonix - Hennadii Lutsyshyn</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
     <RepositoryType>git</RepositoryType>

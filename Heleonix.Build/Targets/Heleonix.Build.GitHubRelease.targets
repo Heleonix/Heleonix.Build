@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="Hx_GitHubRelease" AfterTargets="Hx_Net_GitHubRelease">
+  <Target Name="Hx_GitHubRelease" AfterTargets="Hx_NetGitHubRelease">
     <Message Text="> STARTING..."/>
 
     <PropertyGroup>

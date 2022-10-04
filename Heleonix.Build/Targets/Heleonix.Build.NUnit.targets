@@ -3,11 +3,10 @@
     <Message Text="> STARTING..."/>
 
     <Message Text="> 1/2: Creating the artifacts directory"/>
-    <RemoveDir Directories="$(Hx_Internal_NUnit_ArtifactDir)"/>
-    <MakeDir Directories="$(Hx_Internal_NUnit_ArtifactDir)"/>
+    <RemoveDir Directories="$(Hx_NUnit_ArtifactDir)"/>
+    <MakeDir Directories="$(Hx_NUnit_ArtifactDir)"/>
 
     <PropertyGroup>
-      <Hx_NUnit_ErrorOutputFile Condition="'$(Hx_NUnit_ErrorOutputFile)' == ''">Errors.txt</Hx_NUnit_ErrorOutputFile>
       <Hx_NUnit_TestOutputFile Condition="'$(Hx_NUnit_TestOutputFile)' == ''">Output.txt</Hx_NUnit_TestOutputFile>
       <Hx_NUnit_TestResultFile Condition="'$(Hx_NUnit_TestResultFile)' == ''">NUnit.xml</Hx_NUnit_TestResultFile>
       <Hx_NUnit_ContinueOnError Condition="'$(Hx_NUnit_ContinueOnError)' == ''">ErrorAndContinue</Hx_NUnit_ContinueOnError>
@@ -17,7 +16,7 @@
       Condition="'@(Hx_NUnit_NUnitProjectOrTestFiles)' == ''"
       Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_FindNetTestBinaries"
-      Properties="Hx_Internal_FindNetTestBinaries_StartDir=$(Hx_Internal_Net_Build_ArtifactDir);Hx_Internal_FindNetTestBinaries_Configuration=$(Hx_Input_Configuration)">
+      Properties="Hx_Internal_FindNetTestBinaries_StartDir=$(Hx_NetBuild_ArtifactDir);Hx_Internal_FindNetTestBinaries_Configuration=$(Hx_Input_Configuration)">
       <Output TaskParameter="TargetOutputs" ItemName="Hx_NUnit_NUnitProjectOrTestFiles"/>
     </MSBuild>
 
@@ -36,13 +35,12 @@
       Configuration="$(Hx_Input_Configuration)"
       DomainIsolation="$(Hx_NUnit_DomainIsolation)"
       ShadowCopy="$(Hx_NUnit_ShadowCopy)"
-      ErrorOutputFile="$(Hx_Internal_NUnit_ArtifactDir)/$(Hx_NUnit_ErrorOutputFile)"
       Framework="$(Hx_NUnit_Framework)"
-      TestResultFile="$(Hx_Internal_NUnit_ArtifactDir)/$(Hx_NUnit_TestResultFile)"
+      TestResultFile="$(Hx_NUnit_ArtifactDir)/$(Hx_NUnit_TestResultFile)"
       TestFilter="$(Hx_NUnit_TestFilter)"
       TraceLevel="$(_Hx_NUnit_TraceLevel)"
       TestListFile="@(Hx_NUnit_TestListFile)"
-      TestOutputFile="$(Hx_Internal_NUnit_ArtifactDir)/$(Hx_NUnit_TestOutputFile)"
+      TestOutputFile="$(Hx_NUnit_ArtifactDir)/$(Hx_NUnit_TestOutputFile)"
       TestParameters="$(Hx_NUnit_TestParameters)"
       UseTeamCityServiceMessages="$(Hx_NUnit_UseTeamCityServiceMessages)"
       ProcessIsolation="$(Hx_NUnit_ProcessIsolation)"/>

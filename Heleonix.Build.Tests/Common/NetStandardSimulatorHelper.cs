@@ -1,5 +1,5 @@
 ﻿// <copyright file="NetStandardSimulatorHelper.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -38,7 +38,7 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the solution dir.
         /// </summary>
-        public string SolutionDir { get; } = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+        public string SolutionDir { get; } = PathHelper.GenerateRandomFileInCurrentDir();
 
         /// <summary>
         /// Gets the solution file.

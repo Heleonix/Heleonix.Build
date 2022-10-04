@@ -1,5 +1,5 @@
 ﻿// <copyright file="NugetDeployTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -36,9 +36,9 @@ namespace Heleonix.Build.Tests.Targets
             {
                 simulatorHelper = new NetStandardSimulatorHelper();
 
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
+                MSBuildHelper.RunTestTarget("Hx_NetBuild", simulatorHelper.SolutionDir);
 
-                sourceDir = PathHelper.GetRandomFileInCurrentDir();
+                sourceDir = PathHelper.GenerateRandomFileInCurrentDir();
 
                 Directory.CreateDirectory(sourceDir);
 

@@ -1,5 +1,5 @@
 // <copyright file="FileSystemSearchTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -59,9 +59,15 @@ namespace Heleonix.Build.Tests.Tasks
             {
                 Arrange(() =>
                 {
-                    rootDir = PathHelper.GetRandomFileInCurrentDir();
+                    rootDir = PathHelper.GenerateRandomFileInCurrentDir();
 
                     Directory.CreateDirectory(Path.Combine(rootDir, "1", "11", "111"));
+
+                    using (var f = File.CreateText(Path.Combine(rootDir, "0.txt")))
+                    {
+                        f.Write("0a");
+                    }
+
                     using (var f = File.CreateText(Path.Combine(rootDir, "1", "1a.txt")))
                     {
                         f.Write("1a");
@@ -125,9 +131,9 @@ namespace Heleonix.Build.Tests.Tasks
                                 Should("find all directories and files", () =>
                                 {
                                     Assert.That(succeeded, Is.True);
-                                    Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
+                                    Assert.That(task.FoundFiles, Has.Length.EqualTo(9));
                                     Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
-                                    Assert.That(task.FoundItems, Has.Length.EqualTo(15));
+                                    Assert.That(task.FoundItems, Has.Length.EqualTo(16));
                                 });
                             });
 
@@ -135,7 +141,7 @@ namespace Heleonix.Build.Tests.Tasks
                             {
                                 Arrange(() =>
                                 {
-                                    pathRegExp = @"^.*aaa`.txt$";
+                                    pathRegExp = @".*aaa\.txt$";
                                     pathRegExpOptions = RegexOptions.IgnoreCase.ToString();
                                     contentRegExp = ".*111aaa.*";
                                     contentRegExpOptions = RegexOptions.IgnoreCase.ToString();
@@ -175,9 +181,9 @@ namespace Heleonix.Build.Tests.Tasks
                             Should("find all directories and files", () =>
                             {
                                 Assert.That(succeeded, Is.True);
-                                Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
+                                Assert.That(task.FoundFiles, Has.Length.EqualTo(9));
                                 Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
-                                Assert.That(task.FoundItems, Has.Length.EqualTo(15));
+                                Assert.That(task.FoundItems, Has.Length.EqualTo(16));
                             });
                         });
 
@@ -199,7 +205,7 @@ namespace Heleonix.Build.Tests.Tasks
                             {
                                 Arrange(() =>
                                 {
-                                    pathRegExp = @"(^.*/111$)|(^.*/111[a-z]+`.txt$)";
+                                    pathRegExp = @"(.*/111$)|(.*/111[a-z]+\.txt$)";
                                 });
 
                                 Teardown(() =>
@@ -266,9 +272,9 @@ namespace Heleonix.Build.Tests.Tasks
                         Should("find all files", () =>
                         {
                             Assert.That(succeeded, Is.True);
-                            Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
+                            Assert.That(task.FoundFiles, Has.Length.EqualTo(9));
                             Assert.That(task.FoundDirs, Has.Length.EqualTo(0));
-                            Assert.That(task.FoundItems, Has.Length.EqualTo(8));
+                            Assert.That(task.FoundItems, Has.Length.EqualTo(9));
                         });
                     });
 
@@ -298,9 +304,9 @@ namespace Heleonix.Build.Tests.Tasks
                         Should("find all directories and files", () =>
                         {
                             Assert.That(succeeded, Is.True);
-                            Assert.That(task.FoundFiles, Has.Length.EqualTo(8));
+                            Assert.That(task.FoundFiles, Has.Length.EqualTo(9));
                             Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
-                            Assert.That(task.FoundItems, Has.Length.EqualTo(15));
+                            Assert.That(task.FoundItems, Has.Length.EqualTo(16));
                         });
                     });
                 });

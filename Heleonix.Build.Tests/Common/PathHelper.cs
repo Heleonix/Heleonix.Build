@@ -1,11 +1,10 @@
 ﻿// <copyright file="PathHelper.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
 namespace Heleonix.Build.Tests.Common
 {
-    using System;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
@@ -49,22 +48,12 @@ namespace Heleonix.Build.Tests.Common
         /// <summary>
         /// Gets the Nuget executable path.
         /// </summary>
-        public static string NugetExe => Path.Combine(
-            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
-            "NuGet.CommandLine",
-            "4.7.1",
-            "tools",
-            "NuGet.exe");
+        public static string NugetExe => Path.Combine(CurrentDir, "NuGet.CommandLine", "tools", "NuGet.exe");
 
         /// <summary>
         /// Gets the ReportUnit executable path.
         /// </summary>
-        public static string ReportUnitExe => Path.Combine(
-            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
-            "ReportUnit",
-            "1.2.1",
-            "tools",
-            "ReportUnit.exe");
+        public static string ReportUnitExe => Path.Combine(CurrentDir, "ReportUnit", "tools", "ReportUnit.exe");
 
         /// <summary>
         /// Gets the report generator executable.
@@ -72,12 +61,17 @@ namespace Heleonix.Build.Tests.Common
         /// <value>
         /// The report generator executable.
         /// </value>
-        public static string ReportGeneratorExe => Path.Combine(
-            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
-            "ReportGenerator",
-            "3.1.2",
-            "tools",
-            "ReportGenerator.exe");
+        public static string ReportGeneratorExe => Path.Combine(CurrentDir, "ReportGenerator", "tools", "net6.0", "ReportGenerator.exe");
+
+        /// <summary>
+        /// Gets the NUnit console executable path.
+        /// </summary>
+        public static string NUnitConsoleExe => Path.Combine(CurrentDir, "NUnit.ConsoleRunner", "tools", "nunit3-console.exe");
+
+        /// <summary>
+        /// Gets the OpenCover executable path.
+        /// </summary>
+        public static string OpenCoverExe => Path.Combine(CurrentDir, "OpenCover", "tools", "OpenCover.Console.exe");
 
         /// <summary>
         /// Gets the main project path.
@@ -85,45 +79,9 @@ namespace Heleonix.Build.Tests.Common
         public static string BuildProjectFile => Path.Combine(CurrentDir, "Heleonix.Build.hxbproj");
 
         /// <summary>
-        /// Gets the NUnit console executable path.
-        /// </summary>
-        public static string NUnitConsoleExe => Path.Combine(
-            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
-            "NUnit.ConsoleRunner",
-            "3.8.0",
-            "tools",
-            "nunit3-console.exe");
-
-        /// <summary>
-        /// Gets the OpenCover executable path.
-        /// </summary>
-        public static string OpenCoverExe => Path.Combine(
-            Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
-            "OpenCover",
-            "4.6.519",
-            "tools",
-            "OpenCover.Console.exe");
-
-        /// <summary>
-        /// Gets the Git executable path.
-        /// </summary>
-        public static string GitExe => "git.exe";
-
-        /// <summary>
-        /// Gets the Svn executable path.
-        /// </summary>
-        public static string SvnExe => "svn.exe";
-
-        /// <summary>
-        /// Gets the SvnAdmin executable path.
-        /// </summary>
-        public static string SvnAdminExe => "svnadmin.exe";
-
-        /// <summary>
-        /// Gets the random file in current directory.
+        /// Generates the random file in current directory.
         /// </summary>
         /// <returns>The random file in current directory.</returns>
-        public static string GetRandomFileInCurrentDir() =>
-            Path.Combine(CurrentDir, Path.GetRandomFileName());
+        public static string GenerateRandomFileInCurrentDir() => Path.Combine(CurrentDir, Path.GetRandomFileName());
     }
 }

@@ -159,32 +159,32 @@ Example custom task with single required parameter
   <!--Endregion-->
 
   <!--Region Internal-->
-  <xs:element name="Hx_Internal_Net_Build_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NetBuild_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the Net_Build artifacts directory.</xs:documentation>
+      <xs:documentation>A path to the NetBuild artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Internal_NugetDeploy_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NugetDeploy_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the NugetDeploy artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Internal_NUnit_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NUnit_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the NUnit artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Internal_OpenCover_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_OpenCover_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the OpenCover artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Internal_ReportGenerator_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_ReportGenerator_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the ReportGenerator artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Internal_ReportUnit_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_ReportUnit_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the ReportUnit artifacts directory.</xs:documentation>
     </xs:annotation>
@@ -269,8 +269,7 @@ Example custom task with single required parameter
           <xs:attribute name="PathRegExp">
             <xs:annotation>
               <xs:documentation>
-                The .NET regular expression to include found paths.
-                Use ` instead of \ to escape symbols; use only / for path separators.
+                The .NET regular expression to include found paths. Use only / for path separators.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
@@ -552,11 +551,6 @@ Example custom task with single required parameter
           <xs:attribute name="TestOutputFile" use="required">
             <xs:annotation>
               <xs:documentation>The tests output file path.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="ErrorOutputFile" use="required">
-            <xs:annotation>
-              <xs:documentation>The errors output file path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="TestListFile">
@@ -948,66 +942,66 @@ Example custom task with single required parameter
   </xs:element>
   <!--Endregion-->
 
-  <!--Region Target: Hx_Net_Build-->
-  <xs:element name="Hx_Net_Build_SlnFile" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <!--Region Target: Hx_NetBuild-->
+  <xs:element name="Hx_NetBuild_SlnFile" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_Build_DeleteFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hx_NetBuild_DeleteFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>Files to delete during cleaning.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_Build_DeleteDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hx_NetBuild_DeleteDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>Directories to delete during cleaning.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_Build_CleanDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hx_NetBuild_CleanDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>Directories to clean but not delete during cleaning.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_Build_SnkFile" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hx_NetBuild_SnkFile" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The file with public/private keys pair to sign assemblies.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_Build_VersionedProjectFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hx_NetBuild_VersionedProjectFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>List of project files which should be updated with a new build number using current build counter.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_Build_CustomOutputFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+  <xs:element name="Hx_NetBuild_CustomOutputFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>Custom files to be copied to the artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <!--Endregion-->
 
-  <!--Region Target: Hx_Net_GitHubRelease-->
-  <xs:element name="Hx_Net_GitHubRelease_OwnerName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <!--Region Target: Hx_NetGitHubRelease-->
+  <xs:element name="Hx_NetGitHubRelease_OwnerName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The owner name (i.e. https://api.github.com/repos/:owner/) to call the GitHub Releases API.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_GitHubRelease_RepositoryName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NetGitHubRelease_RepositoryName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The repository name (i.e. https://api.github.com/repos/:owner/:repo) to call the GitHub Releases API.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_GitHubRelease_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NetGitHubRelease_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A personal access token to authorize to the GitHub Releases API.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_GitHubRelease_TagName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NetGitHubRelease_TagName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A name of the tag to create and/or from which the release should be created.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_Net_GitHubRelease_TagSource" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_NetGitHubRelease_TagSource" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
         Any branch or commit SHA from which the tag should be created.
@@ -1081,11 +1075,6 @@ Example custom task with single required parameter
   <xs:element name="Hx_NUnit_TestOutputFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The tests output file path relatively to the artifacts folder.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_NUnit_ErrorOutputFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The errors output file path relatively to the artifacts folder.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_NUnit_TestParameters" type="msb:StringPropertyType" substitutionGroup="msb:Property">

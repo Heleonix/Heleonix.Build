@@ -1,16 +1,18 @@
 <Project>
   <PropertyGroup>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
     <PackageReleaseNotes>
-      Changed methods to search a RepositoryUrl for the github release target;
-      Added possibility to push *.snupkg packages
+      Removed net461 as th target framework for heleonix tasks;
+      FileSystemSearch task applies path regular expresion to the segment after the StartDir when searches items in the Down direction;
+      Renamed Hx_Net_[TargetName] targets to Hx_Net[TargetName];
+      Updated naming conventions of tarets, properties etc.
     </PackageReleaseNotes>
 
     <Description>The MSBuild-based build framework for applications on CI and CD systems.</Description>
     <PackageTags>Heleonix build msbuild continuous integration delivery ci cd teamcity gocd jenkins task target</PackageTags>
 
     <Authors>Heleonix - Hennadii Lutsyshyn</Authors>
-    <Copyright>Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn</Copyright>
+    <Copyright>Copyright (c) Heleonix - Hennadii Lutsyshyn</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
     <RepositoryType>git</RepositoryType>

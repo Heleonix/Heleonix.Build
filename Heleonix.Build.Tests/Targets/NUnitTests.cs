@@ -1,5 +1,5 @@
 ﻿// <copyright file="NUnitTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -32,7 +32,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 simulatorHelper = new NetStandardSimulatorHelper();
 
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
+                MSBuildHelper.RunTestTarget("Hx_NetBuild", simulatorHelper.SolutionDir);
             });
 
             Act(() =>
@@ -53,7 +53,6 @@ namespace Heleonix.Build.Tests.Targets
 
                     Assert.That(succeeded, Is.False);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "NUnit.xml")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(artifactDir, "Errors.txt")), Is.True);
                     Assert.That(File.Exists(Path.Combine(artifactDir, "Output.txt")), Is.True);
                 });
 
@@ -70,7 +69,6 @@ namespace Heleonix.Build.Tests.Targets
 
                         Assert.That(succeeded, Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "NUnit.xml")), Is.True);
-                        Assert.That(File.Exists(Path.Combine(artifactDir, "Errors.txt")), Is.True);
                         Assert.That(File.Exists(Path.Combine(artifactDir, "Output.txt")), Is.True);
                     });
                 });

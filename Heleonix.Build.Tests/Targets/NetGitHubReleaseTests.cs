@@ -1,10 +1,11 @@
 ﻿// <copyright file="NetGitHubReleaseTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
 namespace Heleonix.Build.Tests.Targets
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Net;
@@ -35,11 +36,11 @@ namespace Heleonix.Build.Tests.Targets
             {
                 simulatorHelper = new NetStandardSimulatorHelper();
 
-                MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
+                MSBuildHelper.RunTestTarget("Hx_NetBuild", simulatorHelper.SolutionDir);
 
                 properties = new Dictionary<string, string>
                 {
-                    { "Hx_Net_GithubRelease_Token", "111111111" },
+                    { "Hx_NetGithubRelease_Token", "111111111" },
                 };
 
                 server = CommunicationHelper.LaunchHttpServer(
@@ -48,7 +49,7 @@ namespace Heleonix.Build.Tests.Targets
                     {
                         using (var reader = new StreamReader(request.InputStream))
                         {
-                            return reader.ReadToEnd().Contains("\"v1.0.0\"");
+                            return reader.ReadToEnd().Contains("\"v1.0.0\"", StringComparison.Ordinal);
                         }
                     },
                     ("application/json", "{ \"name\": \"v1.0.0\" }", HttpStatusCode.Created),
@@ -58,7 +59,7 @@ namespace Heleonix.Build.Tests.Targets
             Act(() =>
             {
                 succeeded = MSBuildHelper.RunTestTarget(
-                    "Hx_Net_GitHubRelease",
+                    "Hx_NetGitHubRelease",
                     simulatorHelper.SolutionDir,
                     properties);
             });

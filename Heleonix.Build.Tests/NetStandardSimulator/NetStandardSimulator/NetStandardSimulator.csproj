@@ -4,12 +4,12 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6;net45;net451;net452;net46</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>bin\Debug\netstandard1.6\NetStandardSimulator.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -18,7 +18,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>bin\Release\netstandard1.6\NetStandardSimulator.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -30,14 +29,19 @@
 
   <ItemGroup>
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.16.0.8981" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.45.0.54064" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="SecurityCodeScan" Version="3.2.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
 </Project>

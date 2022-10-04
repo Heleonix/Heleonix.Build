@@ -1,5 +1,5 @@
 // <copyright file="NUnitTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -51,7 +51,7 @@ namespace Heleonix.Build.Tests.Tasks
 
                 testListFile = null;
 
-                outputDir = PathHelper.GetRandomFileInCurrentDir();
+                outputDir = PathHelper.GenerateRandomFileInCurrentDir();
 
                 Directory.CreateDirectory(outputDir);
             });
@@ -65,7 +65,6 @@ namespace Heleonix.Build.Tests.Tasks
                     AgentsNumber = 3,
                     NUnitProjectFileOrTestFiles =
                         simulatorHelper.TestBinaries.Select(file => new TaskItem(file)).ToArray(),
-                    ErrorOutputFile = new TaskItem(Path.Combine(outputDir, "Errors.txt")),
                     TestOutputFile = new TaskItem(Path.Combine(outputDir, "Output.txt")),
                     TestResultFile = new TaskItem(Path.Combine(outputDir, "Results.txt")),
                     TestListFile = testListFile,
@@ -133,7 +132,7 @@ namespace Heleonix.Build.Tests.Tasks
                 {
                     Arrange(() =>
                     {
-                        testListFile = new TaskItem(PathHelper.GetRandomFileInCurrentDir());
+                        testListFile = new TaskItem(PathHelper.GenerateRandomFileInCurrentDir());
 
                         File.Create(testListFile.ItemSpec).Close();
                     });

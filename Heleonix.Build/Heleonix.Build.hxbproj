@@ -7,9 +7,9 @@
   <Import Project="Targets/Heleonix.Build.Internal.FindNetSln.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetProjects.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetTestBinaries.targets"/>
-  <Import Project="Targets/Heleonix.Build.Net.Build.targets"/>
-  <Import Project="Targets/Heleonix.Build.Net.GitHubRelease.targets"/>
-  <Import Project="Targets/Heleonix.Build.Net.Validate.targets"/>
+  <Import Project="Targets/Heleonix.Build.NetBuild.targets"/>
+  <Import Project="Targets/Heleonix.Build.NetGitHubRelease.targets"/>
+  <Import Project="Targets/Heleonix.Build.NetValidate.targets"/>
   <Import Project="Targets/Heleonix.Build.GitHubRelease.targets"/>
   <Import Project="Targets/Heleonix.Build.NugetDeploy.targets"/>
   <Import Project="Targets/Heleonix.Build.NUnit.targets"/>

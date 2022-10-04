@@ -22,14 +22,22 @@ So, if you follow standards as well, you even do not neeed to write custom build
 
 ## Writing custom scripts
 
-Naming Conventions:
+### Naming Conventions:
 
-Global properties: `Ns_WS|System|Input|Build_Property[File(s)|Dir(s)|Ext]`
+#### Global Property Name:
+`<Ns>[_System | _WS | _Input | _Build]_<PropertyName>[Dir(s) | File(s) | <Ext>]`
 
-Target Name: `Ns[_Net|JS|Internal]_Target[_B|A_Target]`
+`Hx_Internal_*` it is only to be used within the Heleonix.Build.
 
-Target Parameter: `Target_Parameter[File(s)|Dir(s)|Ext]`
+#### Target Name:
+`<Ns>_<TargetName>(_B_<TargetName> | _A_<TargetName>)`
 
-Target Variable: `_Target_Variable[File(s)|Dir(s)|Ext]`
+#### Target Parameter Name:
+`<TargetName>_<ParameterName>[Dir(s) | File(s) | <Ext>]`
 
-Use slash `/` in paths, not backslash `\`, because MSBuild replaces them on *nix OSs anyway
+#### Target Private Parameter Name:
+`_<TargetName>_<ParameterName>[Dir(s) | File(s) | <Ext>]`
+
+### Notes
+Use slash `/` in paths in MSBuild scripts, not backslash `\`, because MSBuild replaces them on *nix OSs anyway
+Use slash `/` in path regular expressions in Heleonix.Build tasks.

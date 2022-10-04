@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="Hx_Validate" AfterTargets="Hx_Net_Validate">
+  <Target Name="Hx_Validate" AfterTargets="Hx_NetValidate">
     <Message Text="> STARTING..."/>
 
     <Message Text="> 1/1: Validating files"/>

@@ -1,10 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../SharedProjectInfo.props" />
-
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
-
-    <IsPackable>false</IsPackable>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,13 +10,11 @@
     <DebugSymbols>true</DebugSymbols>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>bin\Debug\net472\Heleonix.Build.Tests.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>bin\Release\net472\Heleonix.Build.Tests.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -74,16 +69,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Heleonix.Execution" Version="1.0.0" />
     <PackageReference Include="Heleonix.Testing.NUnit" Version="1.4.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.8.166" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NuGet.CommandLine" Version="6.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NUnit.ConsoleRunner" Version="3.15.2" />
+    <PackageReference Include="OpenCover" Version="4.7.1221" />
+    <PackageReference Include="ReportGenerator" Version="5.1.10" />
+    <PackageReference Include="ReportUnit" Version="1.2.1" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.16.0.8981" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
+    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.45.0.54064" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="SecurityCodeScan" Version="3.2.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
   </ItemGroup>
 
   <ItemGroup>
@@ -123,4 +136,18 @@
     </None>
   </ItemGroup>
 
+  <Target Name="CopyDependenciesToOutput" AfterTargets="Build">
+    <ItemGroup>
+      <PkgNuGet_CommandLine Include="$(PkgNuGet_CommandLine)\**\*" />
+      <PkgNUnit_ConsoleRunner Include="$(PkgNUnit_ConsoleRunner)\**\*" />
+      <PkgOpenCover Include="$(PkgOpenCover)\**\*" />
+      <PkgReportGenerator Include="$(PkgReportGenerator)\**\*" />
+      <PkgReportUnit Include="$(PkgReportUnit)\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PkgNuGet_CommandLine)" DestinationFolder="$(OutDir)\NuGet.CommandLine\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgNUnit_ConsoleRunner)" DestinationFolder="$(OutDir)\NUnit.ConsoleRunner\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgOpenCover)" DestinationFolder="$(OutDir)\OpenCover\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgReportGenerator)" DestinationFolder="$(OutDir)\ReportGenerator\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgReportUnit)" DestinationFolder="$(OutDir)\ReportUnit\%(RecursiveDir)" />
+  </Target>
 </Project>

@@ -1,5 +1,5 @@
 ﻿// <copyright file="FileSystemSearch.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -54,8 +54,7 @@ namespace Heleonix.Build.Tasks
         public string Types { get; set; }
 
         /// <summary>
-        /// Gets or sets the .NET regular expression to include found paths.
-        /// Use ` instead of \ to escape symbols; use only / for path separators.
+        /// Gets or sets the .NET regular expression to include found paths. Use only / for path separators.
         /// </summary>
         public string PathRegExp { get; set; }
 
@@ -114,23 +113,19 @@ namespace Heleonix.Build.Tasks
                 return;
             }
 
-            var pathReplacement = Path.DirectorySeparatorChar == '\\'
-                ? "\\\\"
-                : Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture);
-
-            var options = string.IsNullOrEmpty(this.PathRegExpOptions)
+            var pathRegExpOptions = string.IsNullOrEmpty(this.PathRegExpOptions)
                         ? RegexOptions.IgnoreCase
                         : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.PathRegExpOptions);
             var pathRegExp = string.IsNullOrEmpty(this.PathRegExp)
                 ? null
-                : new Regex(this.PathRegExp.Replace("\\", pathReplacement).Replace('`', '\\').Replace("/", pathReplacement), options);
+                : new Regex(this.PathRegExp.Replace("/", new string(Path.DirectorySeparatorChar, 2)).Replace("//", "/"), pathRegExpOptions);
 
-            options = string.IsNullOrEmpty(this.ContentRegExpOptions)
+            var contentRegExpOptions = string.IsNullOrEmpty(this.ContentRegExpOptions)
                         ? RegexOptions.IgnoreCase
                         : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.ContentRegExpOptions);
             var contentRegExp = string.IsNullOrEmpty(this.ContentRegExp)
                 ? null
-                : new Regex(this.ContentRegExp, options);
+                : new Regex(this.ContentRegExp, contentRegExpOptions);
 
             var foundFiles = new List<ITaskItem>();
             var foundDirs = new List<ITaskItem>();
@@ -144,8 +139,10 @@ namespace Heleonix.Build.Tasks
                 this.PathRegExp + $" (Transformed: {pathRegExp})",
                 this.ContentRegExp);
 
+            var startDir = this.StartDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar);
             this.Search(
-                this.StartDir.ItemSpec.TrimEnd(Path.DirectorySeparatorChar),
+                startDir,
+                startDir.Length,
                 pathRegExp,
                 contentRegExp,
                 foundFiles,
@@ -161,6 +158,7 @@ namespace Heleonix.Build.Tasks
         /// Searches items in the specified directory.
         /// </summary>
         /// <param name="currentDir">The current directory path.</param>
+        /// <param name="startAt">A position in the <paramref name="currentDir"/> to apply the <paramref name="pathRegExp"/> from.</param>
         /// <param name="pathRegExp">The .NET regular expression to include found paths.</param>
         /// <param name="contentRegExp">The .NET regular expression to include by content.</param>
         /// <param name="foundFiles">The found files.</param>
@@ -168,6 +166,7 @@ namespace Heleonix.Build.Tasks
         /// <param name="foundItems">All the found items.</param>
         private void Search(
             string currentDir,
+            int startAt,
             Regex pathRegExp,
             Regex contentRegExp,
             ICollection<ITaskItem> foundFiles,
@@ -197,7 +196,7 @@ namespace Heleonix.Build.Tasks
                 }
 
                 if ((string.IsNullOrEmpty(this.Direction) || this.Direction == "Down")
-                    && ((pathRegExp == null) || pathRegExp.IsMatch(currentDir)))
+                    && ((pathRegExp == null) || pathRegExp.IsMatch(currentDir.Substring(startAt))))
                 {
                     var dirItem = new TaskItem(currentDir);
 
@@ -212,7 +211,7 @@ namespace Heleonix.Build.Tasks
             {
                 var files = Directory.GetFiles(currentDir)
                     .Where(f =>
-                        (pathRegExp?.IsMatch(f) ?? true)
+                        (pathRegExp?.IsMatch(f.Substring((string.IsNullOrEmpty(this.Direction) || this.Direction == "Down") ? startAt : 0)) ?? true)
                         && (contentRegExp?.IsMatch(File.ReadAllText(f)) ?? true))
                     .Select(f => new TaskItem(f));
 
@@ -231,6 +230,7 @@ namespace Heleonix.Build.Tasks
                 {
                     this.Search(
                         subDir,
+                        startAt,
                         pathRegExp,
                         contentRegExp,
                         foundFiles,
@@ -243,6 +243,7 @@ namespace Heleonix.Build.Tasks
             {
                 this.Search(
                     Path.GetDirectoryName(currentDir),
+                    0,
                     pathRegExp,
                     contentRegExp,
                     foundFiles,

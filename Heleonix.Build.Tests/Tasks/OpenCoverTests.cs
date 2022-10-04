@@ -1,5 +1,5 @@
 // <copyright file="OpenCoverTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -17,7 +17,7 @@ namespace Heleonix.Build.Tests.Tasks
     using static Heleonix.Testing.NUnit.Aaa.AaaSpec;
 
     /// <summary>
-    /// Tests the <see cref="NUnit"/>.
+    /// Tests the <see cref="OpenCover"/>.
     /// </summary>
     [ComponentTest(Type = typeof(OpenCover))]
     public static class OpenCoverTests
@@ -48,7 +48,7 @@ namespace Heleonix.Build.Tests.Tasks
 
             Arrange(() =>
             {
-                outputDir = PathHelper.GetRandomFileInCurrentDir();
+                outputDir = PathHelper.GenerateRandomFileInCurrentDir();
 
                 coverageResultFile = Path.Combine(outputDir, "Coverage.xml");
 
@@ -62,7 +62,6 @@ namespace Heleonix.Build.Tests.Tasks
                     { "Type", targetType },
                     { "TestFilter", testFilter },
                     { "NUnitProjectFileOrTestFiles", string.Join(";", simulatorHelper.TestBinaries) },
-                    { "ErrorOutputFile", Path.Combine(outputDir, "Errors.txt") },
                     { "TestOutputFile", Path.Combine(outputDir, "Output.txt") },
                     { "TestResultFile", Path.Combine(outputDir, "Results.txt") },
                 };

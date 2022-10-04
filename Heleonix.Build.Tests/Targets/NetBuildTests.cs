@@ -1,5 +1,5 @@
 ﻿// <copyright file="NetBuildTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -33,7 +33,7 @@ namespace Heleonix.Build.Tests.Targets
 
             Act(() =>
             {
-                succeeded = MSBuildHelper.RunTestTarget("Hx_Net_Build", simulatorHelper.SolutionDir);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_NetBuild", simulatorHelper.SolutionDir);
             });
 
             Teardown(() =>
@@ -45,7 +45,7 @@ namespace Heleonix.Build.Tests.Targets
             {
                 Should("succeed", () =>
                 {
-                    var artifactDir = simulatorHelper.GetArtifactDir("Hx_Net_Build");
+                    var artifactDir = simulatorHelper.GetArtifactDir("Hx_NetBuild");
 
                     var sourceProjectOutputDir = Path.Combine(
                         artifactDir,

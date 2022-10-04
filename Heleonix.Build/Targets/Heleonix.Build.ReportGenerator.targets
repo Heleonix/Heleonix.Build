@@ -3,8 +3,8 @@
     <Message Text="> STARTING..."/>
 
     <Message Text="> 1/2: Creating the artifacts directory"/>
-    <RemoveDir Directories="$(Hx_Internal_ReportGenerator_ArtifactDir)"/>
-    <MakeDir Directories="$(Hx_Internal_ReportGenerator_ArtifactDir)"/>
+    <RemoveDir Directories="$(Hx_ReportGenerator_ArtifactDir)"/>
+    <MakeDir Directories="$(Hx_ReportGenerator_ArtifactDir)"/>
 
     <PropertyGroup>
       <Hx_ReportGenerator_ReportTypes Condition="'$(Hx_ReportGenerator_ReportTypes)' == ''">Badges;Html</Hx_ReportGenerator_ReportTypes>
@@ -13,7 +13,7 @@
     <ItemGroup>
       <Hx_ReportGenerator_CoverageResultFiles
         Condition="'@(Hx_ReportGenerator_CoverageResultFiles)' == ''"
-        Include="$(Hx_Internal_OpenCover_ArtifactDir)/OpenCover.xml"/>
+        Include="$(Hx_OpenCover_ArtifactDir)/OpenCover.xml"/>
     </ItemGroup>
 
     <PropertyGroup>
@@ -26,7 +26,7 @@
     <Heleonix.Build.Tasks.ReportGenerator
       ReportGeneratorExe="@(Hx_System_ReportGeneratorExe)"
       ResultFiles="@(Hx_ReportGenerator_CoverageResultFiles)"
-      ReportDir="$(Hx_Internal_ReportGenerator_ArtifactDir)"
+      ReportDir="$(Hx_ReportGenerator_ArtifactDir)"
       ReportTypes="$(Hx_ReportGenerator_ReportTypes)"
       Verbosity="$(_Hx_ReportGenerator_Verbosity)"/>
 

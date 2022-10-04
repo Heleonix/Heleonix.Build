@@ -1,5 +1,5 @@
 // <copyright file="FileUpdateTests.cs" company="Heleonix - Hennadii Lutsyshyn">
-// Copyright (c) 2016-present Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
@@ -36,7 +36,7 @@ namespace Heleonix.Build.Tests.Tasks
 
             Arrange(() =>
             {
-                file = new TaskItem(PathHelper.GetRandomFileInCurrentDir());
+                file = new TaskItem(PathHelper.GenerateRandomFileInCurrentDir());
 
                 task = new FileUpdate
                 {
