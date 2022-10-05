@@ -136,7 +136,11 @@
     </None>
   </ItemGroup>
 
-  <Target Name="CopyDependenciesToOutput" AfterTargets="Build;Publish">
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <Target Name="CopyDependenciesToOutput_After_Build" AfterTargets="Build">
     <ItemGroup>
       <PkgNuGet_CommandLine Include="$(PkgNuGet_CommandLine)\**\*" />
       <PkgNUnit_ConsoleRunner Include="$(PkgNUnit_ConsoleRunner)\**\*" />
@@ -149,5 +153,20 @@
     <Copy SourceFiles="@(PkgOpenCover)" DestinationFolder="$(OutDir)\OpenCover\%(RecursiveDir)" />
     <Copy SourceFiles="@(PkgReportGenerator)" DestinationFolder="$(OutDir)\ReportGenerator\%(RecursiveDir)" />
     <Copy SourceFiles="@(PkgReportUnit)" DestinationFolder="$(OutDir)\ReportUnit\%(RecursiveDir)" />
+  </Target>
+
+  <Target Name="CopyDependenciesToOutput_After_Publish" AfterTargets="Publish">
+    <ItemGroup>
+      <PkgNuGet_CommandLine Include="$(PkgNuGet_CommandLine)\**\*" />
+      <PkgNUnit_ConsoleRunner Include="$(PkgNUnit_ConsoleRunner)\**\*" />
+      <PkgOpenCover Include="$(PkgOpenCover)\**\*" />
+      <PkgReportGenerator Include="$(PkgReportGenerator)\**\*" />
+      <PkgReportUnit Include="$(PkgReportUnit)\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PkgNuGet_CommandLine)" DestinationFolder="$(ProjectDir)$(PublishDir)\NuGet.CommandLine\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgNUnit_ConsoleRunner)" DestinationFolder="$(ProjectDir)$(PublishDir)\NUnit.ConsoleRunner\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgOpenCover)" DestinationFolder="$(ProjectDir)$(PublishDir)\OpenCover\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgReportGenerator)" DestinationFolder="$(ProjectDir)$(PublishDir)\ReportGenerator\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PkgReportUnit)" DestinationFolder="$(ProjectDir)$(PublishDir)\ReportUnit\%(RecursiveDir)" />
   </Target>
 </Project>
