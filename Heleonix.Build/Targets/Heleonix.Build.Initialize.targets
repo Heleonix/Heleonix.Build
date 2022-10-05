@@ -3,7 +3,8 @@
     <Hx_System_NUnitConsoleExe Include="$(MSBuildThisFileDirectory)../../NUnit.ConsoleRunner.*/tools/nunit3-console.exe"/>
     <Hx_System_ReportUnitExe Include="$(MSBuildThisFileDirectory)../../ReportUnit.*/tools/ReportUnit.exe"/>
     <Hx_System_OpenCoverConsoleExe Include="$(MSBuildThisFileDirectory)../../OpenCover.*/tools/OpenCover.Console.exe"/>
-    <Hx_System_ReportGeneratorExe Include="$(MSBuildThisFileDirectory)../../ReportGenerator.*/tools/ReportGenerator.exe"/>
+    <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' == 'Core'" Include="$(MSBuildThisFileDirectory)../../ReportGenerator.*/tools/net6.0/ReportGenerator.exe"/>
+    <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' != 'Core'" Include="$(MSBuildThisFileDirectory)../../ReportGenerator.*/tools/net47/ReportGenerator.exe"/>
     <Hx_System_NugetExe Include="$(MSBuildThisFileDirectory)../../NuGet.CommandLine.*/tools/NuGet.exe"/>
   </ItemGroup>
   <PropertyGroup>
