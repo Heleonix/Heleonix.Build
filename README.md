@@ -30,7 +30,10 @@ So, if you follow standards as well, you even do not neeed to write custom build
 `Hx_Internal_*` it is only to be used within the Heleonix.Build.
 
 #### Target Name:
-`<Ns>_<TargetName>(_B_<TargetName> | _A_<TargetName>)`
+`<Ns>_<TargetName>(_B_<CustomTargetName> | _A_<CustomTargetName>)`
+
+#### Target Name to override input parameters (just suggestion):
+`<Ns>_<TargetName>(_B_Overrides | _A_Overrides)`
 
 #### Target Parameter Name:
 `<TargetName>_<ParameterName>[Dir(s) | File(s) | <Ext>]`
