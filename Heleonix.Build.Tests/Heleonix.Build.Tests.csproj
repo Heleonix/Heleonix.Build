@@ -136,7 +136,7 @@
     </None>
   </ItemGroup>
 
-  <Target Name="CopyDependenciesToOutput" AfterTargets="Build">
+  <Target Name="CopyDependenciesToOutput" AfterTargets="Build;Publish">
     <ItemGroup>
       <PkgNuGet_CommandLine Include="$(PkgNuGet_CommandLine)\**\*" />
       <PkgNUnit_ConsoleRunner Include="$(PkgNUnit_ConsoleRunner)\**\*" />
