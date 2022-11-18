@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<!-- Region How To annotate custom stuff -->
+<!-- #region How To annotate custom stuff -->
 <!--
 Example custom itemtype with particular meta-data required
 <xs:element name="MyItem" substitutionGroup="msb:Item">
@@ -37,16 +37,16 @@ Example custom task with single required parameter
   </xs:complexType>
 </xs:element>
 -->
-<!--Endregion-->
+<!--#endregion-->
 
 <xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:include
-    schemaLocation="C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
 
-  <!--Region External-->
+  <!--#region External-->
   <xs:element name="GO_PIPELINE_COUNTER" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A GoCD pipeline counter.</xs:documentation>
@@ -72,15 +72,14 @@ Example custom task with single required parameter
       <xs:documentation>A directory where TeamCity si working on the solution.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region System-->
+  <!--#region System-->
   <xs:element name="Hx_System_GitHubAPIUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A url of the GitHub API. Default value is https://api.github.com</xs:documentation>
     </xs:annotation>
   </xs:element>
-
   <xs:element name="Hx_System_NUnitConsoleExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the NUnit console executable.</xs:documentation>
@@ -106,9 +105,19 @@ Example custom task with single required parameter
       <xs:documentation>A path to the Nuget executable.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <xs:element name="Hx_System_DocFXExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the DocFX executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_GitExe" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>A path to the Git client CLI executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
 
-  <!--Region WS-->
+  <!--#region WS-->
   <xs:element name="Hx_WS_CIType" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A type of continuous integration system: Dev, GoCD, Jenkins, TeamCity.</xs:documentation>
@@ -119,15 +128,19 @@ Example custom task with single required parameter
       <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
     </xs:annotation>
   </xs:element>
-
   <xs:element name="Hx_WS_BuildProjFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The build project file defining workspace-specific overrides.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <xs:element name="Hx_WS_SCMUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The SCM url of the repository, which was downloaded into the Hx_WS_Dir.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
 
-  <!--Region Input-->
+  <!--#region Input-->
   <xs:element name="Hx_Input_Targets" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A list of targets to run.</xs:documentation>
@@ -148,17 +161,17 @@ Example custom task with single required parameter
       <xs:documentation>A file to override everything up to solution-specific definitions.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Build-->
+  <!--#region Build-->
   <xs:element name="Hx_Build_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the root artifacts directory, where targets produce their artifacts.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Internal-->
+  <!--#region Internal-->
   <xs:element name="Hx_NetBuild_ArtifactDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the NetBuild artifacts directory.</xs:documentation>
@@ -189,9 +202,9 @@ Example custom task with single required parameter
       <xs:documentation>A path to the ReportUnit artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Tasks-->
+  <!--#region Tasks-->
   <xs:element name="Heleonix.Build.Tasks.DirectoryClean" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Deletes contents of a directory, but not the directory itself.</xs:documentation>
@@ -911,25 +924,25 @@ Example custom task with single required parameter
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_Internal_FindNetSln-->
+  <!--#region Target: Hx_Internal_FindNetSln-->
   <xs:element name="Hx_Internal_FindNetSln_WSDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the workspace directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_Internal_FindNetProjects-->
+  <!--#region Target: Hx_Internal_FindNetProjects-->
   <xs:element name="Hx_Internal_FindNetProjects_SlnFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the solution file to read projects from.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_Internal_FindNetTestBinaries-->
+  <!--#region Target: Hx_Internal_FindNetTestBinaries-->
   <xs:element name="Hx_Internal_FindNetTestBinaries_StartDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the start directory.</xs:documentation>
@@ -940,9 +953,9 @@ Example custom task with single required parameter
       <xs:documentation>A configuration, i.e. "Release", "Debug" etc.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_NetBuild-->
+  <!--#region Target: Hx_NetBuild-->
   <xs:element name="Hx_NetBuild_SlnFile" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>A path to the solution file to proceed with.</xs:documentation>
@@ -978,50 +991,12 @@ Example custom task with single required parameter
       <xs:documentation>Custom files to be copied to the artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_NetGitHubRelease-->
-  <xs:element name="Hx_NetGitHubRelease_OwnerName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The owner name (i.e. https://api.github.com/repos/:owner/) to call the GitHub Releases API.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_NetGitHubRelease_RepositoryName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The repository name (i.e. https://api.github.com/repos/:owner/:repo) to call the GitHub Releases API.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_NetGitHubRelease_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A personal access token to authorize to the GitHub Releases API.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_NetGitHubRelease_TagName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>A name of the tag to create and/or from which the release should be created.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_NetGitHubRelease_TagSource" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>
-        Any branch or commit SHA from which the tag should be created.
-        It is ignored if the tag already exists. Otherwise, name of the default branch (usually master) is used.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <!--Endregion-->
+  <!--#region Target: Hx_NetGitHubRelease-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_GitHubRelease-->
-  <xs:element name="Hx_GitHubRelease_OwnerName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The owner name (i.e. https://api.github.com/repos/:owner/) to call the GitHub Releases API.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:element name="Hx_GitHubRelease_RepositoryName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>The repository name (i.e. https://api.github.com/repos/:owner/:repo) to call the GitHub Releases API.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
+  <!--#region Target: Hx_GitHubRelease-->
   <xs:element name="Hx_GitHubRelease_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A personal access token to authorize to the GitHub Releases API.</xs:documentation>
@@ -1040,9 +1015,9 @@ Example custom task with single required parameter
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_NugetDeploy-->
+  <!--#region Target: Hx_NugetDeploy-->
   <xs:element name="Hx_NugetDeploy_APIKey" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The API key.</xs:documentation>
@@ -1064,9 +1039,9 @@ Example custom task with single required parameter
       <xs:documentation>The configuration file path.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_NUnit-->
+  <!--#region Target: Hx_NUnit-->
   <xs:element name="Hx_NUnit_TestResultFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The NUnit tests result file path relatively to the artifacts folder.</xs:documentation>
@@ -1134,9 +1109,9 @@ Example custom task with single required parameter
       <xs:documentation>The tests list file path.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_OpenCover-->
+  <!--#region Target: Hx_OpenCover-->
   <xs:element name="Hx_OpenCover_CoverageResultFile" type="msb:StringPropertyType"
               substitutionGroup="msb:Property">
     <xs:annotation>
@@ -1204,9 +1179,9 @@ Example custom task with single required parameter
       <xs:documentation>The PDB search directories path.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_ReportGenerator-->
+  <!--#region Target: Hx_ReportGenerator-->
   <xs:element name="Hx_ReportGenerator_ReportTypes" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The report types to generate, separated by semicolon: Badges, Html, HtmlSummary, Latex, LatexSummary, TextSummary, Xml, XmlSummary.</xs:documentation>
@@ -1218,13 +1193,31 @@ Example custom task with single required parameter
       <xs:documentation>The coverage results file path. Default value is the OpenCover.xml in the OpenCover's artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
 
-  <!--Region Target: Hx_ReportUnit-->
+  <!--#region Target: Hx_ReportUnit-->
   <xs:element name="Hx_ReportUnit_TestResultFile" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The NUnit's tests result XML file path. Default value is the NUnit.xml in the NUnit's  artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <!--Endregion-->
+  <!--#endregion-->
+
+  <!--#region Target: Hx_DocFX-->
+  <xs:element name="Hx_DocFX_RepositoryUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A repository url to download the documentation project.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_DocFX_BranchName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The particular branch where the documentation project is located.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_DocFX_CommitMessage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The commit message to upload the generated documentation back using the repository url.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
 </xs:schema>

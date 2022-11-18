@@ -40,7 +40,7 @@ namespace Heleonix.Build.Tests.Targets
 
                 properties = new Dictionary<string, string>
                 {
-                    { "Hx_NetGithubRelease_Token", "111111111" },
+                    { "Hx_GithubRelease_Token", "111111111" },
                 };
 
                 server = CommunicationHelper.LaunchHttpServer(

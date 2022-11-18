@@ -6,6 +6,8 @@
     <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' == 'Core'" Include="$(MSBuildThisFileDirectory)../../ReportGenerator.*/tools/net6.0/ReportGenerator.exe"/>
     <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' != 'Core'" Include="$(MSBuildThisFileDirectory)../../ReportGenerator.*/tools/net47/ReportGenerator.exe"/>
     <Hx_System_NugetExe Include="$(MSBuildThisFileDirectory)../../NuGet.CommandLine.*/tools/NuGet.exe"/>
+    <Hx_System_DocFXExe Include="$(MSBuildThisFileDirectory)../../docfx.console.*/tools/docfx.exe"/>
+    <Hx_System_GitExe Include="$(MSBuildThisFileDirectory)../../GitForWindows.*/tools/git-cmd.exe"/>
   </ItemGroup>
   <PropertyGroup>
     <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' == 'Core'">dotnet msbuild</Hx_System_MSBuildExe>
@@ -21,7 +23,14 @@
     <Hx_WS_Dir Condition="'$(GO_PIPELINE_COUNTER)' != ''">$(MSBuildStartupDirectory)</Hx_WS_Dir>
     <Hx_WS_Dir Condition="'$(JENKINS_URL)' != ''">$(WORKSPACE)</Hx_WS_Dir>
     <Hx_WS_Dir Condition="'$(TEAMCITY_VERSION)' != ''">$(system_agent_work_dir)</Hx_WS_Dir>
+    <Hx_WS_SCMUrl Condition="'$(GO_MATERIAL_URL)' != ''">$(GO_MATERIAL_URL)</Hx_WS_SCMUrl>
+    <!--TODO: for Jenkins-->
+    <!--TODO: for TeamCity-->
     <Hx_WS_BuildProjFile>$(Hx_WS_Dir)/*.hxbproj"</Hx_WS_BuildProjFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    
   </PropertyGroup>
 
   <Target Name="Hx_Initialize">
@@ -47,6 +56,7 @@
       <Hx_OpenCover_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_OpenCover</Hx_OpenCover_ArtifactDir>
       <Hx_ReportGenerator_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportGenerator</Hx_ReportGenerator_ArtifactDir>
       <Hx_ReportUnit_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_ReportUnit</Hx_ReportUnit_ArtifactDir>
+      <Hx_DocFX_ArtifactDir>$(Hx_Build_ArtifactDir)/Hx_DocFX</Hx_DocFX_ArtifactDir>
     </PropertyGroup>
 
     <Message Text="> 1/1: Primary initialization:"/>
@@ -55,13 +65,20 @@
     <Message Text="@Hx_System_OpenCoverConsoleExe: @(Hx_System_OpenCoverConsoleExe)"/>
     <Message Text="@Hx_System_ReportGeneratorExe: @(Hx_System_ReportGeneratorExe)"/>
     <Message Text="@Hx_System_NugetExe: @(Hx_System_NugetExe)"/>
+    <Message Text="@Hx_System_DocFXExe: @(Hx_System_DocFXExe)"/>
+    <Message Text="@Hx_System_GitExe: @(Hx_System_GitExe)"/>
+    <Message Text="$Hx_System_MSBuildExe: $(Hx_System_MSBuildExe)"/>
+    <Message Text="$Hx_System_GitHubAPIUrl: $(Hx_System_GitHubAPIUrl)"/>
+
     <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
     <Message Text="$Hx_WS_CIType: $(Hx_WS_CIType)"/>
     <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>
+
     <Message Text="$Hx_Input_Configuration: $(Hx_Input_Configuration)"/>
     <Message Text="$Hx_Input_Verbosity: $(Hx_Input_Verbosity)"/>
     <Message Text="$Hx_Input_Targets: $(Hx_Input_Targets)"/>
     <Message Text="$Hx_Input_BuildProjFile: $(Hx_Input_BuildProjFile)"/>
+
     <Message Text="$Hx_Build_ArtifactDir: $(Hx_Build_ArtifactDir)"/>
 
     <Message Text="> DONE!"/>
