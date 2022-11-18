@@ -3,10 +3,10 @@
     <Message Text="> STARTING..."/>
 
     <Message
-      Condition="'$(Hx_NetGitHubRelease_TagName)' == ''"
-      Text="> 1/2: Tag name was not specified. Searching for a version to use it as a tag name in *.props files"/>
+      Condition="'$(Hx_GitHubRelease_TagName)' == ''"
+      Text="> 1/1: Tag name was not specified. Searching for a version to use it as a tag name in *.props files"/>
     <Heleonix.Build.Tasks.FileSystemSearch
-      Condition="'$(Hx_NetGitHubRelease_TagName)' == ''"
+      Condition="'$(Hx_GitHubRelease_TagName)' == ''"
       StartDir="$(Hx_NetBuild_ArtifactDir)"
       PathRegExp="(?&lt;!/(bin|[^/]+\.Tests)/.+)\.props$"
       ContentRegExp="(?&lt;=&lt;%5Cs*Version%5Cs*&gt;).+(?=(-.+)?&lt;)"
@@ -14,47 +14,17 @@
       <Output TaskParameter="FoundFiles" PropertyName="_Hx_NetGitHubRelease_VersioningFile"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
     <Heleonix.Build.Tasks.FileRead
-      Condition="'$(Hx_NetGitHubRelease_TagName)' == ''"
+      Condition="'$(Hx_GitHubRelease_TagName)' == ''"
       File="$(_Hx_NetGitHubRelease_VersioningFile)"
       RegExp="(?&lt;=&lt;%5Cs*Version%5Cs*&gt;).+(?=(-.+)?&lt;)">
       <Output TaskParameter="Matches" ItemName="_Hx_NetGitHubRelease_Version"/>
     </Heleonix.Build.Tasks.FileRead>
     <PropertyGroup>
-      <Hx_NetGitHubRelease_TagName Condition="'$(Hx_NetGitHubRelease_TagName)' == ''">v%(_Hx_NetGitHubRelease_Version.Match)</Hx_NetGitHubRelease_TagName>
-    </PropertyGroup>
-
-    <Message
-      Condition="'$(Hx_NetGitHubRelease_OwnerName)' == '' Or '$(Hx_NetGitHubRelease_RepositoryName)' == ''"
-      Text="> 2/2: Owner name or repository name was not specified. Searching for a repository url to extract them in *.props files"/>
-    <Heleonix.Build.Tasks.FileSystemSearch
-      Condition="'$(Hx_NetGitHubRelease_OwnerName)' == '' Or '$(Hx_NetGitHubRelease_RepositoryName)' == ''"
-      StartDir="$(Hx_NetBuild_ArtifactDir)"
-      PathRegExp="(?&lt;!/(bin|[^/]+\.Tests)/.+)\.props$"
-      ContentRegExp="(?&lt;=&lt;%5Cs*RepositoryUrl%5Cs*&gt;).+(?=(-.+)?&lt;)"
-      Types="Files">
-      <Output TaskParameter="FoundFiles" PropertyName="_Hx_NetGitHubRelease_RepositoryUrlFile"/>
-    </Heleonix.Build.Tasks.FileSystemSearch>
-    <Heleonix.Build.Tasks.FileRead
-      Condition="'$(Hx_NetGitHubRelease_OwnerName)' == '' Or '$(Hx_NetGitHubRelease_RepositoryName)' == ''"
-      File="$(_Hx_NetGitHubRelease_RepositoryUrlFile)"
-      RegExp="(?&lt;=&lt;%5Cs*RepositoryUrl%5Cs*&gt;).+(?=(-.+)?&lt;)">
-      <Output TaskParameter="Matches" ItemName="_Hx_NetGitHubRelease_RepositoryUrl"/>
-    </Heleonix.Build.Tasks.FileRead>
-    <!--
-        Extracts owner and repository from urls in the following format:
-        https://github.com/Heleonix/Heleonix.Build.git
-    -->
-    <PropertyGroup>
-      <Hx_NetGitHubRelease_OwnerName Condition="'$(Hx_NetGitHubRelease_OwnerName)' == ''">$([System.Text.RegularExpressions.Regex]::Match(%(_Hx_NetGitHubRelease_RepositoryUrl.Match), '[^/]+(?=/[^/]+$)'))</Hx_NetGitHubRelease_OwnerName>
-      <Hx_NetGitHubRelease_RepositoryName Condition="'$(Hx_NetGitHubRelease_RepositoryName)' == ''">$([System.Text.RegularExpressions.Regex]::Match(%(_Hx_NetGitHubRelease_RepositoryUrl.Match), '(?&lt;=/)[^/]+$'))</Hx_NetGitHubRelease_RepositoryName>
+      <_Hx_NetGitHubRelease_TagName Condition="'$(Hx_GitHubRelease_TagName)' == ''">v%(_Hx_NetGitHubRelease_Version.Match)</_Hx_NetGitHubRelease_TagName>
     </PropertyGroup>
 
     <PropertyGroup>
-      <Hx_GitHubRelease_OwnerName>$(Hx_NetGitHubRelease_OwnerName)</Hx_GitHubRelease_OwnerName>
-      <Hx_GitHubRelease_RepositoryName>$(Hx_NetGitHubRelease_RepositoryName)</Hx_GitHubRelease_RepositoryName>
-      <Hx_GitHubRelease_Token>$(Hx_NetGitHubRelease_Token)</Hx_GitHubRelease_Token>
-      <Hx_GitHubRelease_TagName>$(Hx_NetGitHubRelease_TagName)</Hx_GitHubRelease_TagName>
-      <Hx_GitHubRelease_TagSource>$(Hx_NetGitHubRelease_TagSource)</Hx_GitHubRelease_TagSource>
+      <Hx_GitHubRelease_TagName>$(_Hx_NetGitHubRelease_TagName)</Hx_GitHubRelease_TagName>
     </PropertyGroup>
 
     <Message Text="> DONE!"/>

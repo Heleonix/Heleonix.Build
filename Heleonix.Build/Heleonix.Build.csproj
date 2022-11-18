@@ -25,22 +25,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Heleonix.Build.Pipelines.targets" />
-    <None Remove="Targets\Heleonix.Build.GitHubRelease.targets" />
-    <None Remove="Targets\Heleonix.Build.Internal.FindNetProjects.targets" />
-    <None Remove="Targets\Heleonix.Build.Internal.FindNetSln.targets" />
-    <None Remove="Targets\Heleonix.Build.Internal.FindNetTestBinaries.targets" />
-    <None Remove="Targets\Heleonix.Build.NetGitHubRelease.targets" />
-    <None Remove="Targets\Heleonix.Build.NetValidate.targets" />
-    <None Remove="Targets\Heleonix.Build.Validate.targets" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Heleonix.Build.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Targets\Heleonix.Build.DocFX.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Targets\Heleonix.Build.Internal.FindNetTestBinaries.targets">
@@ -113,11 +105,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NuGet.CommandLine" Version="6.3.0"/>
+    <PackageReference Include="NuGet.CommandLine" Version="6.3.0" />
     <PackageReference Include="NUnit.ConsoleRunner" Version="3.15.2" />
     <PackageReference Include="OpenCover" Version="4.7.1221" />
     <PackageReference Include="ReportGenerator" Version="5.1.10" />
     <PackageReference Include="ReportUnit" Version="1.2.1" />
+    <PackageReference Include="GitForWindows" Version="2.38.1" />
+    <PackageReference Include="docfx.console" Version="2.59.4" PrivateAssets="all" IncludeAssets="runtime; native; contentfiles; analyzers" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
       <PrivateAssets>all</PrivateAssets>

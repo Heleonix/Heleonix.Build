@@ -4,6 +4,7 @@
 
   <!--Targets-->
   <Import Project="Targets/Heleonix.Build.Initialize.targets"/>
+  <Import Project="Targets/Heleonix.Build.DocFX.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetSln.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetProjects.targets"/>
   <Import Project="Targets/Heleonix.Build.Internal.FindNetTestBinaries.targets"/>
