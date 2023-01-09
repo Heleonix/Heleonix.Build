@@ -1,14 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heleonix.Build", "Heleonix.Build\Heleonix.Build.csproj", "{FE372189-CC03-41CC-8D34-9A40934DA118}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heleonix.Build.Tests", "Heleonix.Build.Tests\Heleonix.Build.Tests.csproj", "{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{634094BF-6A72-43A2-AF01-4714A579E1E0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9168B3E0-883B-4E3E-8DA4-157D663159E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBAD7833-D38E-471E-B3B0-0E287D2789CA}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,10 +32,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{FE372189-CC03-41CC-8D34-9A40934DA118} = {634094BF-6A72-43A2-AF01-4714A579E1E0}
-		{9CB45A6D-FBF1-413C-8C44-02ABF64EDFF6} = {9168B3E0-883B-4E3E-8DA4-157D663159E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DADF4FE8-717D-467C-948E-0F170CDA33E6}
