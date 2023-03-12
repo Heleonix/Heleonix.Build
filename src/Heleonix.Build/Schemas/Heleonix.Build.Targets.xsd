@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- #region How To annotate custom stuff -->
+<!--
+Example custom itemtype with particular meta-data required
+<xs:element name="MyItem" substitutionGroup="msb:Item">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:SimpleItemType">
+        <xs:sequence maxOccurs="1">
+          <xs:choice>
+            <xs:element name="MyMetaData" type="xs:string"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+Example custom itemtype with NO meta-data
+<xs:element name="MySimpleItem" type="msb:SimpleItemType" substitutionGroup="msb:Item"/>
+
+Example custom itemtype with ANY meta-data
+<xs:element name="MyFlexibleItem" type="msb:GenericItemType" substitutionGroup="msb:Item"/>
+
+Example custom property that allows string content only
+<xs:element name="MySimpleProperty" type="msb:StringPropertyType" substitutionGroup="msb:Property"/>
+-->
+<!--#endregion-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <!--#region Target: Hx_ChangeLog-->
+  <xs:element name="Hx_ChangeLog_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the ChangeLog artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx_ChangeLog_CustomChanges" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The list of custom changes to generates change logs with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_ChangeLog_GitHubCommit-->
+  <xs:element name="Hx_ChangeLog_GitHubCommit_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A personal access token to authorize to the GitHub Releases API.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ChangeLog_GitHubCommit_VersionTagRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A regular expression to extract a version from a tag name of the latest release in format 11.22.33.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ChangeLog_GitHubCommit_MajorChangeRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A regular expression to identify a major change.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ChangeLog_GitHubCommit_MinorChangeRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A regular expression to identify a minor change.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ChangeLog_GitHubCommit_PatchChangeRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A regular expression to identify a patch change.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ChangeLog_GitHubCommit_ChangeLogRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A regular expression to capture a change for the change log.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ChangeLog_GitHubCommit_RegExpOptions" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The .NET regular expression options for regexp patterns.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx_ChangeLog_GitHubCommit_TemplateFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The list of template files to generates change logs from.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_DocFX-->
+  <xs:element name="Hx_DocFX_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the DocFX artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_DocFX_Git-->
+  <xs:element name="Hx_DocFX_Git_RepositoryUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A repository url to download the documentation project.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_DocFX_Git_BranchName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The particular branch where the documentation project is located.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_DocFX_Git_CommitMessage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The commit message to upload the generated documentation back using the repository url.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_NetBuild-->
+  <xs:element name="Hx_NetBuild_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the NetBuild artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_SlnFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the solution file to build.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_SnkFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The file with public/private keys pair to sign assemblies.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The semantic version. If specified, it is passed as /p:Version property to the Build target.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_AssemblyVersion" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The .NET Assembly version, like '1.0.0.0'. If specified, it is passed as /p:AssemblyVersion property to the Build target.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_ReleaseNotesFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A text file with package release notes. If specified, it is passed as /p:PackageReleaseNotes property into the Build target.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx_NetBuild_DeleteFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Files to delete during cleaning.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_DeleteDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Directories to delete during cleaning.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_CleanDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Directories to clean but not delete during cleaning.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetBuild_CustomArtifactsFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>Custom files to be copied to the artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_NetValidate-->
+  <xs:element name="Hx_NetValidate_RegExpOptions" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Regular expression options to use when executing validation for each Hx_NetValidate_Files.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NetValidate_Files" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The list of files with regular expressions defined as metadata to validate.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_NugetPublish-->
+  <xs:element name="Hx_NugetPublish_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the NugetDeploy artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NugetPublish_APIKey" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The API key.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NugetPublish_SourceURL" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The source path to publish to (nuget.org etc.).</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NugetPublish_ConfigFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The configuration file path.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NugetPublish_Version" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The semantic version. If specified, it is passed as /p:Version property to the Pack target.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NugetPublish_ReleaseNotesFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A text file with package release notes. If specified, it is passed as /p:PackageReleaseNotes property into the Pack target.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx_NugetPublish_PackageFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The package files to publish.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_NUnit-->
+  <xs:element name="Hx_NUnit_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the NUnit artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_TestParameters" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The tests parameters, specified in the form name=value.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_TestFilter" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A tests filter to filter tests to run.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_AgentsNumber" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The agents number.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_UseTeamCityServiceMessages" type="msb:StringPropertyType"
+              substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Indicates whether to use TeamCity service messages.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_Framework" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The framework to use for tests. Examples: "mono", "net-4.5", "v4.0", "2.0", "mono-4.0".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_ProcessIsolation" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Process isolation for test assemblies: Single, Separate, Multiple.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_DomainIsolation" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Domain isolation for test assemblies: None, Single, Multiple.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_ShadowCopy" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_ContinueOnError" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The ContinuOnError property for all MSBuild tasks, default value is ErrorAndContinue.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_NUnit_TestListFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The tests list file path.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx_NUnit_NUnitProjectOrTestFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The NUnit project or tests files paths.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_OpenCover-->
+  <xs:element name="Hx_OpenCover_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the OpenCover artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_MinClassCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_MinMethodCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The minimum method coverage, in range: 0% - 100%.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_MinBranchCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The minimum branch coverage, in range: 0% - 100%.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_MinLineCoverage" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The minimum line coverage, in range: 0% - 100%.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_ExcludeByAttributeFilters" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The filters to exclude code from coverage by attribute in format: Name*;*Attribute.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_Filters" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_ShowUnvisited" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Show unvisited methods and classes after coverage finishes and results are presented.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_Register" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The type of registration of the OpenCover profiler: auto, user, path32, path64.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_MaxVisitCount" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_ContinueOnError" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The ContinuOnError property for all MSBuild tasks.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx_OpenCover_Target" type="msb:GenericItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The target executable path with command line arguments and its type in metadata.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_PdbSearchDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The PDB search directories path.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_Release_GitHub-->
+  <xs:element name="Hx_Release_GitHub_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A personal access token to authorize to the GitHub Releases API.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Release_GitHub_TagName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A name of the tag to create and/or from which the release should be created.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Release_GitHub_ReleaseNotesFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A file with release notes for a release to be created.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Release_GitHub_TagSource" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>
+        Any branch or commit SHA from which the tag should be created.
+        It is ignored if the tag already exists. Otherwise, name of the default branch (usually master) is used.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_ReportGenerator-->
+  <xs:element name="Hx_ReportGenerator_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportGenerator artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ReportGenerator_ReportTypes" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The report types to generate, separated by semicolon: Badges, Html, HtmlSummary, Latex, LatexSummary, TextSummary, Xml, XmlSummary.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="Hx_ReportGenerator_CoverageResultFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The coverage results file path. Default value is the OpenCover.xml in the OpenCover's artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Target: Hx_ReportUnit-->
+  <xs:element name="Hx_ReportUnit_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportUnit artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_ReportUnit_TestResultFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The NUnit's tests result XML file path. Default value is the NUnit.xml in the NUnit's  artifacts directory.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+</xs:schema>

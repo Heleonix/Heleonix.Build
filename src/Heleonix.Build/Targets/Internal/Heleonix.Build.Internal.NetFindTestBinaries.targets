@@ -1,0 +1,13 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_Internal_NetFindTestBinaries" Outputs="@(_Hx_Internal_NetFindTestBinaries_BinaryFiles)">
+
+    <Heleonix.Build.Tasks.FileSystemSearch
+      StartDir="$(Hx_Internal_NetFindTestBinaries_StartDir)"
+      PathRegExp="/([^/]+)/bin/$(Hx_Input_Configuration)/[^/]+/publish/\1\.(?&lt;=\.Tests\.)(dll|exe)$"
+      Types="Files">
+      <Output TaskParameter="FoundFiles" ItemName="_Hx_Internal_NetFindTestBinaries_BinaryFiles"/>
+    </Heleonix.Build.Tasks.FileSystemSearch>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

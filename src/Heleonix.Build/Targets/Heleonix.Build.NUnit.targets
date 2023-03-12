@@ -1,0 +1,50 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_NUnit">
+    <Message Text="> STARTING..."/>
+
+    <Message Text="> 1/2: Creating the artifacts directory"/>
+    <RemoveDir Directories="$(Hx_NUnit_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_NUnit_ArtifactsDir)"/>
+
+    <PropertyGroup>
+      <Hx_NUnit_ContinueOnError Condition="'$(Hx_NUnit_ContinueOnError)' == ''">ErrorAndContinue</Hx_NUnit_ContinueOnError>
+    </PropertyGroup>
+
+    <MSBuild
+      Condition="'@(Hx_NUnit_NUnitProjectOrTestFiles)' == ''"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="Hx_Internal_NetFindTestBinaries"
+      Properties="Hx_Internal_NetFindTestBinaries_StartDir=$(Hx_NetBuild_ArtifactsDir)">
+      <Output TaskParameter="TargetOutputs" ItemName="Hx_NUnit_NUnitProjectOrTestFiles"/>
+    </MSBuild>
+
+    <PropertyGroup>
+      <_Hx_NUnit_TraceLevel Condition="'$(Hx_Input_Verbosity)' == 'Quiet'">Off</_Hx_NUnit_TraceLevel>
+      <_Hx_NUnit_TraceLevel Condition="'$(Hx_Input_Verbosity)' == 'Normal'">Warning</_Hx_NUnit_TraceLevel>
+      <_Hx_NUnit_TraceLevel Condition="'$(Hx_Input_Verbosity)' == 'Detailed'">Verbose</_Hx_NUnit_TraceLevel>
+    </PropertyGroup>
+
+    <Message Text="> 2/2: Running NUnit"/>
+    <Heleonix.Build.Tasks.NUnit
+      ContinueOnError="$(Hx_NUnit_ContinueOnError)"
+      NUnitConsoleExe="$(Hx_System_NUnitConsoleExe)"
+      NUnitProjectFileOrTestFiles="@(Hx_NUnit_NUnitProjectOrTestFiles)"
+      AgentsNumber="$(Hx_NUnit_AgentsNumber)"
+      Configuration="$(Hx_Input_Configuration)"
+      DomainIsolation="$(Hx_NUnit_DomainIsolation)"
+      ShadowCopy="$(Hx_NUnit_ShadowCopy)"
+      Framework="$(Hx_NUnit_Framework)"
+      TestResultFile="$(Hx_NUnit_ArtifactsDir)/NUnit.xml"
+      TestFilter="$(Hx_NUnit_TestFilter)"
+      TraceLevel="$(_Hx_NUnit_TraceLevel)"
+      TestListFile="$(Hx_NUnit_TestListFile)"
+      TestOutputFile="$(Hx_NUnit_ArtifactsDir)/Output.txt"
+      TestParameters="$(Hx_NUnit_TestParameters)"
+      UseTeamCityServiceMessages="$(Hx_NUnit_UseTeamCityServiceMessages)"
+      ProcessIsolation="$(Hx_NUnit_ProcessIsolation)"/>
+
+    <Message Text="> DONE!"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

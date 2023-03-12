@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- #region How To annotate custom stuff -->
+<!--
+Example custom itemtype with particular meta-data required
+<xs:element name="MyItem" substitutionGroup="msb:Item">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:SimpleItemType">
+        <xs:sequence maxOccurs="1">
+          <xs:choice>
+            <xs:element name="MyMetaData" type="xs:string"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+Example custom itemtype with NO meta-data
+<xs:element name="MySimpleItem" type="msb:SimpleItemType" substitutionGroup="msb:Item"/>
+
+Example custom itemtype with ANY meta-data
+<xs:element name="MyFlexibleItem" type="msb:GenericItemType" substitutionGroup="msb:Item"/>
+
+Example custom property that allows string content only
+<xs:element name="MySimpleProperty" type="msb:StringPropertyType" substitutionGroup="msb:Property"/>
+-->
+<!--#endregion-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <!--#region System-->
+  <xs:element name="Hx_System_GitHubAPIUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A url of the GitHub API. Default value is https://api.github.com</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_NUnitConsoleExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the NUnit console executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_ReportUnitExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportUnit executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_OpenCoverConsoleExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the OpenCover console executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_ReportGeneratorExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the ReportGenerator executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_NugetExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the Nuget executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_DocFXExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the DocFX executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_System_GitExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the Git client CLI executable.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region WS-->
+  <xs:element name="Hx_WS_Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_WS_BuildProjFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The build project file defining workspace-specific overrides.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Input-->
+  <xs:element name="Hx_Input_Targets" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A list of targets to run.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Input_Verbosity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>Logging verbosity for all targets and tasks.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Input_Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A configuration, i.e. "Release", "Debug" etc.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Input_BuildProjFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A file to override everything up to solution-specific definitions.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+  <!--#region Build-->
+  <xs:element name="Hx_Build_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the root artifacts directory, where targets produce their artifacts.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Build_Number" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A unique numeric value of the incremental execution.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <!--#endregion-->
+
+</xs:schema>
