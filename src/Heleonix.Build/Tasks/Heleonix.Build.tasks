@@ -1,0 +1,19 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_Hx_TaskAssemblyFile>$(MSBuildThisFileDirectory)../netstandard2.0/Heleonix.Build.dll</_Hx_TaskAssemblyFile>
+  </PropertyGroup>
+  <UsingTask TaskName="Heleonix.Build.Tasks.DirectoryClean" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileCopy" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileRead" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileSystemSearch" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileUpdate" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileValidate" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitHubRelease" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.GitHubCommitChangeLog" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NugetPush" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.NUnit" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportGenerator" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileT4Generate" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+</Project>

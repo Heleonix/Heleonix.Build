@@ -1,0 +1,20 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_Internal_GitRepoId">
+
+    <!--
+        Extracts owner and repository from urls in the following formats:
+        https://github.com/Heleonix/Heleonix.Build.git
+        git@github.com:Heleonix/Heleonix.Build.git
+    -->
+    <Exec Command="&quot;$(Hx_System_GitExe)&quot; config --get remote.origin.url" WorkingDirectory="$(Hx_WS_Dir)" ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="Hx_Internal_GitRepoId_Path"/>
+    </Exec>
+
+    <PropertyGroup>
+      <Hx_Internal_GitRepoId_OwnerName>$([System.Text.RegularExpressions.Regex]::Match($(Hx_Internal_GitRepoId_Path), '(?&lt;=[/:])[^/]+(?=/[^/]+.git)'))</Hx_Internal_GitRepoId_OwnerName>
+      <Hx_Internal_GitRepoId_RepositoryName>$([System.Text.RegularExpressions.Regex]::Match($(Hx_Internal_GitRepoId_Path), '(?&lt;=/)[^/]+(?=.git)'))</Hx_Internal_GitRepoId_RepositoryName>
+    </PropertyGroup>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

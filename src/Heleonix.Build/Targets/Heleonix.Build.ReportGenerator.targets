@@ -1,0 +1,37 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_ReportGenerator">
+    <Message Text="> STARTING..."/>
+
+    <Message Text="> 1/2: Creating the artifacts directory"/>
+    <RemoveDir Directories="$(Hx_ReportGenerator_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_ReportGenerator_ArtifactsDir)"/>
+
+    <PropertyGroup>
+      <Hx_ReportGenerator_ReportTypes Condition="'$(Hx_ReportGenerator_ReportTypes)' == ''">Badges;Html</Hx_ReportGenerator_ReportTypes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hx_ReportGenerator_CoverageResultFiles
+        Condition="'@(Hx_ReportGenerator_CoverageResultFiles)' == ''"
+        Include="$(Hx_OpenCover_ArtifactsDir)/OpenCover.xml"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_Input_Verbosity)' == 'Quiet'">Error</_Hx_ReportGenerator_Verbosity>
+      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_Input_Verbosity)' == 'Normal'">Info</_Hx_ReportGenerator_Verbosity>
+      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_Input_Verbosity)' == 'Detailed'">Verbose</_Hx_ReportGenerator_Verbosity>
+    </PropertyGroup>
+
+    <Message Text="> 2/2: Generating reports"/>
+    <Heleonix.Build.Tasks.ReportGenerator
+      ReportGeneratorExe="$(Hx_System_ReportGeneratorExe)"
+      ResultFiles="@(Hx_ReportGenerator_CoverageResultFiles)"
+      ReportDir="$(Hx_ReportGenerator_ArtifactsDir)"
+      ReportTypes="$(Hx_ReportGenerator_ReportTypes)"
+      Verbosity="$(_Hx_ReportGenerator_Verbosity)"/>
+
+    <Message Text="> DONE!"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

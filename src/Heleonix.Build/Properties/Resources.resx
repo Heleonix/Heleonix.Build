@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DirectoryClean_CleaningDirectoryStarted" xml:space="preserve">
+    <value>Cleaning directory '{0}' started.</value>
+  </data>
+  <data name="DirectoryClean_DirectoryNotFound" xml:space="preserve">
+    <value>The directory '{0}' not found. Skipping.</value>
+  </data>
+  <data name="FileSystemSearch_StartingDirectoryNotFound" xml:space="preserve">
+    <value>The starting directory '{0}' not found. Stopping.</value>
+  </data>
+  <data name="FileSystemSearch_StartSearching" xml:space="preserve">
+    <value>Start searching in '{0}'; Type: {1}; Direction: {2}; PathRegExp: {3}; ContentRegExp: {4}.</value>
+  </data>
+  <data name="FileUpdate_FileNotFound" xml:space="preserve">
+    <value>The file '{0}' not found. Stopping.</value>
+  </data>
+  <data name="FileUpdate_UpdatingFile" xml:space="preserve">
+    <value>Updating file '{0}'.</value>
+  </data>
+  <data name="NugetPush_Failed" xml:space="preserve">
+    <value>Failed pushing '{0}'. Exit code: {1}.</value>
+  </data>
+  <data name="NugetPush_Started" xml:space="preserve">
+    <value>Pushing '{0}'.</value>
+  </data>
+  <data name="NUnit_Asserts" xml:space="preserve">
+    <value>Asserts: {0}.</value>
+  </data>
+  <data name="NUnit_Duration" xml:space="preserve">
+    <value>Duration: {0}.</value>
+  </data>
+  <data name="NUnit_EndTime" xml:space="preserve">
+    <value>End time: {0}.</value>
+  </data>
+  <data name="NUnit_Failed" xml:space="preserve">
+    <value>Failed: {0}.</value>
+  </data>
+  <data name="NUnit_FinishedWithFailedTests" xml:space="preserve">
+    <value>{0} finished with failed tests. Exit code: {1}.</value>
+  </data>
+  <data name="NUnit_Inconclusive" xml:space="preserve">
+    <value>Inconclusive: {0}.</value>
+  </data>
+  <data name="NUnit_Passed" xml:space="preserve">
+    <value>Passed: {0}.</value>
+  </data>
+  <data name="NUnit_Skipped" xml:space="preserve">
+    <value>Skipped: {0}.</value>
+  </data>
+  <data name="NUnit_StartTime" xml:space="preserve">
+    <value>Start time: {0}.</value>
+  </data>
+  <data name="NUnit_TestCases" xml:space="preserve">
+    <value>Test cases: {0}.</value>
+  </data>
+  <data name="NUnit_Total" xml:space="preserve">
+    <value>Total: {0}.</value>
+  </data>
+  <data name="OpenCover_BranchCoverage" xml:space="preserve">
+    <value>Branch coverage: {0}.</value>
+  </data>
+  <data name="OpenCover_ClassCoverage" xml:space="preserve">
+    <value>Class coverage: {0}.</value>
+  </data>
+  <data name="OpenCover_LineCoverage" xml:space="preserve">
+    <value>Line coverage: {0}.</value>
+  </data>
+  <data name="OpenCover_MaxCyclomaticComplexity" xml:space="preserve">
+    <value>Maximum cyclomatic complexity: {0}.</value>
+  </data>
+  <data name="OpenCover_MethodCoverage" xml:space="preserve">
+    <value>Method coverage: {0}.</value>
+  </data>
+  <data name="OpenCover_MinBranchCoverageFailed" xml:space="preserve">
+    <value>Minimum branch coverage failed.</value>
+  </data>
+  <data name="OpenCover_MinClassCoverageFailed" xml:space="preserve">
+    <value>Minimum class coverage failed.</value>
+  </data>
+  <data name="OpenCover_MinCyclomaticComplexity" xml:space="preserve">
+    <value>Minimum cyclomatic complexity: {0}.</value>
+  </data>
+  <data name="OpenCover_MinLineCoverageFailed" xml:space="preserve">
+    <value>Minimum line coverage failed.</value>
+  </data>
+  <data name="OpenCover_MinMethodCoverageFailed" xml:space="preserve">
+    <value>Minimum method coverage failed.</value>
+  </data>
+  <data name="OpenCover_TargetFailed" xml:space="preserve">
+    <value>Target failed. Target's exit code: {0}.</value>
+  </data>
+  <data name="OpenCover_TargetTypeIsNotRecognized" xml:space="preserve">
+    <value>The target type is not recognized: '{0}'.</value>
+  </data>
+  <data name="OpenCover_TotalBranches" xml:space="preserve">
+    <value>Total branches: {0}.</value>
+  </data>
+  <data name="OpenCover_TotalClasses" xml:space="preserve">
+    <value>Total classes: {0}.</value>
+  </data>
+  <data name="OpenCover_TotalLines" xml:space="preserve">
+    <value>Total lines: {0}.</value>
+  </data>
+  <data name="OpenCover_TotalMethods" xml:space="preserve">
+    <value>Total methods: {0}.</value>
+  </data>
+  <data name="OpenCover_VisitedBranches" xml:space="preserve">
+    <value>Visited branches: {0}.</value>
+  </data>
+  <data name="OpenCover_VisitedClasses" xml:space="preserve">
+    <value>Visited classes: {0}.</value>
+  </data>
+  <data name="OpenCover_VisitedLines" xml:space="preserve">
+    <value>Visited lines: {0}.</value>
+  </data>
+  <data name="OpenCover_VisitedMethods" xml:space="preserve">
+    <value>Visited methods: {0}.</value>
+  </data>
+  <data name="ReportGenerator_Failed" xml:space="preserve">
+    <value>{0} failed for '{1}'. Exit code: {2}.</value>
+  </data>
+  <data name="TaskFailed" xml:space="preserve">
+    <value>Task failed: '{0}'.</value>
+  </data>
+  <data name="TaskFailedWithExitCode" xml:space="preserve">
+    <value>{0} failed. Exit code: {1}.</value>
+  </data>
+  <data name="FileCopy_FileNotFound" xml:space="preserve">
+    <value>The file to copy '{0}' not found.</value>
+  </data>
+  <data name="FileCopy_WithSubDirsFromIsInvalid" xml:space="preserve">
+    <value>A directory '{0}' to cory from was specified, but it does not belong to the file '{1}'. Skipping.</value>
+  </data>
+  <data name="FileRead_FileNotFound" xml:space="preserve">
+    <value>The file '{0}' is not found.</value>
+  </data>
+  <data name="SvnLog_ThereAreNoCommitsYet" xml:space="preserve">
+    <value>There are no commits yet.</value>
+  </data>
+  <data name="GitHubRelease_CreatingRelease" xml:space="preserve">
+    <value>Creating a release: {0}.</value>
+  </data>
+  <data name="GitHubRelease_Failed" xml:space="preserve">
+    <value>Creating release failed with HTTP response: {0} - {1}.</value>
+  </data>
+  <data name="FileValidate_FileNotFound" xml:space="preserve">
+    <value>A file '{0}' to validate not found.</value>
+  </data>
+  <data name="FileValidate_ValidatingFile" xml:space="preserve">
+    <value>Validating file '{0}' with patterns: {1}.</value>
+  </data>
+  <data name="FileValidate_RuleViolated" xml:space="preserve">
+    <value>The file '{0}' violates the rule '{1}={2}'.</value>
+  </data>
+  <data name="FileSystemSearch_FoundItem" xml:space="preserve">
+    <value>Found {0}.</value>
+  </data>
+  <data name="FileCopy_CopyingFile" xml:space="preserve">
+    <value>Copying file: from '{0}' to '{1}'.</value>
+  </data>
+  <data name="GithubCommitChangeLog_CollectChanges" xml:space="preserve">
+    <value>Collecting changes. Since: {0}.</value>
+  </data>
+  <data name="GitHubCommitChangeLog_GettingLatestRelease" xml:space="preserve">
+    <value>Getting the latest release.</value>
+  </data>
+  <data name="GitHubCommitChangeLog_NoReleaseFound" xml:space="preserve">
+    <value>No release found to collect changes and calculate version from.</value>
+  </data>
+  <data name="FileT4Generate_TemplateNotFound" xml:space="preserve">
+    <value>The template file '{0}' not found.</value>
+  </data>
+  <data name="FileT4Generate_GeneratorFailed" xml:space="preserve">
+    <value>File generation failed: {0}</value>
+  </data>
+</root>

@@ -1,0 +1,79 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_System_NUnitConsoleExe>$(MSBuildThisFileDirectory)../../NUnit.ConsoleRunner.3.16.3/tools/nunit3-console.exe</Hx_System_NUnitConsoleExe>
+    <Hx_System_ReportUnitExe>$(MSBuildThisFileDirectory)../../ReportUnit.1.2.1/tools/ReportUnit.exe</Hx_System_ReportUnitExe>
+    <Hx_System_OpenCoverConsoleExe>$(MSBuildThisFileDirectory)../../OpenCover.4.7.1221/tools/OpenCover.Console.exe</Hx_System_OpenCoverConsoleExe>
+    <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)../../ReportGenerator.5.1.19/tools/net6.0/ReportGenerator.exe</Hx_System_ReportGeneratorExe>
+    <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)../../ReportGenerator.5.1.19/tools/net47/ReportGenerator.exe</Hx_System_ReportGeneratorExe>
+    <Hx_System_NugetExe>$(MSBuildThisFileDirectory)../../NuGet.CommandLine.6.4.0/tools/NuGet.exe</Hx_System_NugetExe>
+    <Hx_System_DocFXExe>$(MSBuildThisFileDirectory)../../docfx.console.2.59.4/tools/docfx.exe</Hx_System_DocFXExe>
+    <Hx_System_GitExe>$(MSBuildThisFileDirectory)../../GitForWindows.2.39.2/tools/cmd/git.exe</Hx_System_GitExe>
+    <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' == 'Core'">dotnet msbuild</Hx_System_MSBuildExe>
+    <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildBinPath)/MSBuild.exe</Hx_System_MSBuildExe>
+    <Hx_System_GitHubAPIUrl>https://api.github.com</Hx_System_GitHubAPIUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Hx_WS_Dir>$(MSBuildStartupDirectory)</Hx_WS_Dir>
+    <Hx_WS_BuildProjFile>$(Hx_WS_Dir)/*.hxbproj"</Hx_WS_BuildProjFile>
+  </PropertyGroup>
+
+  <Target Name="Hx_Initialize">
+    <Message Text="> STARTING..."/>
+
+    <Error Condition="'$(Hx_Input_Targets)' == ''" Text="'$Hx_Input_Targets' is not defined."/>
+    <Error Condition="!Exists('$(Hx_WS_Dir)')" Text="'$Hx_WS_Dir' is not found."/>
+
+    <Message Text="> 1/1: Initialization of global properties"/>
+
+    <PropertyGroup>
+      <Hx_Input_Configuration Condition="'$(Hx_Input_Configuration)' == ''">Release</Hx_Input_Configuration>
+      <Hx_Input_Verbosity Condition="'$(Hx_Input_Verbosity)' == ''">Normal</Hx_Input_Verbosity>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <Hx_Build_ArtifactsDir>$(Hx_WS_Dir)/Hx_Artifacts</Hx_Build_ArtifactsDir>
+      <Hx_Build_Number Condition="'$(GO_PIPELINE_COUNTER)' != ''">$(GO_PIPELINE_COUNTER)</Hx_Build_Number>
+      <Hx_Build_Number Condition="'$(BUILD_NUMBER)' != ''">$(BUILD_NUMBER)</Hx_Build_Number>
+      <Hx_Build_Number Condition="'$(GITHUB_RUN_NUMBER)' != ''">$(GITHUB_RUN_NUMBER)</Hx_Build_Number>
+      <Hx_Build_Number Condition="'$(CI_PIPELINE_ID)' != ''">$(CI_PIPELINE_ID)</Hx_Build_Number>
+      <Hx_Build_Number Condition="'$(Hx_Build_Number)' == ''">0</Hx_Build_Number>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <Hx_NetBuild_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_NetBuild</Hx_NetBuild_ArtifactsDir>
+      <Hx_NugetPublish_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_NugetPublish</Hx_NugetPublish_ArtifactsDir>
+      <Hx_NUnit_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_NUnit</Hx_NUnit_ArtifactsDir>
+      <Hx_OpenCover_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_OpenCover</Hx_OpenCover_ArtifactsDir>
+      <Hx_ReportGenerator_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_ReportGenerator</Hx_ReportGenerator_ArtifactsDir>
+      <Hx_ReportUnit_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_ReportUnit</Hx_ReportUnit_ArtifactsDir>
+      <Hx_DocFX_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_DocFX</Hx_DocFX_ArtifactsDir>
+      <Hx_ChangeLog_ArtifactsDir>$(Hx_Build_ArtifactsDir)/Hx_ChangeLog</Hx_ChangeLog_ArtifactsDir>
+    </PropertyGroup>
+
+    <Message Text="$Hx_System_NUnitConsoleExe: $(Hx_System_NUnitConsoleExe)"/>
+    <Message Text="$Hx_System_ReportUnitExe: $(Hx_System_ReportUnitExe)"/>
+    <Message Text="$Hx_System_OpenCoverConsoleExe: $(Hx_System_OpenCoverConsoleExe)"/>
+    <Message Text="$Hx_System_ReportGeneratorExe: $(Hx_System_ReportGeneratorExe)"/>
+    <Message Text="$Hx_System_NugetExe: $(Hx_System_NugetExe)"/>
+    <Message Text="$Hx_System_DocFXExe: $(Hx_System_DocFXExe)"/>
+    <Message Text="$Hx_System_GitExe: $(Hx_System_GitExe)"/>
+    <Message Text="$Hx_System_MSBuildExe: $(Hx_System_MSBuildExe)"/>
+    <Message Text="$Hx_System_GitHubAPIUrl: $(Hx_System_GitHubAPIUrl)"/>
+
+    <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
+    <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>
+
+    <Message Text="$Hx_Input_Configuration: $(Hx_Input_Configuration)"/>
+    <Message Text="$Hx_Input_Verbosity: $(Hx_Input_Verbosity)"/>
+    <Message Text="$Hx_Input_Targets: $(Hx_Input_Targets)"/>
+    <Message Text="$Hx_Input_BuildProjFile: $(Hx_Input_BuildProjFile)"/>
+
+    <Message Text="$Hx_Build_ArtifactsDir: $(Hx_Build_ArtifactsDir)"/>
+    <Message Text="$Hx_Build_Number: $(Hx_Build_Number)"/>
+
+    <Message Text="> DONE!"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>
