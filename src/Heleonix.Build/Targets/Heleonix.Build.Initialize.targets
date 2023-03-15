@@ -10,12 +10,12 @@
     <Hx_System_GitExe>$(MSBuildThisFileDirectory)../../GitForWindows.2.39.2/tools/cmd/git.exe</Hx_System_GitExe>
     <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' == 'Core'">dotnet msbuild</Hx_System_MSBuildExe>
     <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildBinPath)/MSBuild.exe</Hx_System_MSBuildExe>
-    <Hx_System_GitHubAPIUrl>https://api.github.com</Hx_System_GitHubAPIUrl>
   </PropertyGroup>
 
   <PropertyGroup>
     <Hx_WS_Dir>$(MSBuildStartupDirectory)</Hx_WS_Dir>
     <Hx_WS_BuildProjFile>$(Hx_WS_Dir)/*.hxbproj"</Hx_WS_BuildProjFile>
+    <Hx_WS_GitHubAPIUrl>https://api.github.com</Hx_WS_GitHubAPIUrl>
   </PropertyGroup>
 
   <Target Name="Hx_Initialize">
@@ -59,10 +59,10 @@
     <Message Text="$Hx_System_DocFXExe: $(Hx_System_DocFXExe)"/>
     <Message Text="$Hx_System_GitExe: $(Hx_System_GitExe)"/>
     <Message Text="$Hx_System_MSBuildExe: $(Hx_System_MSBuildExe)"/>
-    <Message Text="$Hx_System_GitHubAPIUrl: $(Hx_System_GitHubAPIUrl)"/>
 
     <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
     <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>
+    <Message Text="$Hx_WS_GitHubAPIUrl: $(Hx_WS_GitHubAPIUrl)"/>
 
     <Message Text="$Hx_Input_Configuration: $(Hx_Input_Configuration)"/>
     <Message Text="$Hx_Input_Verbosity: $(Hx_Input_Verbosity)"/>
