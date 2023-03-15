@@ -21,7 +21,7 @@
 
     <Message Text="> 2/4: Collecting changes and calculating a new version for $(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"/>
     <Heleonix.Build.Tasks.GitHubCommitChangeLog
-      GitHubRepositoryApiUrl="$(Hx_System_GitHubAPIUrl)/repos/$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
+      GitHubRepositoryApiUrl="$(Hx_WS_GitHubAPIUrl)/repos/$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
       Token="$(Hx_ChangeLog_GitHubCommit_Token)"
       UserAgent="$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
       VersionTagRegExp="$(Hx_ChangeLog_GitHubCommit_VersionTagRegExp)"

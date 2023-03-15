@@ -36,7 +36,7 @@ Example custom property that allows string content only
     schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
 
   <!--#region System-->
-  <xs:element name="Hx_System_GitHubAPIUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_WS_GitHubAPIUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A url of the GitHub API. Default value is https://api.github.com</xs:documentation>
     </xs:annotation>
