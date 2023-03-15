@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/Heleonix/Heleonix.Build</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/Heleonix/Heleonix.Build/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Heleonix/Heleonix.Build</PackageProjectUrl>
-    <PackageIconUrl>https://s.gravatar.com/avatar/22d1d9391b9f682a589d324d403ec0d8?s=256</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/Heleonix/documentation/master/images/heleonix-logos/Heleonix-logo-128x128.jpg</PackageIconUrl>
 
     <IsTool>false</IsTool>
     <IncludeSymbols>false</IncludeSymbols>
@@ -19,7 +19,12 @@
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <ContentTargetFolders>.\</ContentTargetFolders>
     <BuildOutputTargetFolder>.\</BuildOutputTargetFolder>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
