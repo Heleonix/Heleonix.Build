@@ -10,7 +10,7 @@ https://www.nuget.org/packages/Heleonix.Build
 
 This framework is developed to simplify writing scripts to build applications on CI/CD systems like GoCD, Jenkins, TeamCity etc.
 
-The framework provides parameterized targets such as Hx_Build, Hx_OpenCover, Hx_NUnit, Hx_Validate etc., which represent separate steps in CI pipelines.
+The framework provides parameterized targets such as Hx_NetBuild, Hx_OpenCover, Hx_NUnit, Hx_Validate etc., which represent separate steps in CI pipelines.
 
 Each company designs some custom standards in organization of source code, so this build framework supports detailed customization.
 Basically it follows "configurable conventions" approach.
