@@ -52,7 +52,7 @@
   </ItemGroup>
 
   <Target Name="InstallHeleonixBuild" AfterTargets="Build">
-    <RemoveDir Directories="$(OutputPath)\Heleonix.Build.1.0.0" />
-    <Exec Command="&quot;$(PkgNuGet_CommandLine)\tools\NuGet.exe&quot; install Heleonix.Build -Version 1.0.0 -Source &quot;$(MSBuildThisFileDirectory)..\..\src\Heleonix.Build\bin\$(Configuration)&quot;" WorkingDirectory="$(OutputPath)" />
+    <RemoveDir Directories="$(OutputPath)\Heleonix.Build.$(Version)" />
+    <Exec Command="&quot;$(PkgNuGet_CommandLine)\tools\NuGet.exe&quot; install Heleonix.Build -Version $(Version) -Source &quot;$(MSBuildThisFileDirectory)..\..\src\Heleonix.Build\bin\$(Configuration)&quot;" WorkingDirectory="$(OutputPath)" />
   </Target>
 </Project>
