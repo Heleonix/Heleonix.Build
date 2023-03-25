@@ -32,13 +32,16 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(_Hx_NugetPublish_SlnFile)' != ''">
-      <_Hx_NugetPublish_VersionProps Condition="'$(Hx_NugetPublish_Version)' != ''">/p:Version=&quot;$(Hx_NugetPublish_Version)&quot;</_Hx_NugetPublish_VersionProps>
-      <_Hx_NugetPublish_ReleaseNotesProps Condition="'$(Hx_NugetPublish_ReleaseNotesFile)' != ''">/p:PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NugetPublish_ReleaseNotesFile)').Trim())&quot;</_Hx_NugetPublish_ReleaseNotesProps>
+      <_Hx_NugetPublish_VersionProps Condition="'$(Hx_NugetPublish_Version)' != ''">Version=$(Hx_NugetPublish_Version)</_Hx_NugetPublish_VersionProps>
+      <_Hx_NugetPublish_ReleaseNotesProps Condition="'$(Hx_NugetPublish_ReleaseNotesFile)' != ''">PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NugetPublish_ReleaseNotesFile)').Trim())&quot;</_Hx_NugetPublish_ReleaseNotesProps>
     </PropertyGroup>
 
-    <Exec
+    <MSBuild
       Condition="'$(_Hx_NugetPublish_SlnFile)' != ''"
-      Command="&quot;$(Hx_System_MSBuildExe)&quot; &quot;$(_Hx_NugetPublish_SlnFile)&quot; /t:Pack /p:Configuration=$(Hx_Input_Configuration);NoBuild=true $(_Hx_NugetPublish_VersionProps) $(_Hx_NugetPublish_ReleaseNotesProps)"/>
+      Projects="$(_Hx_NugetPublish_SlnFile)"
+      Targets="Pack"
+      Properties="Configuration=$(Hx_Input_Configuration);NoBuild=true;$(_Hx_NugetPublish_VersionProps);$(_Hx_NugetPublish_ReleaseNotesProps)"
+      />
 
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'$(_Hx_NugetPublish_SlnFile)' != ''"
