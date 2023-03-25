@@ -8,8 +8,6 @@
     <Hx_System_NugetExe>$(MSBuildThisFileDirectory)../../NuGet.CommandLine.6.4.0/tools/NuGet.exe</Hx_System_NugetExe>
     <Hx_System_DocFXExe>$(MSBuildThisFileDirectory)../../docfx.console.2.59.4/tools/docfx.exe</Hx_System_DocFXExe>
     <Hx_System_GitExe>$(MSBuildThisFileDirectory)../../GitForWindows.2.39.2/tools/cmd/git.exe</Hx_System_GitExe>
-    <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' == 'Core'">dotnet msbuild</Hx_System_MSBuildExe>
-    <Hx_System_MSBuildExe Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildBinPath)/MSBuild.exe</Hx_System_MSBuildExe>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -58,7 +56,6 @@
     <Message Text="$Hx_System_NugetExe: $(Hx_System_NugetExe)"/>
     <Message Text="$Hx_System_DocFXExe: $(Hx_System_DocFXExe)"/>
     <Message Text="$Hx_System_GitExe: $(Hx_System_GitExe)"/>
-    <Message Text="$Hx_System_MSBuildExe: $(Hx_System_MSBuildExe)"/>
 
     <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
     <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>

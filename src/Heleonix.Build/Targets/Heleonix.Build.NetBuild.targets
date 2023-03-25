@@ -46,16 +46,24 @@
 
     <Message Text="> 5/8: Cleaning the solution"/>
     <!--Sometimes Clean is failing without Restore-->
-    <Exec Command="&quot;$(Hx_System_MSBuildExe)&quot; &quot;$(Hx_NetBuild_SlnFile)&quot; /t:Restore /t:Clean /p:Configuration=$(Hx_Input_Configuration)"/>
+    <MSBuild
+      Projects="$(Hx_NetBuild_SlnFile)"
+      Targets="Restore;Clean"
+      Properties="Configuration=$(Hx_Input_Configuration)"
+      />
 
     <Message Text="> 6/8: Building the solution"/>
     <PropertyGroup>
-      <_Hx_NetBuild_SigningProps Condition="Exists('$(Hx_NetBuild_SnkFile)')">/p:SignAssembly=true;AssemblyOriginatorKeyFile=&quot;$(Hx_NetBuild_SnkFile)&quot;</_Hx_NetBuild_SigningProps>
-      <_Hx_NetBuild_VersionProps Condition="'$(Hx_NetBuild_Version)' != ''">/p:Version=&quot;$(Hx_NetBuild_Version)&quot;</_Hx_NetBuild_VersionProps>
-      <_Hx_NetBuild_AssemblyVersionProps Condition="'$(Hx_NetBuild_AssemblyVersion)' != ''">/p:AssemblyVersion=&quot;$(Hx_NetBuild_AssemblyVersion)&quot;</_Hx_NetBuild_AssemblyVersionProps>
-      <_Hx_NetBuild_ReleaseNotes Condition="'$(Hx_NetBuild_ReleaseNotesFile)' != ''">/p:PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NetBuild_ReleaseNotesFile)').Trim())&quot;</_Hx_NetBuild_ReleaseNotes>
+      <_Hx_NetBuild_SigningProps Condition="Exists('$(Hx_NetBuild_SnkFile)')">SignAssembly=true;AssemblyOriginatorKeyFile=$(Hx_NetBuild_SnkFile)</_Hx_NetBuild_SigningProps>
+      <_Hx_NetBuild_VersionProps Condition="'$(Hx_NetBuild_Version)' != ''">Version=$(Hx_NetBuild_Version)</_Hx_NetBuild_VersionProps>
+      <_Hx_NetBuild_AssemblyVersionProps Condition="'$(Hx_NetBuild_AssemblyVersion)' != ''">AssemblyVersion=$(Hx_NetBuild_AssemblyVersion)</_Hx_NetBuild_AssemblyVersionProps>
+      <_Hx_NetBuild_ReleaseNotes Condition="'$(Hx_NetBuild_ReleaseNotesFile)' != ''">PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NetBuild_ReleaseNotesFile)').Trim())&quot;</_Hx_NetBuild_ReleaseNotes>
     </PropertyGroup>
-    <Exec Command="&quot;$(Hx_System_MSBuildExe)&quot; &quot;$(Hx_NetBuild_SlnFile)&quot; /t:Restore /t:Build /p:Configuration=$(Hx_Input_Configuration) $(_Hx_NetBuild_SigningProps) $(_Hx_NetBuild_VersionProps) $(_Hx_NetBuild_AssemblyVersionProps) $(_Hx_NetBuild_ReleaseNotes)"/>
+    <MSBuild
+      Projects="$(Hx_NetBuild_SlnFile)"
+      Targets="Restore;Build"
+      Properties="Configuration=$(Hx_Input_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)"
+      />
 
     <Message Text="> 7/8: Publishing all target frameworks in all projects"/>
     <MSBuild
@@ -71,7 +79,11 @@
       <Output TaskParameter="Matches" ItemName="_Hx_NetBuild_TFMProjectFiles"/>
     </Heleonix.Build.Tasks.FileRead>
     <!--Passing the same properties as to Build, because sometimes Publish can re-run Build and re-generate assemblies-->
-    <Exec Command="&quot;$(Hx_System_MSBuildExe)&quot; &quot;%(_Hx_NetBuild_TFMProjectFiles.FullPath)&quot; /t:Publish /p:TargetFramework=%(Match);Configuration=$(Hx_Input_Configuration) $(_Hx_NetBuild_SigningProps) $(_Hx_NetBuild_VersionProps) $(_Hx_NetBuild_AssemblyVersionProps) $(_Hx_NetBuild_ReleaseNotes)"/>
+    <MSBuild
+      Projects="%(_Hx_NetBuild_TFMProjectFiles.FullPath)"
+      Targets="Publish"
+      Properties="TargetFramework=%(Match);Configuration=$(Hx_Input_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)"
+      />
 
     <Message Text="> 8/8: Copying .sln, all 'bin' and 'obj' folders, all *.props, *.*proj and custom artifacts files to the artifacts directory"/>
     <Heleonix.Build.Tasks.FileSystemSearch
