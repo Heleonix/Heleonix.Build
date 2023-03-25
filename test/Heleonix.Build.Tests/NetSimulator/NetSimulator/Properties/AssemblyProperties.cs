@@ -1,0 +1,9 @@
+// <copyright file="AssemblyProperties.cs" company="Heleonix - Hennadii Lutsyshyn">
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the repository root for full license information.
+// </copyright>
+
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("NetSimulator.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010085f7b50864598f821a20e5fa2a9c27f5c575c124d0fab844325068492fe3c9c3ed6cc210ac93e04bc8f75b45a9c33b3a1695051b4d1d6bd97817a58daba48e68a8b1eb55a9f5bc4cf861f06719bb258d6c5eaee5fb6d65e0a96198a55ad528665fe381b7e4dcd7bc0cc0e7e96f1f91724d093fea2760d7030f92a32fadd76ad6")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2, PublicKey=0024000004800000940000000602000000240000525341310004000001000100c547cac37abd99c8db225ef2f6c8a3602f3b3606cc9891605d02baa56104f4cfc0734aa39b93bf7852f7d9266654753cc297e7d2edfe0bac1cdcf9f717241550e0a7b191195b7667bb4f64bcb8e2121380fd1d9d46ad2d92d2d15605093924cceaf74c4861eff62abf69b9291ed0a340e113be11e6a7d3113e92484cf7045cc7")]
