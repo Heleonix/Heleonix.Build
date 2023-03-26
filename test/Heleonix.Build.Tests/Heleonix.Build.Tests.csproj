@@ -55,4 +55,9 @@
     <RemoveDir Directories="$(OutputPath)\Heleonix.Build.$(Version)" />
     <Exec Command="&quot;$(PkgNuGet_CommandLine)\tools\NuGet.exe&quot; install Heleonix.Build -Version $(Version) -Source &quot;$(MSBuildThisFileDirectory)..\..\src\Heleonix.Build\bin\$(Configuration)&quot;" WorkingDirectory="$(OutputPath)" />
   </Target>
+
+  <Target Name="PublishHeleonixBuild" AfterTargets="Publish">
+    <RemoveDir Directories="$(OutputPath)\publish\Heleonix.Build.$(Version)" />
+    <Exec Command="&quot;$(PkgNuGet_CommandLine)\tools\NuGet.exe&quot; install Heleonix.Build -Version $(Version) -Source &quot;$(MSBuildThisFileDirectory)..\..\src\Heleonix.Build\bin\$(Configuration)&quot;" WorkingDirectory="$(OutputPath)\publish" />
+  </Target>
 </Project>
