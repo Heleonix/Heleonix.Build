@@ -14,7 +14,7 @@
       Condition="'@(Hx_NUnit_NUnitProjectOrTestFiles)' == ''"
       Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_NetFindTestBinaries"
-      Properties="Hx_Internal_NetFindTestBinaries_StartDir=$(Hx_NetBuild_ArtifactsDir)">
+      Properties="Hx_Internal_NetFindTestBinaries_StartDir=$(Hx_NetBuild_ArtifactsDir);Hx_Internal_NetFindTestBinaries_Configuration=$(Hx_Input_Configuration)">
       <Output TaskParameter="TargetOutputs" ItemName="Hx_NUnit_NUnitProjectOrTestFiles"/>
     </MSBuild>
 
