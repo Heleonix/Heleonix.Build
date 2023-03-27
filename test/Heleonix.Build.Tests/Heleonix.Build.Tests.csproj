@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,13 +52,17 @@
     <ProjectReference Include="..\..\src\Heleonix.Build\Heleonix.Build.csproj" />
   </ItemGroup>
 
-  <Target Name="InstallHeleonixBuild" AfterTargets="Build">
-    <RemoveDir Directories="$(OutputPath)\Heleonix.Build.$(Version)" />
-    <Exec Command="&quot;$(PkgNuGet_CommandLine)\tools\NuGet.exe&quot; install Heleonix.Build -Version $(Version) -Source &quot;$(MSBuildThisFileDirectory)..\..\src\Heleonix.Build\bin\$(Configuration)&quot;" WorkingDirectory="$(OutputPath)" />
+  <ItemGroup>
+    <PkgNuGet_CommandLine Include="$(PkgNuGet_CommandLine)\**\*" />
+  </ItemGroup>
+
+  <Target Name="CopyDependenciesToOutput" AfterTargets="Build">
+    <Copy SourceFiles="..\..\src\Heleonix.Build\bin\$(Configuration)\Heleonix.Build.$(Version).nupkg" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="@(PkgNuGet_CommandLine)" DestinationFolder="$(OutDir)\NuGet.CommandLine\%(RecursiveDir)" />
   </Target>
 
-  <Target Name="PublishHeleonixBuild" AfterTargets="Publish">
-    <RemoveDir Directories="$(OutputPath)\publish\Heleonix.Build.$(Version)" />
-    <Exec Command="&quot;$(PkgNuGet_CommandLine)\tools\NuGet.exe&quot; install Heleonix.Build -Version $(Version) -Source &quot;$(MSBuildThisFileDirectory)..\..\src\Heleonix.Build\bin\$(Configuration)&quot;" WorkingDirectory="$(OutputPath)\publish" />
+  <Target Name="CopyDependenciesToPublish" AfterTargets="Publish">
+    <Copy SourceFiles="..\..\src\Heleonix.Build\bin\$(Configuration)\Heleonix.Build.$(Version).nupkg" DestinationFolder="$(ProjectDir)$(PublishDir)" />
+    <Copy SourceFiles="@(PkgNuGet_CommandLine)" DestinationFolder="$(ProjectDir)$(PublishDir)\NuGet.CommandLine\%(RecursiveDir)" />
   </Target>
 </Project>
