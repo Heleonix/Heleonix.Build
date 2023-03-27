@@ -18,6 +18,11 @@ public static class PathHelper
     public static string CurrentDir => Path.GetDirectoryName(typeof(PathHelper).Assembly.Location);
 
     /// <summary>
+    /// Gets the installed Heleonix.Build package directory path.
+    /// </summary>
+    public static string HeleonixBuildDir => Path.Combine(CurrentDir, "Heleonix.Build");
+
+    /// <summary>
     /// Gets the current configuration: Debug, Release.
     /// </summary>
     public static string Configuration => typeof(PathHelper).Assembly.GetCustomAttributes(false)
@@ -46,17 +51,12 @@ public static class PathHelper
     /// <summary>
     /// Gets the Nuget executable path.
     /// </summary>
-    public static string NugetExe => Path.Combine(CurrentDir, "NuGet.CommandLine.6.4.0", "tools", "NuGet.exe");
-
-    /// <summary>
-    /// Gets the Git executable path.
-    /// </summary>
-    public static string GitExe => Path.Combine(CurrentDir, "GitForWindows.2.39.2", "tools", "cmd", "git.exe");
+    public static string NugetExe => Path.Combine(CurrentDir, "NuGet.CommandLine", "tools", "NuGet.exe");
 
     /// <summary>
     /// Gets the ReportUnit executable path.
     /// </summary>
-    public static string ReportUnitExe => Path.Combine(CurrentDir, "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
+    public static string ReportUnitExe => Path.Combine(HeleonixBuildDir, "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
 
     /// <summary>
     /// Gets the report generator executable.
@@ -64,23 +64,23 @@ public static class PathHelper
     /// <value>
     /// The report generator executable.
     /// </value>
-    public static string ReportGeneratorExe => Path.Combine(CurrentDir, "ReportGenerator.5.1.19", "tools", "net6.0", "ReportGenerator.exe");
+    public static string ReportGeneratorExe => Path.Combine(HeleonixBuildDir, "ReportGenerator.5.1.19", "tools", "net6.0", "ReportGenerator.exe");
 
     /// <summary>
     /// Gets the NUnit console executable path.
     /// </summary>
-    public static string NUnitConsoleExe => Path.Combine(CurrentDir, "NUnit.ConsoleRunner.3.16.3", "tools", "nunit3-console.exe");
+    public static string NUnitConsoleExe => Path.Combine(HeleonixBuildDir, "NUnit.ConsoleRunner.3.16.3", "tools", "nunit3-console.exe");
 
     /// <summary>
     /// Gets the OpenCover executable path.
     /// </summary>
-    public static string OpenCoverExe => Path.Combine(CurrentDir, "OpenCover.4.7.1221", "tools", "OpenCover.Console.exe");
+    public static string OpenCoverExe => Path.Combine(HeleonixBuildDir, "OpenCover.4.7.1221", "tools", "OpenCover.Console.exe");
 
     /// <summary>
     /// Gets the main project path.
     /// </summary>
     public static string BuildProjectFile => Path.Combine(
-        CurrentDir,
+        HeleonixBuildDir,
         "Heleonix.Build." + FileVersionInfo.GetVersionInfo(typeof(PathHelper).Assembly.Location).ProductVersion,
         "Heleonix.Build.hxbproj");
 
