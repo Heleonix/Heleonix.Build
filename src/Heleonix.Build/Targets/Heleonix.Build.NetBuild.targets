@@ -25,14 +25,14 @@
       <Hx_NetBuild_ReleaseNotesFile>$(Hx_ChangeLog_ArtifactsDir)/ReleaseNotes.txt</Hx_NetBuild_ReleaseNotesFile>
     </PropertyGroup>
 
-    <Message Text="> 1/8: Creating the artifacts directory"/>
+    <Message Text="> 1/7: Creating the artifacts directory"/>
     <RemoveDir Directories="$(Hx_NetBuild_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_NetBuild_ArtifactsDir)"/>
 
-    <Message Text="> 2/8: Deleting files"/>
+    <Message Text="> 2/7: Deleting files"/>
     <Delete Files="@(Hx_NetBuild_DeleteFiles)"/>
 
-    <Message Text="> 3/8: Deleting directories"/>
+    <Message Text="> 3/7: Deleting directories"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(_Hx_NetBuild_SlnDir)"
       PathRegExp="/(bin|obj)/$(Hx_Input_Configuration)$"
@@ -41,10 +41,10 @@
     </Heleonix.Build.Tasks.FileSystemSearch>
     <RemoveDir Directories="@(Hx_NetBuild_DeleteDirs)"/>
 
-    <Message Text="> 4/8: Cleaning directories"/>
+    <Message Text="> 4/7: Cleaning directories"/>
     <Heleonix.Build.Tasks.DirectoryClean Dirs="@(Hx_NetBuild_CleanDirs)"/>
 
-    <Message Text="> 5/8: Cleaning the solution"/>
+    <Message Text="> 5/7: Cleaning the solution"/>
     <!--Sometimes Clean is failing without Restore-->
     <MSBuild
       Projects="$(Hx_NetBuild_SlnFile)"
@@ -52,7 +52,7 @@
       Properties="Configuration=$(Hx_Input_Configuration)"
       />
 
-    <Message Text="> 6/8: Building the solution"/>
+    <Message Text="> 6/7: Building the solution"/>
     <PropertyGroup>
       <_Hx_NetBuild_SigningProps Condition="Exists('$(Hx_NetBuild_SnkFile)')">SignAssembly=true;AssemblyOriginatorKeyFile=$(Hx_NetBuild_SnkFile)</_Hx_NetBuild_SigningProps>
       <_Hx_NetBuild_VersionProps Condition="'$(Hx_NetBuild_Version)' != ''">Version=$(Hx_NetBuild_Version)</_Hx_NetBuild_VersionProps>
@@ -65,7 +65,6 @@
       Properties="Configuration=$(Hx_Input_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)"
       />
 
-    <Message Text="> 7/8: Publishing all target frameworks in all projects"/>
     <MSBuild
       Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_NetFindProjects"
@@ -73,19 +72,18 @@
       <Output TaskParameter="TargetOutputs" ItemName="_Hx_NetBuild_ProjectFiles"/>
     </MSBuild>
     <!--RegExp: (?<=(?<=<(TargetFrameworks?)>)([^<>]+|))[^;<>]+(?=([^<>]+|)(?=</\1>))-->
-    <Heleonix.Build.Tasks.FileRead
+    <!--<Heleonix.Build.Tasks.FileRead
       File="%(_Hx_NetBuild_ProjectFiles.FullPath)"
       RegExp="(?&lt;=(?&lt;=&lt;(TargetFrameworks?)&gt;)([^&lt;&gt;]+|))[^;&lt;&gt;]+(?=([^&lt;&gt;]+|)(?=&lt;/%5C1>))">
       <Output TaskParameter="Matches" ItemName="_Hx_NetBuild_TFMProjectFiles"/>
-    </Heleonix.Build.Tasks.FileRead>
+    </Heleonix.Build.Tasks.FileRead>-->
     <!--Passing the same properties as to Build, because sometimes Publish can re-run Build and re-generate assemblies-->
-    <MSBuild
+    <!--<MSBuild
       Projects="%(_Hx_NetBuild_TFMProjectFiles.FullPath)"
       Targets="Publish"
-      Properties="TargetFramework=%(Match);Configuration=$(Hx_Input_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)"
-      />
+      Properties="TargetFramework=%(Match);Configuration=$(Hx_Input_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)" />-->
 
-    <Message Text="> 8/8: Copying .sln, all 'bin' and 'obj' folders, all *.props, *.*proj and custom artifacts files to the artifacts directory"/>
+    <Message Text="> 7/7: Copying .sln, all 'bin' and 'obj' folders, all *.props, *.*proj and custom artifacts files to the artifacts directory"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(Hx_WS_Dir)"
       PathRegExp="(?&lt;!/(bin|obj)/.+)\.props$"

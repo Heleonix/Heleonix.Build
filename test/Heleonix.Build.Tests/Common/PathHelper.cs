@@ -15,48 +15,48 @@ public static class PathHelper
     /// <summary>
     /// Gets the current directory path.
     /// </summary>
-    public static string CurrentDir => Path.GetDirectoryName(typeof(PathHelper).Assembly.Location);
+    public static string CurrentDir { get; } = Path.GetDirectoryName(typeof(PathHelper).Assembly.Location);
 
     /// <summary>
     /// Gets the installed Heleonix.Build package directory path.
     /// </summary>
-    public static string HeleonixBuildDir => Path.Combine(CurrentDir, "Heleonix.Build");
+    public static string HeleonixBuildDir { get; } = Path.Combine(CurrentDir, "Heleonix.Build");
 
     /// <summary>
     /// Gets the current configuration: Debug, Release.
     /// </summary>
-    public static string Configuration => typeof(PathHelper).Assembly.GetCustomAttributes(false)
+    public static string Configuration { get; } = typeof(PathHelper).Assembly.GetCustomAttributes(false)
                 .OfType<DebuggableAttribute>().Any(da => da.IsJITTrackingEnabled) ? "Debug" : "Release";
 
     /// <summary>
     /// Gets the OpenCover coverage results file.
     /// </summary>
-    public static string OpenCoverResultFile => Path.Combine(CurrentDir, "OpenCover.xml");
+    public static string OpenCoverResultFile { get; } = Path.Combine(CurrentDir, "OpenCover.xml");
 
     /// <summary>
     /// Gets the OpenCover coverage results file.
     /// </summary>
-    public static string NUnitTestResultFile => Path.Combine(CurrentDir, "NUnitTestResult.xml");
+    public static string NUnitTestResultFile { get; } = Path.Combine(CurrentDir, "NUnitTestResult.xml");
 
     /// <summary>
     /// Gets the Nuget package file.
     /// </summary>
-    public static string NugetPackageFile => Path.Combine(CurrentDir, "NetSimulator.1.0.0.nupkg");
+    public static string NugetPackageFile { get; } = Path.Combine(CurrentDir, "NetSimulator.1.0.0.nupkg");
 
     /// <summary>
     /// Gets the OpenCover coverage results file.
     /// </summary>
-    public static string CustomBuildProj => Path.Combine(CurrentDir, "Custom.hxbproj");
+    public static string CustomBuildProj { get; } = Path.Combine(CurrentDir, "Custom.hxbproj");
 
     /// <summary>
     /// Gets the Nuget executable path.
     /// </summary>
-    public static string NugetExe => Path.Combine(CurrentDir, "NuGet.CommandLine", "tools", "NuGet.exe");
+    public static string NugetExe { get; } = Path.Combine(CurrentDir, "NuGet.CommandLine", "tools", "NuGet.exe");
 
     /// <summary>
     /// Gets the ReportUnit executable path.
     /// </summary>
-    public static string ReportUnitExe => Path.Combine(HeleonixBuildDir, "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
+    public static string ReportUnitExe { get; } = Path.Combine(HeleonixBuildDir, "ReportUnit.1.2.1", "tools", "ReportUnit.exe");
 
     /// <summary>
     /// Gets the report generator executable.
@@ -64,22 +64,22 @@ public static class PathHelper
     /// <value>
     /// The report generator executable.
     /// </value>
-    public static string ReportGeneratorExe => Path.Combine(HeleonixBuildDir, "ReportGenerator.5.1.19", "tools", "net6.0", "ReportGenerator.exe");
+    public static string ReportGeneratorExe { get; } = Path.Combine(HeleonixBuildDir, "ReportGenerator.5.1.19", "tools", "net6.0", "ReportGenerator.exe");
 
     /// <summary>
     /// Gets the NUnit console executable path.
     /// </summary>
-    public static string NUnitConsoleExe => Path.Combine(HeleonixBuildDir, "NUnit.ConsoleRunner.3.16.3", "tools", "nunit3-console.exe");
+    public static string NUnitConsoleExe { get; } = Path.Combine(HeleonixBuildDir, "NUnit.ConsoleRunner.3.16.3", "tools", "nunit3-console.exe");
 
     /// <summary>
     /// Gets the OpenCover executable path.
     /// </summary>
-    public static string OpenCoverExe => Path.Combine(HeleonixBuildDir, "OpenCover.4.7.1221", "tools", "OpenCover.Console.exe");
+    public static string OpenCoverExe { get; } = Path.Combine(HeleonixBuildDir, "OpenCover.4.7.1221", "tools", "OpenCover.Console.exe");
 
     /// <summary>
     /// Gets the main project path.
     /// </summary>
-    public static string BuildProjectFile => Path.Combine(
+    public static string BuildProjectFile { get; } = Path.Combine(
         HeleonixBuildDir,
         "Heleonix.Build." + FileVersionInfo.GetVersionInfo(typeof(PathHelper).Assembly.Location).ProductVersion,
         "Heleonix.Build.hxbproj");
@@ -87,7 +87,7 @@ public static class PathHelper
     /// <summary>
     /// Gets the SNK file path to sign assemblies.
     /// </summary>
-    public static string SnkPairFile => Path.Combine(CurrentDir, "SnkPair.snk");
+    public static string SnkPairFile { get; } = Path.Combine(CurrentDir, "SnkPair.snk");
 
     /// <summary>
     /// Gets the random file name in current directory.

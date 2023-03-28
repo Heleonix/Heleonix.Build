@@ -3,7 +3,7 @@
 
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(Hx_Internal_NetFindTestBinaries_StartDir)"
-      PathRegExp="/([^/]+)/bin/$(Hx_Internal_NetFindTestBinaries_Configuration)/[^/]+/publish/\1\.(?&lt;=\.Tests\.)(dll|exe)$"
+      PathRegExp="/([^/]+)/bin/$(Hx_Internal_NetFindTestBinaries_Configuration)/[^/]+/\1\.(?&lt;=\.Tests\.)(dll|exe)$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="_Hx_Internal_NetFindTestBinaries_BinaryFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
