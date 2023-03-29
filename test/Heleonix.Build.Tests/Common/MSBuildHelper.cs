@@ -6,6 +6,7 @@
 namespace Heleonix.Build.Tests.Common;
 
 using System.Xml.Linq;
+using NUnit.Framework.Internal;
 
 /// <summary>
 /// Provides functionality to work with MSBuild.
@@ -54,8 +55,10 @@ public static class MSBuildHelper
 
             return true;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            TestExecutionContext.CurrentContext.OutWriter.WriteLine(ex);
+
             return false;
         }
         finally
@@ -89,7 +92,7 @@ public static class MSBuildHelper
 
         if (result.ExitCode != 0)
         {
-            Console.WriteLine(result.Output);
+            NUnit.Framework.Internal.TestExecutionContext.CurrentContext.OutWriter.WriteLine(result.Output);
 
             throw new InvalidOperationException(result.Output);
         }
