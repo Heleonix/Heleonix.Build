@@ -20,11 +20,6 @@ public static class PathHelper
     /// <summary>
     /// Gets the installed Heleonix.Build package directory path.
     /// </summary>
-    public static string HeleonixBuildDir { get; } = Path.Combine(CurrentDir, "Heleonix.Build");
-
-    /// <summary>
-    /// Gets the installed Heleonix.Build package directory path.
-    /// </summary>
     public static string HeleonixBuildDir => Path.Combine(CurrentDir, "Heleonix.Build");
 
     /// <summary>
@@ -56,7 +51,7 @@ public static class PathHelper
     /// <summary>
     /// Gets the Nuget executable path.
     /// </summary>
-    public static string NugetExe { get; } = Path.Combine(HeleonixBuildDir, "NuGet.CommandLine", "tools", "NuGet.exe");
+    public static string NugetExe => Path.Combine(CurrentDir, "NuGet.CommandLine", "tools", "NuGet.exe");
 
     /// <summary>
     /// Gets the ReportUnit executable path.
