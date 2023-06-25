@@ -20,7 +20,7 @@ public static class PathHelper
     /// <summary>
     /// Gets the installed Heleonix.Build package directory path.
     /// </summary>
-    public static string HeleonixBuildDir => Path.Combine(CurrentDir, "Heleonix.Build");
+    public static string HeleonixBuildDir { get; } = Path.Combine(CurrentDir, "Heleonix.Build");
 
     /// <summary>
     /// Gets the current configuration: Debug, Release.

@@ -45,7 +45,7 @@ public static class MSBuildHelper
 
         try
         {
-            customBuildProj = AppendCustomBuildProj(target, properties, items);
+            customBuildProj = AppendInputBuildProj(properties, items);
 
             var msBuildProperties = $"Hx_Input_BuildProjFile=\"{customBuildProj}\";" +
                 $"Hx_Input_Configuration={PathHelper.Configuration};" +
@@ -92,7 +92,7 @@ public static class MSBuildHelper
 
         if (result.ExitCode != 0)
         {
-            NUnit.Framework.Internal.TestExecutionContext.CurrentContext.OutWriter.WriteLine(result.Output);
+            TestExecutionContext.CurrentContext.OutWriter.WriteLine(result.Output);
 
             throw new InvalidOperationException(result.Output);
         }
@@ -101,12 +101,10 @@ public static class MSBuildHelper
     /// <summary>
     /// Appends custom build file with properties and itesm.
     /// </summary>
-    /// <param name="target">The name of the target.</param>
     /// <param name="properties">Properties of the target to override or define.</param>
     /// /// <param name="items">Items of the target to override or define.</param>
     /// <returns>The overrides file path.</returns>
-    private static string AppendCustomBuildProj(
-        string target,
+    private static string AppendInputBuildProj(
         IDictionary<string, string> properties,
         IDictionary<string, ITaskItem[]> items)
     {
@@ -146,7 +144,7 @@ public static class MSBuildHelper
 
         var targetElement = new XElement(
             ns + "Target",
-            new XAttribute("Name", target + "_B_Overrides"),
+            new XAttribute("Name", "Hx_Initialize_B_Overrides"),
             new XAttribute("BeforeTargets", "Hx_Initialize"),
             propertyGroupElement,
             itemGroupElement);
