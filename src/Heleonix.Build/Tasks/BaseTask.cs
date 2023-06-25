@@ -25,9 +25,9 @@ public abstract class BaseTask : Task
         }
         catch (Exception ex)
         {
-            this.Log.LogErrorFromException(ex);
+            this.Log.LogError(Resources.TaskFailed, this.GetType().FullName);
 
-            this.Log.LogError(Resources.TaskFailed, this.GetType().Name);
+            this.Log.LogErrorFromException(ex, true, true, ex.Source);
         }
 
         return !this.Log.HasLoggedErrors;
