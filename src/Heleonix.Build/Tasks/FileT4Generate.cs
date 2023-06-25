@@ -19,7 +19,6 @@ using Mono.TextTemplating;
 /// <item>System.Text.RegularExpressions</item>
 /// <item>System.Collections.Generic</item>
 /// <item>System.IO</item>
-/// <item>System.Linq</item>
 /// <item>Microsoft.Build.Framework</item>
 /// <item>Heleonix.Build.Tasks</item>
 /// </list>
@@ -63,17 +62,6 @@ public class FileT4Generate : BaseTask
 
         var generator = new FileT4GenerateHost(this.Data);
 
-        generator.Refs.Add(typeof(FileT4GenerateHost).Assembly.Location);
-        generator.Refs.Add(typeof(ITaskItem).Assembly.Location);
-        generator.Refs.Add(typeof(Task).Assembly.Location);
-
-        generator.Imports.Add(typeof(Enumerable).Namespace);
-        generator.Imports.Add(typeof(List<object>).Namespace);
-        generator.Imports.Add(typeof(Regex).Namespace);
-        generator.Imports.Add(typeof(File).Namespace);
-        generator.Imports.Add(typeof(FileT4GenerateHost).Namespace);
-        generator.Imports.Add(typeof(ITaskItem).Namespace);
-
         var task = generator.ProcessTemplateAsync(this.TemplateFile, this.GeneratedFile);
 
         task.Wait(30 * 60 * 1000);
@@ -104,6 +92,17 @@ public class FileT4Generate : BaseTask
         public FileT4GenerateHost(ITaskItem[] data)
         {
             this.Data = data ?? Array.Empty<ITaskItem>();
+
+            this.Refs.Add(typeof(FileT4GenerateHost).Assembly.Location);
+            this.Refs.Add(typeof(ITaskItem).Assembly.Location);
+            this.Refs.Add(typeof(Task).Assembly.Location);
+
+            this.Imports.Add(typeof(Enumerable).Namespace);
+            this.Imports.Add(typeof(List<object>).Namespace);
+            this.Imports.Add(typeof(Regex).Namespace);
+            this.Imports.Add(typeof(File).Namespace);
+            this.Imports.Add(typeof(ITaskItem).Namespace);
+            this.Imports.Add(typeof(FileT4GenerateHost).Namespace);
         }
 
         /// <summary>

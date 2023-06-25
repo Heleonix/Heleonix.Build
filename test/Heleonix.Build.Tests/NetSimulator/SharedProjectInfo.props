@@ -17,18 +17,10 @@
     <PackageIconUrl>https://s.gravatar.com/avatar/22d1d9391b9f682a589d324d403ec0d8?s=256</PackageIconUrl>
 
     <IsPackable>true</IsPackable>
-    <!--<PackageTypes>Dependency/DotnetCliTool</PackageTypes>-->
-    <!--<DevelopmentDependency>false</DevelopmentDependency>-->
     <IsTool>false</IsTool>
-    <!--<IncludeBuildOutput>true</IncludeBuildOutput>-->
-    <!--<BuildOutputTargetFolder>lib</BuildOutputTargetFolder>-->
-    <!--<IncludeContentInPack>true</IncludeContentInPack>-->
-    <!--<ContentTargetFolders></ContentTargetFolders>-->
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <IncludeSource>false</IncludeSource>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-
-    <!--<MinClientVersion>3.3</MinClientVersion>-->
   </PropertyGroup>
 </Project>

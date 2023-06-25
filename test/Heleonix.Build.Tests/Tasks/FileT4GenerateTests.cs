@@ -22,13 +22,14 @@ public static class FileT4GenerateTests
         string templateFile = null;
         string generatedFile = null;
         TaskItem[] data = null;
+        TestBuildEngine buildEngine = null;
 
         Arrange(() =>
         {
             templateFile = PathHelper.GetRandomFileNameInCurrentDir();
             generatedFile = PathHelper.GetRandomFileNameInCurrentDir();
 
-            var template = @"<#@ template hostspecific=""true"" #>" +
+            const string template = @"<#@ template hostspecific=""true"" #>" +
                 @"<# foreach (var item in Host.Data) #>" +
                 @"<#{#>" +
                 @"-<#= item.GetMetadata(""description"")#>" +
@@ -64,9 +65,11 @@ public static class FileT4GenerateTests
                 }),
             };
 
+            buildEngine = new TestBuildEngine();
+
             task = new FileT4Generate
             {
-                BuildEngine = new TestBuildEngine(),
+                BuildEngine = buildEngine,
                 TemplateFile = templateFile,
                 GeneratedFile = generatedFile,
                 Data = data,
@@ -88,6 +91,9 @@ public static class FileT4GenerateTests
         {
             Should("succeed", () =>
             {
+                NUnit.Framework.Internal.TestExecutionContext.CurrentContext.OutWriter.WriteLine(
+                    "ERROR FROM TASK=====" + string.Join("\r\n\r\n", buildEngine.ErrorMessages));
+
                 Assert.That(succeeded, Is.True);
 
                 var generatedContent = File.ReadAllText(generatedFile);

@@ -22,7 +22,7 @@
     <Content Include="OpenCover.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Custom.hxbproj">
+    <Content Include="Input.hxbproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SnkPair.snk">

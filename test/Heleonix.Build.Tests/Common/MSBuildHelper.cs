@@ -110,7 +110,7 @@ public static class MSBuildHelper
         IDictionary<string, string> properties,
         IDictionary<string, ITaskItem[]> items)
     {
-        var file = XDocument.Load(PathHelper.CustomBuildProj);
+        var file = XDocument.Load(PathHelper.InputBuildProj);
 
         var ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003");
 
@@ -147,7 +147,7 @@ public static class MSBuildHelper
         var targetElement = new XElement(
             ns + "Target",
             new XAttribute("Name", target + "_B_Overrides"),
-            new XAttribute("BeforeTargets", target),
+            new XAttribute("BeforeTargets", "Hx_Initialize"),
             propertyGroupElement,
             itemGroupElement);
 

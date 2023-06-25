@@ -14,6 +14,11 @@ using System.Collections;
 public class TestBuildEngine : IBuildEngine
 {
     /// <summary>
+    /// Gets logged error messages.
+    /// </summary>
+    public List<string> ErrorMessages { get; } = new List<string>();
+
+    /// <summary>
     /// Gets a value indicating whether the ContinueOnError flag was set to true
     /// for this particular task in the project file.
     /// </summary>
@@ -40,7 +45,10 @@ public class TestBuildEngine : IBuildEngine
     /// <param name="e">The event data.</param>
     public void LogErrorEvent(BuildErrorEventArgs e)
     {
-        // Dummy implementation.
+        if (!string.IsNullOrEmpty(e.Message))
+        {
+            this.ErrorMessages.Add(e.Message);
+        }
     }
 
     /// <summary>

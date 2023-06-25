@@ -39,7 +39,11 @@ public static class NetBuildTests
             succeeded = MSBuildHelper.RunTestTarget(
                 "Hx_NetBuild",
                 simulator.SolutionDir,
-                new Dictionary<string, string> { { "Hx_NetBuild_SnkFile", PathHelper.SnkPairFile } });
+                new Dictionary<string, string>
+                {
+                    { "Hx_NetBuild_SnkFile", PathHelper.SnkPairFile },
+                    { "GO_PIPELINE_COUNTER", "123" },
+                });
         });
 
         Teardown(() =>
@@ -68,12 +72,12 @@ public static class NetBuildTests
                     var path = Path.Combine(sourceProjectOutputDir, tfm, "NetSimulator.dll");
                     var info = FileVersionInfo.GetVersionInfo(path);
 
-                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.0"));
+                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.123"));
                     Assert.That(info.ProductVersion, Is.EqualTo("1.2.3"));
 
                     var name = AssemblyName.GetAssemblyName(path);
 
-                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.0"));
+                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.123"));
                     Assert.That(name.FullName, Contains.Substring("PublicKeyToken=56430db2a23ca0d2"));
 
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "NetSimulator.xml")));
@@ -82,12 +86,12 @@ public static class NetBuildTests
                     path = Path.Combine(sourceProjectOutputDir, tfm, "publish", "NetSimulator.dll");
                     info = FileVersionInfo.GetVersionInfo(path);
 
-                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.0"));
+                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.123"));
                     Assert.That(info.ProductVersion, Is.EqualTo("1.2.3"));
 
                     name = AssemblyName.GetAssemblyName(path);
 
-                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.0"));
+                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.123"));
                     Assert.That(name.FullName, Contains.Substring("PublicKeyToken=56430db2a23ca0d2"));
 
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "publish", "NetSimulator.xml")));
@@ -105,12 +109,12 @@ public static class NetBuildTests
                     var path = Path.Combine(testProjectOutputDir, tfm, "NetSimulator.Tests.dll");
                     var info = FileVersionInfo.GetVersionInfo(path);
 
-                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.0"));
+                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.123"));
                     Assert.That(info.ProductVersion, Is.EqualTo("1.2.3"));
 
                     var name = AssemblyName.GetAssemblyName(path);
 
-                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.0"));
+                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.123"));
                     Assert.That(name.FullName, Contains.Substring("PublicKeyToken=56430db2a23ca0d2"));
 
                     Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "NetSimulator.Tests.xml")));
@@ -119,12 +123,12 @@ public static class NetBuildTests
                     path = Path.Combine(testProjectOutputDir, tfm, "publish", "NetSimulator.Tests.dll");
                     info = FileVersionInfo.GetVersionInfo(path);
 
-                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.0"));
+                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.123"));
                     Assert.That(info.ProductVersion, Is.EqualTo("1.2.3"));
 
                     name = AssemblyName.GetAssemblyName(path);
 
-                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.0"));
+                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.123"));
                     Assert.That(name.FullName, Contains.Substring("PublicKeyToken=56430db2a23ca0d2"));
 
                     Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "publish", "NetSimulator.Tests.xml")));

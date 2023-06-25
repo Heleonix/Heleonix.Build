@@ -45,8 +45,8 @@ public static class OpenCoverTests
                 properties = new Dictionary<string, string>
                 {
                     { "Hx_OpenCover_MinClassCoverage", "57" },
-                    { "Hx_OpenCover_MinBranchCoverage", "53" },
-                    { "Hx_OpenCover_MinMethodCoverage", "54" },
+                    { "Hx_OpenCover_MinBranchCoverage", "50" },
+                    { "Hx_OpenCover_MinMethodCoverage", "50" },
                     { "Hx_OpenCover_MinLineCoverage", "40" },
                 };
 

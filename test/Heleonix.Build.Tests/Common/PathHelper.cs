@@ -44,9 +44,9 @@ public static class PathHelper
     public static string NugetPackageFile { get; } = Path.Combine(CurrentDir, "NetSimulator.1.0.0.nupkg");
 
     /// <summary>
-    /// Gets the OpenCover coverage results file.
+    /// Gets the custom inpuy hxbproj file.
     /// </summary>
-    public static string CustomBuildProj { get; } = Path.Combine(CurrentDir, "Custom.hxbproj");
+    public static string InputBuildProj { get; } = Path.Combine(CurrentDir, "Input.hxbproj");
 
     /// <summary>
     /// Gets the Nuget executable path.
