@@ -98,6 +98,9 @@ public static class FileT4GenerateTests
 
             Should("succeed", () =>
             {
+                NUnit.Framework.Internal.TestExecutionContext.CurrentContext.OutWriter.WriteLine(
+                    "ERROR FROM TASK=====" + string.Join("\r\n\r\n", buildEngine.ErrorMessages));
+
                 Assert.That(succeeded, Is.True);
 
                 var generatedContent = File.ReadAllText(generatedFile);
