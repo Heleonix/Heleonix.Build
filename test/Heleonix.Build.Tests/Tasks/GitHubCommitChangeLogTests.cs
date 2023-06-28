@@ -24,6 +24,15 @@ public static class GitHubCommitChangeLogTests
         var succeeded = false;
         HttpListener listener = null;
         (string, Predicate<HttpListenerRequest>, (string, HttpStatusCode), (string, HttpStatusCode))[] responses = null;
+        var commits =
+            @"[{""commit"":{""message"":""fix(ID-1): Fix 1.""}}," +
+            @"{""commit"":{""message"":""feat(ID-2): Feat 2.""}}," +
+            @"{""commit"":{""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
+            @"{""commit"":{""message"":""fix(ID-4): Fix 4.""}}," +
+            @"{""commit"":{""message"":""feat(ID-5): Feat 5.""}}," +
+            @"{""commit"":{""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
+            @"{""commit"":{""message"":""perf(ID-4): Fix 4.""}}," +
+            @"{""commit"":{""message"":""Free commit to be ignored.""}}]";
 
         Arrange(() =>
         {
@@ -40,7 +49,6 @@ public static class GitHubCommitChangeLogTests
                 MinorChangeRegExp = @"^(feat)(\([\w-.]+\))?: (.+)",
                 PatchChangeRegExp = @"^(fix)(\([\w-.]+\))?: (.+)",
                 ChangeLogRegExp = @"^(?'type'[a-z]+)(?:\((?'scope'[\w-.]+)\))?(?'breaking'!)?: (?'description'.+)(?:[\r\n])*(?'body'(?<=\r\r|\n\n|\r\n\r\n)[\s\S]+?(?!([\w-.]+|BREAKING CHANGE)(: | #)[\s\S]+))??(?:[\r\n])*(?'footer'(?<=\r\r|\n\n|\r\n\r\n)(?:[\w-.]+|(?'breaking'BREAKING-CHANGE|BREAKING CHANGE))(?:: | #)[\s\S]+?)?(?:[\r\n])*$",
-                RegExpOptions = null,
             };
         });
 
@@ -56,16 +64,6 @@ public static class GitHubCommitChangeLogTests
 
         When("there is a release and commits after it", () =>
         {
-            var commits =
-                @"[{""commit"":{""message"":""fix(ID-1): Fix 1.""}}," +
-                @"{""commit"":{""message"":""feat(ID-2): Feat 2.""}}," +
-                @"{""commit"":{""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
-                @"{""commit"":{""message"":""fix(ID-4): Fix 4.""}}," +
-                @"{""commit"":{""message"":""feat(ID-5): Feat 5.""}}," +
-                @"{""commit"":{""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
-                @"{""commit"":{""message"":""perf(ID-4): Fix 4.""}}," +
-                @"{""commit"":{""message"":""Free commit to be ignored.""}}]";
-
             responses = new (string, Predicate<HttpListenerRequest>, (string, HttpStatusCode), (string, HttpStatusCode))[]
             {
                 ("http://localhost:33333/repos/heleonix/heleonix.build/releases/latest/",
@@ -97,6 +95,33 @@ public static class GitHubCommitChangeLogTests
                 Assert.That(task.Changes[7].GetMetadata("Version"), Is.EqualTo("2.0.0"));
                 Assert.That(task.Changes[8].ItemSpec, Is.EqualTo("1.2.3"));
                 Assert.That(task.Changes[8].GetMetadata("PreviousVersion"), Is.EqualTo("1.2.3"));
+            });
+        });
+
+        When("there is no releases", () =>
+        {
+            responses = new (string, Predicate<HttpListenerRequest>, (string, HttpStatusCode), (string, HttpStatusCode))[]
+            {
+                ("http://localhost:33333/repos/heleonix/heleonix.build/releases/latest/",
+                request => true,
+                (@"{}", HttpStatusCode.OK),
+                (string.Empty, HttpStatusCode.BadRequest)),
+                ("http://localhost:33333/repos/heleonix/heleonix.build/commits/",
+                request => true,
+                (@"[]", HttpStatusCode.OK),
+                (string.Empty, HttpStatusCode.BadRequest)),
+            };
+
+            Should("succeed", () =>
+            {
+                Assert.That(succeeded, Is.True);
+                Assert.That(task.Version, Is.EqualTo("1.0.0"));
+                Assert.That(task.Changes.Length, Is.EqualTo(2));
+
+                Assert.That(task.Changes[0].ItemSpec, Is.EqualTo("1.0.0"));
+                Assert.That(task.Changes[0].GetMetadata("Version"), Is.EqualTo("1.0.0"));
+                Assert.That(task.Changes[1].ItemSpec, Is.EqualTo("0.0.0"));
+                Assert.That(task.Changes[1].GetMetadata("PreviousVersion"), Is.EqualTo("0.0.0"));
             });
         });
     }

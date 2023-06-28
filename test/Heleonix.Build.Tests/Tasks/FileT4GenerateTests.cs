@@ -20,22 +20,48 @@ public static class FileT4GenerateTests
         FileT4Generate task = null;
         var succeeded = false;
         string templateFile = null;
-        string generatedFile = null;
         TaskItem[] data = null;
         TestBuildEngine buildEngine = null;
 
+        var generatedFile = PathHelper.GetRandomFileNameInCurrentDir();
+
+        var template = @"<#@ template hostspecific=""true"" #>" +
+            @"<# foreach (var item in Host.Data) #>" +
+            @"<#{#>" +
+            @"-<#= item.GetMetadata(""description"")#>" +
+            @"<#}#>";
+
         Arrange(() =>
         {
+            buildEngine = new TestBuildEngine();
+
+            task = new FileT4Generate
+            {
+                BuildEngine = buildEngine,
+                TemplateFile = templateFile,
+                GeneratedFile = generatedFile,
+                Data = data,
+            };
+        });
+
+        Act(() =>
+        {
+            succeeded = task.Execute();
+        });
+
+        Teardown(() =>
+        {
+            if (templateFile != null)
+            {
+                File.Delete(templateFile);
+            }
+
+            File.Delete(generatedFile);
+        });
+
+        When("the template file and data are specified", () =>
+        {
             templateFile = PathHelper.GetRandomFileNameInCurrentDir();
-            generatedFile = PathHelper.GetRandomFileNameInCurrentDir();
-
-            const string template = @"<#@ template hostspecific=""true"" #>" +
-                @"<# foreach (var item in Host.Data) #>" +
-                @"<#{#>" +
-                @"-<#= item.GetMetadata(""description"")#>" +
-                @"<#}#>";
-
-            File.WriteAllText(templateFile, template);
 
             data = new TaskItem[]
             {
@@ -65,30 +91,11 @@ public static class FileT4GenerateTests
                 }),
             };
 
-            buildEngine = new TestBuildEngine();
-
-            task = new FileT4Generate
+            Arrange(() =>
             {
-                BuildEngine = buildEngine,
-                TemplateFile = templateFile,
-                GeneratedFile = generatedFile,
-                Data = data,
-            };
-        });
+                File.WriteAllText(templateFile, template);
+            });
 
-        Act(() =>
-        {
-            succeeded = task.Execute();
-        });
-
-        Teardown(() =>
-        {
-            File.Delete(templateFile);
-            File.Delete(generatedFile);
-        });
-
-        When("the template file, generated file and data are specified", () =>
-        {
             Should("succeed", () =>
             {
                 Assert.That(succeeded, Is.True);
@@ -99,6 +106,51 @@ public static class FileT4GenerateTests
                 {
                     Assert.That(generatedContent, Contains.Substring(d.GetMetadata("description")));
                 }
+            });
+        });
+
+        When("data is not specified", () =>
+        {
+            data = null;
+
+            Arrange(() =>
+            {
+                File.WriteAllText(templateFile, template);
+            });
+
+            Should("succeed", () =>
+            {
+                Assert.That(succeeded, Is.True);
+            });
+        });
+
+        When("the template file is invalid", () =>
+        {
+            Arrange(() =>
+            {
+                template = @"<#@ template hostspecific=""true"" #>" +
+                           @"<# foreach (var item in Host.Data) #>" +
+                           @"<#{#>" +
+                           @"-<#= item.Get-----Metadata(""description"")#>" +
+                           @"<#}#>";
+
+                File.WriteAllText(templateFile, template);
+            });
+
+            Should("fail", () =>
+            {
+                Assert.That(succeeded, Is.False);
+                Assert.That(buildEngine.ErrorMessages.Count, Is.EqualTo(1));
+            });
+        });
+
+        When("the template file is not specified", () =>
+        {
+            templateFile = null;
+
+            Should("fail", () =>
+            {
+                Assert.That(succeeded, Is.False);
             });
         });
     }
