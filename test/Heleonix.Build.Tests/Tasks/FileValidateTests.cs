@@ -20,7 +20,6 @@ public static class FileValidateTests
         FileValidate task = null;
         var succeeded = false;
         ITaskItem[] files = null;
-        string regExpOptions = null;
 
         Arrange(() =>
         {
@@ -28,7 +27,6 @@ public static class FileValidateTests
             {
                 BuildEngine = new TestBuildEngine(),
                 Files = files,
-                RegExpOptions = regExpOptions,
             };
         });
 
@@ -80,16 +78,6 @@ public static class FileValidateTests
                     Should("succeed", () =>
                     {
                         Assert.That(succeeded, Is.True);
-                    });
-
-                    And("regex options are specified", () =>
-                    {
-                        regExpOptions = RegexOptions.IgnoreCase.ToString();
-
-                        Should("succeed", () =>
-                        {
-                            Assert.That(succeeded, Is.True);
-                        });
                     });
                 });
 

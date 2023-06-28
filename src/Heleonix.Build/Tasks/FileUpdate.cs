@@ -27,7 +27,7 @@ public class FileUpdate : BaseTask
     /// <summary>
     /// Gets or sets the .NET regular expression options.
     /// </summary>
-    public string RegExpOptions { get; set; }
+    public string RegExpOptions { get; set; } = "None";
 
     /// <summary>
     /// Gets or sets content to replace with.
@@ -47,9 +47,7 @@ public class FileUpdate : BaseTask
         }
 
         var input = System.IO.File.ReadAllText(this.File);
-        var regExpOptions = string.IsNullOrEmpty(this.RegExpOptions)
-            ? RegexOptions.None
-            : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
+        var regExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
 
         var output = Regex.Replace(input, this.RegExp, this.Replacement ?? string.Empty, regExpOptions);
 

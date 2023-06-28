@@ -21,7 +21,6 @@ public static class FileReadTests
         var succeeded = false;
         string file = null;
         string regExp = null;
-        string regExpOptions = null;
 
         Arrange(() =>
         {
@@ -30,7 +29,6 @@ public static class FileReadTests
                 BuildEngine = new TestBuildEngine(),
                 File = file,
                 RegExp = regExp,
-                RegExpOptions = regExpOptions,
             };
         });
 
@@ -69,36 +67,19 @@ public static class FileReadTests
 
                 And("regex is specified", () =>
                 {
-                    regExp = "read_this";
+                    regExp = "READ_THIS";
 
-                    And("regex options are specified", () =>
+                    Should("read the text", () =>
                     {
-                        regExpOptions = RegexOptions.IgnoreCase.ToString();
+                        Assert.That(succeeded, Is.True);
 
-                        Should("read the text", () =>
-                        {
-                            Assert.That(succeeded, Is.True);
-
-                            Assert.That(task.Matches, Has.Length.EqualTo(3));
-                            Assert.That(task.Matches[0].ItemSpec, Is.EqualTo(file));
-                            Assert.That(task.Matches[0].GetMetadata("Match"), Is.EqualTo("READ_THIS"));
-                            Assert.That(task.Matches[1].ItemSpec, Is.EqualTo(file));
-                            Assert.That(task.Matches[1].GetMetadata("Match"), Is.EqualTo("READ_THIS"));
-                            Assert.That(task.Matches[2].ItemSpec, Is.EqualTo(file));
-                            Assert.That(task.Matches[2].GetMetadata("Match"), Is.EqualTo("READ_THIS"));
-                        });
-                    });
-
-                    And("regex options are not specified", () =>
-                    {
-                        regExpOptions = null;
-
-                        Should("not read the text", () =>
-                        {
-                            Assert.That(succeeded, Is.True);
-
-                            Assert.That(task.Matches, Is.Empty);
-                        });
+                        Assert.That(task.Matches, Has.Length.EqualTo(3));
+                        Assert.That(task.Matches[0].ItemSpec, Is.EqualTo(file));
+                        Assert.That(task.Matches[0].GetMetadata("Match"), Is.EqualTo("READ_THIS"));
+                        Assert.That(task.Matches[1].ItemSpec, Is.EqualTo(file));
+                        Assert.That(task.Matches[1].GetMetadata("Match"), Is.EqualTo("READ_THIS"));
+                        Assert.That(task.Matches[2].ItemSpec, Is.EqualTo(file));
+                        Assert.That(task.Matches[2].GetMetadata("Match"), Is.EqualTo("READ_THIS"));
                     });
                 });
             });

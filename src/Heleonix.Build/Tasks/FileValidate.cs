@@ -21,16 +21,14 @@ public class FileValidate : BaseTask
     /// <summary>
     /// Gets or sets the .NET regular expression options.
     /// </summary>
-    public string RegExpOptions { get; set; }
+    public string RegExpOptions { get; set; } = "None";
 
     /// <summary>
     /// Reads a file with specified regular expression and content.
     /// </summary>
     protected override void ExecuteInternal()
     {
-        var regExpOptions = string.IsNullOrEmpty(this.RegExpOptions)
-            ? RegexOptions.None
-            : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
+        var regExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
 
         foreach (var file in this.Files)
         {

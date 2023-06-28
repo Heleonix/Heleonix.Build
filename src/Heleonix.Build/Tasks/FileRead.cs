@@ -25,7 +25,7 @@ public class FileRead : BaseTask
     /// <summary>
     /// Gets or sets the .NET regular expression options.
     /// </summary>
-    public string RegExpOptions { get; set; }
+    public string RegExpOptions { get; set; } = "None";
 
     /// <summary>
     /// Gets or sets found matches [Output].
@@ -48,9 +48,7 @@ public class FileRead : BaseTask
         }
 
         var input = System.IO.File.ReadAllText(this.File);
-        var regExpOptions = string.IsNullOrEmpty(this.RegExpOptions)
-            ? RegexOptions.None
-            : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
+        var regExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
 
         var foundMatches = Regex.Matches(input, this.RegExp, regExpOptions);
 

@@ -21,7 +21,6 @@ public static class FileUpdateTests
         var succeeded = false;
         string file = null;
         string regExp = null;
-        string regExpOptions = null;
         string replacement = null;
 
         Arrange(() =>
@@ -33,7 +32,6 @@ public static class FileUpdateTests
                 BuildEngine = new TestBuildEngine(),
                 File = file,
                 RegExp = regExp,
-                RegExpOptions = regExpOptions,
                 Replacement = replacement,
             };
         });
@@ -68,51 +66,29 @@ public static class FileUpdateTests
 
             And("regex is specified", () =>
             {
-                regExp = "replace_this";
+                regExp = "REPLACE_THIS";
 
-                And("regex options are specified", () =>
+                And("replacement is specified", () =>
                 {
-                    regExpOptions = RegexOptions.IgnoreCase.ToString();
+                    replacement = "REPLACEMENT";
 
-                    And("replacement is specified", () =>
+                    Should("replace the text", () =>
                     {
-                        replacement = "REPLACEMENT";
+                        Assert.That(succeeded, Is.True);
 
-                        Should("replace the text", () =>
-                        {
-                            Assert.That(succeeded, Is.True);
-
-                            Assert.That(File.ReadAllText(file), Is.EqualTo("text text REPLACEMENT text text"));
-                        });
-                    });
-
-                    And("replacement is not specified", () =>
-                    {
-                        replacement = null;
-
-                        Should("replace the text with empty string", () =>
-                        {
-                            Assert.That(succeeded, Is.True);
-
-                            Assert.That(File.ReadAllText(file), Is.EqualTo("text text  text text"));
-                        });
+                        Assert.That(File.ReadAllText(file), Is.EqualTo("text text REPLACEMENT text text"));
                     });
                 });
 
-                And("regex options are not specified", () =>
+                And("replacement is not specified", () =>
                 {
-                    regExpOptions = null;
+                    replacement = null;
 
-                    And("replacement is specified", () =>
+                    Should("replace the text with empty string", () =>
                     {
-                        replacement = "REPLACEMENT";
+                        Assert.That(succeeded, Is.True);
 
-                        Should("not replace the text", () =>
-                        {
-                            Assert.That(succeeded, Is.True);
-
-                            Assert.That(File.ReadAllText(file), Is.EqualTo("text text REPLACE_THIS text text"));
-                        });
+                        Assert.That(File.ReadAllText(file), Is.EqualTo("text text  text text"));
                     });
                 });
             });

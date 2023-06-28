@@ -66,7 +66,7 @@ public class GitHubCommitChangeLog : BaseTask
     /// <summary>
     /// Gets or sets the .NET regular expression options for regexp patterns.
     /// </summary>
-    public string RegExpOptions { get; set; }
+    public string RegExpOptions { get; set; } = "None";
 
     /// <summary>
     /// Gets or sets the calculated version based on the change conventions [Output].
@@ -87,9 +87,7 @@ public class GitHubCommitChangeLog : BaseTask
     {
         this.Log.LogMessage(Resources.GitHubCommitChangeLog_GettingLatestRelease);
 
-        var regExpOptions = string.IsNullOrEmpty(this.RegExpOptions)
-            ? RegexOptions.None
-            : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
+        var regExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
 
         using var client = new HttpClient();
 

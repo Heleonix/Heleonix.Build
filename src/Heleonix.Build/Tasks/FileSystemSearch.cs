@@ -53,7 +53,7 @@ public class FileSystemSearch : BaseTask
     /// <summary>
     /// Gets or sets the .NET regular expression options to include found paths. Default is "IgnoreCase".
     /// </summary>
-    public string PathRegExpOptions { get; set; }
+    public string PathRegExpOptions { get; set; } = "IgnoreCase";
 
     /// <summary>
     /// Gets or sets the .NET regular expression to include by content.
@@ -63,7 +63,7 @@ public class FileSystemSearch : BaseTask
     /// <summary>
     /// Gets or sets the .NET regular expression options to include by content.
     /// </summary>
-    public string ContentRegExpOptions { get; set; }
+    public string ContentRegExpOptions { get; set; } = "IgnoreCase";
 
     /// <summary>
     /// Gets or sets the found files [Output].
@@ -99,16 +99,12 @@ public class FileSystemSearch : BaseTask
             return;
         }
 
-        var pathRegExpOptions = string.IsNullOrEmpty(this.PathRegExpOptions)
-                    ? RegexOptions.IgnoreCase
-                    : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.PathRegExpOptions);
+        var pathRegExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.PathRegExpOptions);
         var pathRegExp = string.IsNullOrEmpty(this.PathRegExp)
             ? null
             : new Regex(this.PathRegExp.Replace("/", new string(Path.DirectorySeparatorChar, 2)).Replace("//", "/"), pathRegExpOptions);
 
-        var contentRegExpOptions = string.IsNullOrEmpty(this.ContentRegExpOptions)
-                    ? RegexOptions.IgnoreCase
-                    : (RegexOptions)Enum.Parse(typeof(RegexOptions), this.ContentRegExpOptions);
+        var contentRegExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.ContentRegExpOptions);
         var contentRegExp = string.IsNullOrEmpty(this.ContentRegExp)
             ? null
             : new Regex(this.ContentRegExp, contentRegExpOptions);

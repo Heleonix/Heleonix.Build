@@ -23,9 +23,7 @@ public static class FileSystemSearchTests
         string direction = null;
         string types = null;
         string pathRegExp = null;
-        string pathRegExpOptions = null;
         string contentRegExp = null;
-        string contentRegExpOptions = null;
         string rootDir = null;
 
         Act(() =>
@@ -37,9 +35,7 @@ public static class FileSystemSearchTests
                 Direction = direction,
                 Types = types,
                 PathRegExp = pathRegExp,
-                PathRegExpOptions = pathRegExpOptions,
                 ContentRegExp = contentRegExp,
-                ContentRegExpOptions = contentRegExpOptions,
             };
 
             succeeded = task.Execute();
@@ -116,15 +112,12 @@ public static class FileSystemSearchTests
                 {
                     And("search direction is not specified", () =>
                     {
-                        And("search options are not specified", () =>
+                        Should("find all directories and files", () =>
                         {
-                            Should("find all directories and files", () =>
-                            {
-                                Assert.That(succeeded, Is.True);
-                                Assert.That(task.FoundFiles, Has.Length.EqualTo(9));
-                                Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
-                                Assert.That(task.FoundItems, Has.Length.EqualTo(16));
-                            });
+                            Assert.That(succeeded, Is.True);
+                            Assert.That(task.FoundFiles, Has.Length.EqualTo(9));
+                            Assert.That(task.FoundDirs, Has.Length.EqualTo(7));
+                            Assert.That(task.FoundItems, Has.Length.EqualTo(16));
                         });
 
                         And("search options are specified", () =>
@@ -132,17 +125,13 @@ public static class FileSystemSearchTests
                             Arrange(() =>
                             {
                                 pathRegExp = @".*aaa\.txt$";
-                                pathRegExpOptions = RegexOptions.IgnoreCase.ToString();
                                 contentRegExp = ".*111aaa.*";
-                                contentRegExpOptions = RegexOptions.IgnoreCase.ToString();
                             });
 
                             Teardown(() =>
                             {
                                 pathRegExp = null;
-                                pathRegExpOptions = null;
                                 contentRegExp = null;
-                                contentRegExpOptions = null;
                             });
 
                             Should("find the only 111aaa.txt file", () =>
