@@ -5,7 +5,7 @@
     <Hx_System_OpenCoverConsoleExe>$(MSBuildThisFileDirectory)../../OpenCover.4.7.1221/tools/OpenCover.Console.exe</Hx_System_OpenCoverConsoleExe>
     <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)../../ReportGenerator.5.1.19/tools/net6.0/ReportGenerator.exe</Hx_System_ReportGeneratorExe>
     <Hx_System_ReportGeneratorExe Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)../../ReportGenerator.5.1.19/tools/net47/ReportGenerator.exe</Hx_System_ReportGeneratorExe>
-    <Hx_System_NugetExe>$(MSBuildThisFileDirectory)../../NuGet.CommandLine.6.4.0/tools/NuGet.exe</Hx_System_NugetExe>
+    <Hx_System_NugetExe>$(MSBuildThisFileDirectory)../../NuGet.CommandLine.6.4.2/tools/NuGet.exe</Hx_System_NugetExe>
     <Hx_System_DocFXExe>$(MSBuildThisFileDirectory)../../docfx.console.2.59.4/tools/docfx.exe</Hx_System_DocFXExe>
     <Hx_System_GitExe>$(MSBuildThisFileDirectory)../../GitForWindows.2.39.2/tools/cmd/git.exe</Hx_System_GitExe>
   </PropertyGroup>
