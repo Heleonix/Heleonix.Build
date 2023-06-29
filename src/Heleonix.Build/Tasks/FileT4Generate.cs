@@ -5,6 +5,7 @@
 
 namespace Heleonix.Build.Tasks;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.Build.Utilities;
 using Mono.TextTemplating;
@@ -29,6 +30,7 @@ using Mono.TextTemplating;
 /// Item: <#= item.ItemSpec#>
 /// <#}#>
 /// ]]></example>
+[ExcludeFromCodeCoverage]
 public class FileT4Generate : BaseTask
 {
     /// <summary>
