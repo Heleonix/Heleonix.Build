@@ -16,6 +16,7 @@ public static class FileT4GenerateTests
     /// Tests the <see cref="FileT4Generate.ExecuteInternal"/>.
     /// </summary>
     [MemberTest(Name = nameof(FileT4Generate.Execute))]
+    [Ignore("Tests for Mono.TextTemplating do not work with NUnit console runner.")]
     public static void Execute()
     {
         FileT4Generate task = null;
