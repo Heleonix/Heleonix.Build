@@ -40,16 +40,14 @@ public static class ChangeLogGitHubCommitTests
                 @"{""commit"":{""message"":""perf(ID-4): Perf 7.""}}," +
                 @"{""commit"":{""message"":""Free commit to be ignored.""}}]";
 
-            var responses = new (string, Predicate<HttpListenerRequest>, (string, HttpStatusCode), (string, HttpStatusCode))[]
+            var responses = new (string, Func<HttpListenerRequest, (string, HttpStatusCode)>)[]
             {
-                ("http://localhost:33333/repos/Heleonix/NetSimulator/releases/latest/",
-                request => true,
-                (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-02-27T19:35:32Z""}", HttpStatusCode.OK),
-                (string.Empty, HttpStatusCode.BadRequest)),
-                ("http://localhost:33333/repos/Heleonix/NetSimulator/commits/",
-                request => true,
-                (commits, HttpStatusCode.OK),
-                (string.Empty, HttpStatusCode.BadRequest)),
+                (
+                    "http://localhost:33333/repos/Heleonix/NetSimulator/releases/latest/",
+                    request => (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-02-27T19:35:32Z""}", HttpStatusCode.OK)),
+                (
+                    "http://localhost:33333/repos/Heleonix/NetSimulator/commits/",
+                    request => (commits, HttpStatusCode.OK)),
             };
 
             listener = CommunicationHelper.LaunchHttpServer(responses);

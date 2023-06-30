@@ -47,11 +47,11 @@ public static class ReleaseGitHubTests
                     {
                         var req = reader.ReadToEnd();
 
-                        return req.Contains("\"v1.2.3\"") && req.Contains("-release note 1; -release note 2");
+                        return req.Contains("\"v1.2.3\"") && req.Contains("-release note 1; -release note 2") ?
+                        ("{ \"name\": \"v1.2.3\" }", HttpStatusCode.Created) :
+                        ("{ \"name\": \"v1.2.3\" }", HttpStatusCode.BadRequest);
                     }
-                },
-                ("{ \"name\": \"v1.2.3\" }", HttpStatusCode.Created),
-                ("{ \"name\": \"v1.2.3\" }", HttpStatusCode.BadRequest)));
+                }));
         });
 
         Act(() =>

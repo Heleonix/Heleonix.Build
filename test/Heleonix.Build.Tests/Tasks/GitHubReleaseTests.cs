@@ -36,11 +36,11 @@ public static class GitHubReleaseTests
                     {
                         var req = reader.ReadToEnd();
 
-                        return req.Contains("\"v1.0.0\"") && req.Contains("-release note 1; -release note 2");
+                        return req.Contains("\"v1.0.0\"") && req.Contains("-release note 1; -release note 2") ?
+                        ("{ \"name\": \"v1.0.0\" }", HttpStatusCode.Created) :
+                        ("{ \"name\": \"v1.0.0\" }", HttpStatusCode.BadRequest);
                     }
-                },
-                ("{ \"name\": \"v1.0.0\" }", HttpStatusCode.Created),
-                ("{ \"name\": \"v1.0.0\" }", HttpStatusCode.BadRequest)));
+                }));
 
             task = new GitHubRelease
             {
