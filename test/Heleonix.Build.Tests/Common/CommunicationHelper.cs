@@ -22,15 +22,13 @@ public static class CommunicationHelper
     /// <returns>A task to manage launched server.</returns>
     public static HttpListener LaunchHttpServer(params (
         string Url,
-        Predicate<HttpListenerRequest> IsSuccess,
-        (string Content, HttpStatusCode StatusCode) OnSuccess,
-        (string Content, HttpStatusCode StatusCode) OnFail)[] mocks)
+        Func<HttpListenerRequest, (string Content, HttpStatusCode StatusCode)>)[] mocks)
     {
         var listener = new HttpListener();
 
         Task.Run(() =>
         {
-            foreach (var (url, _, _, _) in mocks)
+            foreach (var (url, _) in mocks)
             {
                 listener.Prefixes.Add(url);
             }
@@ -44,10 +42,9 @@ public static class CommunicationHelper
                 var request = context.Request;
                 var response = context.Response;
 
-                var (_, isSuccess, onSuccess, onFail) = mocks.Single(m => m.Url.Contains(request.Url.AbsolutePath));
+                var (_, handler) = mocks.Single(m => m.Url.Contains(request.Url.AbsolutePath));
 
-                var (content, statusCode) =
-                isSuccess(context.Request) ? onSuccess : onFail;
+                var (content, statusCode) = handler(context.Request);
 
                 var buffer = Encoding.UTF8.GetBytes(content);
 
