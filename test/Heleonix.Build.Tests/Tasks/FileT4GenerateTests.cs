@@ -8,6 +8,7 @@ namespace Heleonix.Build.Tests.Tasks;
 /// <summary>
 /// Tests the <see cref="FileT4Generate"/>.
 /// </summary>
+[Ignore("Tests for Mono.TextTemplating do not work with NUnit console runner.")]
 [ComponentTest(Type = typeof(FileT4Generate))]
 public static class FileT4GenerateTests
 {
