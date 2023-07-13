@@ -1,4 +1,4 @@
-﻿// <copyright file="CommunicationHelper.cs" company="Heleonix - Hennadii Lutsyshyn">
+﻿// <copyright file="HttpHelper.cs" company="Heleonix - Hennadii Lutsyshyn">
 // Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// Provides functionality for working with requests, responses, emulated services etc.
 /// </summary>
-public static class CommunicationHelper
+public static class HttpHelper
 {
     /// <summary>
     /// Launches an http server.

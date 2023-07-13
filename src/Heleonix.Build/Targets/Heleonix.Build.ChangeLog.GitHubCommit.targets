@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <ItemGroup Condition="'@(Hx_ChangeLog_GitHubCommit_TemplateFiles)' == ''">
-      <Hx_ChangeLog_GitHubCommit_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.md.tt"/>
-      <Hx_ChangeLog_GitHubCommit_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.txt.tt"/>
+      <Hx_ChangeLog_GitHubCommit_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.md.cshtml"/>
+      <Hx_ChangeLog_GitHubCommit_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.txt.cshtml"/>
     </ItemGroup>
 
     <Message Text="> 1/4: Creating the artifacts directory"/>
@@ -48,7 +48,7 @@
       Overwrite="true"/>
 
     <Message Text="> 4/4: Generating the change logs into the artifacts directory using the provided templates"/>
-    <Heleonix.Build.Tasks.FileT4Generate
+    <Heleonix.Build.Tasks.FileRazorGenerate
       TemplateFile="%(Hx_ChangeLog_GitHubCommit_TemplateFiles.FullPath)"
       GeneratedFile="$(Hx_ChangeLog_ArtifactsDir)/%(Hx_ChangeLog_GitHubCommit_TemplateFiles.Filename)"
       Data="@(_Hx_ChangeLog_GitHubCommit_Changes)"/>

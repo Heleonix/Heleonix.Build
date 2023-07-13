@@ -93,6 +93,21 @@ public class OpenCover : BaseTask
     public string Register { get; set; }
 
     /// <summary>
+    /// Gets or sets the file path to replace the paths of covered files with.
+    /// </summary>
+    public string FilePathReplacement { get; set; }
+
+    /// <summary>
+    /// Gets or sets the .NET regular expression to replace file paths of covered files.
+    /// </summary>
+    public string FilePathRegExp { get; set; }
+
+    /// <summary>
+    /// Gets or sets the .NET regular expression options to replace paths. Default is "IgnoreCase".
+    /// </summary>
+    public string FilePathRegExpOptions { get; set; } = "IgnoreCase";
+
+    /// <summary>
     /// Gets or sets the total lines count [Output].
     /// </summary>
     [Output]
@@ -236,7 +251,31 @@ public class OpenCover : BaseTask
             this.Log.LogWarning(Resources.OpenCover_TargetFailed, result.ExitCode);
         }
 
-        var summary = XDocument.Load(this.CoverageResultFile).Element("CoverageSession").Element("Summary");
+        var document = XDocument.Load(this.CoverageResultFile);
+
+        if (!string.IsNullOrEmpty(this.FilePathRegExp))
+        {
+            var regExp = new Regex(
+                this.FilePathRegExp,
+                (RegexOptions)Enum.Parse(typeof(RegexOptions), this.FilePathRegExpOptions));
+
+            var paths = document
+            .Element("CoverageSession")
+            .Element("Modules")
+            .Elements("Module").Where(e => e.Attribute("skippedDueTo") == null)
+            .Elements("Files")
+            .Elements("File")
+            .Attributes("fullPath");
+
+            foreach (var path in paths)
+            {
+                path.Value = regExp.Replace(path.Value, this.FilePathReplacement);
+            }
+
+            document.Save(this.CoverageResultFile);
+        }
+
+        var summary = document.Element("CoverageSession").Element("Summary");
 
         this.TotalLines = Convert.ToInt64(summary.Attribute("numSequencePoints").Value, InvariantInfo);
         this.VisitedLines = Convert.ToInt64(summary.Attribute("visitedSequencePoints").Value, InvariantInfo);

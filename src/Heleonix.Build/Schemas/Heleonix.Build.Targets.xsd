@@ -336,6 +336,21 @@ Example custom property that allows string content only
       <xs:documentation>The type of registration of the OpenCover profiler: auto, user, path32, path64.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hx_OpenCover_FilePathReplacement" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The file path to replace the paths of covered files with.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_FilePathRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The .NET regular expression to replace file paths of covered files.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_OpenCover_FilePathRegExpOptions" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The .NET regular expression options to replace paths. Default is "IgnoreCase".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hx_OpenCover_MaxVisitCount" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>

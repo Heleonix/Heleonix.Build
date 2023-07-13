@@ -1,4 +1,4 @@
-// <copyright file="FileT4GenerateTests.cs" company="Heleonix - Hennadii Lutsyshyn">
+// <copyright file="FileRazorGenerateTests.cs" company="Heleonix - Hennadii Lutsyshyn">
 // Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
@@ -6,20 +6,18 @@
 namespace Heleonix.Build.Tests.Tasks;
 
 /// <summary>
-/// Tests the <see cref="FileT4Generate"/>.
+/// Tests the <see cref="FileRazorGenerate"/>.
 /// </summary>
-[Ignore("Tests for Mono.TextTemplating do not work with NUnit console runner.")]
-[ComponentTest(Type = typeof(FileT4Generate))]
-public static class FileT4GenerateTests
+[ComponentTest(Type = typeof(FileRazorGenerate))]
+public static class FileRazorGenerateTests
 {
     /// <summary>
-    /// Tests the <see cref="FileT4Generate.ExecuteInternal"/>.
+    /// Tests the <see cref="FileRazorGenerate.ExecuteInternal"/>.
     /// </summary>
-    [MemberTest(Name = nameof(FileT4Generate.Execute))]
-    [Ignore("Tests for Mono.TextTemplating do not work with NUnit console runner.")]
+    [MemberTest(Name = nameof(FileRazorGenerate.Execute))]
     public static void Execute()
     {
-        FileT4Generate task = null;
+        FileRazorGenerate task = null;
         var succeeded = false;
         string templateFile = null;
         TaskItem[] data = null;
@@ -27,17 +25,21 @@ public static class FileT4GenerateTests
 
         var generatedFile = PathHelper.GetRandomFileNameInCurrentDir();
 
-        var template = @"<#@ template hostspecific=""true"" #>" +
-            @"<# foreach (var item in Host.Data) #>" +
-            @"<#{#>" +
-            @"-<#= item.GetMetadata(""description"")#>" +
-            @"<#}#>";
+        var template = @"@using System
+@using Microsoft.Build.Framework
+@inherits RazorEngineCore.RazorEngineTemplateBase<ITaskItem[]>
+@DateTime.UtcNow.ToShortDateString()
+@foreach (var item in Model)
+{
+    <text>- </text> @item.GetMetadata(""description"")
+    @:
+}";
 
         Arrange(() =>
         {
             buildEngine = new TestBuildEngine();
 
-            task = new FileT4Generate
+            task = new FileRazorGenerate
             {
                 BuildEngine = buildEngine,
                 TemplateFile = templateFile,
@@ -63,7 +65,7 @@ public static class FileT4GenerateTests
 
         When("the template file and data are specified", () =>
         {
-            templateFile = PathHelper.GetRandomFileNameInCurrentDir();
+            templateFile = Path.ChangeExtension(PathHelper.GetRandomFileNameInCurrentDir(), ".cshtml");
 
             data = new TaskItem[]
             {
@@ -100,9 +102,6 @@ public static class FileT4GenerateTests
 
             Should("succeed", () =>
             {
-                NUnit.Framework.Internal.TestExecutionContext.CurrentContext.OutWriter.WriteLine(
-                    "ERROR FROM TASK=====" + string.Join("\r\n\r\n", buildEngine.ErrorMessages));
-
                 Assert.That(succeeded, Is.True);
 
                 var generatedContent = File.ReadAllText(generatedFile);
@@ -133,11 +132,7 @@ public static class FileT4GenerateTests
         {
             Arrange(() =>
             {
-                template = @"<#@ template hostspecific=""true"" #>" +
-                           @"<# foreach (var item in Host.Data) #>" +
-                           @"<#{#>" +
-                           @"-<#= item.Get-----Metadata(""description"")#>" +
-                           @"<#}#>";
+                template = @"@asdasdasd";
 
                 File.WriteAllText(templateFile, template);
             });
@@ -145,7 +140,7 @@ public static class FileT4GenerateTests
             Should("fail", () =>
             {
                 Assert.That(succeeded, Is.False);
-                Assert.That(buildEngine.ErrorMessages.Count, Is.EqualTo(1));
+                Assert.That(buildEngine.ErrorMessages.Count, Is.EqualTo(2));
             });
         });
 

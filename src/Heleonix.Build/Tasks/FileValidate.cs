@@ -19,9 +19,9 @@ public class FileValidate : BaseTask
     public ITaskItem[] Files { get; set; }
 
     /// <summary>
-    /// Gets or sets the .NET regular expression options.
+    /// Gets or sets the .NET regular expression options. Default value is "IgnoreCase".
     /// </summary>
-    public string RegExpOptions { get; set; } = "None";
+    public string RegExpOptions { get; set; } = "IgnoreCase";
 
     /// <summary>
     /// Reads a file with specified regular expression and content.

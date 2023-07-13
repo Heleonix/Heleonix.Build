@@ -15,5 +15,5 @@
   <UsingTask TaskName="Heleonix.Build.Tasks.OpenCover" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.ReportGenerator" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
   <UsingTask TaskName="Heleonix.Build.Tasks.ReportUnit" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
-  <UsingTask TaskName="Heleonix.Build.Tasks.FileT4Generate" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
+  <UsingTask TaskName="Heleonix.Build.Tasks.FileRazorGenerate" AssemblyFile="$(_Hx_TaskAssemblyFile)"/>
 </Project>

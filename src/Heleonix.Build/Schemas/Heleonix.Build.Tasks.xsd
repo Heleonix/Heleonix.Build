@@ -599,6 +599,21 @@ Example custom task with single required parameter
               <xs:documentation>The type of registration of the OpenCover profiler: auto, user, path32, path64.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="FilePathReplacement">
+            <xs:annotation>
+              <xs:documentation>The file path to replace the paths of covered files with.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FilePathRegExp">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression to replace file paths of covered files.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FilePathRegExpOptions">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options to replace paths. Default is "IgnoreCase".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="MaxVisitCount">
             <xs:annotation>
               <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
@@ -785,16 +800,16 @@ Example custom task with single required parameter
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="Heleonix.Build.Tasks.FileT4Generate" substitutionGroup="msb:Task">
+  <xs:element name="Heleonix.Build.Tasks.FileRazorGenerate" substitutionGroup="msb:Task">
     <xs:annotation>
-      <xs:documentation>Generates a file using the passed T4 template file and passed list of data items.</xs:documentation>
+      <xs:documentation>Generates a file using the passed Razor template file and passed list of data items.</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="msb:TaskType">
           <xs:attribute name="TemplateFile" use="required">
             <xs:annotation>
-              <xs:documentation>Path to the T4 template file.</xs:documentation>
+              <xs:documentation>Path to the Razor template file.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="GeneratedFile" use="required">

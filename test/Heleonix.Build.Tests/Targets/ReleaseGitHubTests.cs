@@ -39,7 +39,7 @@ public static class ReleaseGitHubTests
                 { "Hx_Release_GitHub_Token", "111111111" },
             };
 
-            listener = CommunicationHelper.LaunchHttpServer((
+            listener = HttpHelper.LaunchHttpServer((
                 "http://localhost:33333/repos/Heleonix/NetSimulator/releases/",
                 request =>
                 {

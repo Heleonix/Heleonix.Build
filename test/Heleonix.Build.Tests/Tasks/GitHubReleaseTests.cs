@@ -28,7 +28,7 @@ public static class GitHubReleaseTests
 
         Arrange(() =>
         {
-            listener = CommunicationHelper.LaunchHttpServer((
+            listener = HttpHelper.LaunchHttpServer((
                 "http://localhost:33333/repos/heleonix/heleonix.build/releases/",
                 request =>
                 {
