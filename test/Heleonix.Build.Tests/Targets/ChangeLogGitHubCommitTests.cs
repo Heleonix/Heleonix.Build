@@ -6,7 +6,6 @@
 namespace Heleonix.Build.Tests.Targets;
 
 using System.Net;
-using System.Text.Json.Nodes;
 
 /// <summary>
 /// Tests the BuildNet target.
@@ -50,7 +49,7 @@ public static class ChangeLogGitHubCommitTests
                     request => (commits, HttpStatusCode.OK)),
             };
 
-            listener = CommunicationHelper.LaunchHttpServer(responses);
+            listener = HttpHelper.LaunchHttpServer(responses);
 
             properties = new Dictionary<string, string>
             {

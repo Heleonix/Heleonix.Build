@@ -5,6 +5,8 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
+using System.Xml.Linq;
+
 /// <summary>
 /// Tests the <see cref="OpenCover"/>.
 /// </summary>
@@ -24,6 +26,8 @@ public static class OpenCoverTests
         string targetExe = null;
         string outputDir = null;
         string testFilter = null;
+        string filePathRegExp = null;
+        string filePathReplacement = null;
         var minCoverage = 0;
         ITaskItem[] pdbSearchDirs = null;
         var simulator = new NetSimulatorHelper();
@@ -67,6 +71,8 @@ public static class OpenCoverTests
                 MinLineCoverage = minCoverage,
                 MinMethodCoverage = minCoverage,
                 PdbSearchDirs = pdbSearchDirs,
+                FilePathRegExp = filePathRegExp,
+                FilePathReplacement = filePathReplacement,
             };
 
             succeeded = task.Execute();
@@ -110,22 +116,14 @@ public static class OpenCoverTests
                 {
                     targetExe = PathHelper.NUnitConsoleExe;
 
-                    And("source code should pass coverage threshold", () =>
+                    And("replacement of file paths is specified", () =>
                     {
-                        minCoverage = 0;
+                        filePathRegExp = @".*?\\Heleonix\.Build";
+                        filePathReplacement = @"https://some.url.com";
 
-                        Should("succeed and provide coverage greater than or equal to minimal coverage", () =>
+                        And("source code should pass coverage threshold", () =>
                         {
-                            Assert.That(succeeded, Is.True);
-                            Assert.That(task.ClassCoverage, Is.GreaterThanOrEqualTo(minCoverage));
-                            Assert.That(task.MethodCoverage, Is.GreaterThanOrEqualTo(minCoverage));
-                            Assert.That(task.BranchCoverage, Is.GreaterThanOrEqualTo(minCoverage));
-                            Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
-                        });
-
-                        And("target exit code is 0", () =>
-                        {
-                            testFilter = "method == PlusOne";
+                            minCoverage = 0;
 
                             Should("succeed and provide coverage greater than or equal to minimal coverage", () =>
                             {
@@ -134,21 +132,58 @@ public static class OpenCoverTests
                                 Assert.That(task.MethodCoverage, Is.GreaterThanOrEqualTo(minCoverage));
                                 Assert.That(task.BranchCoverage, Is.GreaterThanOrEqualTo(minCoverage));
                                 Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                Assert.That(task.VisitedClasses, Is.GreaterThan(0));
+                                Assert.That(task.VisitedMethods, Is.GreaterThan(0));
+                                Assert.That(task.VisitedLines, Is.GreaterThan(0));
+                                Assert.That(task.TotalClasses, Is.GreaterThan(0));
+                                Assert.That(task.TotalMethods, Is.GreaterThan(0));
+                                Assert.That(task.TotalBranches, Is.GreaterThan(0));
+                                Assert.That(task.TotalLines, Is.GreaterThan(0));
+
+                                var paths = XDocument.Load(coverageResultFile)
+                                .Element("CoverageSession")
+                                .Element("Modules")
+                                .Elements(@"Module").Where(e => e.Attribute("skippedDueTo") == null)
+                                .Elements("Files")
+                                .Elements("File")
+                                .Attributes("fullPath");
+
+                                Assert.That(paths, Has.All.StartsWith(filePathReplacement));
+                            });
+
+                            And("target exit code is 0", () =>
+                            {
+                                testFilter = "method == PlusOne";
+
+                                Should("succeed and provide coverage greater than or equal to minimal coverage", () =>
+                                {
+                                    Assert.That(succeeded, Is.True);
+                                    Assert.That(task.ClassCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.MethodCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.BranchCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                    Assert.That(task.LineCoverage, Is.GreaterThanOrEqualTo(minCoverage));
+                                });
                             });
                         });
                     });
 
-                    And("source code should not pass coverage threshold", () =>
+                    And("replacement of file paths is not specified", () =>
                     {
-                        minCoverage = 100;
+                        filePathRegExp = null;
+                        filePathReplacement = null;
 
-                        Should("fail", () =>
+                        And("source code should not pass coverage threshold", () =>
                         {
-                            Assert.That(succeeded, Is.False);
-                            Assert.That(task.ClassCoverage, Is.LessThan(minCoverage));
-                            Assert.That(task.MethodCoverage, Is.LessThan(minCoverage));
-                            Assert.That(task.BranchCoverage, Is.LessThan(minCoverage));
-                            Assert.That(task.LineCoverage, Is.LessThan(minCoverage));
+                            minCoverage = 100;
+
+                            Should("fail", () =>
+                            {
+                                Assert.That(succeeded, Is.False);
+                                Assert.That(task.ClassCoverage, Is.LessThan(minCoverage));
+                                Assert.That(task.MethodCoverage, Is.LessThan(minCoverage));
+                                Assert.That(task.BranchCoverage, Is.LessThan(minCoverage));
+                                Assert.That(task.LineCoverage, Is.LessThan(minCoverage));
+                            });
                         });
                     });
                 });

@@ -27,7 +27,7 @@ public static class GitHubCommitChangeLogTests
 
         Arrange(() =>
         {
-            listener = CommunicationHelper.LaunchHttpServer(responses);
+            listener = HttpHelper.LaunchHttpServer(responses);
 
             task = new GitHubCommitChangeLog
             {

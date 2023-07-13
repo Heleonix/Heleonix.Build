@@ -54,7 +54,10 @@
       MinLineCoverage="$(Hx_OpenCover_MinLineCoverage)"
       MaxVisitCount="$(Hx_OpenCover_MaxVisitCount)"
       ShowUnvisited="$(Hx_OpenCover_ShowUnvisited)"
-      Register="$(Hx_OpenCover_Register)"/>
+      Register="$(Hx_OpenCover_Register)"
+      FilePathReplacement="$(Hx_OpenCover_FilePathReplacement)"
+      FilePathRegExp="$(Hx_OpenCover_FilePathRegExp)"
+      FilePathRegExpOptions="$(Hx_OpenCover_FilePathRegExpOptions)"/>
 
     <Message Text="> DONE!"/>
 

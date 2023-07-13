@@ -1,4 +1,4 @@
-﻿// <copyright file="Module.cs" company="Heleonix - Hennadii Lutsyshyn">
+﻿// <copyright file="ModuleInitializer.cs" company="Heleonix - Hennadii Lutsyshyn">
 // Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
@@ -12,7 +12,7 @@ using Heleonix.Build.Tests.Common;
 /// <summary>
 /// Initializes the assembly.
 /// </summary>
-internal static class Module
+internal static class ModuleInitializer
 {
     /// <summary>
     /// Initializes the assembly.

@@ -28,10 +28,6 @@
       </Hx_NetValidate_Files>
     </ItemGroup>
 
-    <PropertyGroup>
-      <Hx_NetValidate_RegExpOptions>IgnoreCase</Hx_NetValidate_RegExpOptions>
-    </PropertyGroup>
-
     <Message Text="> 1/1: Validating files"/>
     <Heleonix.Build.Tasks.FileValidate Files="@(Hx_NetValidate_Files)" RegExpOptions="$(Hx_NetValidate_RegExpOptions)"/>
 

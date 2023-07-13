@@ -55,10 +55,8 @@ public static class MSBuildHelper
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            TestExecutionContext.CurrentContext.OutWriter.WriteLine(ex);
-
             return false;
         }
         finally

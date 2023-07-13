@@ -1,0 +1,58 @@
+﻿@using System
+@using Microsoft.Build.Framework
+@inherits RazorEngineCore.RazorEngineTemplateBase<ITaskItem[]>
+@{
+    var breaking = Model.Where(d => !string.IsNullOrEmpty(d.GetMetadata("breaking")));
+    var features = Model.Where(d => d.GetMetadata("type") == "feat" && string.IsNullOrEmpty(d.GetMetadata("breaking")));
+    var fixes = Model.Where(d => d.GetMetadata("type") == "fix");
+    var others = Model.Where(d =>
+        string.IsNullOrEmpty(d.GetMetadata("breaking")) &&
+        !string.IsNullOrEmpty(d.GetMetadata("type")) &&
+        d.GetMetadata("type") != "feat" &&
+        d.GetMetadata("type") != "fix");
+}
+@Model.Single(d => !string.IsNullOrEmpty(d.GetMetadata("Version"))).ItemSpec (@DateTime.UtcNow.ToShortDateString())
+
+@if (breaking.Count() > 0)
+{
+    <text>Breaking Changes</text>
+    @:
+    foreach (var change in breaking)
+    {
+        <text>- </text> @change.GetMetadata("description").Trim()
+        @:
+    }
+}
+
+@if (features.Count() > 0)
+{
+    <text>New Features</text>
+    @:
+    foreach (var change in features)
+    {
+        <text>- </text> @change.GetMetadata("description").Trim()
+        @:
+    }
+}
+
+@if (fixes.Count() > 0)
+{
+    <text>Bug Fixes</text>
+    @:
+    foreach (var change in fixes)
+    {
+        <text>- </text> @change.GetMetadata("description").Trim()
+        @:
+    }
+}
+
+@if (others.Count() > 0)
+{
+    <text>Other Changes</text>
+    @:
+    foreach (var change in others)
+    {
+        <text>- </text> @change.GetMetadata("description").Trim()
+        @:
+    }
+}

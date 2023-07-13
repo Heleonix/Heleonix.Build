@@ -285,10 +285,7 @@
   <data name="GitHubCommitChangeLog_NoReleaseFound" xml:space="preserve">
     <value>No release found to collect changes and calculate version from.</value>
   </data>
-  <data name="FileT4Generate_TemplateNotFound" xml:space="preserve">
+  <data name="FileRazorGenerate_TemplateNotFound" xml:space="preserve">
     <value>The template file '{0}' not found.</value>
-  </data>
-  <data name="FileT4Generate_GeneratorFailed" xml:space="preserve">
-    <value>File generation failed: {0}</value>
   </data>
 </root>

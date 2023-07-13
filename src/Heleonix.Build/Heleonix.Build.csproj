@@ -1,9 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDependencyFile>true</GenerateDependencyFile>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Schemas\*">
@@ -26,10 +32,10 @@
 
   <ItemGroup>
     <PackageReference Include="Heleonix.Execution" Version="2.0.1" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.5.0" PrivateAssets="all" ExcludeAssets="runtime">
-      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="RazorEngineCore" Version="2022.8.1" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="7.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.5.0" ExcludeAssets="runtime" />
+
     <PackageReference Include="NuGet.CommandLine" Version="6.4.2" />
     <PackageReference Include="NUnit.ConsoleRunner" Version="3.16.3" />
     <PackageReference Include="OpenCover" Version="4.7.1221" />
@@ -37,12 +43,12 @@
     <PackageReference Include="ReportUnit" Version="1.2.1" />
     <PackageReference Include="GitForWindows" Version="2.39.2" />
     <PackageReference Include="docfx.console" Version="2.59.4" ExcludeAssets="build" />
-    <PackageReference Include="Mono.TextTemplating" Version="2.3.1" PrivateAssets="all" />
+
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0-preview1.23165.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.54.0.64047" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-    <PackageReference Include="System.Net.Http.Json" Version="7.0.0" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,19 +66,11 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <PropertyGroup>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);BundleDependencies</TargetsForTfmSpecificBuildOutput>
-  </PropertyGroup>
-
-  <Target Name="BundleDependencies" DependsOnTargets="ResolveReferences">
+  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
     <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths)" TargetPath="%(ReferenceCopyLocalPaths.DestinationSubPath)" />
-    </ItemGroup>
-  </Target>
-
-  <Target Name="BundleDependencyFile" BeforeTargets="BuiltProjectOutputGroup" Condition="'$(GenerateDependencyFile)' == 'true'">
-    <ItemGroup>
-      <BuiltProjectOutputGroupOutput Include="$(ProjectDepsFilePath)" TargetPath="$(ProjectDepsFileName)" FinalOutputPath="$(ProjectDepsFilePath)" />
+      <_PackageFiles Include="bin\$(Configuration)\$(TargetFramework)\*.*">
+        <PackagePath>$(TargetFramework)\</PackagePath>
+      </_PackageFiles>
     </ItemGroup>
   </Target>
 </Project>

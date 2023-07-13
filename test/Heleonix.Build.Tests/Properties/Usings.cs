@@ -4,7 +4,6 @@
 // </copyright>
 
 #pragma warning disable SA1200 // Using directives should be placed correctly
-global using System.Text.RegularExpressions;
 global using Heleonix.Build.Tasks;
 global using Heleonix.Build.Tests.Common;
 global using Heleonix.Execution;
