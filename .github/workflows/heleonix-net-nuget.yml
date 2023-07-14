@@ -1,0 +1,20 @@
+name: heleonix-net-nuget
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  ci:
+    runs-on: 'windows-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - run: nuget install Heleonix.Build -outputdirectory ./hxb
+      - name: validate
+        run: dotnet msbuild ./hxb/Heleonix.Build.1.0.0/Heleonix.Build.hxbproj /p:Hx_Input_Targets=Hx_NetValidate
+      - name: changelog
+        run: dotnet msbuild ./hxb/Heleonix.Build.1.0.0/Heleonix.Build.hxbproj /p:Hx_Input_Targets=Hx_ChangeLog_GitHubCommit
+      - name: build
+        run: dotnet msbuild ./hxb/Heleonix.Build.1.0.0/Heleonix.Build.hxbproj /p:Hx_Input_Targets=Hx_NetBuild
+      - name: test
+        run: dotnet msbuild ./hxb/Heleonix.Build.1.0.0/Heleonix.Build.hxbproj /p:Hx_Input_Targets="Hx_OpenCover;Hx_ReportUnit;Hx_ReportGenerator"
