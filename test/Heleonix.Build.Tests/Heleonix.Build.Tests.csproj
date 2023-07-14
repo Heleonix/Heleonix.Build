@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Heleonix.Execution" Version="2.0.1" />
     <PackageReference Include="Heleonix.Testing.NUnit" Version="2.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
