@@ -5,9 +5,8 @@
 
 namespace Heleonix.Build.Tasks;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RazorEngineCore;
 
 /// <summary>
@@ -21,7 +20,7 @@ using RazorEngineCore;
 /// @DateTime.UtcNow.ToShortDateString()
 /// @foreach (var item in Model)
 /// {
-///     < text >- </ text > @item.GetMetadata("description")
+///     <text>- </text> @item.GetMetadata("description")
 ///     @:
 /// }
 /// ]]></example>
@@ -73,6 +72,7 @@ public class FileRazorGenerate : BaseTask
     /// <param name="sender">An object which sent the event.</param>
     /// <param name="args">Event arguments to get the name of the missing assembly to resolve.</param>
     /// <returns>A resolved assembly or <c>null</c> otherwise.</returns>
+    [ExcludeFromCodeCoverage]
     private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {
         if (args.Name.Contains("RazorEngineCore"))
