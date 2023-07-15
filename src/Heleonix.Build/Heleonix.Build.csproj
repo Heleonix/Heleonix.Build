@@ -68,7 +68,7 @@
 
   <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
     <ItemGroup>
-      <_PackageFiles Include="bin\$(Configuration)\$(TargetFramework)\*.*">
+      <_PackageFiles Include="bin\$(Configuration)\$(TargetFramework)\*.*" Exclude="bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).*">
         <PackagePath>$(TargetFramework)\</PackagePath>
       </_PackageFiles>
     </ItemGroup>
