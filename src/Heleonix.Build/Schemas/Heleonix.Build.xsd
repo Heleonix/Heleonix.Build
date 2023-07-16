@@ -6,7 +6,7 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:include
     schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-  <xs:include schemaLocation="./Heleonix.Build.Global.xsd"/>
-  <xs:include schemaLocation="./Heleonix.Build.Targets.xsd"/>
-  <xs:include schemaLocation="./Heleonix.Build.Tasks.xsd"/>
+  <xs:include schemaLocation="./Global.xsd"/>
+  <xs:include schemaLocation="./Targets.xsd"/>
+  <xs:include schemaLocation="./Tasks.xsd"/>
 </xs:schema>

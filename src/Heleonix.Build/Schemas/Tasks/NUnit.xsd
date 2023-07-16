@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Heleonix.Build.Tasks.NUnit" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the NUnit.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="NUnitConsoleExe" use="required">
+            <xs:annotation>
+              <xs:documentation>The NUnit console executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="NUnitProjectFileOrTestFiles" use="required">
+            <xs:annotation>
+              <xs:documentation>The NUnit project or tests files path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestResultFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The NUnit tests result file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestOutputFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The tests output file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestListFile">
+            <xs:annotation>
+              <xs:documentation>The tests list file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestParameters">
+            <xs:annotation>
+              <xs:documentation>The tests parameters, specified in the form name=value.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestFilter">
+            <xs:annotation>
+              <xs:documentation>A tests filter to filter tests to run.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AgentsNumber">
+            <xs:annotation>
+              <xs:documentation>The agents number.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="UseTeamCityServiceMessages">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether to use TeamCity service messages.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Framework">
+            <xs:annotation>
+              <xs:documentation>The framework to use for tests. Examples: "mono", "net-4.5", "v4.0", "2.0", "mono-4.0".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TraceLevel">
+            <xs:annotation>
+              <xs:documentation>The trace level: Off, Error, Warning, Info, Verbose.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Configuration">
+            <xs:annotation>
+              <xs:documentation>The project configuration to load: Debug, Release etc.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ProcessIsolation">
+            <xs:annotation>
+              <xs:documentation>Process isolation for test assemblies: Single, Separate, Multiple.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="DomainIsolation">
+            <xs:annotation>
+              <xs:documentation>Domain isolation for test assemblies: None, Single, Multiple.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ShadowCopy">
+            <xs:annotation>
+              <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TestCases">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of test cases.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Total">
+            <xs:annotation>
+              <xs:documentation>[Output] The total count of tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Passed">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of passed tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Failed">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of failed tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Inconclusive">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of inconclusive tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Skipped">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of skipped tests.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Asserts">
+            <xs:annotation>
+              <xs:documentation>[Output] The count of asserts.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="StartTime">
+            <xs:annotation>
+              <xs:documentation>[Output] The start time.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="EndTime">
+            <xs:annotation>
+              <xs:documentation>[Output] The end time.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Duration">
+            <xs:annotation>
+              <xs:documentation>[Output] The duration of tests running.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

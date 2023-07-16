@@ -82,7 +82,7 @@ public static class PathHelper
     public static string BuildProjectFile { get; } = Path.Combine(
         HeleonixBuildDir,
         "Heleonix.Build." + FileVersionInfo.GetVersionInfo(typeof(PathHelper).Assembly.Location).ProductVersion,
-        "Heleonix.Build.hxbproj");
+        "Main.hxbproj");
 
     /// <summary>
     /// Gets the SNK file path to sign assemblies.

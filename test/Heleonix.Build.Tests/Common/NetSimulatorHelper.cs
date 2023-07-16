@@ -20,16 +20,6 @@ public class NetSimulatorHelper
         this.CopyAll(
             new DirectoryInfo(Path.Combine(PathHelper.CurrentDir, "NetSimulator")),
             new DirectoryInfo(this.SolutionDir));
-
-        var gitDir = Directory.CreateDirectory(Path.Combine(this.SolutionDir, ".git"));
-
-        File.WriteAllText(
-            Path.Combine(gitDir.FullName, "config"),
-            "[remote \"origin\"] url = https://github.com/Heleonix/NetSimulator.git");
-        File.WriteAllText(Path.Combine(gitDir.FullName, "HEAD"), "ref: refs/heads/develop");
-
-        Directory.CreateDirectory(Path.Combine(gitDir.FullName, "objects"));
-        Directory.CreateDirectory(Path.Combine(gitDir.FullName, "refs"));
     }
 
     /// <summary>
