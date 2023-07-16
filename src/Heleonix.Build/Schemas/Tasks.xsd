@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:include schemaLocation="./Tasks/DirectoryClean.xsd"/>
+  <xs:include schemaLocation="./Tasks/FileCopy.xsd"/>
+  <xs:include schemaLocation="./Tasks/FileRazorGenerate.xsd"/>
+  <xs:include schemaLocation="./Tasks/FileRead.xsd"/>
+  <xs:include schemaLocation="./Tasks/FileSystemSearch.xsd"/>
+  <xs:include schemaLocation="./Tasks/FileUpdate.xsd"/>
+  <xs:include schemaLocation="./Tasks/FileValidate.xsd"/>
+  <xs:include schemaLocation="./Tasks/GitHubCommitChangeLog.xsd"/>
+  <xs:include schemaLocation="./Tasks/GitHubRelease.xsd"/>
+  <xs:include schemaLocation="./Tasks/NugetPush.xsd"/>
+  <xs:include schemaLocation="./Tasks/NUnit.xsd"/>
+  <xs:include schemaLocation="./Tasks/OpenCover.xsd"/>
+  <xs:include schemaLocation="./Tasks/ReportGenerator.xsd"/>
+  <xs:include schemaLocation="./Tasks/ReportUnit.xsd"/>
+</xs:schema>

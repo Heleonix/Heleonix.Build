@@ -16,7 +16,7 @@
 
     <Message Text="> 1/1: Creating a release for $(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"/>
     <Heleonix.Build.Tasks.GitHubRelease
-      GitHubRepositoryApiUrl="$(Hx_WS_GitHubAPIUrl)/repos/$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
+      GitHubRepositoryApiUrl="$(Hx_WS_RepositoryAPIUrl)/repos/$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
       Token="$(Hx_Release_GitHub_Token)"
       UserAgent="$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
       TagName="$(Hx_Release_GitHub_TagName)"

@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Heleonix.Build.Tasks.FileSystemSearch" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Searches items in the file system.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="StartDir" use="required">
+            <xs:annotation>
+              <xs:documentation>The directory to start from, including that directory.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Direction">
+            <xs:annotation>
+              <xs:documentation>The search direction: Up, Down.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Types">
+            <xs:annotation>
+              <xs:documentation>Types of items to search: Files, Directories, All.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PathRegExp">
+            <xs:annotation>
+              <xs:documentation>
+                The .NET regular expression to include found paths. Use only / for path separators.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PathRegExpOptions">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options to include found paths. Default is "IgnoreCase".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ContentRegExp">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression to include by content.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ContentRegExpOptions">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options to include by content.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FoundFiles">
+            <xs:annotation>
+              <xs:documentation>[Output] The found files.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FoundDirs">
+            <xs:annotation>
+              <xs:documentation>[Output] The found directories.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FoundItems">
+            <xs:annotation>
+              <xs:documentation>[Output] All the found items.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -13,7 +13,12 @@
   <PropertyGroup>
     <Hx_WS_Dir>$(MSBuildStartupDirectory)</Hx_WS_Dir>
     <Hx_WS_BuildProjFile>$(Hx_WS_Dir)/*.hxbproj"</Hx_WS_BuildProjFile>
-    <Hx_WS_GitHubAPIUrl>https://api.github.com</Hx_WS_GitHubAPIUrl>
+    <Hx_WS_RepositoryAPIUrl Condition="'$(Hx_WS_RepositoryAPIUrl)' == ''">https://api.github.com</Hx_WS_RepositoryAPIUrl>
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GO_MATERIAL_URL)</Hx_WS_RepositoryUrl><!--GoCD-->
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GIT_URL)</Hx_WS_RepositoryUrl><!--Jenkins-->
+    <!--<Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">???</Hx_WS_RepositoryUrl>TeamCity-->
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(CI_REPOSITORY_URL)</Hx_WS_RepositoryUrl><!--GitLab-->
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY).git</Hx_WS_RepositoryUrl><!--GitHub-->
   </PropertyGroup>
 
   <Target Name="Hx_Initialize">
@@ -31,10 +36,10 @@
 
     <PropertyGroup>
       <Hx_Build_ArtifactsDir>$(Hx_WS_Dir)/Hx_Artifacts</Hx_Build_ArtifactsDir>
-      <Hx_Build_Number Condition="'$(GO_PIPELINE_COUNTER)' != ''">$(GO_PIPELINE_COUNTER)</Hx_Build_Number>
-      <Hx_Build_Number Condition="'$(BUILD_NUMBER)' != ''">$(BUILD_NUMBER)</Hx_Build_Number>
-      <Hx_Build_Number Condition="'$(GITHUB_RUN_NUMBER)' != ''">$(GITHUB_RUN_NUMBER)</Hx_Build_Number>
-      <Hx_Build_Number Condition="'$(CI_PIPELINE_ID)' != ''">$(CI_PIPELINE_ID)</Hx_Build_Number>
+      <Hx_Build_Number Condition="'$(Hx_Build_Number)' == ''">$(GO_PIPELINE_COUNTER)</Hx_Build_Number><!--GoCD-->
+      <Hx_Build_Number Condition="'$(Hx_Build_Number)' == ''">$(BUILD_NUMBER)</Hx_Build_Number><!--Jenkins, TeamCity-->
+      <Hx_Build_Number Condition="'$(Hx_Build_Number)' == ''">$(GITHUB_RUN_NUMBER)</Hx_Build_Number><!--Github-->
+      <Hx_Build_Number Condition="'$(Hx_Build_Number)' == ''">$(CI_PIPELINE_ID)</Hx_Build_Number><!--GitLab-->
       <Hx_Build_Number Condition="'$(Hx_Build_Number)' == ''">0</Hx_Build_Number>
     </PropertyGroup>
 
@@ -59,7 +64,8 @@
 
     <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
     <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>
-    <Message Text="$Hx_WS_GitHubAPIUrl: $(Hx_WS_GitHubAPIUrl)"/>
+    <Message Text="$Hx_WS_RepositoryAPIUrl: $(Hx_WS_RepositoryAPIUrl)"/>
+    <Message Text="$Hx_WS_RepositoryUrl: $(Hx_WS_RepositoryUrl)"/>
 
     <Message Text="$Hx_Input_Configuration: $(Hx_Input_Configuration)"/>
     <Message Text="$Hx_Input_Verbosity: $(Hx_Input_Verbosity)"/>

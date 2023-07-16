@@ -1,5 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Hx_WS_GitHubAPIUrl>http://localhost:33333</Hx_WS_GitHubAPIUrl>
+    <Hx_WS_RepositoryAPIUrl>http://localhost:33333</Hx_WS_RepositoryAPIUrl>
+    <Hx_WS_RepositoryUrl>https://fake.git_hub.com/Heleonix/NetSimulator.git</Hx_WS_RepositoryUrl>
   </PropertyGroup>
 </Project>

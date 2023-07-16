@@ -18,16 +18,148 @@
     <Content Include="Targets\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Schemas\Targets\ReportUnit.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\DocFX.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\DocFX.Git.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\NetBuild.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\NetValidate.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\NugetPublish.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\NUnit.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\OpenCover.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\Release.GitHub.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\ReportGenerator.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\ChangeLog.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Targets\ChangeLog.GitHubCommit.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Schemas\Tasks\DirectoryClean.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\FileCopy.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\FileSystemSearch.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\FileUpdate.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\FileValidate.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\GitHubRelease.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\GitHubCommitChangeLog.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\FileRead.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\NugetPush.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\NUnit.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\OpenCover.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\ReportGenerator.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\ReportUnit.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Schemas\Tasks\FileRazorGenerate.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Tasks\Heleonix.Build.tasks">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Heleonix.Build.hxbproj">
+    <Content Include="Main.hxbproj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\*">
       <Generator></Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Schemas\Targets\ChangeLog.GitHubCommit.xsd" />
+    <None Remove="Schemas\Targets\ChangeLog.xsd" />
+    <None Remove="Schemas\Targets\DocFX.Git.xsd" />
+    <None Remove="Schemas\Targets\DocFX.xsd" />
+    <None Remove="Schemas\Targets\NetBuild.xsd" />
+    <None Remove="Schemas\Targets\NetValidate.xsd" />
+    <None Remove="Schemas\Targets\NugetPublish.xsd" />
+    <None Remove="Schemas\Targets\NUnit.xsd" />
+    <None Remove="Schemas\Targets\OpenCover.xsd" />
+    <None Remove="Schemas\Targets\Release.GitHub.xsd" />
+    <None Remove="Schemas\Targets\ReportGenerator.xsd" />
+    <None Remove="Schemas\Targets\ReportUnit.xsd" />
+    <None Remove="Schemas\Tasks\DirectoryClean.xsd" />
+    <None Remove="Schemas\Tasks\FileCopy.xsd" />
+    <None Remove="Schemas\Tasks\FileRazorGenerate.xsd" />
+    <None Remove="Schemas\Tasks\FileRead.xsd" />
+    <None Remove="Schemas\Tasks\FileSystemSearch.xsd" />
+    <None Remove="Schemas\Tasks\FileUpdate.xsd" />
+    <None Remove="Schemas\Tasks\FileValidate.xsd" />
+    <None Remove="Schemas\Tasks\GitHubCommitChangeLog.xsd" />
+    <None Remove="Schemas\Tasks\GitHubRelease.xsd" />
+    <None Remove="Schemas\Tasks\NugetPush.xsd" />
+    <None Remove="Schemas\Tasks\NUnit.xsd" />
+    <None Remove="Schemas\Tasks\OpenCover.xsd" />
+    <None Remove="Schemas\Tasks\ReportGenerator.xsd" />
+    <None Remove="Schemas\Tasks\ReportUnit.xsd" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,8 +200,7 @@
 
   <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
     <ItemGroup>
-      <_PackageFiles Include="bin\$(Configuration)\$(TargetFramework)\*.*"
-                     Exclude="bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).dll;bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml">
+      <_PackageFiles Include="bin\$(Configuration)\$(TargetFramework)\*.*" Exclude="bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).dll;bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml">
         <PackagePath>$(TargetFramework)\</PackagePath>
       </_PackageFiles>
     </ItemGroup>

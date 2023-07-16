@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom itemtype with particular meta-data required
+<xs:element name="MyItem" substitutionGroup="msb:Item">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:SimpleItemType">
+        <xs:sequence maxOccurs="1">
+          <xs:choice>
+            <xs:element name="MyMetaData" type="xs:string"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+Example custom itemtype with NO meta-data
+<xs:element name="MySimpleItem" type="msb:SimpleItemType" substitutionGroup="msb:Item"/>
+
+Example custom itemtype with ANY meta-data
+<xs:element name="MyFlexibleItem" type="msb:GenericItemType" substitutionGroup="msb:Item"/>
+
+Example custom property that allows string content only
+<xs:element name="MySimpleProperty" type="msb:StringPropertyType" substitutionGroup="msb:Property"/>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Hx_Release_GitHub_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A personal access token to authorize to the GitHub Releases API.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Release_GitHub_TagName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A name of the tag to create and/or from which the release should be created.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Release_GitHub_ReleaseNotesFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A file with release notes for a release to be created.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_Release_GitHub_TagSource" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>
+        Any branch or commit SHA from which the tag should be created.
+        It is ignored if the tag already exists. Otherwise, name of the default branch (usually master) is used.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Heleonix.Build.Tasks.FileRead" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Gets content from file by specified regular expression.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="File" use="required">
+            <xs:annotation>
+              <xs:documentation>The file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegExp" use="required">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression to find content.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegExpOptions">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Matches">
+            <xs:annotation>
+              <xs:documentation>Found matches [Output].</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

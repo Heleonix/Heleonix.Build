@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Heleonix.Build.Tasks.GitHubCommitChangeLog" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Collects list of changes from commits since the latest release on GitHub using the GitHub API, and the new version.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="GitHubRepositoryApiUrl" use="required">
+            <xs:annotation>
+              <xs:documentation>The url of the GitHub API for the repository.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Token" use="required">
+            <xs:annotation>
+              <xs:documentation>A personal access token to authorize to the GitHub API.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="UserAgent" use="required">
+            <xs:annotation>
+              <xs:documentation>The User-Agent request header.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VersionTagRegExp" use="required">
+            <xs:annotation>
+              <xs:documentation>A regular expression to extract a version from a tag name of the latest release in format 11.22.33.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MajorChangeRegExp" use="required">
+            <xs:annotation>
+              <xs:documentation>A regular expression to identify a major change.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinorChangeRegExp" use="required">
+            <xs:annotation>
+              <xs:documentation>A regular expression to identify a minor change.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PatchChangeRegExp" use="required">
+            <xs:annotation>
+              <xs:documentation>A regular expression to identify a patch change.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ChangeLogRegExp" use="required">
+            <xs:annotation>
+              <xs:documentation>A regular expression to capture a change for the change log.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegExpOptions">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options for regexp patterns.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Version">
+            <xs:annotation>
+              <xs:documentation>The calculated version based on the change conventions [Output].</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Changes">
+            <xs:annotation>
+              <xs:documentation>The list of changes with metadata as captured groups names and values [Output].</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

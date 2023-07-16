@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Heleonix.Build.Tasks.OpenCover" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Runs the OpenCover.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="OpenCoverExe" use="required">
+            <xs:annotation>
+              <xs:documentation>The OpenCover executable path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Target" use="required">
+            <xs:annotation>
+              <xs:documentation>The target executable path with command line arguments and its "Type" in metadata.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CoverageResultFile" use="required">
+            <xs:annotation>
+              <xs:documentation>The coverage results output file path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PdbSearchDirs" use="required">
+            <xs:annotation>
+              <xs:documentation>The PDB search directories path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinClassCoverage">
+            <xs:annotation>
+              <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinMethodCoverage">
+            <xs:annotation>
+              <xs:documentation>The minimum method coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinBranchCoverage">
+            <xs:annotation>
+              <xs:documentation>The minimum branch coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinLineCoverage">
+            <xs:annotation>
+              <xs:documentation>The minimum line coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ExcludeByAttributeFilters">
+            <xs:annotation>
+              <xs:documentation>The filters to exclude code from coverage by attribute in format: Name*;*Attribute.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Filters">
+            <xs:annotation>
+              <xs:documentation>The filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ShowUnvisited">
+            <xs:annotation>
+              <xs:documentation>Show unvisited methods and classes after coverage finishes and results are presented.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Register">
+            <xs:annotation>
+              <xs:documentation>The type of registration of the OpenCover profiler: auto, user, path32, path64.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FilePathReplacement">
+            <xs:annotation>
+              <xs:documentation>The file path to replace the paths of covered files with.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FilePathRegExp">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression to replace file paths of covered files.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FilePathRegExpOptions">
+            <xs:annotation>
+              <xs:documentation>The .NET regular expression options to replace paths. Default is "IgnoreCase".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MaxVisitCount">
+            <xs:annotation>
+              <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalLines">
+            <xs:annotation>
+              <xs:documentation>[Output] The total lines count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedLines">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited lines count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalBranches">
+            <xs:annotation>
+              <xs:documentation>[Output] The total branches count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedBranches">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited branches count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalClasses">
+            <xs:annotation>
+              <xs:documentation>[Output] The total classes count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedClasses">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited classes count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TotalMethods">
+            <xs:annotation>
+              <xs:documentation>[Output] The total methods count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="VisitedMethods">
+            <xs:annotation>
+              <xs:documentation>[Output] The visited methods count.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MinCyclomaticComplexity">
+            <xs:annotation>
+              <xs:documentation>[Output] The minimum cyclomatic complexity.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MaxCyclomaticComplexity">
+            <xs:annotation>
+              <xs:documentation>[Output] The maximum cyclomatic complexity.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ClassCoverage">
+            <xs:annotation>
+              <xs:documentation>[Output] The class coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MethodCoverage">
+            <xs:annotation>
+              <xs:documentation>[Output] The method coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="LineCoverage">
+            <xs:annotation>
+              <xs:documentation>[Output] The line coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="BranchCoverage">
+            <xs:annotation>
+              <xs:documentation>[Output] The branch coverage, in range: 0% - 100%.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
