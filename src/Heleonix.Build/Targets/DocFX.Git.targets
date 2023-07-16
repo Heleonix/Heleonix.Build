@@ -12,6 +12,7 @@
     <PropertyGroup>
       <Hx_DocFX_Git_BranchName Condition="'$(Hx_DocFX_Git_BranchName)' == ''">gh-pages</Hx_DocFX_Git_BranchName>
       <Hx_DocFX_Git_CommitMessage Condition="'$(Hx_DocFX_Git_CommitMessage)' == ''">Automatic update of documentation.</Hx_DocFX_Git_CommitMessage>
+      <Hx_DocFX_Git_CommitAuthor Condition="'$(Hx_DocFX_Git_CommitAuthor)' == ''">Automatic update of documentation.</Hx_DocFX_Git_CommitAuthor>
     </PropertyGroup>
 
     <Message Text="> 1/4: Creating the artifacts directory"/>
@@ -29,8 +30,8 @@
 
     <Message Text="> 4/4: Uploading the generated documentation"/>
     <Exec Command="&quot;$(Hx_System_GitExe)&quot; add -A" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
-    <Exec Command="&quot;$(Hx_System_GitExe)&quot; commit -m &quot;$(Hx_DocFX_Git_CommitMessage)&quot;" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
-    <Exec Command="&quot;$(Hx_System_GitExe)&quot; push" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
+    <Exec Command="&quot;$(Hx_System_GitExe)&quot; commit --author &quot;&quot; -m &quot;$(Hx_DocFX_Git_CommitMessage)&quot;" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
+    <Exec Command="&quot;$(Hx_System_GitExe)&quot; push $(Hx_DocFX_Git_RepositoryUrl)" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
 
     <Message Text="> DONE!"/>
 

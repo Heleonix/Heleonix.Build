@@ -7,6 +7,7 @@ namespace Heleonix.Build.Tasks;
 
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 /// <summary>
 /// Creates a release on GitHub using the GitHub API.
@@ -68,19 +69,20 @@ public class GitHubRelease : BaseTask
     /// </summary>
     protected override void ExecuteInternal()
     {
-        var content = "{ " +
-            $"\"tag_name\": \"{this.TagName}\", " +
-            $"\"target_commitish\": \"{this.TagSource}\", " +
-            $"\"name\": \"{this.Name}\", " +
-            $"\"body\": \"{this.Body}\", " +
-            $"\"draft\": {(this.IsDraft ? "true" : "false")}, " +
-            $"\"prerelease\": {(this.IsPrerelease ? "true" : "false")}" +
-            " }";
+        var content = new
+        {
+            tag_name = this.TagName,
+            target_commitish = this.TagSource,
+            name = this.Name,
+            body = this.Body,
+            draft = this.IsDraft,
+            prerelease = this.IsPrerelease,
+        };
 
         this.Log.LogMessage(Resources.GitHubRelease_CreatingRelease, content);
 
         using (var client = new HttpClient())
-        using (var requestContent = new StringContent(content, Encoding.UTF8, "application/json"))
+        using (var requestContent = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"))
         {
             client.DefaultRequestHeaders.Add("Authorization", $"token {this.Token}");
             client.DefaultRequestHeaders.Add("User-Agent", this.UserAgent);
