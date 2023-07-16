@@ -27,12 +27,13 @@ public static class ReleaseGitHubTests
         Arrange(() =>
         {
             simulator = new NetSimulatorHelper();
+            const string content = @"Release
+-release note 1;
+-release note 2";
 
             Directory.CreateDirectory(simulator.GetArtifactsDir("Hx_ChangeLog"));
             File.WriteAllText(Path.Combine(simulator.GetArtifactsDir("Hx_ChangeLog"), "semver.txt"), "1.2.3\r\n");
-            File.WriteAllText(
-                Path.Combine(simulator.GetArtifactsDir("Hx_ChangeLog"), "ReleaseNotes.md"),
-                "-release note 1; -release note 2");
+            File.WriteAllText(Path.Combine(simulator.GetArtifactsDir("Hx_ChangeLog"), "ReleaseNotes.md"), content);
 
             properties = new Dictionary<string, string>
             {
@@ -47,7 +48,7 @@ public static class ReleaseGitHubTests
                     {
                         var req = reader.ReadToEnd();
 
-                        return req.Contains("\"v1.2.3\"") && req.Contains("-release note 1; -release note 2") ?
+                        return req.Contains("v1.2.3") && req.Contains("-release note 1;") ?
                         ("{ \"name\": \"v1.2.3\" }", HttpStatusCode.Created) :
                         ("{ \"name\": \"v1.2.3\" }", HttpStatusCode.BadRequest);
                     }

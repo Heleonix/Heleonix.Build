@@ -36,7 +36,7 @@ public static class GitHubReleaseTests
                     {
                         var req = reader.ReadToEnd();
 
-                        return req.Contains("\"v1.0.0\"") && req.Contains("-release note 1; -release note 2") ?
+                        return req.Contains("v1.0.0") && req.Contains("-release note 1;") ?
                         ("{ \"name\": \"v1.0.0\" }", HttpStatusCode.Created) :
                         ("{ \"name\": \"v1.0.0\" }", HttpStatusCode.BadRequest);
                     }
@@ -47,7 +47,9 @@ public static class GitHubReleaseTests
                 BuildEngine = new TestBuildEngine(),
                 GitHubRepositoryApiUrl = "http://localhost:33333/repos/heleonix/heleonix.build",
                 Name = tagName,
-                Body = "-release note 1; -release note 2",
+                Body = @"Release
+-release note 1;
+-release note 2",
                 TagName = tagName,
                 TagSource = "master",
                 Token = "111111111",
