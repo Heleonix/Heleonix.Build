@@ -6,7 +6,7 @@
       <Hx_ChangeLog_GitHubCommit_VersionTagRegExp Condition="'$(Hx_GitHubChangeLog_VersionTagRegExp)' == ''">(?&lt;=\D*|^)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?=\D*)</Hx_ChangeLog_GitHubCommit_VersionTagRegExp>
       <Hx_ChangeLog_GitHubCommit_MajorChangeRegExp Condition="'$(Hx_GitHubChangeLog_MajorChangeRegExp)' == ''">^(\w+)(\([\w-.]+\))?!: (.+)|^(\w+)(\([\w-.]+\))?: (.+)([\r\n])*(?&lt;=\r\r|\n\n|\r\n\r\n)[\s\S]*?(BREAKING CHANGE|BREAKING-CHANGE)(: | #)</Hx_ChangeLog_GitHubCommit_MajorChangeRegExp>
       <Hx_ChangeLog_GitHubCommit_MinorChangeRegExp Condition="'$(Hx_GitHubChangeLog_MinorChangeRegExp)' == ''">^(feat)(\([\w-.]+\))?: (.+)</Hx_ChangeLog_GitHubCommit_MinorChangeRegExp>
-      <Hx_ChangeLog_GitHubCommit_TokenchChangeRegExp Condition="'$(Hx_GitHubChangeLog_PatchChangeRegExp)' == ''">^(fix)(\([\w-.]+\))?: (.+)</Hx_ChangeLog_GitHubCommit_TokenchChangeRegExp>
+      <Hx_ChangeLog_GitHubCommit_PatchChangeRegExp Condition="'$(Hx_GitHubChangeLog_PatchChangeRegExp)' == ''">^(fix)(\([\w-.]+\))?: (.+)</Hx_ChangeLog_GitHubCommit_PatchChangeRegExp>
       <Hx_ChangeLog_GitHubCommit_ChangeLogRegExp Condition="'$(Hx_ChangeLog_GitHubCommit_ChangeLogRegExp)' == ''">^(?'type'[a-z]+)(?:\((?'scope'[\w-.]+)\))?(?'breaking'!)?: (?'description'.+)(?:[\r\n])*(?'body'(?&lt;=\r\r|\n\n|\r\n\r\n)[\s\S]+?(?!([\w-.]+|BREAKING CHANGE)(: | #)[\s\S]+))??(?:[\r\n])*(?'footer'(?&lt;=\r\r|\n\n|\r\n\r\n)(?:[\w-.]+|(?'breaking'BREAKING-CHANGE|BREAKING CHANGE))(?:: | #)[\s\S]+?)?(?:[\r\n])*$</Hx_ChangeLog_GitHubCommit_ChangeLogRegExp>
     </PropertyGroup>
 
@@ -27,7 +27,7 @@
       VersionTagRegExp="$(Hx_ChangeLog_GitHubCommit_VersionTagRegExp)"
       MajorChangeRegExp="$(Hx_ChangeLog_GitHubCommit_MajorChangeRegExp)"
       MinorChangeRegExp="$(Hx_ChangeLog_GitHubCommit_MinorChangeRegExp)"
-      PatchChangeRegExp="$(Hx_ChangeLog_GitHubCommit_TokenchChangeRegExp)"
+      PatchChangeRegExp="$(Hx_ChangeLog_GitHubCommit_PatchChangeRegExp)"
       ChangeLogRegExp="$(Hx_ChangeLog_GitHubCommit_ChangeLogRegExp)"
       RegExpOptions="$(Hx_ChangeLog_GitHubCommit_RegExpOptions)">
       <Output TaskParameter="Version" PropertyName="_Hx_ChangeLog_GitHubCommit_Version"/>
