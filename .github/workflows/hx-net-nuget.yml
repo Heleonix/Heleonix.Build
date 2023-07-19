@@ -13,15 +13,15 @@ jobs:
       - name: Heleonix.Build
         run: nuget install Heleonix.Build -version ${{ vars.Hx_Ver }} -outputdirectory ./hxb
       - name: Validate
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_NetValidate
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_In_Targets=Hx_NetValidate
       - name: ChangeLog
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_ChangeLog_GitHubCommit
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_In_Targets=Hx_ChangeLog_GitHubCommit
         env:
           Hx_ChangeLog_GitHubCommit_Token: ${{ secrets.GH_PAT }}
       - name: Build
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_NetBuild
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_In_Targets=Hx_NetBuild
       - name: Test
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets="Hx_OpenCover;Hx_ReportUnit;Hx_ReportGenerator"
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_In_Targets="Hx_OpenCover;Hx_ReportUnit;Hx_ReportGenerator"
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -40,14 +40,14 @@ jobs:
         with:
           name: Hx_Artifacts
       - name: Publish
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_NugetPublish
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_In_Targets=Hx_NugetPublish
         env:
           Hx_NugetPublish_APIKey: ${{ secrets.NUGET_API_KEY }}
       - name: Release
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_Release_GitHub
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_In_Targets=Hx_Release_GitHub
         env:
           Hx_Release_GitHub_Token: ${{ secrets.GH_PAT }}
       - name: Docs
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_DocFX_Git
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj /p:Hx_In_Targets=Hx_DocFX_Git
         env:
           Hx_DocFX_Git_Token: ${{ secrets.GH_PAT }}
