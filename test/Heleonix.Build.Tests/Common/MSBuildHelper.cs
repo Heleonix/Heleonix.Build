@@ -47,9 +47,9 @@ public static class MSBuildHelper
         {
             customBuildProj = AppendInputBuildProj(properties, items);
 
-            var msBuildProperties = $"Hx_Input_BuildProjFile=\"{customBuildProj}\";" +
-                $"Hx_Input_Configuration={PathHelper.Configuration};" +
-                $"Hx_Input_Targets={target}";
+            var msBuildProperties = $"Hx_In_BuildProjFile=\"{customBuildProj}\";" +
+                $"Hx_In_Configuration={PathHelper.Configuration};" +
+                $"Hx_In_Targets={target}";
 
             RunTarget(PathHelper.BuildProjectFile, null, msBuildProperties, workspace);
 

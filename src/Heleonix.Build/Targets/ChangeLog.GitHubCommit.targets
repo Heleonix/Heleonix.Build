@@ -10,9 +10,9 @@
       <Hx_ChangeLog_GitHubCommit_ChangeLogRegExp Condition="'$(Hx_ChangeLog_GitHubCommit_ChangeLogRegExp)' == ''">^(?'type'[a-z]+)(?:\((?'scope'[\w-.]+)\))?(?'breaking'!)?: (?'description'.+)(?:[\r\n])*(?'body'(?&lt;=\r\r|\n\n|\r\n\r\n)[\s\S]+?(?!([\w-.]+|BREAKING CHANGE)(: | #)[\s\S]+))??(?:[\r\n])*(?'footer'(?&lt;=\r\r|\n\n|\r\n\r\n)(?:[\w-.]+|(?'breaking'BREAKING-CHANGE|BREAKING CHANGE))(?:: | #)[\s\S]+?)?(?:[\r\n])*$</Hx_ChangeLog_GitHubCommit_ChangeLogRegExp>
     </PropertyGroup>
 
-    <ItemGroup Condition="'@(Hx_ChangeLog_GitHubCommit_TemplateFiles)' == ''">
-      <Hx_ChangeLog_GitHubCommit_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.md.cshtml"/>
-      <Hx_ChangeLog_GitHubCommit_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.txt.cshtml"/>
+    <ItemGroup Condition="'@(Hx_ChangeLog_TemplateFiles)' == ''">
+      <Hx_ChangeLog_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.md.cshtml"/>
+      <Hx_ChangeLog_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.txt.cshtml"/>
     </ItemGroup>
 
     <Message Text="> 1/4: Creating the artifacts directory"/>
@@ -36,8 +36,8 @@
 
     <ItemGroup>
       <_Hx_ChangeLog_GitHubCommit_Changes Include="@(Hx_ChangeLog_CustomChanges)"/>
-      <_Hx_ChangeLog_GitHubCommit_Changes Include="$(Hx_Build_Number)">
-        <BuildNumber>$(Hx_Build_Number)</BuildNumber>
+      <_Hx_ChangeLog_GitHubCommit_Changes Include="$(Hx_Run_Number)">
+        <BuildNumber>$(Hx_Run_Number)</BuildNumber>
       </_Hx_ChangeLog_GitHubCommit_Changes>
     </ItemGroup>
 
@@ -49,8 +49,8 @@
 
     <Message Text="> 4/4: Generating the change logs into the artifacts directory using the provided templates"/>
     <Heleonix.Build.Tasks.FileRazorGenerate
-      TemplateFile="%(Hx_ChangeLog_GitHubCommit_TemplateFiles.FullPath)"
-      GeneratedFile="$(Hx_ChangeLog_ArtifactsDir)/%(Hx_ChangeLog_GitHubCommit_TemplateFiles.Filename)"
+      TemplateFile="%(Hx_ChangeLog_TemplateFiles.FullPath)"
+      GeneratedFile="$(Hx_ChangeLog_ArtifactsDir)/%(Hx_ChangeLog_TemplateFiles.Filename)"
       Data="@(_Hx_ChangeLog_GitHubCommit_Changes)"/>
 
     <Message Text="> DONE!"/>

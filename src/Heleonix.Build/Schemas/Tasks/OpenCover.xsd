@@ -107,6 +107,11 @@ Example custom task with single required parameter
               <xs:documentation>The maximum visits count. Limiting can improve performance.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="WorkingDir">
+            <xs:annotation>
+              <xs:documentation>The working directory to run the executable in.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="TotalLines">
             <xs:annotation>
               <xs:documentation>[Output] The total lines count.</xs:documentation>

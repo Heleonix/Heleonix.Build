@@ -10,7 +10,7 @@
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'@(Hx_NugetPublish_PackageFiles)' == ''"
       StartDir="$(Hx_NetBuild_ArtifactsDir)"
-      PathRegExp=".+/bin/$(Hx_Input_Configuration)/[^/]+\.s?nupkg$"
+      PathRegExp=".+/bin/$(Hx_In_Configuration)/[^/]+\.s?nupkg$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="Hx_NugetPublish_PackageFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
@@ -40,13 +40,13 @@
       Condition="'$(_Hx_NugetPublish_SlnFile)' != ''"
       Projects="$(_Hx_NugetPublish_SlnFile)"
       Targets="Pack"
-      Properties="Configuration=$(Hx_Input_Configuration);NoBuild=true;$(_Hx_NugetPublish_VersionProps);$(_Hx_NugetPublish_ReleaseNotesProps)"
+      Properties="Configuration=$(Hx_In_Configuration);NoBuild=true;$(_Hx_NugetPublish_VersionProps);$(_Hx_NugetPublish_ReleaseNotesProps)"
       />
 
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'$(_Hx_NugetPublish_SlnFile)' != ''"
       StartDir="$(Hx_NetBuild_ArtifactsDir)"
-      PathRegExp=".+/bin/$(Hx_Input_Configuration)/[^/]+\.s?nupkg$"
+      PathRegExp=".+/bin/$(Hx_In_Configuration)/[^/]+\.s?nupkg$"
       Types="Files">
       <Output TaskParameter="FoundFiles" ItemName="Hx_NugetPublish_PackageFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
@@ -56,12 +56,13 @@
 
     <Message Text="> 4/4: Publishing packages"/>
     <Heleonix.Build.Tasks.NugetPush
-      NugetExe="$(Hx_System_NugetExe)"
+      NugetExe="$(Hx_Sys_NugetExe)"
       PackageFile="%(Hx_NugetPublish_PackageFiles.FullPath)"
       APIKey="$(Hx_NugetPublish_APIKey)"
       ConfigFile="$(Hx_NugetPublish_ConfigFile)"
       SourceURL="$(Hx_NugetPublish_SourceURL)"
-      Verbosity="$(Hx_Input_Verbosity)"/>
+      Verbosity="$(Hx_In_Verbosity)"
+      WorkingDir="$(Hx_WS_Dir)"/>
 
     <Message Text="> DONE!"/>
 

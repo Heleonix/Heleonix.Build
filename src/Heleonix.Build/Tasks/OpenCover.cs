@@ -108,6 +108,11 @@ public class OpenCover : BaseTask
     public string FilePathRegExpOptions { get; set; } = "IgnoreCase";
 
     /// <summary>
+    /// Gets or sets the working directory to run the executable in.
+    /// </summary>
+    public string WorkingDir { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets or sets the total lines count [Output].
     /// </summary>
     [Output]
@@ -235,7 +240,7 @@ public class OpenCover : BaseTask
         // OpenCover does not create a directory for coverage result file.
         Directory.CreateDirectory(coverageResultDir);
 
-        var result = ExeHelper.Execute(this.OpenCoverExe, args, true);
+        var result = ExeHelper.Execute(this.OpenCoverExe, args, true, this.WorkingDir);
 
         this.Log.LogMessage(result.Output);
 

@@ -39,6 +39,11 @@ Example custom property that allows string content only
     </xs:annotation>
   </xs:element>
 
+  <xs:element name="Hx_ChangeLog_TemplateFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The list of template files to generates change logs from.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
   <xs:element name="Hx_ChangeLog_CustomChanges" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>The list of custom changes to generates change logs with.</xs:documentation>

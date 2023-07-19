@@ -102,6 +102,11 @@ Example custom task with single required parameter
               <xs:documentation>Tells .NET to copy loaded assemblies to the shadow copy directory.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="WorkingDir">
+            <xs:annotation>
+              <xs:documentation>The working directory to run the executable in.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="TestCases">
             <xs:annotation>
               <xs:documentation>[Output] The count of test cases.</xs:documentation>

@@ -22,10 +22,10 @@
   <Import Project="Targets/ReportUnit.targets"/>
 
   <!--Custom-->
-  <Import Condition="Exists('$(Hx_Input_BuildProjFile)')" Project="$(Hx_Input_BuildProjFile)"/>
+  <Import Condition="Exists('$(Hx_In_BuildProjFile)')" Project="$(Hx_In_BuildProjFile)"/>
 
   <!--Workspace-->
   <Import Condition="Exists('$(Hx_WS_BuildProjFile)')" Project="$(Hx_WS_BuildProjFile)"/>
 
-  <Target Name="Hx_Main" DependsOnTargets="Hx_Initialize;$(Hx_Input_Targets);Hx_Finalize"/>
+  <Target Name="Hx_Main" DependsOnTargets="Hx_Initialize;$(Hx_In_Targets);Hx_Finalize"/>
 </Project>

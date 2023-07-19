@@ -61,6 +61,11 @@ public class ReportGenerator : BaseTask
     public string Verbosity { get; set; }
 
     /// <summary>
+    /// Gets or sets the working directory to run the executable in.
+    /// </summary>
+    public string WorkingDir { get; set; } = string.Empty;
+
+    /// <summary>
     /// Executes the ReportUnit.
     /// </summary>
     protected override void ExecuteInternal()
@@ -73,7 +78,7 @@ public class ReportGenerator : BaseTask
 
         Directory.CreateDirectory(this.ReportDir);
 
-        var result = ExeHelper.Execute(this.ReportGeneratorExe, args, true);
+        var result = ExeHelper.Execute(this.ReportGeneratorExe, args, true, this.WorkingDir);
 
         this.Log.LogMessage(result.Output);
 

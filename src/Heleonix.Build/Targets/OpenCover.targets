@@ -10,7 +10,7 @@
       Condition="'@(Hx_OpenCover_Target)' == ''"
       Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_NetFindTestBinaries"
-      Properties="Hx_Internal_NetFindTestBinaries_StartDir=$(Hx_NetBuild_ArtifactsDir);Hx_Internal_NetFindTestBinaries_Configuration=$(Hx_Input_Configuration)">
+      Properties="Hx_Internal_NetFindTestBinaries_StartDir=$(Hx_NetBuild_ArtifactsDir);Hx_Internal_NetFindTestBinaries_Configuration=$(Hx_In_Configuration)">
       <Output TaskParameter="TargetOutputs" ItemName="_Hx_OpenCover_TestBinaryFiles"/>
     </MSBuild>
 
@@ -31,7 +31,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Hx_OpenCover_Target Condition="'@(Hx_OpenCover_Target)' == ''" Include="$(Hx_System_NUnitConsoleExe)">
+      <Hx_OpenCover_Target Condition="'@(Hx_OpenCover_Target)' == ''" Include="$(Hx_Sys_NUnitConsoleExe)">
         <Type>NUnit</Type>
         <NUnitProjectFileOrTestFiles>@(_Hx_OpenCover_TestBinaryFiles)</NUnitProjectFileOrTestFiles>
         <TestOutputFile>$(Hx_NUnit_ArtifactsDir)/Output.txt</TestOutputFile>
@@ -42,7 +42,7 @@
     <Message Text="> 2/2: Running OpenCover with %(Hx_OpenCover_Target.Type)"/>
     <Heleonix.Build.Tasks.OpenCover
       ContinueOnError="$(Hx_OpenCover_ContinueOnError)"
-      OpenCoverExe="$(Hx_System_OpenCoverConsoleExe)"
+      OpenCoverExe="$(Hx_Sys_OpenCoverConsoleExe)"
       CoverageResultFile="$(Hx_OpenCover_ArtifactsDir)/OpenCover.xml"
       ExcludeByAttributeFilters="$(Hx_OpenCover_ExcludeByAttributeFilters)"
       Filters="$(Hx_OpenCover_Filters)"
@@ -57,7 +57,8 @@
       Register="$(Hx_OpenCover_Register)"
       FilePathReplacement="$(Hx_OpenCover_FilePathReplacement)"
       FilePathRegExp="$(Hx_OpenCover_FilePathRegExp)"
-      FilePathRegExpOptions="$(Hx_OpenCover_FilePathRegExpOptions)"/>
+      FilePathRegExpOptions="$(Hx_OpenCover_FilePathRegExpOptions)"
+      WorkingDir="$(Hx_WS_Dir)"/>
 
     <Message Text="> DONE!"/>
 
