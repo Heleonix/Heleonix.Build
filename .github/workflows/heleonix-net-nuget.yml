@@ -1,4 +1,4 @@
-name: heleonix-net-nuget
+name: CI/CD
 
 on:
   push:
