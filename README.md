@@ -8,7 +8,7 @@ The MSBuild-based build framework for applications on CI and CD systems.
 
 https://www.nuget.org/packages/Heleonix.Build
 
-## The small idea
+## The main idea
 
 This framework is developed to simplify writing scripts to build applications on CI/CD systems like GoCD, Jenkins, TeamCity etc.
 
