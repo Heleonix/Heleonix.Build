@@ -29,25 +29,25 @@ jobs:
           path: Hx_Artifacts
 
   cd:
-   runs-on: 'windows-latest'
-   environment: 'prod'
-   needs: ci
-   steps:
-     - name: Heleonix.Build
-       run: nuget install Heleonix.Build -version ${{ Hx_Ver }} -outputdirectory ./hxb
-     - name: Download
-       uses: actions/download-artifact@v3
-       with:
-         name: Hx_Artifacts
-     - name: Publish
-       run: dotnet msbuild ./hxb/Heleonix.Build.${{ Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_NugetPublish
-       env:
-         Hx_NugetPublish_APIKey: ${{ secrets.NUGET_API_KEY }}
-     - name: Release
-       run: dotnet msbuild ./hxb/Heleonix.Build.${{ Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_Release_GitHub
-       env:
-         Hx_Release_GitHub_Token: ${{ secrets.GH_PAT }}
-     - name: Docs
-       run: dotnet msbuild ./hxb/Heleonix.Build.${{ Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_DocFX_Git
-       env:
-         Hx_DocFX_Git_Token: ${{ secrets.GH_PAT }}
+    runs-on: 'windows-latest'
+    environment: 'prod'
+    needs: ci
+    steps:
+      - name: Heleonix.Build
+        run: nuget install Heleonix.Build -version ${{ Hx_Ver }} -outputdirectory ./hxb
+      - name: Download
+        uses: actions/download-artifact@v3
+        with:
+          name: Hx_Artifacts
+      - name: Publish
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_NugetPublish
+        env:
+          Hx_NugetPublish_APIKey: ${{ secrets.NUGET_API_KEY }}
+      - name: Release
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_Release_GitHub
+        env:
+          Hx_Release_GitHub_Token: ${{ secrets.GH_PAT }}
+      - name: Docs
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ Hx_Ver }}/Main.hxbproj /p:Hx_Input_Targets=Hx_DocFX_Git
+        env:
+          Hx_DocFX_Git_Token: ${{ secrets.GH_PAT }}
