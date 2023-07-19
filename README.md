@@ -43,4 +43,5 @@ Artifacts directory for all variations is the same
 
 ### Notes
 Use slash `/` in paths in MSBuild scripts, not backslash `\`, because MSBuild replaces them on *nix OSs anyway
+
 Use slash `/` in path regular expressions in Heleonix.Build tasks.
