@@ -53,7 +53,7 @@ Example custom property that allows string content only
       <xs:documentation>A regular expression to identify a minor change.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_ChangeLog_GitHubCommit_PatchChangeRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_ChangeLog_GitHubCommit_TokenchChangeRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A regular expression to identify a patch change.</xs:documentation>
     </xs:annotation>
