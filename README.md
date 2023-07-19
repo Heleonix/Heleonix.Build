@@ -2,6 +2,8 @@
 
 The MSBuild-based build framework for applications on CI and CD systems.
 
+[![CI/CD](https://github.com/Heleonix/Heleonix.Build/actions/workflows/hx-net-nuget.yml/badge.svg?event=push)](https://github.com/Heleonix/Heleonix.Build/actions/workflows/hx-net-nuget.yml)
+
 ## Install
 
 https://www.nuget.org/packages/Heleonix.Build
