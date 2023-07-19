@@ -14,23 +14,23 @@
       Condition="'@(Hx_NUnit_NUnitProjectOrTestFiles)' == ''"
       Projects="$(MSBuildProjectFullPath)"
       Targets="Hx_Internal_NetFindTestBinaries"
-      Properties="Hx_Internal_NetFindTestBinaries_StartDir=$(Hx_NetBuild_ArtifactsDir);Hx_Internal_NetFindTestBinaries_Configuration=$(Hx_Input_Configuration)">
+      Properties="Hx_Internal_NetFindTestBinaries_StartDir=$(Hx_NetBuild_ArtifactsDir);Hx_Internal_NetFindTestBinaries_Configuration=$(Hx_In_Configuration)">
       <Output TaskParameter="TargetOutputs" ItemName="Hx_NUnit_NUnitProjectOrTestFiles"/>
     </MSBuild>
 
     <PropertyGroup>
-      <_Hx_NUnit_TraceLevel Condition="'$(Hx_Input_Verbosity)' == 'Quiet'">Off</_Hx_NUnit_TraceLevel>
-      <_Hx_NUnit_TraceLevel Condition="'$(Hx_Input_Verbosity)' == 'Normal'">Warning</_Hx_NUnit_TraceLevel>
-      <_Hx_NUnit_TraceLevel Condition="'$(Hx_Input_Verbosity)' == 'Detailed'">Verbose</_Hx_NUnit_TraceLevel>
+      <_Hx_NUnit_TraceLevel Condition="'$(Hx_In_Verbosity)' == 'Quiet'">Off</_Hx_NUnit_TraceLevel>
+      <_Hx_NUnit_TraceLevel Condition="'$(Hx_In_Verbosity)' == 'Normal'">Warning</_Hx_NUnit_TraceLevel>
+      <_Hx_NUnit_TraceLevel Condition="'$(Hx_In_Verbosity)' == 'Detailed'">Verbose</_Hx_NUnit_TraceLevel>
     </PropertyGroup>
 
     <Message Text="> 2/2: Running NUnit"/>
     <Heleonix.Build.Tasks.NUnit
       ContinueOnError="$(Hx_NUnit_ContinueOnError)"
-      NUnitConsoleExe="$(Hx_System_NUnitConsoleExe)"
+      NUnitConsoleExe="$(Hx_Sys_NUnitConsoleExe)"
       NUnitProjectFileOrTestFiles="@(Hx_NUnit_NUnitProjectOrTestFiles)"
       AgentsNumber="$(Hx_NUnit_AgentsNumber)"
-      Configuration="$(Hx_Input_Configuration)"
+      Configuration="$(Hx_In_Configuration)"
       DomainIsolation="$(Hx_NUnit_DomainIsolation)"
       ShadowCopy="$(Hx_NUnit_ShadowCopy)"
       Framework="$(Hx_NUnit_Framework)"
@@ -41,7 +41,8 @@
       TestOutputFile="$(Hx_NUnit_ArtifactsDir)/Output.txt"
       TestParameters="$(Hx_NUnit_TestParameters)"
       UseTeamCityServiceMessages="$(Hx_NUnit_UseTeamCityServiceMessages)"
-      ProcessIsolation="$(Hx_NUnit_ProcessIsolation)"/>
+      ProcessIsolation="$(Hx_NUnit_ProcessIsolation)"
+      WorkingDir="$(Hx_WS_Dir)"/>
 
     <Message Text="> DONE!"/>
 

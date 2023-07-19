@@ -29,6 +29,11 @@ public class ReportUnit : BaseTask
     public string ReportFile { get; set; }
 
     /// <summary>
+    /// Gets or sets the working directory to run the executable in.
+    /// </summary>
+    public string WorkingDir { get; set; } = string.Empty;
+
+    /// <summary>
     /// Executes the ReportUnit.
     /// </summary>
     protected override void ExecuteInternal()
@@ -37,7 +42,7 @@ public class ReportUnit : BaseTask
             .AddPath(this.TestResultFile)
             .AddPath(this.ReportFile);
 
-        var result = ExeHelper.Execute(this.ReportUnitExe, args, true);
+        var result = ExeHelper.Execute(this.ReportUnitExe, args, true, this.WorkingDir);
 
         this.Log.LogMessage(result.Output);
     }

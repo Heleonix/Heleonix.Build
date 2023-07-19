@@ -38,4 +38,14 @@ Example custom property that allows string content only
       <xs:documentation>A path to the DocFX artifacts directory.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hx_DocFX_RepositoryUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>A path to the documentation repository.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Hx_DocFX_Message" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The commit message to upload the generated documentation back to the repository url.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 </xs:schema>

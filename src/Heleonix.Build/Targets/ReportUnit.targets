@@ -12,9 +12,10 @@
 
     <Message Text="> 2/2: Generating report"/>
     <Heleonix.Build.Tasks.ReportUnit
-      ReportUnitExe="$(Hx_System_ReportUnitExe)"
+      ReportUnitExe="$(Hx_Sys_ReportUnitExe)"
       TestResultFile="$(Hx_ReportUnit_TestResultFile)"
-      ReportFile="$(Hx_ReportUnit_ArtifactsDir)/ReportUnit.html"/>
+      ReportFile="$(Hx_ReportUnit_ArtifactsDir)/ReportUnit.html"
+      WorkingDir="$(Hx_WS_Dir)"/>
 
     <Message Text="> DONE!"/>
 

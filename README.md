@@ -25,7 +25,7 @@ So, if you follow standards as well, you even do not neeed to write custom build
 ### Naming Conventions:
 
 #### Global Property Name:
-`<Ns><_System | _WS | _Input | _Build>_<PropertyName>[Dir(s) | File(s) | <Ext>]`
+`<Ns><_Sys | _WS | _In | _Run>_<PropertyName>[Dir(s) | File(s) | <Ext>]`
 
 `Hx_Internal_*` it is only to be used within the Heleonix.Build.
 

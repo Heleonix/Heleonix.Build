@@ -53,7 +53,7 @@ Example custom property that allows string content only
       <xs:documentation>A regular expression to identify a minor change.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_ChangeLog_GitHubCommit_PatchChangeRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+  <xs:element name="Hx_ChangeLog_GitHubCommit_TokenchChangeRegExp" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A regular expression to identify a patch change.</xs:documentation>
     </xs:annotation>
@@ -66,12 +66,6 @@ Example custom property that allows string content only
   <xs:element name="Hx_ChangeLog_GitHubCommit_RegExpOptions" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>The .NET regular expression options for regexp patterns.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-
-  <xs:element name="Hx_ChangeLog_GitHubCommit_TemplateFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
-    <xs:annotation>
-      <xs:documentation>The list of template files to generates change logs from.</xs:documentation>
     </xs:annotation>
   </xs:element>
 </xs:schema>

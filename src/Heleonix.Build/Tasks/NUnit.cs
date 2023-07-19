@@ -131,6 +131,11 @@ public class NUnit : BaseTask
     public bool ShadowCopy { get; set; }
 
     /// <summary>
+    /// Gets or sets the working directory to run the executable in.
+    /// </summary>
+    public string WorkingDir { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets or sets the count of test cases [Output].
     /// </summary>
     [Output]
@@ -260,7 +265,7 @@ public class NUnit : BaseTask
             .AddArgument("domain", this.DomainIsolation)
             .AddKey("shadowcopy", this.ShadowCopy);
 
-        var result = ExeHelper.Execute(this.NUnitConsoleExe, args, true);
+        var result = ExeHelper.Execute(this.NUnitConsoleExe, args, true, this.WorkingDir);
 
         this.Log.LogMessage(result.Output);
 

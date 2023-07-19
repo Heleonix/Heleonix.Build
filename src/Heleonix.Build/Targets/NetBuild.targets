@@ -18,7 +18,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Hx_NetBuild_AssemblyVersion)' == '' And '$(Hx_NetBuild_Version)' != ''">
-      <Hx_NetBuild_AssemblyVersion>$(Hx_NetBuild_Version).$(Hx_Build_Number)</Hx_NetBuild_AssemblyVersion>
+      <Hx_NetBuild_AssemblyVersion>$(Hx_NetBuild_Version).$(Hx_Run_Number)</Hx_NetBuild_AssemblyVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Hx_NetBuild_ReleaseNotesFile)' == '' And Exists('$(Hx_ChangeLog_ArtifactsDir)/ReleaseNotes.txt')">
@@ -35,7 +35,7 @@
     <Message Text="> 3/7: Deleting directories"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(_Hx_NetBuild_SlnDir)"
-      PathRegExp="/(bin|obj)/$(Hx_Input_Configuration)$"
+      PathRegExp="/(bin|obj)/$(Hx_In_Configuration)$"
       Types="Directories">
       <Output TaskParameter="FoundDirs" ItemName="Hx_NetBuild_DeleteDirs"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
@@ -49,7 +49,7 @@
     <MSBuild
       Projects="$(Hx_NetBuild_SlnFile)"
       Targets="Restore;Clean"
-      Properties="Configuration=$(Hx_Input_Configuration)"
+      Properties="Configuration=$(Hx_In_Configuration)"
       />
 
     <Message Text="> 6/7: Building the solution"/>
@@ -62,7 +62,7 @@
     <MSBuild
       Projects="$(Hx_NetBuild_SlnFile)"
       Targets="Restore;Build"
-      Properties="Configuration=$(Hx_Input_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)"
+      Properties="Configuration=$(Hx_In_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)"
       />
 
     <MSBuild
@@ -81,7 +81,7 @@
     <!--<MSBuild
       Projects="%(_Hx_NetBuild_TFMProjectFiles.FullPath)"
       Targets="Publish"
-      Properties="TargetFramework=%(Match);Configuration=$(Hx_Input_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)" />-->
+      Properties="TargetFramework=%(Match);Configuration=$(Hx_In_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)" />-->
 
     <Message Text="> 7/7: Copying .sln, all 'bin' and 'obj' folders, all *.props, *.*proj and custom artifacts files to the artifacts directory"/>
     <Heleonix.Build.Tasks.FileSystemSearch

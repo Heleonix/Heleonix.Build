@@ -52,6 +52,11 @@ Example custom task with single required parameter
               <xs:documentation>The verbosity: Error, Info, Verbose.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="WorkingDir">
+            <xs:annotation>
+              <xs:documentation>The working directory to run the executable in.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>

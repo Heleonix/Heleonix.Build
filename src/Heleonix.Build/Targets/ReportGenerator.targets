@@ -17,18 +17,19 @@
     </ItemGroup>
 
     <PropertyGroup>
-      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_Input_Verbosity)' == 'Quiet'">Error</_Hx_ReportGenerator_Verbosity>
-      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_Input_Verbosity)' == 'Normal'">Info</_Hx_ReportGenerator_Verbosity>
-      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_Input_Verbosity)' == 'Detailed'">Verbose</_Hx_ReportGenerator_Verbosity>
+      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_In_Verbosity)' == 'Quiet'">Error</_Hx_ReportGenerator_Verbosity>
+      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_In_Verbosity)' == 'Normal'">Info</_Hx_ReportGenerator_Verbosity>
+      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_In_Verbosity)' == 'Detailed'">Verbose</_Hx_ReportGenerator_Verbosity>
     </PropertyGroup>
 
     <Message Text="> 2/2: Generating reports"/>
     <Heleonix.Build.Tasks.ReportGenerator
-      ReportGeneratorExe="$(Hx_System_ReportGeneratorExe)"
+      ReportGeneratorExe="$(Hx_Sys_ReportGeneratorExe)"
       ResultFiles="@(Hx_ReportGenerator_CoverageResultFiles)"
       ReportDir="$(Hx_ReportGenerator_ArtifactsDir)"
       ReportTypes="$(Hx_ReportGenerator_ReportTypes)"
-      Verbosity="$(_Hx_ReportGenerator_Verbosity)"/>
+      Verbosity="$(_Hx_ReportGenerator_Verbosity)"
+      WorkingDir="$(Hx_WS_Dir)"/>
 
     <Message Text="> DONE!"/>
 

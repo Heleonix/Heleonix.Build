@@ -2,36 +2,53 @@
   <Target Name="Hx_DocFX_Git">
     <Message Text="> STARTING..."/>
 
-    <Exec Condition="'$(Hx_DocFX_Git_RepositoryUrl)' == ''"
-          Command="&quot;$(Hx_System_GitExe)&quot; config --get remote.origin.url"
-          WorkingDirectory="$(Hx_WS_Dir)"
-          ConsoleToMsBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="Hx_DocFX_Git_RepositoryUrl"/>
-    </Exec>
-
     <PropertyGroup>
+      <Hx_DocFX_RepositoryUrl Condition="'$(Hx_DocFX_RepositoryUrl)' == ''">$(Hx_WS_RepositoryUrl)</Hx_DocFX_RepositoryUrl>
+      <Hx_DocFX_Message Condition="'$(Hx_DocFX_Message)' == ''">Automatic update of documentation.</Hx_DocFX_Message>
       <Hx_DocFX_Git_BranchName Condition="'$(Hx_DocFX_Git_BranchName)' == ''">gh-pages</Hx_DocFX_Git_BranchName>
-      <Hx_DocFX_Git_CommitMessage Condition="'$(Hx_DocFX_Git_CommitMessage)' == ''">Automatic update of documentation.</Hx_DocFX_Git_CommitMessage>
-      <Hx_DocFX_Git_CommitAuthor Condition="'$(Hx_DocFX_Git_CommitAuthor)' == ''">Automatic update of documentation.</Hx_DocFX_Git_CommitAuthor>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Hx_DocFX_Git_User)' != ''">
+      <_Hx_DocFX_Git_UserOption>-c user.name=&quot;$(Hx_DocFX_Git_User)&quot;</_Hx_DocFX_Git_UserOption>
+      <_Hx_DocFX_Git_EmailOption>-c user.email=&quot;&quot;</_Hx_DocFX_Git_EmailOption>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Hx_DocFX_Git_Email)' != ''">
+      <_Hx_DocFX_Git_EmailOption>-c user.email=&quot;$(Hx_DocFX_Git_Email)&quot;</_Hx_DocFX_Git_EmailOption>
     </PropertyGroup>
 
     <Message Text="> 1/4: Creating the artifacts directory"/>
     <RemoveDir Directories="$(Hx_DocFX_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_DocFX_ArtifactsDir)"/>
 
-    <Message Text="> 2/4: Downloading a documentation project from $(Hx_DocFX_Git_RepositoryUrl) and branch '$(Hx_DocFX_Git_BranchName)' into the $(Hx_DocFX_ArtifactsDir)"/>
+    <Message Text="> 2/4: Downloading a documentation project from '$(Hx_DocFX_RepositoryUrl)' and branch '$(Hx_DocFX_Git_BranchName)' into the $(Hx_DocFX_ArtifactsDir)"/>
     <Exec
-      Command="&quot;$(Hx_System_GitExe)&quot; clone &quot;$(Hx_DocFX_Git_RepositoryUrl)&quot; --branch $(Hx_DocFX_Git_BranchName) --single-branch ."
+      Condition="'$(Hx_DocFX_Git_Token)' != '' And $(Hx_DocFX_RepositoryUrl.StartsWith('https://'))"
+      Command="&quot;$(Hx_Sys_GitExe)&quot; clone &quot;$(Hx_DocFX_RepositoryUrl.Replace('https://','https://$(Hx_DocFX_Git_Token)@'))&quot; --branch $(Hx_DocFX_Git_BranchName) --single-branch ."
+      WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"
+      EchoOff="true"/>
+    <Exec
+      Condition="'$(Hx_DocFX_Git_Token)' == '' Or !$(Hx_DocFX_RepositoryUrl.StartsWith('https://'))"
+      Command="&quot;$(Hx_Sys_GitExe)&quot; clone &quot;$(Hx_DocFX_RepositoryUrl)&quot; --branch $(Hx_DocFX_Git_BranchName) --single-branch ."
       WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
 
     <Message Text="> 3/4: Running DocFX from the current workspace directory"/>
-    <Exec Command="&quot;$(Hx_System_DocFXExe)&quot; metadata &quot;$(Hx_DocFX_ArtifactsDir)/docfx.json&quot;"/>
-    <Exec Command="&quot;$(Hx_System_DocFXExe)&quot; build &quot;$(Hx_DocFX_ArtifactsDir)/docfx.json&quot;"/>
+    <Exec Command="&quot;$(Hx_Sys_DocFXExe)&quot; metadata &quot;$(Hx_DocFX_ArtifactsDir)/docfx.json&quot;"/>
+    <Exec Command="&quot;$(Hx_Sys_DocFXExe)&quot; build &quot;$(Hx_DocFX_ArtifactsDir)/docfx.json&quot;"/>
 
     <Message Text="> 4/4: Uploading the generated documentation"/>
-    <Exec Command="&quot;$(Hx_System_GitExe)&quot; add -A" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
-    <Exec Command="&quot;$(Hx_System_GitExe)&quot; commit --author &quot;&quot; -m &quot;$(Hx_DocFX_Git_CommitMessage)&quot;" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
-    <Exec Command="&quot;$(Hx_System_GitExe)&quot; push $(Hx_DocFX_Git_RepositoryUrl)" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
+    <Exec Command="&quot;$(Hx_Sys_GitExe)&quot; add -A" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
+    <Exec
+      Command="&quot;$(Hx_Sys_GitExe)&quot; $(_Hx_DocFX_Git_UserOption) $(_Hx_DocFX_Git_EmailOption) commit -m &quot;$(Hx_DocFX_Message)&quot;"
+      WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
+    <Exec
+      Condition="'$(Hx_DocFX_Git_Token)' != '' And $(Hx_DocFX_RepositoryUrl.StartsWith('https://'))"
+      Command="&quot;$(Hx_Sys_GitExe)&quot; push &quot;$(Hx_DocFX_RepositoryUrl.Replace('https://','https://$(Hx_DocFX_Git_Token)@'))&quot;"
+      WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"
+      EchoOff="true"/>
+    <Exec
+      Condition="'$(Hx_DocFX_Git_Token)' == '' Or !$(Hx_DocFX_RepositoryUrl.StartsWith('https://'))"
+      Command="&quot;$(Hx_Sys_GitExe)&quot; push &quot;$(Hx_DocFX_RepositoryUrl&quot;"
+      WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
 
     <Message Text="> DONE!"/>
 

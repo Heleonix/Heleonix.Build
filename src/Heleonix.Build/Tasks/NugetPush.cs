@@ -51,6 +51,11 @@ public class NugetPush : BaseTask
     public string Verbosity { get; set; }
 
     /// <summary>
+    /// Gets or sets the working directory to run the executable in.
+    /// </summary>
+    public string WorkingDir { get; set; } = string.Empty;
+
+    /// <summary>
     /// Executes the Nuget "push" command.
     /// </summary>
     protected override void ExecuteInternal()
@@ -66,7 +71,7 @@ public class NugetPush : BaseTask
 
         this.Log.LogMessage(Resources.NugetPush_Started, this.PackageFile);
 
-        var result = ExeHelper.Execute(this.NugetExe, args, true);
+        var result = ExeHelper.Execute(this.NugetExe, args, true, this.WorkingDir);
 
         this.Log.LogMessage(result.Output);
 
