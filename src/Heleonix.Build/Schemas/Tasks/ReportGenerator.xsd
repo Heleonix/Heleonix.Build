@@ -49,7 +49,7 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="Verbosity">
             <xs:annotation>
-              <xs:documentation>The verbosity: Error, Info, Verbose.</xs:documentation>
+              <xs:documentation>The verbosity: Error, Info, Verbose. Default is "Info".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="WorkingDir">

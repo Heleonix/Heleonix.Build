@@ -1,8 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_OpenCover">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
-    <Message Text="> 1/2: Creating the artifacts directory"/>
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_OpenCover_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_OpenCover_ArtifactsDir)"/>
 
@@ -39,7 +39,7 @@
       </Hx_OpenCover_Target>
     </ItemGroup>
 
-    <Message Text="> 2/2: Running OpenCover with %(Hx_OpenCover_Target.Type)"/>
+    <Message Text="> 2/2: Running OpenCover with %(Hx_OpenCover_Target.Type)" Importance="high"/>
     <Heleonix.Build.Tasks.OpenCover
       ContinueOnError="$(Hx_OpenCover_ContinueOnError)"
       OpenCoverExe="$(Hx_Sys_OpenCoverConsoleExe)"
@@ -60,7 +60,7 @@
       FilePathRegExpOptions="$(Hx_OpenCover_FilePathRegExpOptions)"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

@@ -242,7 +242,7 @@ public class OpenCover : BaseTask
 
         var result = ExeHelper.Execute(this.OpenCoverExe, args, true, this.WorkingDir);
 
-        this.Log.LogMessage(result.Output);
+        this.Log.LogMessage(MessageImportance.High, result.Output);
 
         if (!File.Exists(this.CoverageResultFile))
         {
@@ -297,20 +297,20 @@ public class OpenCover : BaseTask
         this.LineCoverage = (int)Convert.ToSingle(summary.Attribute("sequenceCoverage").Value, InvariantInfo);
         this.BranchCoverage = (int)Convert.ToSingle(summary.Attribute("branchCoverage").Value, InvariantInfo);
 
-        this.Log.LogMessage(Resources.OpenCover_TotalLines, this.TotalLines);
-        this.Log.LogMessage(Resources.OpenCover_VisitedLines, this.VisitedLines);
-        this.Log.LogMessage(Resources.OpenCover_TotalBranches, this.TotalBranches);
-        this.Log.LogMessage(Resources.OpenCover_VisitedBranches, this.VisitedBranches);
-        this.Log.LogMessage(Resources.OpenCover_TotalClasses, this.TotalClasses);
-        this.Log.LogMessage(Resources.OpenCover_VisitedClasses, this.VisitedClasses);
-        this.Log.LogMessage(Resources.OpenCover_TotalMethods, this.TotalMethods);
-        this.Log.LogMessage(Resources.OpenCover_VisitedMethods, this.VisitedMethods);
-        this.Log.LogMessage(Resources.OpenCover_MinCyclomaticComplexity, this.MinCyclomaticComplexity);
-        this.Log.LogMessage(Resources.OpenCover_MaxCyclomaticComplexity, this.MaxCyclomaticComplexity);
-        this.Log.LogMessage(Resources.OpenCover_ClassCoverage, this.ClassCoverage);
-        this.Log.LogMessage(Resources.OpenCover_MethodCoverage, this.MethodCoverage);
-        this.Log.LogMessage(Resources.OpenCover_LineCoverage, this.LineCoverage);
-        this.Log.LogMessage(Resources.OpenCover_BranchCoverage, this.BranchCoverage);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_TotalLines, this.TotalLines);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_VisitedLines, this.VisitedLines);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_TotalBranches, this.TotalBranches);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_VisitedBranches, this.VisitedBranches);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_TotalClasses, this.TotalClasses);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_VisitedClasses, this.VisitedClasses);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_TotalMethods, this.TotalMethods);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_VisitedMethods, this.VisitedMethods);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_MinCyclomaticComplexity, this.MinCyclomaticComplexity);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_MaxCyclomaticComplexity, this.MaxCyclomaticComplexity);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_ClassCoverage, this.ClassCoverage);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_MethodCoverage, this.MethodCoverage);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_LineCoverage, this.LineCoverage);
+        this.Log.LogMessage(MessageImportance.High, Resources.OpenCover_BranchCoverage, this.BranchCoverage);
 
         if (this.ClassCoverage < this.MinClassCoverage)
         {

@@ -1,8 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NUnit">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
-    <Message Text="> 1/2: Creating the artifacts directory"/>
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_NUnit_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_NUnit_ArtifactsDir)"/>
 
@@ -18,13 +18,7 @@
       <Output TaskParameter="TargetOutputs" ItemName="Hx_NUnit_NUnitProjectOrTestFiles"/>
     </MSBuild>
 
-    <PropertyGroup>
-      <_Hx_NUnit_TraceLevel Condition="'$(Hx_In_Verbosity)' == 'Quiet'">Off</_Hx_NUnit_TraceLevel>
-      <_Hx_NUnit_TraceLevel Condition="'$(Hx_In_Verbosity)' == 'Normal'">Warning</_Hx_NUnit_TraceLevel>
-      <_Hx_NUnit_TraceLevel Condition="'$(Hx_In_Verbosity)' == 'Detailed'">Verbose</_Hx_NUnit_TraceLevel>
-    </PropertyGroup>
-
-    <Message Text="> 2/2: Running NUnit"/>
+    <Message Text="> 2/2: Running NUnit" Importance="high"/>
     <Heleonix.Build.Tasks.NUnit
       ContinueOnError="$(Hx_NUnit_ContinueOnError)"
       NUnitConsoleExe="$(Hx_Sys_NUnitConsoleExe)"
@@ -36,7 +30,7 @@
       Framework="$(Hx_NUnit_Framework)"
       TestResultFile="$(Hx_NUnit_ArtifactsDir)/NUnit.xml"
       TestFilter="$(Hx_NUnit_TestFilter)"
-      TraceLevel="$(_Hx_NUnit_TraceLevel)"
+      TraceLevel="$(Hx_NUnit_TraceLevel)"
       TestListFile="$(Hx_NUnit_TestListFile)"
       TestOutputFile="$(Hx_NUnit_ArtifactsDir)/Output.txt"
       TestParameters="$(Hx_NUnit_TestParameters)"
@@ -44,7 +38,7 @@
       ProcessIsolation="$(Hx_NUnit_ProcessIsolation)"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

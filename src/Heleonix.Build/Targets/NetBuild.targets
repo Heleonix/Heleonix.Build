@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NetBuild">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
     <MSBuild
       Condition="'$(Hx_NetBuild_SlnFile)' == ''"
@@ -25,14 +25,14 @@
       <Hx_NetBuild_ReleaseNotesFile>$(Hx_ChangeLog_ArtifactsDir)/ReleaseNotes.txt</Hx_NetBuild_ReleaseNotesFile>
     </PropertyGroup>
 
-    <Message Text="> 1/7: Creating the artifacts directory"/>
+    <Message Text="> 1/7: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_NetBuild_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_NetBuild_ArtifactsDir)"/>
 
-    <Message Text="> 2/7: Deleting files"/>
+    <Message Text="> 2/7: Deleting files" Importance="high"/>
     <Delete Files="@(Hx_NetBuild_DeleteFiles)"/>
 
-    <Message Text="> 3/7: Deleting directories"/>
+    <Message Text="> 3/7: Deleting directories" Importance="high"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(_Hx_NetBuild_SlnDir)"
       PathRegExp="/(bin|obj)/$(Hx_In_Configuration)$"
@@ -41,10 +41,10 @@
     </Heleonix.Build.Tasks.FileSystemSearch>
     <RemoveDir Directories="@(Hx_NetBuild_DeleteDirs)"/>
 
-    <Message Text="> 4/7: Cleaning directories"/>
+    <Message Text="> 4/7: Cleaning directories" Importance="high"/>
     <Heleonix.Build.Tasks.DirectoryClean Dirs="@(Hx_NetBuild_CleanDirs)"/>
 
-    <Message Text="> 5/7: Cleaning the solution"/>
+    <Message Text="> 5/7: Cleaning the solution" Importance="high"/>
     <!--Sometimes Clean is failing without Restore-->
     <MSBuild
       Projects="$(Hx_NetBuild_SlnFile)"
@@ -52,7 +52,7 @@
       Properties="Configuration=$(Hx_In_Configuration)"
       />
 
-    <Message Text="> 6/7: Building the solution"/>
+    <Message Text="> 6/7: Building the solution" Importance="high"/>
     <PropertyGroup>
       <_Hx_NetBuild_SigningProps Condition="Exists('$(Hx_NetBuild_SnkFile)')">SignAssembly=true;AssemblyOriginatorKeyFile=$(Hx_NetBuild_SnkFile)</_Hx_NetBuild_SigningProps>
       <_Hx_NetBuild_VersionProps Condition="'$(Hx_NetBuild_Version)' != ''">Version=$(Hx_NetBuild_Version)</_Hx_NetBuild_VersionProps>
@@ -83,7 +83,7 @@
       Targets="Publish"
       Properties="TargetFramework=%(Match);Configuration=$(Hx_In_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)" />-->
 
-    <Message Text="> 7/7: Copying .sln, all 'bin' and 'obj' folders, all *.props, *.*proj and custom artifacts files to the artifacts directory"/>
+    <Message Text="> 7/7: Copying .sln, all 'bin' and 'obj' folders, all *.props, *.*proj and custom artifacts files to the artifacts directory" Importance="high"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       StartDir="$(Hx_WS_Dir)"
       PathRegExp="(?&lt;!/(bin|obj)/.+)\.props$"
@@ -118,7 +118,7 @@
       DestinationDirs="$(Hx_NetBuild_ArtifactsDir)"
       Overwrite="true"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

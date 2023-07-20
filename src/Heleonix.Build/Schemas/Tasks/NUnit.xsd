@@ -79,7 +79,7 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="TraceLevel">
             <xs:annotation>
-              <xs:documentation>The trace level: Off, Error, Warning, Info, Verbose.</xs:documentation>
+              <xs:documentation>The trace level: Off, Error, Warning, Info, Verbose. Default is "Warning".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Configuration">

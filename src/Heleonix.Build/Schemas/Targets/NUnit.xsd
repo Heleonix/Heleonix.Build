@@ -89,6 +89,11 @@ Example custom property that allows string content only
       <xs:documentation>The tests list file path.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hx_NUnit_TraceLevel" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The trace level: Off, Error, Warning, Info, Verbose. Default is "Warning".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 
   <xs:element name="Hx_NUnit_NUnitProjectOrTestFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>

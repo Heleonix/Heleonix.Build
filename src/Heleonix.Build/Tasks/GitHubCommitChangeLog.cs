@@ -85,7 +85,7 @@ public class GitHubCommitChangeLog : BaseTask
     /// </summary>
     protected override void ExecuteInternal()
     {
-        this.Log.LogMessage(Resources.GitHubCommitChangeLog_GettingLatestRelease);
+        this.Log.LogMessage(MessageImportance.High, Resources.GitHubCommitChangeLog_GettingLatestRelease);
 
         var regExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);
 
@@ -119,10 +119,10 @@ public class GitHubCommitChangeLog : BaseTask
         }
         catch (KeyNotFoundException)
         {
-            this.Log.LogMessage(Resources.GitHubCommitChangeLog_NoReleaseFound);
+            this.Log.LogMessage(MessageImportance.High, Resources.GitHubCommitChangeLog_NoReleaseFound);
         }
 
-        this.Log.LogMessage(Resources.GithubCommitChangeLog_CollectChanges, createdAt);
+        this.Log.LogMessage(MessageImportance.High, Resources.GithubCommitChangeLog_CollectChanges, createdAt);
 
         this.CollectChanges(client, createdAt, latestVersion, regExpOptions, tagSource);
     }

@@ -43,6 +43,11 @@ Example custom property that allows string content only
       <xs:documentation>The report types to generate, separated by semicolon: Badges, Html, HtmlSummary, Latex, LatexSummary, TextSummary, Xml, XmlSummary.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hx_ReportGenerator_Verbosity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The verbosity: Error, Info, Verbose. Default is "Info".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 
   <xs:element name="Hx_ReportGenerator_CoverageResultFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>

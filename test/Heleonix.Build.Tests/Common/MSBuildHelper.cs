@@ -86,7 +86,7 @@ public static class MSBuildHelper
             .AddArgument("t", target)
             .AddArgument("p", props);
 
-        var result = ExeHelper.Execute("MSBuild.exe", args, true, workingDirectory, int.MaxValue);
+        var result = ExeHelper.Execute("dotnet.exe", "msbuild " + args, true, workingDirectory, int.MaxValue);
 
         if (result.ExitCode != 0)
         {

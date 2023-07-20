@@ -51,7 +51,7 @@ public class FileUpdate : BaseTask
 
         var output = Regex.Replace(input, this.RegExp, this.Replacement ?? string.Empty, regExpOptions);
 
-        this.Log.LogMessage(Resources.FileUpdate_UpdatingFile, this.File);
+        this.Log.LogMessage(MessageImportance.High, Resources.FileUpdate_UpdatingFile, this.File);
         System.IO.File.WriteAllText(this.File, output);
     }
 }

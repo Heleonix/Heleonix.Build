@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_DocFX_Git">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
     <PropertyGroup>
       <Hx_DocFX_RepositoryUrl Condition="'$(Hx_DocFX_RepositoryUrl)' == ''">$(Hx_WS_RepositoryUrl)</Hx_DocFX_RepositoryUrl>
@@ -16,11 +16,11 @@
       <_Hx_DocFX_Git_EmailOption>-c user.email=&quot;$(Hx_DocFX_Git_Email)&quot;</_Hx_DocFX_Git_EmailOption>
     </PropertyGroup>
 
-    <Message Text="> 1/4: Creating the artifacts directory"/>
+    <Message Text="> 1/4: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_DocFX_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_DocFX_ArtifactsDir)"/>
 
-    <Message Text="> 2/4: Downloading a documentation project from '$(Hx_DocFX_RepositoryUrl)' and branch '$(Hx_DocFX_Git_BranchName)' into the $(Hx_DocFX_ArtifactsDir)"/>
+    <Message Text="> 2/4: Downloading a documentation project from '$(Hx_DocFX_RepositoryUrl)' and branch '$(Hx_DocFX_Git_BranchName)' into the $(Hx_DocFX_ArtifactsDir)" Importance="high"/>
     <Exec
       Condition="'$(Hx_DocFX_Git_Token)' != '' And $(Hx_DocFX_RepositoryUrl.StartsWith('https://'))"
       Command="&quot;$(Hx_Sys_GitExe)&quot; clone &quot;$(Hx_DocFX_RepositoryUrl.Replace('https://','https://$(Hx_DocFX_Git_Token)@'))&quot; --branch $(Hx_DocFX_Git_BranchName) --single-branch ."
@@ -31,11 +31,11 @@
       Command="&quot;$(Hx_Sys_GitExe)&quot; clone &quot;$(Hx_DocFX_RepositoryUrl)&quot; --branch $(Hx_DocFX_Git_BranchName) --single-branch ."
       WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
 
-    <Message Text="> 3/4: Running DocFX from the current workspace directory"/>
+    <Message Text="> 3/4: Running DocFX from the current workspace directory" Importance="high"/>
     <Exec Command="&quot;$(Hx_Sys_DocFXExe)&quot; metadata &quot;$(Hx_DocFX_ArtifactsDir)/docfx.json&quot;"/>
     <Exec Command="&quot;$(Hx_Sys_DocFXExe)&quot; build &quot;$(Hx_DocFX_ArtifactsDir)/docfx.json&quot;"/>
 
-    <Message Text="> 4/4: Uploading the generated documentation"/>
+    <Message Text="> 4/4: Uploading the generated documentation" Importance="high"/>
     <Exec Command="&quot;$(Hx_Sys_GitExe)&quot; add -A" WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
     <Exec
       Command="&quot;$(Hx_Sys_GitExe)&quot; $(_Hx_DocFX_Git_UserOption) $(_Hx_DocFX_Git_EmailOption) commit -m &quot;$(Hx_DocFX_Message)&quot;"
@@ -50,7 +50,7 @@
       Command="&quot;$(Hx_Sys_GitExe)&quot; push &quot;$(Hx_DocFX_RepositoryUrl&quot;"
       WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

@@ -90,7 +90,7 @@ public class FileSystemSearch : BaseTask
     {
         if (!Directory.Exists(this.StartDir))
         {
-            this.Log.LogMessage(Resources.FileSystemSearch_StartingDirectoryNotFound, this.StartDir);
+            this.Log.LogMessage(MessageImportance.High, Resources.FileSystemSearch_StartingDirectoryNotFound, this.StartDir);
 
             this.FoundFiles = Array.Empty<ITaskItem>();
             this.FoundDirs = Array.Empty<ITaskItem>();
@@ -114,6 +114,7 @@ public class FileSystemSearch : BaseTask
         var foundItems = new List<ITaskItem>();
 
         this.Log.LogMessage(
+            MessageImportance.High,
             Resources.FileSystemSearch_StartSearching,
             this.StartDir,
             this.Types,
@@ -173,7 +174,7 @@ public class FileSystemSearch : BaseTask
                     foundDirs.Add(dir);
                     foundItems.Add(dir);
 
-                    this.Log.LogMessage(Resources.FileSystemSearch_FoundItem, dir);
+                    this.Log.LogMessage(MessageImportance.High, Resources.FileSystemSearch_FoundItem, dir);
                 }
             }
 
@@ -185,7 +186,7 @@ public class FileSystemSearch : BaseTask
                 foundDirs.Add(dirItem);
                 foundItems.Add(dirItem);
 
-                this.Log.LogMessage(Resources.FileSystemSearch_FoundItem, dirItem);
+                this.Log.LogMessage(MessageImportance.High, Resources.FileSystemSearch_FoundItem, dirItem);
             }
         }
 
@@ -202,7 +203,7 @@ public class FileSystemSearch : BaseTask
                 foundFiles.Add(file);
                 foundItems.Add(file);
 
-                this.Log.LogMessage(Resources.FileSystemSearch_FoundItem, file);
+                this.Log.LogMessage(MessageImportance.High, Resources.FileSystemSearch_FoundItem, file);
             }
         }
 

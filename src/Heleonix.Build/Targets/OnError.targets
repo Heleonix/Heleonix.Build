@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_OnError">
-    <Message Text="> An error occured in one of Heleonix.Build targets!"/>
+    <Message Text="> An error occured in one of Heleonix.Build targets!" Importance="high"/>
   </Target>
 </Project>

@@ -1,12 +1,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NugetPublish">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
-    <Message Text="> 1/4: Creating the artifacts directory"/>
+    <Message Text="> 1/4: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_NugetPublish_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_NugetPublish_ArtifactsDir)"/>
 
-    <Message Text="> 2/4: Searching packages or packing the solution in NetBuild artifacts directory, if packages are not found"/>
+    <Message Text="> 2/4: Searching packages or packing the solution in NetBuild artifacts directory, if packages are not found" Importance="high"/>
     <Heleonix.Build.Tasks.FileSystemSearch
       Condition="'@(Hx_NugetPublish_PackageFiles)' == ''"
       StartDir="$(Hx_NetBuild_ArtifactsDir)"
@@ -51,20 +51,20 @@
       <Output TaskParameter="FoundFiles" ItemName="Hx_NugetPublish_PackageFiles"/>
     </Heleonix.Build.Tasks.FileSystemSearch>
 
-    <Message Text="> 3/4: Copying packages to the artifacts directory"/>
+    <Message Text="> 3/4: Copying packages to the artifacts directory" Importance="high"/>
     <Copy SourceFiles="@(Hx_NugetPublish_PackageFiles)" DestinationFolder="$(Hx_NugetPublish_ArtifactsDir)"/>
 
-    <Message Text="> 4/4: Publishing packages"/>
+    <Message Text="> 4/4: Publishing packages" Importance="high"/>
     <Heleonix.Build.Tasks.NugetPush
       NugetExe="$(Hx_Sys_NugetExe)"
       PackageFile="%(Hx_NugetPublish_PackageFiles.FullPath)"
       APIKey="$(Hx_NugetPublish_APIKey)"
       ConfigFile="$(Hx_NugetPublish_ConfigFile)"
       SourceURL="$(Hx_NugetPublish_SourceURL)"
-      Verbosity="$(Hx_In_Verbosity)"
+      Verbosity="$(Hx_NugetPublish_Verbosity)"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

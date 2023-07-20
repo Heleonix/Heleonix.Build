@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_ChangeLog_GitHubCommit" DependsOnTargets="Hx_Internal_GitRepoId">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high" />
 
     <PropertyGroup>
       <Hx_ChangeLog_GitHubCommit_VersionTagRegExp Condition="'$(Hx_GitHubChangeLog_VersionTagRegExp)' == ''">(?&lt;=\D*|^)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?=\D*)</Hx_ChangeLog_GitHubCommit_VersionTagRegExp>
@@ -15,11 +15,11 @@
       <Hx_ChangeLog_TemplateFiles Include="$(MSBuildThisFileDirectory)../Templates/ReleaseNotes.txt.cshtml"/>
     </ItemGroup>
 
-    <Message Text="> 1/4: Creating the artifacts directory"/>
+    <Message Text="> 1/4: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_ChangeLog_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_ChangeLog_ArtifactsDir)"/>
 
-    <Message Text="> 2/4: Collecting changes and calculating a new version for $(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"/>
+    <Message Text="> 2/4: Collecting changes and calculating a new version for $(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)" Importance="high"/>
     <Heleonix.Build.Tasks.GitHubCommitChangeLog
       GitHubRepositoryApiUrl="$(Hx_WS_RepositoryAPIUrl)/repos/$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
       Token="$(Hx_ChangeLog_GitHubCommit_Token)"
@@ -33,7 +33,6 @@
       <Output TaskParameter="Version" PropertyName="_Hx_ChangeLog_GitHubCommit_Version"/>
       <Output TaskParameter="Changes" ItemName="_Hx_ChangeLog_GitHubCommit_Changes"/>
     </Heleonix.Build.Tasks.GitHubCommitChangeLog>
-
     <ItemGroup>
       <_Hx_ChangeLog_GitHubCommit_Changes Include="@(Hx_ChangeLog_CustomChanges)"/>
       <_Hx_ChangeLog_GitHubCommit_Changes Include="$(Hx_Run_Number)">
@@ -41,19 +40,19 @@
       </_Hx_ChangeLog_GitHubCommit_Changes>
     </ItemGroup>
 
-    <Message Text="> 3/4: Storing the calculated version '$(_Hx_ChangeLog_GitHubCommit_Version)' into the artifacts directory in 'semver.txt'"/>
+    <Message Text="> 3/4: Storing the calculated version '$(_Hx_ChangeLog_GitHubCommit_Version)'" Importance="high"/>
     <WriteLinesToFile
       File="$(Hx_ChangeLog_ArtifactsDir)/semver.txt"
       Lines="$(_Hx_ChangeLog_GitHubCommit_Version)"
       Overwrite="true"/>
 
-    <Message Text="> 4/4: Generating the change logs into the artifacts directory using the provided templates"/>
+    <Message Text="> 4/4: Generating change logs using the provided templates" Importance="high"/>
     <Heleonix.Build.Tasks.FileRazorGenerate
       TemplateFile="%(Hx_ChangeLog_TemplateFiles.FullPath)"
       GeneratedFile="$(Hx_ChangeLog_ArtifactsDir)/%(Hx_ChangeLog_TemplateFiles.Filename)"
       Data="@(_Hx_ChangeLog_GitHubCommit_Changes)"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

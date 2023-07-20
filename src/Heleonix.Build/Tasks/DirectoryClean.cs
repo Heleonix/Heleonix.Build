@@ -35,7 +35,7 @@ public class DirectoryClean : BaseTask
             {
                 if (Directory.Exists(dir.ItemSpec))
                 {
-                    this.Log.LogMessage(Resources.DirectoryClean_CleaningDirectoryStarted, dir.ItemSpec);
+                    this.Log.LogMessage(MessageImportance.High, Resources.DirectoryClean_CleaningDirectoryStarted, dir.ItemSpec);
 
                     foreach (var file in Directory.GetFiles(dir.ItemSpec))
                     {
@@ -51,7 +51,7 @@ public class DirectoryClean : BaseTask
                 }
                 else
                 {
-                    this.Log.LogMessage(Resources.DirectoryClean_DirectoryNotFound, dir.ItemSpec);
+                    this.Log.LogMessage(MessageImportance.High, Resources.DirectoryClean_DirectoryNotFound, dir.ItemSpec);
                 }
             }
             catch (Exception ex)
