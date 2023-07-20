@@ -27,5 +27,5 @@
   <!--Workspace-->
   <Import Condition="Exists('$(Hx_WS_BuildProjFile)')" Project="$(Hx_WS_BuildProjFile)"/>
 
-  <Target Name="Hx_Main" DependsOnTargets="Hx_Initialize;$(Hx_In_Targets.Replace('>',';'));Hx_Finalize"/>
+  <Target Name="Hx_Main" DependsOnTargets="Hx_Initialize;$([MSBuild]::Unescape($(Hx_In_Targets.Replace('>',';'))));Hx_Finalize"/>
 </Project>
