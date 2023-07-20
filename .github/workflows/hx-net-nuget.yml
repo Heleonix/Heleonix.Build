@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_NetBuild
       - name: Test
-        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=\"Hx_OpenCover;Hx_ReportUnit;Hx_ReportGenerator\"
+        run: dotnet msbuild ./hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets='"Hx_OpenCover;Hx_ReportUnit;Hx_ReportGenerator"'
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
