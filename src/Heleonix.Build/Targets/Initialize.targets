@@ -22,16 +22,15 @@
   </PropertyGroup>
 
   <Target Name="Hx_Initialize">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
     <Error Condition="'$(Hx_In_Targets)' == ''" Text="'$Hx_In_Targets' is not defined."/>
     <Error Condition="!Exists('$(Hx_WS_Dir)')" Text="'$Hx_WS_Dir' is not found."/>
 
-    <Message Text="> 1/1: Initialization of global properties"/>
+    <Message Text="> 1/1: Initialization of global properties" Importance="high"/>
 
     <PropertyGroup>
       <Hx_In_Configuration Condition="'$(Hx_In_Configuration)' == ''">Release</Hx_In_Configuration>
-      <Hx_In_Verbosity Condition="'$(Hx_In_Verbosity)' == ''">Normal</Hx_In_Verbosity>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -54,28 +53,27 @@
       <Hx_ChangeLog_ArtifactsDir>$(Hx_Run_ArtifactsDir)/Hx_ChangeLog</Hx_ChangeLog_ArtifactsDir>
     </PropertyGroup>
 
-    <Message Text="$Hx_Sys_NUnitConsoleExe: $(Hx_Sys_NUnitConsoleExe)"/>
-    <Message Text="$Hx_Sys_ReportUnitExe: $(Hx_Sys_ReportUnitExe)"/>
-    <Message Text="$Hx_Sys_OpenCoverConsoleExe: $(Hx_Sys_OpenCoverConsoleExe)"/>
-    <Message Text="$Hx_Sys_ReportGeneratorExe: $(Hx_Sys_ReportGeneratorExe)"/>
-    <Message Text="$Hx_Sys_NugetExe: $(Hx_Sys_NugetExe)"/>
-    <Message Text="$Hx_Sys_DocFXExe: $(Hx_Sys_DocFXExe)"/>
-    <Message Text="$Hx_Sys_GitExe: $(Hx_Sys_GitExe)"/>
+    <Message Text="$Hx_Sys_NUnitConsoleExe: $(Hx_Sys_NUnitConsoleExe)" Importance="high"/>
+    <Message Text="$Hx_Sys_ReportUnitExe: $(Hx_Sys_ReportUnitExe)" Importance="high"/>
+    <Message Text="$Hx_Sys_OpenCoverConsoleExe: $(Hx_Sys_OpenCoverConsoleExe)" Importance="high"/>
+    <Message Text="$Hx_Sys_ReportGeneratorExe: $(Hx_Sys_ReportGeneratorExe)" Importance="high"/>
+    <Message Text="$Hx_Sys_NugetExe: $(Hx_Sys_NugetExe)" Importance="high"/>
+    <Message Text="$Hx_Sys_DocFXExe: $(Hx_Sys_DocFXExe)" Importance="high"/>
+    <Message Text="$Hx_Sys_GitExe: $(Hx_Sys_GitExe)" Importance="high"/>
 
-    <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)"/>
-    <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)"/>
-    <Message Text="$Hx_WS_RepositoryAPIUrl: $(Hx_WS_RepositoryAPIUrl)"/>
-    <Message Text="$Hx_WS_RepositoryUrl: $(Hx_WS_RepositoryUrl)"/>
+    <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)" Importance="high"/>
+    <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)" Importance="high"/>
+    <Message Text="$Hx_WS_RepositoryAPIUrl: $(Hx_WS_RepositoryAPIUrl)" Importance="high"/>
+    <Message Text="$Hx_WS_RepositoryUrl: $(Hx_WS_RepositoryUrl)" Importance="high"/>
 
-    <Message Text="$Hx_In_Configuration: $(Hx_In_Configuration)"/>
-    <Message Text="$Hx_In_Verbosity: $(Hx_In_Verbosity)"/>
-    <Message Text="$Hx_In_Targets: $(Hx_In_Targets)"/>
-    <Message Text="$Hx_In_BuildProjFile: $(Hx_In_BuildProjFile)"/>
+    <Message Text="$Hx_In_Configuration: $(Hx_In_Configuration)" Importance="high"/>
+    <Message Text="$Hx_In_Targets: $(Hx_In_Targets)" Importance="high"/>
+    <Message Text="$Hx_In_BuildProjFile: $(Hx_In_BuildProjFile)" Importance="high"/>
 
-    <Message Text="$Hx_Run_ArtifactsDir: $(Hx_Run_ArtifactsDir)"/>
-    <Message Text="$Hx_Run_Number: $(Hx_Run_Number)"/>
+    <Message Text="$Hx_Run_ArtifactsDir: $(Hx_Run_ArtifactsDir)" Importance="high"/>
+    <Message Text="$Hx_Run_Number: $(Hx_Run_Number)" Importance="high"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

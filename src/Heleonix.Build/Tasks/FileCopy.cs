@@ -60,7 +60,7 @@ public class FileCopy : BaseTask
         {
             if (!File.Exists(this.Files[i].ItemSpec))
             {
-                this.Log.LogMessage(Resources.FileCopy_FileNotFound, this.Files[i].ItemSpec);
+                this.Log.LogMessage(MessageImportance.High, Resources.FileCopy_FileNotFound, this.Files[i].ItemSpec);
 
                 continue;
             }
@@ -100,7 +100,7 @@ public class FileCopy : BaseTask
 
                 destinationPath = Path.Combine(destinationPath, Path.GetFileName(filePath));
 
-                this.Log.LogMessage(Resources.FileCopy_CopyingFile, filePath, destinationPath);
+                this.Log.LogMessage(MessageImportance.High, Resources.FileCopy_CopyingFile, filePath, destinationPath);
                 File.Copy(filePath, destinationPath, this.Overwrite);
                 copiedFiles.Add(new TaskItem(destinationPath));
             }

@@ -35,6 +35,7 @@ public class FileValidate : BaseTask
             var patterns = file.CloneCustomMetadata() as IDictionary<string, string>;
 
             this.Log.LogMessage(
+                MessageImportance.High,
                 Resources.FileValidate_ValidatingFile,
                 file.ItemSpec,
                 string.Join(";", patterns.Select(m => $"{m.Key}={m.Value}")));

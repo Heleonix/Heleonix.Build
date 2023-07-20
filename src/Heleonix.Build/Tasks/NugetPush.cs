@@ -38,7 +38,7 @@ public class NugetPush : BaseTask
     public string ConfigFile { get; set; }
 
     /// <summary>
-    /// Gets or sets the verbosity of the command.
+    /// Gets or sets the verbosity of the command. Default is "Normal".
     /// </summary>
     /// <remarks>
     /// Possible values:
@@ -48,7 +48,7 @@ public class NugetPush : BaseTask
     /// <item><term>detailed</term></item>
     /// </list>
     /// </remarks>
-    public string Verbosity { get; set; }
+    public string Verbosity { get; set; } = "Normal";
 
     /// <summary>
     /// Gets or sets the working directory to run the executable in.
@@ -69,11 +69,11 @@ public class NugetPush : BaseTask
             .AddArgument($"Verbosity", this.Verbosity)
             .AddKey("NonInteractive");
 
-        this.Log.LogMessage(Resources.NugetPush_Started, this.PackageFile);
+        this.Log.LogMessage(MessageImportance.High, Resources.NugetPush_Started, this.PackageFile);
 
         var result = ExeHelper.Execute(this.NugetExe, args, true, this.WorkingDir);
 
-        this.Log.LogMessage(result.Output);
+        this.Log.LogMessage(MessageImportance.High, result.Output);
 
         if (!string.IsNullOrEmpty(result.Error))
         {

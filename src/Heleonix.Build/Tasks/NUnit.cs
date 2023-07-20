@@ -77,7 +77,7 @@ public class NUnit : BaseTask
     public string Framework { get; set; }
 
     /// <summary>
-    /// Gets or sets the trace level.
+    /// Gets or sets the trace level. Default is "Warning".
     /// </summary>
     /// <remarks>
     /// Possible values:
@@ -89,7 +89,7 @@ public class NUnit : BaseTask
     /// <item><term>Verbose</term></item>
     /// </list>
     /// </remarks>
-    public string TraceLevel { get; set; }
+    public string TraceLevel { get; set; } = "Warning";
 
     /// <summary>
     /// Gets or sets the project configuration to load, i.e. "Debug", "Release".
@@ -267,7 +267,7 @@ public class NUnit : BaseTask
 
         var result = ExeHelper.Execute(this.NUnitConsoleExe, args, true, this.WorkingDir);
 
-        this.Log.LogMessage(result.Output);
+        this.Log.LogMessage(MessageImportance.High, result.Output);
 
         if (!string.IsNullOrEmpty(result.Error))
         {
@@ -299,15 +299,15 @@ public class NUnit : BaseTask
         this.EndTime = testRun.Attribute("end-time").Value;
         this.Duration = Convert.ToSingle(testRun.Attribute("duration").Value, InvariantInfo);
 
-        this.Log.LogMessage(Resources.NUnit_TestCases, this.TestCases);
-        this.Log.LogMessage(Resources.NUnit_Total, this.Total);
-        this.Log.LogMessage(Resources.NUnit_Passed, this.Passed);
-        this.Log.LogMessage(Resources.NUnit_Failed, this.Failed);
-        this.Log.LogMessage(Resources.NUnit_Inconclusive, this.Inconclusive);
-        this.Log.LogMessage(Resources.NUnit_Skipped, this.Skipped);
-        this.Log.LogMessage(Resources.NUnit_Asserts, this.Asserts);
-        this.Log.LogMessage(Resources.NUnit_StartTime, this.StartTime);
-        this.Log.LogMessage(Resources.NUnit_EndTime, this.EndTime);
-        this.Log.LogMessage(Resources.NUnit_Duration, this.Duration);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_TestCases, this.TestCases);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_Total, this.Total);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_Passed, this.Passed);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_Failed, this.Failed);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_Inconclusive, this.Inconclusive);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_Skipped, this.Skipped);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_Asserts, this.Asserts);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_StartTime, this.StartTime);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_EndTime, this.EndTime);
+        this.Log.LogMessage(MessageImportance.High, Resources.NUnit_Duration, this.Duration);
     }
 }

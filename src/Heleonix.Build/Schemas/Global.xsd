@@ -95,11 +95,6 @@ Example custom property that allows string content only
       <xs:documentation>A list of targets to run.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="Hx_In_Verbosity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
-    <xs:annotation>
-      <xs:documentation>Logging verbosity for all targets and tasks.</xs:documentation>
-    </xs:annotation>
-  </xs:element>
   <xs:element name="Hx_In_Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A configuration, i.e. "Release", "Debug" etc.</xs:documentation>

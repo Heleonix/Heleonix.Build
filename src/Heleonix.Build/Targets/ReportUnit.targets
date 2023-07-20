@@ -1,8 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_ReportUnit">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
-    <Message Text="> 1/2: Creating the artifacts directory"/>
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_ReportUnit_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_ReportUnit_ArtifactsDir)"/>
 
@@ -10,14 +10,14 @@
       <Hx_ReportUnit_TestResultFile>$(Hx_NUnit_ArtifactsDir)/NUnit.xml</Hx_ReportUnit_TestResultFile>
     </PropertyGroup>
 
-    <Message Text="> 2/2: Generating report"/>
+    <Message Text="> 2/2: Generating report" Importance="high"/>
     <Heleonix.Build.Tasks.ReportUnit
       ReportUnitExe="$(Hx_Sys_ReportUnitExe)"
       TestResultFile="$(Hx_ReportUnit_TestResultFile)"
       ReportFile="$(Hx_ReportUnit_ArtifactsDir)/ReportUnit.html"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

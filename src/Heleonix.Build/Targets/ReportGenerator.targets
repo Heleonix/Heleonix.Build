@@ -1,8 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_ReportGenerator">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
-    <Message Text="> 1/2: Creating the artifacts directory"/>
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_ReportGenerator_ArtifactsDir)"/>
     <MakeDir Directories="$(Hx_ReportGenerator_ArtifactsDir)"/>
 
@@ -16,22 +16,16 @@
         Include="$(Hx_OpenCover_ArtifactsDir)/OpenCover.xml"/>
     </ItemGroup>
 
-    <PropertyGroup>
-      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_In_Verbosity)' == 'Quiet'">Error</_Hx_ReportGenerator_Verbosity>
-      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_In_Verbosity)' == 'Normal'">Info</_Hx_ReportGenerator_Verbosity>
-      <_Hx_ReportGenerator_Verbosity Condition="'$(Hx_In_Verbosity)' == 'Detailed'">Verbose</_Hx_ReportGenerator_Verbosity>
-    </PropertyGroup>
-
-    <Message Text="> 2/2: Generating reports"/>
+    <Message Text="> 2/2: Generating reports" Importance="high"/>
     <Heleonix.Build.Tasks.ReportGenerator
       ReportGeneratorExe="$(Hx_Sys_ReportGeneratorExe)"
       ResultFiles="@(Hx_ReportGenerator_CoverageResultFiles)"
       ReportDir="$(Hx_ReportGenerator_ArtifactsDir)"
       ReportTypes="$(Hx_ReportGenerator_ReportTypes)"
-      Verbosity="$(_Hx_ReportGenerator_Verbosity)"
+      Verbosity="$(Hx_ReportGenerator_Verbosity)"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

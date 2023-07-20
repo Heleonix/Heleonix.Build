@@ -79,7 +79,7 @@ public class GitHubRelease : BaseTask
             prerelease = this.IsPrerelease,
         };
 
-        this.Log.LogMessage(Resources.GitHubRelease_CreatingRelease, content);
+        this.Log.LogMessage(MessageImportance.High, Resources.GitHubRelease_CreatingRelease, content);
 
         using (var client = new HttpClient())
         using (var requestContent = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"))

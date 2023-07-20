@@ -44,6 +44,6 @@ public class ReportUnit : BaseTask
 
         var result = ExeHelper.Execute(this.ReportUnitExe, args, true, this.WorkingDir);
 
-        this.Log.LogMessage(result.Output);
+        this.Log.LogMessage(MessageImportance.High, result.Output);
     }
 }

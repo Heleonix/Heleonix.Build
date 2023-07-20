@@ -63,6 +63,11 @@ Example custom property that allows string content only
       <xs:documentation>A text file with package release notes. If specified, it is passed as /p:PackageReleaseNotes property into the Pack target.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hx_NugetPublish_Verbosity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
+    <xs:annotation>
+      <xs:documentation>The verbosity of the publishing to the source: Quiet, Normal, Detailed. Default is "Normal".</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 
   <xs:element name="Hx_NugetPublish_PackageFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>

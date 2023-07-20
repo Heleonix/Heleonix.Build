@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_Release_GitHub" DependsOnTargets="Hx_Internal_GitRepoId">
-    <Message Text="> STARTING..."/>
+    <Message Text="> STARTING..." Importance="high"/>
 
     <PropertyGroup>
       <Hx_Release_GitHub_TagName Condition="'$(Hx_Release_GitHub_TagName)' == ''">v$([System.IO.File]::ReadAllText('$(Hx_ChangeLog_ArtifactsDir)/semver.txt').Trim())</Hx_Release_GitHub_TagName>
@@ -14,7 +14,7 @@
       <_Hx_Release_GitHub_IsPrerelease Condition="'$(_Hx_Release_GitHub_PrereleaseSuffix)' != ''">true</_Hx_Release_GitHub_IsPrerelease>
     </PropertyGroup>
 
-    <Message Text="> 1/1: Creating a release for $(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"/>
+    <Message Text="> 1/1: Creating a release for $(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)" Importance="high"/>
     <Heleonix.Build.Tasks.GitHubRelease
       GitHubRepositoryApiUrl="$(Hx_WS_RepositoryAPIUrl)/repos/$(Hx_Internal_GitRepoId_OwnerName)/$(Hx_Internal_GitRepoId_RepositoryName)"
       Token="$(Hx_Release_GitHub_Token)"
@@ -26,7 +26,7 @@
       IsPrerelease="$(_Hx_Release_GitHub_IsPrerelease)"
       IsDraft="false"/>
 
-    <Message Text="> DONE!"/>
+    <Message Text="> DONE!" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>
