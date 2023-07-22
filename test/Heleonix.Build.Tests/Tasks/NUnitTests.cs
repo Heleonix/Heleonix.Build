@@ -7,6 +7,7 @@ namespace Heleonix.Build.Tests.Tasks;
 
 using System.Xml.Linq;
 using Heleonix.Build.Tasks;
+using NUnit.Framework.Internal;
 using static System.Globalization.NumberFormatInfo;
 
 /// <summary>
@@ -30,10 +31,17 @@ public static class NUnitTests
 
         var simulator = new NetSimulatorHelper();
 
+        TestExecutionContext.CurrentContext.OutWriter.WriteLine("Tasks.NUnitTests: copied NetSimulator");
+
         try
         {
             MSBuildHelper.RunTarget(simulator.SolutionFile, "Restore", null, simulator.SolutionDir);
+
+            TestExecutionContext.CurrentContext.OutWriter.WriteLine("Tasks.NUnitTests: restored");
+
             MSBuildHelper.RunTarget(simulator.SolutionFile, $"Build", null, simulator.SolutionDir);
+
+            TestExecutionContext.CurrentContext.OutWriter.WriteLine("Tasks.NUnitTests: Built");
 
             Arrange(() =>
             {
@@ -48,6 +56,8 @@ public static class NUnitTests
 
             Act(() =>
             {
+                TestExecutionContext.CurrentContext.OutWriter.WriteLine("Tasks.NUnitTests: Starting task");
+
                 task = new NUnit
                 {
                     BuildEngine = new TestBuildEngine(),
@@ -63,6 +73,8 @@ public static class NUnitTests
                 };
 
                 succeeded = task.Execute();
+
+                TestExecutionContext.CurrentContext.OutWriter.WriteLine("Tasks.NUnitTests: Task finished");
             });
 
             Teardown(() =>
