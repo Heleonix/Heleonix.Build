@@ -21,50 +21,49 @@ public static class NUnitTests
         IDictionary<string, string> properties = null;
         NetSimulatorHelper simulator = null;
 
-        Arrange(() =>
-        {
-            simulator = new NetSimulatorHelper();
+        simulator = new NetSimulatorHelper();
 
+        try
+        {
             MSBuildHelper.RunTestTarget("Hx_NetBuild", simulator.SolutionDir);
-        });
 
-        Act(() =>
-        {
-            succeeded = MSBuildHelper.RunTestTarget("Hx_NUnit", simulator.SolutionDir, properties);
-        });
-
-        Teardown(() =>
-        {
-            simulator.Clear();
-        });
-
-        When("target is executed", () =>
-        {
-            Should("fail", () =>
+            Act(() =>
             {
-                var artifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
-
-                Assert.That(succeeded, Is.False);
-                Assert.That(File.Exists(Path.Combine(artifactsDir, "NUnit.xml")), Is.True);
-                Assert.That(File.Exists(Path.Combine(artifactsDir, "Output.txt")), Is.True);
+                succeeded = MSBuildHelper.RunTestTarget("Hx_NUnit", simulator.SolutionDir, properties);
             });
 
-            And("should continue on error", () =>
+            When("target is executed", () =>
             {
-                properties = new Dictionary<string, string>
+                Should("fail", () =>
+                {
+                    var artifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
+
+                    Assert.That(succeeded, Is.False);
+                    Assert.That(File.Exists(Path.Combine(artifactsDir, "NUnit.xml")), Is.True);
+                    Assert.That(File.Exists(Path.Combine(artifactsDir, "Output.txt")), Is.True);
+                });
+
+                And("should continue on error", () =>
+                {
+                    properties = new Dictionary<string, string>
                 {
                     { "Hx_NUnit_ContinueOnError", "true" },
                 };
 
-                Should("succeed", () =>
-                {
-                    var artifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
+                    Should("succeed", () =>
+                    {
+                        var artifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
 
-                    Assert.That(succeeded, Is.True);
-                    Assert.That(File.Exists(Path.Combine(artifactsDir, "NUnit.xml")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(artifactsDir, "Output.txt")), Is.True);
+                        Assert.That(succeeded, Is.True);
+                        Assert.That(File.Exists(Path.Combine(artifactsDir, "NUnit.xml")), Is.True);
+                        Assert.That(File.Exists(Path.Combine(artifactsDir, "Output.txt")), Is.True);
+                    });
                 });
             });
-        });
+        }
+        finally
+        {
+            simulator.Clear();
+        }
     }
 }

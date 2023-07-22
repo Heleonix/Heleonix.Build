@@ -21,71 +21,28 @@ public static class OpenCoverTests
         NetSimulatorHelper simulator = null;
         IDictionary<string, string> properties = null;
 
-        Arrange(() =>
-        {
-            simulator = new NetSimulatorHelper();
+        simulator = new NetSimulatorHelper();
 
+        try
+        {
             MSBuildHelper.RunTestTarget("Hx_NetBuild", simulator.SolutionDir);
-        });
 
-        Act(() =>
-        {
-            succeeded = MSBuildHelper.RunTestTarget("Hx_OpenCover", simulator.SolutionDir, properties);
-        });
-
-        Teardown(() =>
-        {
-            simulator.Clear();
-        });
-
-        When("target is executed", () =>
-        {
-            And("Minimum coverage is satisfied", () =>
+            Act(() =>
             {
-                properties = new Dictionary<string, string>
+                succeeded = MSBuildHelper.RunTestTarget("Hx_OpenCover", simulator.SolutionDir, properties);
+            });
+
+            When("target is executed", () =>
+            {
+                And("Minimum coverage is satisfied", () =>
                 {
+                    properties = new Dictionary<string, string>
+                    {
                     { "Hx_OpenCover_MinClassCoverage", "57" },
                     { "Hx_OpenCover_MinBranchCoverage", "50" },
                     { "Hx_OpenCover_MinMethodCoverage", "50" },
                     { "Hx_OpenCover_MinLineCoverage", "40" },
-                };
-
-                Should("succeed", () =>
-                {
-                    var artifactsDir = simulator.GetArtifactsDir("Hx_OpenCover");
-                    var nunitArtifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
-
-                    Assert.That(succeeded, Is.True);
-                    Assert.That(File.Exists(Path.Combine(artifactsDir, "OpenCover.xml")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
-                });
-            });
-
-            And("Minimum coverage is not satisfied", () =>
-            {
-                properties = new Dictionary<string, string>
-                {
-                    { "Hx_OpenCover_MinClassCoverage", "100" },
-                    { "Hx_OpenCover_MinBranchCoverage", "100" },
-                    { "Hx_OpenCover_MinMethodCoverage", "100" },
-                    { "Hx_OpenCover_MinLineCoverage", "100" },
-                };
-
-                Should("fail", () =>
-                {
-                    var artifactsDir = simulator.GetArtifactsDir("Hx_OpenCover");
-                    var nunitArtifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
-
-                    Assert.That(succeeded, Is.False);
-                    Assert.That(File.Exists(Path.Combine(artifactsDir, "OpenCover.xml")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
-                });
-
-                And("should continue on error", () =>
-                {
-                    properties.Add("Hx_OpenCover_ContinueOnError", "true");
+                    };
 
                     Should("succeed", () =>
                     {
@@ -98,7 +55,49 @@ public static class OpenCoverTests
                         Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
                     });
                 });
+
+                And("Minimum coverage is not satisfied", () =>
+                {
+                    properties = new Dictionary<string, string>
+                    {
+                    { "Hx_OpenCover_MinClassCoverage", "100" },
+                    { "Hx_OpenCover_MinBranchCoverage", "100" },
+                    { "Hx_OpenCover_MinMethodCoverage", "100" },
+                    { "Hx_OpenCover_MinLineCoverage", "100" },
+                    };
+
+                    Should("fail", () =>
+                    {
+                        var artifactsDir = simulator.GetArtifactsDir("Hx_OpenCover");
+                        var nunitArtifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
+
+                        Assert.That(succeeded, Is.False);
+                        Assert.That(File.Exists(Path.Combine(artifactsDir, "OpenCover.xml")), Is.True);
+                        Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
+                        Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
+                    });
+
+                    And("should continue on error", () =>
+                    {
+                        properties.Add("Hx_OpenCover_ContinueOnError", "true");
+
+                        Should("succeed", () =>
+                        {
+                            var artifactsDir = simulator.GetArtifactsDir("Hx_OpenCover");
+                            var nunitArtifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
+
+                            Assert.That(succeeded, Is.True);
+                            Assert.That(File.Exists(Path.Combine(artifactsDir, "OpenCover.xml")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "NUnit.xml")), Is.True);
+                            Assert.That(File.Exists(Path.Combine(nunitArtifactsDir, "Output.txt")), Is.True);
+                        });
+                    });
+                });
             });
-        });
+        }
+        finally
+        {
+            simulator.Clear();
+        }
     }
 }

@@ -27,184 +27,186 @@ public static class NUnitTests
         string testFilter = null;
         string testListFile = null;
         string outputDir = null;
+
         var simulator = new NetSimulatorHelper();
 
-        MSBuildHelper.RunTarget(simulator.SolutionFile, "Restore", null, simulator.SolutionDir);
-        MSBuildHelper.RunTarget(simulator.SolutionFile, $"Build", null, simulator.SolutionDir);
-        MSBuildHelper.Publish(
-            simulator.TestProjectFile,
-            simulator.TestProjectTargetFrameworks,
-            simulator.TestProjectDir);
-
-        Arrange(() =>
+        try
         {
-            testFilter = null;
+            MSBuildHelper.RunTarget(simulator.SolutionFile, "Restore", null, simulator.SolutionDir);
+            MSBuildHelper.RunTarget(simulator.SolutionFile, $"Build", null, simulator.SolutionDir);
 
-            testListFile = null;
-
-            outputDir = PathHelper.GetRandomFileNameInCurrentDir();
-
-            Directory.CreateDirectory(outputDir);
-        });
-
-        Act(() =>
-        {
-            task = new NUnit
-            {
-                BuildEngine = new TestBuildEngine(),
-                NUnitConsoleExe = PathHelper.NUnitConsoleExe,
-                AgentsNumber = 3,
-                NUnitProjectFileOrTestFiles =
-                    simulator.TestBinaries.Select(file => new TaskItem(file)).ToArray(),
-                TestOutputFile = Path.Combine(outputDir, "Output.txt"),
-                TestResultFile = Path.Combine(outputDir, "Results.txt"),
-                TestListFile = testListFile,
-                TraceLevel = traceLevel,
-                TestFilter = testFilter,
-            };
-
-            succeeded = task.Execute();
-        });
-
-        Teardown(() =>
-        {
-            Directory.Delete(outputDir, true);
-        });
-
-        When("all parameters are valid", () =>
-        {
-            And("all tests are included", () =>
-            {
-                Arrange(() =>
-                {
-                    testFilter = null;
-                });
-
-                Should("should fail on failed tests", () =>
-                {
-                    Assert.That(succeeded, Is.False);
-
-                    var testRun = XDocument.Load(Path.Combine(outputDir, "Results.txt")).Element("test-run");
-
-                    Assert.That(
-                        task.TestCases,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Total,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Passed,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Failed,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Inconclusive,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Skipped,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Asserts,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value, InvariantInfo)));
-                    Assert.That(
-                        task.StartTime,
-                        Is.EqualTo(testRun.Attribute("start-time").Value));
-                    Assert.That(
-                        task.EndTime,
-                        Is.EqualTo(testRun.Attribute("end-time").Value));
-                    Assert.That(
-                        task.Duration,
-                        Is.EqualTo(Convert.ToSingle(testRun.Attribute("duration").Value, InvariantInfo)));
-                });
-            });
-
-            And("empty test list file is specified", () =>
-            {
-                Arrange(() =>
-                {
-                    testListFile = PathHelper.GetRandomFileNameInCurrentDir();
-
-                    File.Create(testListFile).Close();
-                });
-
-                Teardown(() =>
-                {
-                    File.Delete(testListFile);
-                });
-
-                Should("fail with failed tests", () =>
-                {
-                    Assert.That(succeeded, Is.False);
-
-                    var testRun = XDocument.Load(Path.Combine(outputDir, "Results.txt")).Element("test-run");
-
-                    Assert.That(
-                        task.TestCases,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Total,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Passed,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Failed,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Inconclusive,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Skipped,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value, InvariantInfo)));
-                    Assert.That(
-                        task.Asserts,
-                        Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value, InvariantInfo)));
-                    Assert.That(
-                        task.StartTime,
-                        Is.EqualTo(testRun.Attribute("start-time").Value));
-                    Assert.That(
-                        task.EndTime,
-                        Is.EqualTo(testRun.Attribute("end-time").Value));
-                    Assert.That(
-                        task.Duration,
-                        Is.EqualTo(Convert.ToSingle(testRun.Attribute("duration").Value, InvariantInfo)));
-                });
-            });
-
-            And("only successful tests are included", () =>
-            {
-                Arrange(() =>
-                {
-                    testFilter = "name == PlusOne";
-                });
-
-                Should("succeed", () =>
-                {
-                    // One test per TFM assembly.
-                    var numOfTFMs = simulator.TestProjectTargetFrameworks.Count();
-
-                    Assert.That(succeeded, Is.True);
-                    Assert.That(task.Total, Is.EqualTo(numOfTFMs));
-                    Assert.That(task.Passed, Is.EqualTo(numOfTFMs));
-                    Assert.That(task.Failed, Is.EqualTo(0));
-                });
-            });
-        });
-
-        When("trace level is invalid to simulate an NUnit error", () =>
-        {
             Arrange(() =>
             {
-                traceLevel = "INVALID_TRACE_LEVEL";
+                testFilter = null;
+
+                testListFile = null;
+
+                outputDir = PathHelper.GetRandomFileNameInCurrentDir();
+
+                Directory.CreateDirectory(outputDir);
             });
 
-            Should("fail", () =>
+            Act(() =>
             {
-                Assert.That(succeeded, Is.False);
-            });
-        });
+                task = new NUnit
+                {
+                    BuildEngine = new TestBuildEngine(),
+                    NUnitConsoleExe = PathHelper.NUnitConsoleExe,
+                    AgentsNumber = 3,
+                    NUnitProjectFileOrTestFiles =
+                        simulator.TestBinaries.Select(file => new TaskItem(file)).ToArray(),
+                    TestOutputFile = Path.Combine(outputDir, "Output.txt"),
+                    TestResultFile = Path.Combine(outputDir, "Results.txt"),
+                    TestListFile = testListFile,
+                    TraceLevel = traceLevel,
+                    TestFilter = testFilter,
+                };
 
-        simulator.Clear();
+                succeeded = task.Execute();
+            });
+
+            Teardown(() =>
+            {
+                Directory.Delete(outputDir, true);
+            });
+
+            When("all parameters are valid", () =>
+            {
+                And("all tests are included", () =>
+                {
+                    Arrange(() =>
+                    {
+                        testFilter = null;
+                    });
+
+                    Should("should fail on failed tests", () =>
+                    {
+                        Assert.That(succeeded, Is.False);
+
+                        var testRun = XDocument.Load(Path.Combine(outputDir, "Results.txt")).Element("test-run");
+
+                        Assert.That(
+                            task.TestCases,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Total,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Passed,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Failed,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Inconclusive,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Skipped,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Asserts,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value, InvariantInfo)));
+                        Assert.That(
+                            task.StartTime,
+                            Is.EqualTo(testRun.Attribute("start-time").Value));
+                        Assert.That(
+                            task.EndTime,
+                            Is.EqualTo(testRun.Attribute("end-time").Value));
+                        Assert.That(
+                            task.Duration,
+                            Is.EqualTo(Convert.ToSingle(testRun.Attribute("duration").Value, InvariantInfo)));
+                    });
+                });
+
+                And("empty test list file is specified", () =>
+                {
+                    Arrange(() =>
+                    {
+                        testListFile = PathHelper.GetRandomFileNameInCurrentDir();
+
+                        File.Create(testListFile).Close();
+                    });
+
+                    Teardown(() =>
+                    {
+                        File.Delete(testListFile);
+                    });
+
+                    Should("fail with failed tests", () =>
+                    {
+                        Assert.That(succeeded, Is.False);
+
+                        var testRun = XDocument.Load(Path.Combine(outputDir, "Results.txt")).Element("test-run");
+
+                        Assert.That(
+                            task.TestCases,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("testcasecount").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Total,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("total").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Passed,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("passed").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Failed,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("failed").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Inconclusive,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("inconclusive").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Skipped,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("skipped").Value, InvariantInfo)));
+                        Assert.That(
+                            task.Asserts,
+                            Is.EqualTo(Convert.ToInt32(testRun.Attribute("asserts").Value, InvariantInfo)));
+                        Assert.That(
+                            task.StartTime,
+                            Is.EqualTo(testRun.Attribute("start-time").Value));
+                        Assert.That(
+                            task.EndTime,
+                            Is.EqualTo(testRun.Attribute("end-time").Value));
+                        Assert.That(
+                            task.Duration,
+                            Is.EqualTo(Convert.ToSingle(testRun.Attribute("duration").Value, InvariantInfo)));
+                    });
+                });
+
+                And("only successful tests are included", () =>
+                {
+                    Arrange(() =>
+                    {
+                        testFilter = "name == PlusOne";
+                    });
+
+                    Should("succeed", () =>
+                    {
+                        // One test per TFM assembly.
+                        var numOfTFMs = simulator.TestProjectTargetFrameworks.Count();
+
+                        Assert.That(succeeded, Is.True);
+                        Assert.That(task.Total, Is.EqualTo(numOfTFMs));
+                        Assert.That(task.Passed, Is.EqualTo(numOfTFMs));
+                        Assert.That(task.Failed, Is.EqualTo(0));
+                    });
+                });
+            });
+
+            When("trace level is invalid to simulate an NUnit error", () =>
+            {
+                Arrange(() =>
+                {
+                    traceLevel = "INVALID_TRACE_LEVEL";
+                });
+
+                Should("fail", () =>
+                {
+                    Assert.That(succeeded, Is.False);
+                });
+            });
+        }
+        finally
+        {
+            simulator.Clear();
+        }
     }
 }

@@ -32,7 +32,7 @@ public static class GitHubCommitChangeLogTests
             task = new GitHubCommitChangeLog
             {
                 BuildEngine = new TestBuildEngine(),
-                GitHubRepositoryApiUrl = "http://localhost:33333/repos/heleonix/heleonix.build",
+                GitHubRepositoryApiUrl = "http://localhost:12345/repos/heleonix/heleonix.build",
                 Token = "111111111",
                 UserAgent = "heleonix/heleonix.build",
                 VersionTagRegExp = @"(?<=\D*|^)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?=\D*)",
@@ -50,7 +50,7 @@ public static class GitHubCommitChangeLogTests
 
         Teardown(() =>
         {
-            listener.Stop();
+            listener.Abort();
         });
 
         When("there is a release and commits after it", () =>
@@ -60,10 +60,10 @@ public static class GitHubCommitChangeLogTests
             responses = new (string, Func<HttpListenerRequest, (string, HttpStatusCode)>)[]
             {
                 (
-                    "http://localhost:33333/repos/heleonix/heleonix.build/releases/latest/",
+                    "http://localhost:12345/repos/heleonix/heleonix.build/releases/latest/",
                     request => (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-02-27T19:35:32Z""}", HttpStatusCode.OK)),
                 (
-                    "http://localhost:33333/repos/heleonix/heleonix.build/commits/",
+                    "http://localhost:12345/repos/heleonix/heleonix.build/commits/",
                     (HttpListenerRequest request) =>
                     {
                         if (requestsCount == 0)
@@ -225,10 +225,10 @@ public static class GitHubCommitChangeLogTests
             responses = new (string, Func<HttpListenerRequest, (string, HttpStatusCode)>)[]
             {
                 (
-                    "http://localhost:33333/repos/heleonix/heleonix.build/releases/latest/",
+                    "http://localhost:12345/repos/heleonix/heleonix.build/releases/latest/",
                     request => (@"{}", HttpStatusCode.OK)),
                 (
-                    "http://localhost:33333/repos/heleonix/heleonix.build/commits/",
+                    "http://localhost:12345/repos/heleonix/heleonix.build/commits/",
                     request => (@"[]", HttpStatusCode.OK)),
             };
 

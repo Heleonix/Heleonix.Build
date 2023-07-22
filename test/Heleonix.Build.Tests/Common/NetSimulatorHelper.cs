@@ -45,19 +45,14 @@ public class NetSimulatorHelper
     /// <summary>
     /// Gets the source binary directories.
     /// </summary>
-    public IEnumerable<string> SourcePublishDirs =>
-        Directory
-        .GetDirectories(Path.Combine(
-            this.SourceProjectDir,
-            "bin",
-            PathHelper.Configuration))
-        .Select(dir => Path.Combine(dir, "publish"));
+    public IEnumerable<string> SourceDirs =>
+        Directory.GetDirectories(Path.Combine(this.SourceProjectDir, "bin", PathHelper.Configuration));
 
     /// <summary>
     /// Gets the source binaries.
     /// </summary>
     public IEnumerable<string> SourceBinaries =>
-        this.SourcePublishDirs.Select(dir => Path.Combine(dir, "NetSimulator.dll"));
+        this.SourceDirs.Select(dir => Path.Combine(dir, "NetSimulator.dll"));
 
     /// <summary>
     /// Gets the path to the Nuget package file.
@@ -78,19 +73,14 @@ public class NetSimulatorHelper
     /// <summary>
     /// Gets the test binary directories.
     /// </summary>
-    public IEnumerable<string> TestPublishDirs =>
-        Directory
-        .GetDirectories(Path.Combine(
-            this.TestProjectDir,
-            "bin",
-            PathHelper.Configuration))
-        .Select(dir => Path.Combine(dir, "publish"));
+    public IEnumerable<string> TestDirs =>
+        Directory.GetDirectories(Path.Combine(this.TestProjectDir, "bin", PathHelper.Configuration));
 
     /// <summary>
     /// Gets the test binaries.
     /// </summary>
     public IEnumerable<string> TestBinaries =>
-        this.TestPublishDirs.Select(dir => Path.Combine(dir, "NetSimulator.Tests.dll"));
+        this.TestDirs.Select(dir => Path.Combine(dir, "NetSimulator.Tests.dll"));
 
     /// <summary>
     /// Gets the source project target frameworks.

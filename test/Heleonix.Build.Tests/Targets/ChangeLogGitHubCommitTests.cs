@@ -42,10 +42,10 @@ public static class ChangeLogGitHubCommitTests
             var responses = new (string, Func<HttpListenerRequest, (string, HttpStatusCode)>)[]
             {
                 (
-                    "http://localhost:33333/repos/Heleonix/NetSimulator/releases/latest/",
+                    "http://localhost:12345/repos/Heleonix/NetSimulator/releases/latest/",
                     request => (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-02-27T19:35:32Z""}", HttpStatusCode.OK)),
                 (
-                    "http://localhost:33333/repos/Heleonix/NetSimulator/commits/",
+                    "http://localhost:12345/repos/Heleonix/NetSimulator/commits/",
                     request => (commits, HttpStatusCode.OK)),
             };
 
@@ -64,7 +64,7 @@ public static class ChangeLogGitHubCommitTests
 
         Teardown(() =>
         {
-            listener.Stop();
+            listener.Abort();
 
             simulator.Clear();
         });
