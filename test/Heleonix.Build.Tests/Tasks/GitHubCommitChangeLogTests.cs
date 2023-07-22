@@ -12,6 +12,7 @@ using System.Text.Json.Nodes;
 /// Tests the <see cref="GitHubCommitChangeLog"/>.
 /// </summary>
 [ComponentTest(Type = typeof(GitHubCommitChangeLog))]
+[NonParallelizable]
 public static class GitHubCommitChangeLogTests
 {
     /// <summary>

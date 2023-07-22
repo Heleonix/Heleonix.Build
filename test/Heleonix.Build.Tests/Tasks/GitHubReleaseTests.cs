@@ -11,6 +11,7 @@ using System.Net;
 /// Tests the <see cref="GitHubRelease"/>.
 /// </summary>
 [ComponentTest(Type = typeof(GitHubRelease))]
+[NonParallelizable]
 public static class GitHubReleaseTests
 {
     /// <summary>

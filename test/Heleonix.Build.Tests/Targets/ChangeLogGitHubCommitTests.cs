@@ -11,6 +11,7 @@ using System.Net;
 /// Tests the BuildNet target.
 /// </summary>
 [ComponentTest(Type = typeof(ChangeLogGitHubCommitTests))]
+[NonParallelizable]
 public static class ChangeLogGitHubCommitTests
 {
     /// <summary>

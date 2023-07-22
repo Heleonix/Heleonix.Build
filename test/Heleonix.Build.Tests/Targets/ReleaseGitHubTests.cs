@@ -11,6 +11,7 @@ using System.Net;
 /// Tests the GitHubReleaseNet target.
 /// </summary>
 [ComponentTest(Type = typeof(ReleaseGitHubTests))]
+[NonParallelizable]
 public static class ReleaseGitHubTests
 {
     /// <summary>
