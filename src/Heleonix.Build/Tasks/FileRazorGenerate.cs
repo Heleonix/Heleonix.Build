@@ -75,9 +75,15 @@ public class FileRazorGenerate : BaseTask
     [ExcludeFromCodeCoverage]
     private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {
+        // Resolve assemblies, which are referenced in the compiled template assembly.
         if (args.Name.Contains("RazorEngineCore"))
         {
             return typeof(RazorEngine).Assembly;
+        }
+
+        if (args.Name.Contains("Microsoft.Build.Framework"))
+        {
+            return typeof(ITaskItem).Assembly;
         }
 
         return null;
