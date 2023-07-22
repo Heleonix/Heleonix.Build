@@ -29,7 +29,7 @@ public static class GitHubReleaseTests
         Arrange(() =>
         {
             listener = HttpHelper.LaunchHttpServer((
-                "http://localhost:33333/repos/heleonix/heleonix.build/releases/",
+                "http://localhost:12345/repos/heleonix/heleonix.build/releases/",
                 request =>
                 {
                     using (var reader = new StreamReader(request.InputStream))
@@ -45,7 +45,7 @@ public static class GitHubReleaseTests
             task = new GitHubRelease
             {
                 BuildEngine = new TestBuildEngine(),
-                GitHubRepositoryApiUrl = "http://localhost:33333/repos/heleonix/heleonix.build",
+                GitHubRepositoryApiUrl = "http://localhost:12345/repos/heleonix/heleonix.build",
                 Name = tagName,
                 Body = @"Release
 -release note 1;
@@ -66,7 +66,7 @@ public static class GitHubReleaseTests
 
         Teardown(() =>
         {
-            listener.Stop();
+            listener.Abort();
         });
 
         When("creation should succeed", () =>

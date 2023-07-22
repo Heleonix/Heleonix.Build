@@ -3,7 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDependencyFile>true</GenerateDependencyFile>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

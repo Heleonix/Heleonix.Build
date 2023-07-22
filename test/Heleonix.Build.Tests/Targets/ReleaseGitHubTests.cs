@@ -41,7 +41,7 @@ public static class ReleaseGitHubTests
             };
 
             listener = HttpHelper.LaunchHttpServer((
-                "http://localhost:33333/repos/Heleonix/NetSimulator/releases/",
+                "http://localhost:12345/repos/Heleonix/NetSimulator/releases/",
                 request =>
                 {
                     using (var reader = new StreamReader(request.InputStream))
@@ -62,7 +62,7 @@ public static class ReleaseGitHubTests
 
         Teardown(() =>
         {
-            listener.Stop();
+            listener.Abort();
             simulator.Clear();
         });
 

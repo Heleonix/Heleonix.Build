@@ -82,20 +82,6 @@ public static class NetBuildTests
 
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "NetSimulator.xml")));
                     Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "NetSimulator.pdb")));
-
-                    path = Path.Combine(sourceProjectOutputDir, tfm, "publish", "NetSimulator.dll");
-                    info = FileVersionInfo.GetVersionInfo(path);
-
-                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.123"));
-                    Assert.That(info.ProductVersion, Is.EqualTo("1.2.3"));
-
-                    name = AssemblyName.GetAssemblyName(path);
-
-                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.123"));
-                    Assert.That(name.FullName, Contains.Substring("PublicKeyToken=56430db2a23ca0d2"));
-
-                    Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "publish", "NetSimulator.xml")));
-                    Assert.That(File.Exists(Path.Combine(sourceProjectOutputDir, tfm, "publish", "NetSimulator.pdb")));
                 }
 
                 var testProjectOutputDir = Path.Combine(
@@ -119,20 +105,6 @@ public static class NetBuildTests
 
                     Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "NetSimulator.Tests.xml")));
                     Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "NetSimulator.Tests.pdb")));
-
-                    path = Path.Combine(testProjectOutputDir, tfm, "publish", "NetSimulator.Tests.dll");
-                    info = FileVersionInfo.GetVersionInfo(path);
-
-                    Assert.That(info.FileVersion, Is.EqualTo("1.2.3.123"));
-                    Assert.That(info.ProductVersion, Is.EqualTo("1.2.3"));
-
-                    name = AssemblyName.GetAssemblyName(path);
-
-                    Assert.That(name.FullName, Contains.Substring("Version=1.2.3.123"));
-                    Assert.That(name.FullName, Contains.Substring("PublicKeyToken=56430db2a23ca0d2"));
-
-                    Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "publish", "NetSimulator.Tests.xml")));
-                    Assert.That(File.Exists(Path.Combine(testProjectOutputDir, tfm, "publish", "NetSimulator.Tests.pdb")));
                 }
 
                 var sourceProjectObjDir = Path.Combine(

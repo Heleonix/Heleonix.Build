@@ -22,10 +22,10 @@ public static class NugetPublishTests
         IDictionary<string, string> properties = null;
         NetSimulatorHelper simulator = null;
 
-        Arrange(() =>
-        {
-            simulator = new NetSimulatorHelper();
+        simulator = new NetSimulatorHelper();
 
+        try
+        {
             Directory.CreateDirectory(simulator.GetArtifactsDir("Hx_ChangeLog"));
             File.WriteAllText(Path.Combine(simulator.GetArtifactsDir("Hx_ChangeLog"), "semver.txt"), "1.2.3\r\n");
             File.WriteAllText(
@@ -34,40 +34,46 @@ public static class NugetPublishTests
 
             MSBuildHelper.RunTestTarget("Hx_NetBuild", simulator.SolutionDir);
 
-            sourceDir = PathHelper.GetRandomFileNameInCurrentDir();
+            Arrange(() =>
+            {
+                sourceDir = PathHelper.GetRandomFileNameInCurrentDir();
 
-            Directory.CreateDirectory(sourceDir);
+                Directory.CreateDirectory(sourceDir);
 
-            ExeHelper.Execute(PathHelper.NugetExe, $"init \"{sourceDir}\"");
+                ExeHelper.Execute(PathHelper.NugetExe, $"init \"{sourceDir}\"");
 
-            properties = new Dictionary<string, string>
+                properties = new Dictionary<string, string>
             {
                 { "Hx_NugetPublish_SourceURL", sourceDir },
             };
-        });
-
-        Act(() =>
-        {
-            succeeded = MSBuildHelper.RunTestTarget("Hx_NugetPublish", simulator.SolutionDir, properties);
-        });
-
-        Teardown(() =>
-        {
-            Directory.Delete(sourceDir, true);
-            simulator.Clear();
-        });
-
-        When("target is executed", () =>
-        {
-            Should("succeed", () =>
-            {
-                var artifactsDir = simulator.GetArtifactsDir("Hx_NugetPublish");
-
-                Assert.That(succeeded, Is.True);
-                Assert.That(File.Exists(Path.Combine(artifactsDir, "NetSimulator.1.2.3.nupkg")), Is.True);
-                Assert.That(File.Exists(Path.Combine(artifactsDir, "NetSimulator.1.2.3.snupkg")), Is.True);
-                Assert.That(File.Exists(Path.Combine(sourceDir, "NetSimulator.1.2.3.nupkg")), Is.True);
             });
-        });
+
+            Act(() =>
+            {
+                succeeded = MSBuildHelper.RunTestTarget("Hx_NugetPublish", simulator.SolutionDir, properties);
+            });
+
+            Teardown(() =>
+            {
+                Directory.Delete(sourceDir, true);
+            });
+
+            When("target is executed", () =>
+            {
+                Should("succeed", () =>
+                {
+                    var artifactsDir = simulator.GetArtifactsDir("Hx_NugetPublish");
+
+                    Assert.That(succeeded, Is.True);
+                    Assert.That(File.Exists(Path.Combine(artifactsDir, "NetSimulator.1.2.3.nupkg")), Is.True);
+                    Assert.That(File.Exists(Path.Combine(artifactsDir, "NetSimulator.1.2.3.snupkg")), Is.True);
+                    Assert.That(File.Exists(Path.Combine(sourceDir, "NetSimulator.1.2.3.nupkg")), Is.True);
+                });
+            });
+        }
+        finally
+        {
+            simulator.Clear();
+        }
     }
 }
