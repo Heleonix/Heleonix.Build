@@ -1,24 +1,25 @@
-﻿// <copyright file="ModuleInitializer.cs" company="Heleonix - Hennadii Lutsyshyn">
+﻿// <copyright file="TestModule.cs" company="Heleonix - Hennadii Lutsyshyn">
 // Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
-namespace Heleonix.Build.Tests;
-
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using Heleonix.Build.Tests.Common;
+
+[assembly: Parallelizable(ParallelScope.Fixtures)]
 
 /// <summary>
-/// Initializes the assembly.
+/// Sets up and cleans up the assembly.
 /// </summary>
-internal static class ModuleInitializer
+[SetUpFixture]
+#pragma warning disable S3903 // Types should be defined in named namespaces
+public static class TestModule
+#pragma warning restore S3903 // Types should be defined in named namespaces
 {
     /// <summary>
-    /// Initializes the assembly.
+    /// Sets up the assembly.
     /// </summary>
-    [ModuleInitializer]
-    internal static void Initialize()
+    [OneTimeSetUp]
+    public static void Setup()
     {
         Directory.CreateDirectory(PathHelper.HeleonixBuildDir);
 
@@ -29,5 +30,14 @@ internal static class ModuleInitializer
             .AddPath("Source", PathHelper.CurrentDir);
 
         ExeHelper.Execute(PathHelper.NugetExe, args, true, PathHelper.HeleonixBuildDir);
+    }
+
+    /// <summary>
+    /// Cleans up the assembly.
+    /// </summary>
+    [OneTimeTearDown]
+    public static void Cleanup()
+    {
+        Directory.Delete(PathHelper.HeleonixBuildDir, true);
     }
 }

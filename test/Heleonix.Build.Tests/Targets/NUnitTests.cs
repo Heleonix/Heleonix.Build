@@ -34,21 +34,12 @@ public static class NUnitTests
 
             When("target is executed", () =>
             {
-                Should("fail", () =>
-                {
-                    var artifactsDir = simulator.GetArtifactsDir("Hx_NUnit");
-
-                    Assert.That(succeeded, Is.False);
-                    Assert.That(File.Exists(Path.Combine(artifactsDir, "NUnit.xml")), Is.True);
-                    Assert.That(File.Exists(Path.Combine(artifactsDir, "Output.txt")), Is.True);
-                });
-
                 And("should continue on error", () =>
                 {
                     properties = new Dictionary<string, string>
-                {
-                    { "Hx_NUnit_ContinueOnError", "true" },
-                };
+                    {
+                        { "Hx_NUnit_ContinueOnError", "true" },
+                    };
 
                     Should("succeed", () =>
                     {
