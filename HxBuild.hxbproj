@@ -1,0 +1,7 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_B_OpenCover" BeforeTargets="Hx_OpenCover">
+    <ItemGroup>
+      <Hx_OpenCover_ExcludeDirs Include="$(Hx_WS_Dir)/Hx_Artifacts/Hx_NetBuild/test/Heleonix.Build.Tests/bin/Release/net7.0/Heleonix.Build/**"/>
+    </ItemGroup>
+  </Target>
+</Project>

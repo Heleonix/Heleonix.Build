@@ -48,6 +48,7 @@
       Filters="$(Hx_OpenCover_Filters)"
       Target="@(Hx_OpenCover_Target)"
       PdbSearchDirs="@(Hx_OpenCover_PdbSearchDirs)"
+      ExcludeDirs="@(Hx_OpenCover_ExcludeDirs)"
       MinClassCoverage="$(Hx_OpenCover_MinClassCoverage)"
       MinMethodCoverage="$(Hx_OpenCover_MinMethodCoverage)"
       MinBranchCoverage="$(Hx_OpenCover_MinBranchCoverage)"

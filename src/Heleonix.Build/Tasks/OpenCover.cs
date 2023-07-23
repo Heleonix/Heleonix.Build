@@ -64,6 +64,11 @@ public class OpenCover : BaseTask
     public string ExcludeByAttributeFilters { get; set; }
 
     /// <summary>
+    /// Gets or sets the directories to exclude assemblies from coverage loaded from these directories.
+    /// </summary>
+    public ITaskItem[] ExcludeDirs { get; set; }
+
+    /// <summary>
     /// Gets or sets the filters of binaries to cover in format: +[ModuleName*]*ClassName -[ModuleName*]*ClassName.
     /// </summary>
     public string Filters { get; set; }
@@ -224,6 +229,11 @@ public class OpenCover : BaseTask
             .AddKey("mergebyhash")
             .AddPath("output", this.CoverageResultFile)
             .AddKey("skipautoprops")
+            .AddPaths(
+                "excludedirs",
+                this.ExcludeDirs?.Select(i => i.ItemSpec),
+                false,
+                this.ExcludeDirs?.Length > 0)
             .AddPaths(
                 "searchdirs",
                 this.PdbSearchDirs.Select(i => i.ItemSpec),
