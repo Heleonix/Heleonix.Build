@@ -114,4 +114,9 @@ Example custom property that allows string content only
       <xs:documentation>The PDB search directories path.</xs:documentation>
     </xs:annotation>
   </xs:element>
+  <xs:element name="Hx_OpenCover_ExcludeDirs" type="msb:SimpleItemType" substitutionGroup="msb:Item">
+    <xs:annotation>
+      <xs:documentation>The directories to exclude assemblies from coverage loaded from these directories.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
 </xs:schema>

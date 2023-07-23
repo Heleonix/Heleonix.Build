@@ -38,6 +38,15 @@ public static class TestModule
     [OneTimeTearDown]
     public static void Cleanup()
     {
-        Directory.Delete(PathHelper.HeleonixBuildDir, true);
+#pragma warning disable CC0004 // Catch block cannot be empty
+        try
+        {
+            Directory.Delete(PathHelper.HeleonixBuildDir, true);
+        }
+        catch
+        {
+            // The Heleonix.Build.dll is locked by the AppDomain at this point, so cannot be deleted.
+        }
+#pragma warning restore CC0004 // Catch block cannot be empty
     }
 }
