@@ -22,7 +22,6 @@ jobs:
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_NetBuild
       - name: Test
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_OpenCover>Hx_ReportUnit>Hx_ReportGenerator
-        continue-on-error: true
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -40,6 +39,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: Hx_Artifacts
+          path: Hx_Artifacts
       - name: Publish
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_NugetPublish
         env:
