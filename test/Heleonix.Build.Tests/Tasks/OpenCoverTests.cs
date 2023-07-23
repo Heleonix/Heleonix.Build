@@ -70,6 +70,7 @@ public static class OpenCoverTests
                     MinLineCoverage = minCoverage,
                     MinMethodCoverage = minCoverage,
                     PdbSearchDirs = pdbSearchDirs,
+                    ExcludeDirs = new ITaskItem[] { new TaskItem("Z:\\NON_EXISTING_DIR") },
                     FilePathRegExp = filePathRegExp,
                     FilePathReplacement = filePathReplacement,
                 };

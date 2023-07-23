@@ -47,6 +47,11 @@ Example custom task with single required parameter
               <xs:documentation>The PDB search directories path.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="ExcludeDirs">
+            <xs:annotation>
+              <xs:documentation>The directories to exclude assemblies from coverage loaded from these directories.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="MinClassCoverage">
             <xs:annotation>
               <xs:documentation>The minimum class coverage, in range: 0% - 100%.</xs:documentation>
