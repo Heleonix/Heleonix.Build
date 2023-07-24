@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_ChangeLog_GitHubCommit" DependsOnTargets="Hx_Internal_GitRepoId">
-    <Message Text="> STARTING..." Importance="high" />
+    <Message Text="> STARTING Hx_ChangeLog_GitHubCommit" Importance="high" />
 
     <PropertyGroup>
       <Hx_ChangeLog_GitHubCommit_VersionTagRegExp Condition="'$(Hx_GitHubChangeLog_VersionTagRegExp)' == ''">(?&lt;=\D*|^)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?=\D*)</Hx_ChangeLog_GitHubCommit_VersionTagRegExp>
@@ -52,7 +52,7 @@
       GeneratedFile="$(Hx_ChangeLog_ArtifactsDir)/%(Hx_ChangeLog_TemplateFiles.Filename)"
       Data="@(_Hx_ChangeLog_GitHubCommit_Changes)"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_ChangeLog_GitHubCommit" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

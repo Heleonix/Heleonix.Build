@@ -20,6 +20,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A3674ABC-7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heleonix.Build.Tests", "test\Heleonix.Build.Tests\Heleonix.Build.Tests.csproj", "{F4CE21CC-39D4-43C0-81F2-BFED6436DC5C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{3499A7EA-88BC-48DF-8E9B-1EB80C052AD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{34F2A7E3-FDE8-4425-BD9C-323F304F8EEE}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\hx-net-nuget.yml = .github\workflows\hx-net-nuget.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{44202B1B-5C68-40CE-B2C2-1FEB9AEC48E3} = {86666126-26CC-48EE-A647-28E94D1AE95A}
 		{F4CE21CC-39D4-43C0-81F2-BFED6436DC5C} = {A3674ABC-7370-429D-8AE6-9AA33F4DE8F9}
+		{34F2A7E3-FDE8-4425-BD9C-323F304F8EEE} = {3499A7EA-88BC-48DF-8E9B-1EB80C052AD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DADF4FE8-717D-467C-948E-0F170CDA33E6}

@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NetBuild">
-    <Message Text="> STARTING..." Importance="high"/>
+    <Message Text="> STARTING Hx_NetBuild" Importance="high"/>
 
     <MSBuild
       Condition="'$(Hx_NetBuild_SlnFile)' == ''"
@@ -118,7 +118,7 @@
       DestinationDirs="$(Hx_NetBuild_ArtifactsDir)"
       Overwrite="true"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_NetBuild" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

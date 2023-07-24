@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NugetPublish">
-    <Message Text="> STARTING..." Importance="high"/>
+    <Message Text="> STARTING Hx_NugetPublish" Importance="high"/>
 
     <Message Text="> 1/4: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_NugetPublish_ArtifactsDir)"/>
@@ -64,7 +64,7 @@
       Verbosity="$(Hx_NugetPublish_Verbosity)"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_NugetPublish" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>
