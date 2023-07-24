@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NUnit">
-    <Message Text="> STARTING..." Importance="high"/>
+    <Message Text="> STARTING Hx_NUnit" Importance="high"/>
 
     <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_NUnit_ArtifactsDir)"/>
@@ -38,7 +38,7 @@
       ProcessIsolation="$(Hx_NUnit_ProcessIsolation)"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_NUnit" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

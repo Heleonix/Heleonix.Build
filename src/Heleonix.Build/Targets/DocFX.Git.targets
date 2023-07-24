@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_DocFX_Git">
-    <Message Text="> STARTING..." Importance="high"/>
+    <Message Text="> STARTING Hx_DocFX_Git" Importance="high"/>
 
     <PropertyGroup>
       <Hx_DocFX_RepositoryUrl Condition="'$(Hx_DocFX_RepositoryUrl)' == ''">$(Hx_WS_RepositoryUrl)</Hx_DocFX_RepositoryUrl>
@@ -50,7 +50,7 @@
       Command="&quot;$(Hx_Sys_GitExe)&quot; push &quot;$(Hx_DocFX_RepositoryUrl&quot;"
       WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_DocFX_Git" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

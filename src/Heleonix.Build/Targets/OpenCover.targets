@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_OpenCover">
-    <Message Text="> STARTING..." Importance="high"/>
+    <Message Text="> STARTING Hx_OpenCover" Importance="high"/>
 
     <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_OpenCover_ArtifactsDir)"/>
@@ -61,7 +61,7 @@
       FilePathRegExpOptions="$(Hx_OpenCover_FilePathRegExpOptions)"
       WorkingDir="$(Hx_WS_Dir)"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_OpenCover" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

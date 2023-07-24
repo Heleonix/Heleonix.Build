@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_Finalize" AfterTargets="Hx_OnError">
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> FINISHED!" Importance="high"/>
   </Target>
 </Project>

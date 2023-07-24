@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NetValidate">
-    <Message Text="> STARTING..." Importance="high"/>
+    <Message Text="> STARTING Hx_NetValidate" Importance="high"/>
 
     <MSBuild
       Condition="'@(Hx_NetValidate_Files)' == ''"
@@ -31,7 +31,7 @@
     <Message Text="> 1/1: Validating files" Importance="high"/>
     <Heleonix.Build.Tasks.FileValidate Files="@(Hx_NetValidate_Files)" RegExpOptions="$(Hx_NetValidate_RegExpOptions)"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_NetValidate" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>

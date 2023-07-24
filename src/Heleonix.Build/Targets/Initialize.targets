@@ -16,7 +16,7 @@
     <Hx_WS_RepositoryAPIUrl Condition="'$(Hx_WS_RepositoryAPIUrl)' == ''">https://api.github.com</Hx_WS_RepositoryAPIUrl>
     <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GO_MATERIAL_URL)</Hx_WS_RepositoryUrl><!--GoCD-->
     <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GIT_URL)</Hx_WS_RepositoryUrl><!--Jenkins-->
-    <!--<Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">???</Hx_WS_RepositoryUrl>TeamCity-->
+    <!--<Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">???</Hx_WS_RepositoryUrl>--><!--TeamCity-->
     <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(CI_REPOSITORY_URL)</Hx_WS_RepositoryUrl><!--GitLab-->
     <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY).git</Hx_WS_RepositoryUrl><!--GitHub-->
   </PropertyGroup>
@@ -73,7 +73,7 @@
     <Message Text="$Hx_Run_ArtifactsDir: $(Hx_Run_ArtifactsDir)" Importance="high"/>
     <Message Text="$Hx_Run_Number: $(Hx_Run_Number)" Importance="high"/>
 
-    <Message Text="> DONE!" Importance="high"/>
+    <Message Text="> DONE Hx_Initialize" Importance="high"/>
 
     <OnError ExecuteTargets="Hx_OnError"/>
   </Target>
