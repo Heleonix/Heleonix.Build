@@ -57,5 +57,5 @@ jobs:
         env:
           Hx_DocFX_Git_BranchName: ${{ vars.Hx_DocFX_Git_BranchName }}
           Hx_DocFX_Git_User: ${{ vars.Hx_DocFX_Git_User }}
-          Hx_DocFX_RepositoryUrl: $${{ vars.Hx_DocFX_RepositoryUrl }}
+          Hx_DocFX_RepositoryUrl: ${{ vars.Hx_DocFX_RepositoryUrl }}
           Hx_DocFX_Git_Token: ${{ secrets.GH_PAT }}
