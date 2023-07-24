@@ -22,6 +22,9 @@ jobs:
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_NetBuild
       - name: Test
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_OpenCover>Hx_ReportUnit>Hx_ReportGenerator
+        env:
+          Hx_OpenCover_FilePathReplacement: ${{ vars.Hx_OpenCover_FilePathReplacement }}
+          Hx_OpenCover_FilePathRegExp: ${{ vars.Hx_OpenCover_FilePathRegExp }}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -43,6 +46,7 @@ jobs:
       - name: Publish
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_NugetPublish
         env:
+          Hx_NugetPublish_SourceURL: ${{ vars.Hx_NugetPublish_SourceURL }}
           Hx_NugetPublish_APIKey: ${{ secrets.NUGET_API_KEY }}
       - name: Release
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_Release_GitHub
@@ -51,4 +55,7 @@ jobs:
       - name: Docs
         run: dotnet msbuild ../hxb/Heleonix.Build.${{ vars.Hx_Ver }}/Main.hxbproj -p:Hx_In_Targets=Hx_DocFX_Git
         env:
+          Hx_DocFX_Git_BranchName: ${{ vars.Hx_DocFX_Git_BranchName }}
+          Hx_DocFX_Git_User: ${{ vars.Hx_DocFX_Git_User }}
+          Hx_DocFX_RepositoryUrl: $${{ vars.Hx_DocFX_RepositoryUrl }}
           Hx_DocFX_Git_Token: ${{ secrets.GH_PAT }}
