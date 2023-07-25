@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_DocFX_Git">
-    <Message Text="> STARTING Hx_DocFX_Git" Importance="high"/>
+    <Message Text="> RUNNING Hx_DocFX_Git" Importance="high"/>
 
     <PropertyGroup>
       <Hx_DocFX_RepositoryUrl Condition="'$(Hx_DocFX_RepositoryUrl)' == ''">$(Hx_WS_RepositoryUrl)</Hx_DocFX_RepositoryUrl>

@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NetBuild">
-    <Message Text="> STARTING Hx_NetBuild" Importance="high"/>
+    <Message Text="> RUNNING Hx_NetBuild" Importance="high"/>
 
     <MSBuild
       Condition="'$(Hx_NetBuild_SlnFile)' == ''"
