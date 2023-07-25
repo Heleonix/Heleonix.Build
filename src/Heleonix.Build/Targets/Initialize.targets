@@ -22,7 +22,9 @@
   </PropertyGroup>
 
   <Target Name="Hx_Initialize">
-    <Message Text="> STARTING..." Importance="high"/>
+    <Message Text="> STARTING ..." Importance="high"/>
+
+    <Message Text="> RUNNING Hx_Initialize ..." Importance="high"/>
 
     <Error Condition="'$(Hx_In_Targets)' == ''" Text="'$Hx_In_Targets' is not defined."/>
     <Error Condition="!Exists('$(Hx_WS_Dir)')" Text="'$Hx_WS_Dir' is not found."/>

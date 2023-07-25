@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_Release_GitHub" DependsOnTargets="Hx_Internal_GitRepoId">
-    <Message Text="> STARTING Hx_Release_GitHub" Importance="high"/>
+    <Message Text="> RUNNING Hx_Release_GitHub" Importance="high"/>
 
     <PropertyGroup>
       <Hx_Release_GitHub_TagName Condition="'$(Hx_Release_GitHub_TagName)' == ''">v$([System.IO.File]::ReadAllText('$(Hx_ChangeLog_ArtifactsDir)/semver.txt').Trim())</Hx_Release_GitHub_TagName>
