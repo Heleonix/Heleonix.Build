@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_ChangeLog_GitHubCommit" DependsOnTargets="Hx_Internal_GitRepoId">
-    <Message Text="> RUNNING Hx_ChangeLog_GitHubCommit" Importance="high" />
+    <Message Text="> RUNNING Hx_ChangeLog_GitHubCommit ..." Importance="high" />
 
     <PropertyGroup>
       <Hx_ChangeLog_GitHubCommit_VersionTagRegExp Condition="'$(Hx_GitHubChangeLog_VersionTagRegExp)' == ''">(?&lt;=\D*|^)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?=\D*)</Hx_ChangeLog_GitHubCommit_VersionTagRegExp>

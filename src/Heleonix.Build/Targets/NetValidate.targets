@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NetValidate">
-    <Message Text="> RUNNING Hx_NetValidate" Importance="high"/>
+    <Message Text="> RUNNING Hx_NetValidate ..." Importance="high"/>
 
     <MSBuild
       Condition="'@(Hx_NetValidate_Files)' == ''"
