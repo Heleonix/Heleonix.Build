@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NugetPublish">
-    <Message Text="> RUNNING Hx_NugetPublish" Importance="high"/>
+    <Message Text="> RUNNING Hx_NugetPublish ..." Importance="high"/>
 
     <Message Text="> 1/4: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_NugetPublish_ArtifactsDir)"/>

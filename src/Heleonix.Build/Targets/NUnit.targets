@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="Hx_NUnit">
-    <Message Text="> RUNNING Hx_NUnit" Importance="high"/>
+    <Message Text="> RUNNING Hx_NUnit ..." Importance="high"/>
 
     <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
     <RemoveDir Directories="$(Hx_NUnit_ArtifactsDir)"/>
