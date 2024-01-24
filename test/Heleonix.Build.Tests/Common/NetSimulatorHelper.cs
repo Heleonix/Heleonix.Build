@@ -35,7 +35,7 @@ public class NetSimulatorHelper
     /// <summary>
     /// Gets the source project directory.
     /// </summary>
-    public string SourceProjectDir => Path.Combine(this.SolutionDir, "NetSimulator");
+    public string SourceProjectDir => Path.Combine(this.SolutionDir, "src", "NetSimulator");
 
     /// <summary>
     /// Gets the source project file.
@@ -63,7 +63,7 @@ public class NetSimulatorHelper
     /// <summary>
     /// Gets the test project directory.
     /// </summary>
-    public string TestProjectDir => Path.Combine(this.SolutionDir, "NetSimulator.Tests");
+    public string TestProjectDir => Path.Combine(this.SolutionDir, "test", "NetSimulator.Tests");
 
     /// <summary>
     /// Gets the test project file.
@@ -107,7 +107,8 @@ public class NetSimulatorHelper
     /// </summary>
     /// <param name="target">A name of a target.</param>
     /// <returns>An artifacts directory path for the specified targed in the artifacts directory.</returns>
-    public string GetArtifactsDir(string target) => Path.Combine(this.SolutionDir, "Hx_Artifacts", target);
+    public string GetArtifactsDir(string target) =>
+        Path.Combine(this.SolutionDir, "Hx_Artifacts", target.Replace("Hx_", string.Empty));
 
     /// <summary>
     /// Clears resources.

@@ -1,0 +1,35 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_ReportGenerator_ArtifactsDir>$(Hx_Run_ArtifactsDir)/ReportGenerator</Hx_ReportGenerator_ArtifactsDir>
+  </PropertyGroup>
+
+  <Target Name="Hx_ReportGenerator">
+    <Message Text="> RUNNING Hx_ReportGenerator ..." Importance="high"/>
+
+    <Hx_NetSetupTool DotnetExe="$(Hx_Sys_DotnetExe)" Name="reportgenerator">
+      <Output TaskParameter="ToolPath" PropertyName="_Hx_ReportGenerator_ReportGeneratorExe"/>
+    </Hx_NetSetupTool>
+
+    <PropertyGroup>
+      <Hx_ReportGenerator_ReportTypes Condition="'$(Hx_ReportGenerator_ReportTypes)' == ''">Badges;Html</Hx_ReportGenerator_ReportTypes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Hx_ReportGenerator_CoverageResultFiles
+        Condition="'@(Hx_ReportGenerator_CoverageResultFiles)' == ''"
+        Include="$(Hx_Run_ArtifactsDir)/*Coverage/**/*.*;$(Hx_Run_ArtifactsDir)/*Test/**/*.*"/>
+    </ItemGroup>
+
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
+    <RemoveDir Directories="$(Hx_ReportGenerator_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_ReportGenerator_ArtifactsDir)"/>
+
+    <Message Text="> 2/2: Generating reports" Importance="high"/>
+    <Exec Command="&quot;$(_Hx_ReportGenerator_ReportGeneratorExe)&quot; -reports:&quot;@(Hx_ReportGenerator_CoverageResultFiles)&quot; -targetdir:&quot;$(Hx_ReportGenerator_ArtifactsDir)&quot; -reporttypes:$(Hx_ReportGenerator_ReportTypes) -verbosity:$(Hx_ReportGenerator_Verbosity)"
+          WorkingDirectory="$(Hx_WS_Dir)"/>
+
+    <Message Text="> DONE Hx_ReportGenerator" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

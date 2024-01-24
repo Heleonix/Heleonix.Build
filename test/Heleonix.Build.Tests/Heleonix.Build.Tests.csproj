@@ -10,38 +10,35 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="NetSimulator\*">
+    <None Include="NetSimulator\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NetSimulator\**\*">
+    </None>
+    <None Include="NetSimulator\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NUnitTestResult.xml">
+    </None>
+    <None Include="NUnitTestResult.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="OpenCover.xml">
+    </None>
+    <None Include="Coverlet.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Input.hxbproj">
+    </None>
+    <None Include="Run.hxbproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SnkPair.snk">
+    </None>
+    <None Include="SnkPair.snk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NetSimulator.1.0.0.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Heleonix.Execution" Version="2.0.1" />
     <PackageReference Include="Heleonix.Testing.NUnit" Version="2.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.5.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.4.2" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0" />
+
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.54.0.64047" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
@@ -52,13 +49,13 @@
     <ProjectReference Include="..\..\src\Heleonix.Build\Heleonix.Build.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PkgNuGet_CommandLine Include="$(PkgNuGet_CommandLine)\**\*" />
-  </ItemGroup>
-
-  <Target Name="CopyDependenciesToOutput" AfterTargets="Build">
-    <RemoveDir Directories="$(OutDir)\Heleonix.Build" />
-    <Copy SourceFiles="..\..\src\Heleonix.Build\bin\$(Configuration)\Heleonix.Build.$(Version).nupkg" DestinationFolder="$(OutDir)" />
-    <Copy SourceFiles="@(PkgNuGet_CommandLine)" DestinationFolder="$(OutDir)\NuGet.CommandLine\%(RecursiveDir)" />
+  <Target Name="Hx_InstallTool" AfterTargets="Build">
+    <RemoveDir Directories="$(OutDir)/.store" />
+    <Delete Files="$(OutDir)/hxbuild.exe" />
+    <Exec Command="dotnet tool install Heleonix.Build --version 1.0.0 --add-source ../../src/Heleonix.Build/bin/$(Configuration) --tool-path $(OutDir)" StandardErrorImportance="high" StandardOutputImportance="high" />
+  </Target>
+  <Target Name="Hx_RemoveTool" AfterTargets="Clean">
+    <RemoveDir Directories="$(OutDir)/.store" />
+    <Delete Files="$(OutDir)/hxbuild.exe" />
   </Target>
 </Project>

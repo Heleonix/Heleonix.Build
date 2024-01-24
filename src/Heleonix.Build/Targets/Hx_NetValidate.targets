@@ -1,0 +1,30 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Hx_NetValidate">
+    <Message Text="> RUNNING Hx_NetValidate ..." Importance="high"/>
+
+    <Hx_NetFindSln Condition="'@(Hx_NetValidate_Files)' == ''" StartDir="$(Hx_WS_Dir)">
+      <Output TaskParameter="SlnFile" PropertyName="_Hx_NetValidate_SlnFile"/>
+    </Hx_NetFindSln>
+
+    <Hx_NetFindProjects Condition="'@(Hx_NetValidate_Files)' == ''" SlnFile="$(_Hx_NetValidate_SlnFile)">
+      <Output TaskParameter="ProjectFiles" ItemName="_Hx_NetValidate_ProjectFiles"/>
+    </Hx_NetFindProjects>
+
+    <ItemGroup Condition="'@(Hx_NetValidate_Files)' == ''">
+      <Hx_NetValidate_Files Include="%(_Hx_NetValidate_ProjectFiles.FullPath)">
+        <CodecrackerCSharp>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(codecracker.CSharp)</CodecrackerCSharp>
+        <FxCopAnalyzers>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(Microsoft.CodeAnalysis.NetAnalyzers)</FxCopAnalyzers>
+        <SecurityCodeScan>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(SecurityCodeScan.VS2019)</SecurityCodeScan>
+        <SonarAnalyzerCSharp>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(SonarAnalyzer.CSharp)</SonarAnalyzerCSharp>
+        <StyleCopAnalyzers>(?&lt;=&lt;%5Cs*PackageReference%5Cs*Include%5Cs*=%5Cs*")(StyleCop.Analyzers)</StyleCopAnalyzers>
+      </Hx_NetValidate_Files>
+    </ItemGroup>
+
+    <Message Text="> 1/1: Validating files" Importance="high"/>
+    <Hx_FileValidate Files="@(Hx_NetValidate_Files)" RegExpOptions="$(Hx_NetValidate_RegExpOptions)"/>
+
+    <Message Text="> DONE Hx_NetValidate" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

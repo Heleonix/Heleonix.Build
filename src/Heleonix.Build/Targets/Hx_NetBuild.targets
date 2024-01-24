@@ -1,0 +1,108 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_NetBuild_ArtifactsDir>$(Hx_Run_ArtifactsDir)/NetBuild</Hx_NetBuild_ArtifactsDir>
+  </PropertyGroup>
+
+  <Target Name="Hx_NetBuild">
+    <Message Text="> RUNNING Hx_NetBuild ..." Importance="high"/>
+
+    <Hx_NetFindSln Condition="'$(Hx_NetBuild_SlnFile)' == ''" StartDir="$(Hx_WS_Dir)">
+      <Output TaskParameter="SlnFile" PropertyName="Hx_NetBuild_SlnFile"/>
+    </Hx_NetFindSln>
+    <PropertyGroup>
+      <_Hx_NetBuild_SlnDir>$([System.IO.Path]::GetDirectoryName('$(Hx_NetBuild_SlnFile)'))</_Hx_NetBuild_SlnDir>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Hx_NetBuild_Version)' == '' and Exists('$(Hx_ChangeLog_ArtifactsDir)/semver.txt')">
+      <Hx_NetBuild_Version>$([System.IO.File]::ReadAllText('$(Hx_ChangeLog_ArtifactsDir)/semver.txt').Trim())</Hx_NetBuild_Version>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Hx_NetBuild_AssemblyVersion)' == '' and '$(Hx_NetBuild_Version)' != ''">
+      <Hx_NetBuild_AssemblyVersion>$(Hx_NetBuild_Version).$(Hx_Run_Number)</Hx_NetBuild_AssemblyVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Hx_NetBuild_ReleaseNotesFile)' == '' and Exists('$(Hx_ChangeLog_ArtifactsDir)/ReleaseNotes.txt')">
+      <Hx_NetBuild_ReleaseNotesFile>$(Hx_ChangeLog_ArtifactsDir)/ReleaseNotes.txt</Hx_NetBuild_ReleaseNotesFile>
+    </PropertyGroup>
+
+    <Message Text="> 1/7: Creating the artifacts directory" Importance="high"/>
+    <RemoveDir Directories="$(Hx_NetBuild_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_NetBuild_ArtifactsDir)"/>
+
+    <Message Text="> 2/7: Deleting files" Importance="high"/>
+    <Delete Files="@(Hx_NetBuild_DeleteFiles)"/>
+
+    <Message Text="> 3/7: Deleting directories" Importance="high"/>
+    <Hx_FileSystemSearch
+      StartDir="$(_Hx_NetBuild_SlnDir)"
+      PathRegExp="/(bin|obj)/$(Hx_Run_Configuration)$"
+      Types="Directories">
+      <Output TaskParameter="FoundDirs" ItemName="Hx_NetBuild_DeleteDirs"/>
+    </Hx_FileSystemSearch>
+    <RemoveDir Directories="@(Hx_NetBuild_DeleteDirs)"/>
+
+    <Message Text="> 4/7: Cleaning directories" Importance="high"/>
+    <Hx_DirectoryClean Dirs="@(Hx_NetBuild_CleanDirs)"/>
+
+    <Message Text="> 5/7: Cleaning the solution" Importance="high"/>
+    <!--Sometimes Clean is failing without Restore-->
+    <MSBuild
+      Projects="$(Hx_NetBuild_SlnFile)"
+      Targets="Restore;Clean"
+      Properties="Configuration=$(Hx_Run_Configuration)"
+      />
+
+    <Message Text="> 6/7: Building the solution" Importance="high"/>
+    <PropertyGroup>
+      <_Hx_NetBuild_SigningProps Condition="Exists('$(Hx_NetBuild_SnkFile)')">SignAssembly=true;AssemblyOriginatorKeyFile=$(Hx_NetBuild_SnkFile)</_Hx_NetBuild_SigningProps>
+      <_Hx_NetBuild_VersionProps Condition="'$(Hx_NetBuild_Version)' != ''">Version=$(Hx_NetBuild_Version)</_Hx_NetBuild_VersionProps>
+      <_Hx_NetBuild_AssemblyVersionProps Condition="'$(Hx_NetBuild_AssemblyVersion)' != ''">AssemblyVersion=$(Hx_NetBuild_AssemblyVersion)</_Hx_NetBuild_AssemblyVersionProps>
+      <_Hx_NetBuild_ReleaseNotes Condition="'$(Hx_NetBuild_ReleaseNotesFile)' != ''">PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NetBuild_ReleaseNotesFile)').Trim())&quot;</_Hx_NetBuild_ReleaseNotes>
+    </PropertyGroup>
+    <MSBuild
+      Projects="$(Hx_NetBuild_SlnFile)"
+      Targets="Restore;Build"
+      Properties="Configuration=$(Hx_Run_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)"
+      />
+    <Hx_NetFindProjects SlnFile="$(Hx_NetBuild_SlnFile)">
+      <Output TaskParameter="ProjectFiles" ItemName="_Hx_NetBuild_ProjectFiles"/>
+    </Hx_NetFindProjects>
+    <!--RegExp: (?<=(?<=<(TargetFrameworks?)>)([^<>]+|))[^;<>]+(?=([^<>]+|)(?=</\1>))-->
+    <!--<Hx_FileRead
+      File="%(_Hx_NetBuild_ProjectFiles.FullPath)"
+      RegExp="(?&lt;=(?&lt;=&lt;(TargetFrameworks?)&gt;)([^&lt;&gt;]+|))[^;&lt;&gt;]+(?=([^&lt;&gt;]+|)(?=&lt;/%5C1>))">
+      <Output TaskParameter="Matches" ItemName="_Hx_NetBuild_TFMProjectFiles"/>
+    </Hx_FileRead>-->
+    <!--Passing the same properties as to Build, because sometimes Publish can re-run Build and re-generate assemblies-->
+    <!--<MSBuild
+      Projects="%(_Hx_NetBuild_TFMProjectFiles.FullPath)"
+      Targets="Publish"
+      Properties="TargetFramework=%(Match);Configuration=$(Hx_Run_Configuration);$(_Hx_NetBuild_SigningProps);$(_Hx_NetBuild_VersionProps);$(_Hx_NetBuild_AssemblyVersionProps);$(_Hx_NetBuild_ReleaseNotes)" />-->
+
+    <Message Text="> 7/7: Copying .sln, 'bin' and 'obj' folders, *.props, *.*proj and custom artifacts files to the artifacts directory" Importance="high"/>
+    <Hx_FileSystemSearch
+      StartDir="$(Hx_WS_Dir)"
+      PathRegExp="(?&lt;!/(bin|obj)/.+)\.props$"
+      Types="Files">
+      <Output TaskParameter="FoundFiles" ItemName="_Hx_NetBuild_PropsFiles"/>
+    </Hx_FileSystemSearch>
+    <ItemGroup>
+      <_Hx_NetBuild_ArtifactsFiles Include="$(Hx_NetBuild_SlnFile)" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+      <_Hx_NetBuild_ArtifactsFiles Include="$(_Hx_NetBuild_SlnDir)/**/bin/**/*" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+      <_Hx_NetBuild_ArtifactsFiles Include="$(_Hx_NetBuild_SlnDir)/**/obj/**/*" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+      <_Hx_NetBuild_ArtifactsFiles Include="@(_Hx_NetBuild_PropsFiles)" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+      <_Hx_NetBuild_ArtifactsFiles Include="@(_Hx_NetBuild_ProjectFiles)" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+      <_Hx_NetBuild_ArtifactsFiles Include="$(Hx_WS_BuildProjFile)" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+      <_Hx_NetBuild_ArtifactsFiles Include="$(Hx_WS_Dir)/**/*.runsettings" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+      <_Hx_NetBuild_ArtifactsFiles Include="@(Hx_NetBuild_CustomArtifactsFiles)" WithSubDirsFrom="$(Hx_WS_Dir)"/>
+    </ItemGroup>
+    <Hx_FileCopy
+      Files="@(_Hx_NetBuild_ArtifactsFiles)"
+      DestinationDirs="$(Hx_NetBuild_ArtifactsDir)"
+      Overwrite="true"/>
+
+    <Message Text="> DONE Hx_NetBuild" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

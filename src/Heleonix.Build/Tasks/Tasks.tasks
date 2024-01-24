@@ -1,0 +1,16 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="Hx_DirectoryClean" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_FileCopy" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_FileRazorGenerate" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_FileRead" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_FileSystemSearch" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_FileUpdate" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_FileValidate" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_GitHubCommitChangeLog" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_GitHubRelease" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_GitParseRepoUrl" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_MetadataToCmdArgs" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_NetFindProjects" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_NetFindSln" AssemblyFile="../Heleonix.Build.dll"/>
+  <UsingTask TaskName="Hx_NetSetupTool" AssemblyFile="../Heleonix.Build.dll"/>
+</Project>

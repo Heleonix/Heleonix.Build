@@ -1,0 +1,42 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_ExtentReport_ArtifactsDir>$(Hx_Run_ArtifactsDir)/ExtentReport</Hx_ExtentReport_ArtifactsDir>
+  </PropertyGroup>
+
+  <Target Name="Hx_ExtentReport">
+    <Message Text="> RUNNING Hx_ExtentReport ..." Importance="high"/>
+
+    <Hx_NetSetupTool DotnetExe="$(Hx_Sys_DotnetExe)" Name="extent">
+      <Output TaskParameter="ToolPath" PropertyName="_Hx_ExtentReport_ExtentDir"/>
+    </Hx_NetSetupTool>
+
+    <Hx_FileSystemSearch
+      Condition="'$(Hx_ExtentReport_TestResultsDir)' == ''"
+      StartDir="$(Hx_Run_ArtifactsDir)"
+      Types="Directories"
+      PathRegExp="^.*/.*Test$">
+      <Output TaskParameter="FoundDirs" PropertyName="Hx_ExtentReport_TestResultsDir"/>
+    </Hx_FileSystemSearch>
+    <PropertyGroup>
+      <Hx_ExtentReport_Reporter Condition="'$(Hx_ExtentReport_Reporters)' == ''">v3html</Hx_ExtentReport_Reporter>
+      <Hx_ExtentReport_Merge Condition="'$(Hx_ExtentReport_Merge)' == ''">true</Hx_ExtentReport_Merge>
+    </PropertyGroup>
+
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
+    <RemoveDir Directories="$(Hx_ExtentReport_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_ExtentReport_ArtifactsDir)"/>
+
+    <Message Text="> 2/2: Generating report" Importance="high"/>
+    <PropertyGroup>
+      <_Hx_ExtentReport_Arg>-d &quot;$(Hx_ExtentReport_TestResultsDir)&quot;</_Hx_ExtentReport_Arg>
+      <_Hx_ExtentReport_Arg>$(_Hx_ExtentReport_Arg) -o &quot;$(Hx_ExtentReport_ArtifactsDir)&quot;</_Hx_ExtentReport_Arg>
+      <_Hx_ExtentReport_Arg>$(_Hx_ExtentReport_Arg) -r $(Hx_ExtentReport_Reporter)</_Hx_ExtentReport_Arg>
+      <_Hx_ExtentReport_Arg Condition="'$(Hx_ExtentReport_Merge)' == 'true'">$(_Hx_ExtentReport_Arg) --merge</_Hx_ExtentReport_Arg>
+    </PropertyGroup>
+    <Exec Command="&quot;$(_Hx_ExtentReport_ExtentDir)/tools/extent.exe&quot; $(_Hx_ExtentReport_Arg)" />
+
+    <Message Text="> DONE Hx_ExtentReport" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

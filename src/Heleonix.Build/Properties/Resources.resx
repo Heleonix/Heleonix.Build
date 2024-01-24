@@ -135,108 +135,6 @@
   <data name="FileUpdate_UpdatingFile" xml:space="preserve">
     <value>Updating file '{0}'.</value>
   </data>
-  <data name="NugetPush_Failed" xml:space="preserve">
-    <value>Failed pushing '{0}'. Exit code: {1}.</value>
-  </data>
-  <data name="NugetPush_Started" xml:space="preserve">
-    <value>Pushing '{0}'.</value>
-  </data>
-  <data name="NUnit_Asserts" xml:space="preserve">
-    <value>Asserts: {0}.</value>
-  </data>
-  <data name="NUnit_Duration" xml:space="preserve">
-    <value>Duration: {0}.</value>
-  </data>
-  <data name="NUnit_EndTime" xml:space="preserve">
-    <value>End time: {0}.</value>
-  </data>
-  <data name="NUnit_Failed" xml:space="preserve">
-    <value>Failed: {0}.</value>
-  </data>
-  <data name="NUnit_FinishedWithFailedTests" xml:space="preserve">
-    <value>{0} finished with failed tests. Exit code: {1}.</value>
-  </data>
-  <data name="NUnit_Inconclusive" xml:space="preserve">
-    <value>Inconclusive: {0}.</value>
-  </data>
-  <data name="NUnit_Passed" xml:space="preserve">
-    <value>Passed: {0}.</value>
-  </data>
-  <data name="NUnit_Skipped" xml:space="preserve">
-    <value>Skipped: {0}.</value>
-  </data>
-  <data name="NUnit_StartTime" xml:space="preserve">
-    <value>Start time: {0}.</value>
-  </data>
-  <data name="NUnit_TestCases" xml:space="preserve">
-    <value>Test cases: {0}.</value>
-  </data>
-  <data name="NUnit_Total" xml:space="preserve">
-    <value>Total: {0}.</value>
-  </data>
-  <data name="OpenCover_BranchCoverage" xml:space="preserve">
-    <value>Branch coverage: {0}.</value>
-  </data>
-  <data name="OpenCover_ClassCoverage" xml:space="preserve">
-    <value>Class coverage: {0}.</value>
-  </data>
-  <data name="OpenCover_LineCoverage" xml:space="preserve">
-    <value>Line coverage: {0}.</value>
-  </data>
-  <data name="OpenCover_MaxCyclomaticComplexity" xml:space="preserve">
-    <value>Maximum cyclomatic complexity: {0}.</value>
-  </data>
-  <data name="OpenCover_MethodCoverage" xml:space="preserve">
-    <value>Method coverage: {0}.</value>
-  </data>
-  <data name="OpenCover_MinBranchCoverageFailed" xml:space="preserve">
-    <value>Minimum branch coverage failed.</value>
-  </data>
-  <data name="OpenCover_MinClassCoverageFailed" xml:space="preserve">
-    <value>Minimum class coverage failed.</value>
-  </data>
-  <data name="OpenCover_MinCyclomaticComplexity" xml:space="preserve">
-    <value>Minimum cyclomatic complexity: {0}.</value>
-  </data>
-  <data name="OpenCover_MinLineCoverageFailed" xml:space="preserve">
-    <value>Minimum line coverage failed.</value>
-  </data>
-  <data name="OpenCover_MinMethodCoverageFailed" xml:space="preserve">
-    <value>Minimum method coverage failed.</value>
-  </data>
-  <data name="OpenCover_TargetFailed" xml:space="preserve">
-    <value>Target failed. Target's exit code: {0}.</value>
-  </data>
-  <data name="OpenCover_TargetTypeIsNotRecognized" xml:space="preserve">
-    <value>The target type is not recognized: '{0}'.</value>
-  </data>
-  <data name="OpenCover_TotalBranches" xml:space="preserve">
-    <value>Total branches: {0}.</value>
-  </data>
-  <data name="OpenCover_TotalClasses" xml:space="preserve">
-    <value>Total classes: {0}.</value>
-  </data>
-  <data name="OpenCover_TotalLines" xml:space="preserve">
-    <value>Total lines: {0}.</value>
-  </data>
-  <data name="OpenCover_TotalMethods" xml:space="preserve">
-    <value>Total methods: {0}.</value>
-  </data>
-  <data name="OpenCover_VisitedBranches" xml:space="preserve">
-    <value>Visited branches: {0}.</value>
-  </data>
-  <data name="OpenCover_VisitedClasses" xml:space="preserve">
-    <value>Visited classes: {0}.</value>
-  </data>
-  <data name="OpenCover_VisitedLines" xml:space="preserve">
-    <value>Visited lines: {0}.</value>
-  </data>
-  <data name="OpenCover_VisitedMethods" xml:space="preserve">
-    <value>Visited methods: {0}.</value>
-  </data>
-  <data name="ReportGenerator_Failed" xml:space="preserve">
-    <value>{0} failed for '{1}'. Exit code: {2}.</value>
-  </data>
   <data name="TaskFailed" xml:space="preserve">
     <value>Task failed: '{0}'.</value>
   </data>
@@ -251,9 +149,6 @@
   </data>
   <data name="FileRead_FileNotFound" xml:space="preserve">
     <value>The file '{0}' is not found.</value>
-  </data>
-  <data name="SvnLog_ThereAreNoCommitsYet" xml:space="preserve">
-    <value>There are no commits yet.</value>
   </data>
   <data name="GitHubRelease_CreatingRelease" xml:space="preserve">
     <value>Creating a release: {0}.</value>
@@ -287,5 +182,11 @@
   </data>
   <data name="FileRazorGenerate_TemplateNotFound" xml:space="preserve">
     <value>The template file '{0}' not found.</value>
+  </data>
+  <data name="FileUpdate_NumberOfRegExpsAndReplacementsMismatch" xml:space="preserve">
+    <value>Number of regular expressions {0} does not match number of replacements {1}.</value>
+  </data>
+  <data name="NetSetupTool_InstallationFailed" xml:space="preserve">
+    <value>Installation of the {0} tool, package {1}, version {2} failed with exit code {3}.</value>
   </data>
 </root>

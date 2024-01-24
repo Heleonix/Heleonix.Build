@@ -1,0 +1,130 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_NetTest_ArtifactsDir>$(Hx_Run_ArtifactsDir)/NetTest</Hx_NetTest_ArtifactsDir>
+  </PropertyGroup>
+
+  <Target Name="Hx_NetTest">
+    <Message Text="> RUNNING Hx_NetTest ..." Importance="high"/>
+
+    <PropertyGroup>
+      <Hx_NetTest_VerifyCoverage Condition="'$(Hx_NetTest_VerifyCoverage)' == ''">true</Hx_NetTest_VerifyCoverage>
+    </PropertyGroup>
+
+    <Hx_NetSetupTool Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'" DotnetExe="$(Hx_Sys_DotnetExe)" Name="reportgenerator">
+      <Output TaskParameter="ToolPath" PropertyName="_Hx_NetTest_ReportGeneratorExe"/>
+    </Hx_NetSetupTool>
+    <Hx_NetSetupTool Condition="'$(Hx_NetTest_Logger)' == ''" DotnetExe="$(Hx_Sys_DotnetExe)" Name="NunitXml.TestLogger">
+      <Output TaskParameter="ToolPath" PropertyName="_Hx_NetTest_NunitXmlTestLoggerDir"/>
+    </Hx_NetSetupTool>
+
+    <ItemGroup>
+      <_Hx_NetTest_RunSettingsFile Include="$(Hx_NetBuild_ArtifactsDir)/*.runsettings"/>
+    </ItemGroup>
+    <PropertyGroup>
+      <Hx_NetTest_RunSettingsFile Condition="'$(Hx_NetTest_RunSettingsFile)' == ''">@(_Hx_NetTest_RunSettingsFile)</Hx_NetTest_RunSettingsFile>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true' and '$(Hx_NetTest_Collect)' == '' and '$(Hx_NetTest_RunSettingsFile)' == ''">
+      <Hx_NetTest_Collect>XPlat Code Coverage</Hx_NetTest_Collect>
+    </PropertyGroup>
+    <PropertyGroup>
+      <Hx_NetTest_SourcePathRegExpOptions Condition="'$(Hx_NetTest_SourcePathRegExpOptions)' == ''">MultiLine</Hx_NetTest_SourcePathRegExpOptions>
+      <Hx_NetTest_MinLineCoverage Condition="'$(Hx_NetTest_MinLineCoverage)' == ''">100</Hx_NetTest_MinLineCoverage>
+      <Hx_NetTest_MinBranchCoverage Condition="'$(Hx_NetTest_MinBranchCoverage)' == ''">100</Hx_NetTest_MinBranchCoverage>
+      <Hx_NetTest_MinMethodCoverage Condition="'$(Hx_NetTest_MinMethodCoverage)' == ''">100</Hx_NetTest_MinMethodCoverage>
+    </PropertyGroup>
+
+    <Hx_NetFindSln Condition="'@(Hx_NetTest_TestFiles)' == ''" StartDir="$(Hx_NetBuild_ArtifactsDir)">
+      <Output TaskParameter="SlnFile" ItemName="Hx_NetTest_TestFiles"/>
+    </Hx_NetFindSln>
+
+    <Message Text="> 1/4: Creating the artifacts directory" Importance="high"/>
+    <RemoveDir Directories="$(Hx_NetTest_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_NetTest_ArtifactsDir)"/>
+
+    <Message Text="> 2/4: Running tests" Importance="high"/>
+    <PropertyGroup>
+      <_Hx_NetTest_TestFilesArg Condition="'@(Hx_NetTest_TestFiles)' != ''">@(Hx_NetTest_TestFiles->'&quot;%(Identity)&quot;', ' ')</_Hx_NetTest_TestFilesArg>
+    </PropertyGroup>
+    <PropertyGroup>
+      <_Hx_NetTest_Arg>--nologo --no-build --configuration $(Hx_Run_Configuration) --results-directory &quot;$(Hx_NetTest_ArtifactsDir)&quot;</_Hx_NetTest_Arg>
+      <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_RunSettingsFile)' != ''">$(_Hx_NetTest_Arg) --settings &quot;$(Hx_NetTest_RunSettingsFile)&quot;</_Hx_NetTest_Arg>
+      <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_Filter)' != ''">$(_Hx_NetTest_Arg) --filter &quot;$(Hx_NetTest_Filter)&quot;</_Hx_NetTest_Arg>
+      <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_AdapterDir)' != ''">$(_Hx_NetTest_Arg) --test-adapter-path &quot;$(Hx_NetTest_AdapterDir)&quot;</_Hx_NetTest_Arg>
+      <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_Collect)' != ''">$(_Hx_NetTest_Arg) --collect &quot;$(Hx_NetTest_Collect)&quot;</_Hx_NetTest_Arg>
+      <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_DiagFile)' != ''">$(_Hx_NetTest_Arg) --diag &quot;$(Hx_NetTest_DiagFile)&quot;</_Hx_NetTest_Arg>
+      <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_Verbosity)' != ''">$(_Hx_NetTest_Arg) --verbosity $(Hx_NetTest_Verbosity)</_Hx_NetTest_Arg>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Hx_NetTest_Logger)' == ''">
+      <Hx_NetTest_Logger>nunit;LogFileName=NUnitTestResults.xml</Hx_NetTest_Logger>
+      <_Hx_NetTest_Arg>$(_Hx_NetTest_Arg) --test-adapter-path &quot;$(_Hx_NetTest_NunitXmlTestLoggerDir)&quot;</_Hx_NetTest_Arg>
+    </PropertyGroup>
+    <PropertyGroup>
+      <_Hx_NetTest_Arg>$(_Hx_NetTest_Arg) --logger &quot;$(Hx_NetTest_Logger)&quot;</_Hx_NetTest_Arg>
+    </PropertyGroup>
+    <Hx_MetadataToCmdArgs Item="@(Hx_NetTest_InlineRunSettings)" DottedKeys="true">
+      <Output TaskParameter="Result" PropertyName="_Hx_NetTest_InlineRunSettingsArg"/>
+    </Hx_MetadataToCmdArgs>
+    <Exec
+      Command="&quot;$(Hx_Sys_DotnetExe)&quot; test $(_Hx_NetTest_TestFilesArg) $(_Hx_NetTest_Arg) -- $(_Hx_NetTest_InlineRunSettingsArg)"
+      WorkingDirectory="$(Hx_WS_Dir)"/>
+
+    <Message Text="3/4: Replacing source code paths in generated files *.info, *.xml, *.json" Importance="high"/>
+    <ItemGroup>
+      <_Hx_NetTest_ResultFiles Include="$(Hx_NetTest_ArtifactsDir)/**/*.info"/>
+      <_Hx_NetTest_ResultFiles Include="$(Hx_NetTest_ArtifactsDir)/**/*.xml"/>
+      <_Hx_NetTest_ResultFiles Include="$(Hx_NetTest_ArtifactsDir)/**/*.json"/>
+    </ItemGroup>
+
+    <Hx_FileUpdate
+      Condition="'@(Hx_NetTest_SourcePathRegExps)' != ''"
+      File="%(_Hx_NetTest_ResultFiles.FullPath)"
+      RegExps="@(Hx_NetTest_SourcePathRegExps)"
+      RegExpOptions="$(Hx_NetTest_SourcePathRegExpOptions)"/>
+
+    <Message Text="4/4: Verifying that minimum coverage percentage is satisfied" Importance="high"/>
+    <PropertyGroup>
+      <_Hx_NetTest_CoverageSummaryDir>$(Hx_NetTest_ArtifactsDir)/$([System.Guid]::NewGuid())</_Hx_NetTest_CoverageSummaryDir>
+      <_Hx_NetTest_CoverageSummaryFile>$(_Hx_NetTest_CoverageSummaryDir)/Summary.xml</_Hx_NetTest_CoverageSummaryFile>
+    </PropertyGroup>
+    <Exec
+      Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'"
+      Command="&quot;$(_Hx_NetTest_ReportGeneratorExe)&quot; &quot;-reports:@(_Hx_NetTest_ResultFiles)&quot; &quot;-targetdir:$(_Hx_NetTest_CoverageSummaryDir)&quot; -reporttypes:XMLSummary"
+      WorkingDirectory="$(Hx_WS_Dir)"/>
+    <Hx_FileRead
+      Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'"
+      File="$(_Hx_NetTest_CoverageSummaryFile)"
+      RegExp="(?&lt;=&lt;Linecoverage&gt;)([0-9.]+)(?=&lt;\/Linecoverage&gt;)">
+      <Output TaskParameter="Matches" ItemName="_Hx_NetTest_LineCoverage"/>
+    </Hx_FileRead>
+    <Hx_FileRead
+      Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'"
+      File="$(_Hx_NetTest_CoverageSummaryFile)"
+      RegExp="(?&lt;=&lt;Branchcoverage&gt;)([0-9.]+)(?=&lt;\/Branchcoverage&gt;)">
+      <Output TaskParameter="Matches" ItemName="_Hx_NetTest_BranchCoverage"/>
+    </Hx_FileRead>
+    <Hx_FileRead
+      Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'"
+      File="$(_Hx_NetTest_CoverageSummaryFile)"
+      RegExp="(?&lt;=&lt;Methodcoverage&gt;)([0-9.]+)(?=&lt;\/Methodcoverage&gt;)">
+      <Output TaskParameter="Matches" ItemName="_Hx_NetTest_MethodCoverage"/>
+    </Hx_FileRead>
+
+    <Message Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'" Text="Line coverage: %(_Hx_NetTest_LineCoverage.Match)%" Importance="high"/>
+    <Message Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'" Text="Branch coverage: %(_Hx_NetTest_BranchCoverage.Match)%" Importance="high"/>
+    <Message Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true'" Text="Method coverage: %(_Hx_NetTest_MethodCoverage.Match)%" Importance="high"/>
+
+    <Error
+      Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true' and '%(_Hx_NetTest_LineCoverage.Match)' &lt; '$(Hx_NetTest_MinLineCoverage)'"
+      Text="Line coverage %(_Hx_NetTest_LineCoverage.Match)% does not meet the minimum $(Hx_NetTest_MinLineCoverage)%."/>
+    <Error
+      Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true' and '%(_Hx_NetTest_BranchCoverage.Match)' &lt; '$(Hx_NetTest_MinBranchCoverage)'"
+      Text="Branch coverage %(_Hx_NetTest_BranchCoverage.Match)% does not meet the minimum $(Hx_NetTest_MinBranchCoverage)%."/>
+    <Error
+      Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true' and '%(_Hx_NetTest_MethodCoverage.Match)' &lt; '$(Hx_NetTest_MinMethodCoverage)'"
+      Text="Method coverage %(_Hx_NetTest_MethodCoverage.Match)% does not meet the minimum $(Hx_NetTest_MinMethodCoverage)%."/>
+
+    <Message Text="> DONE Hx_NetTest" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

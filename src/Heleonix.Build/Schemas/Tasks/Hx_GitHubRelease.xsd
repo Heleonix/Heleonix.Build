@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Hx_GitHubRelease" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Creates a release on GitHub using the GitHub API.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="GitHubRepositoryApiUrl" use="required">
+            <xs:annotation>
+              <xs:documentation>The url of the GitHub API for the repository.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Token" use="required">
+            <xs:annotation>
+              <xs:documentation>A personal access token to authorize to the GitHub API.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="UserAgent" use="required">
+            <xs:annotation>
+              <xs:documentation>The User-Agent request header.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TagName" use="required">
+            <xs:annotation>
+              <xs:documentation>A name of the tag to create and/or from which the release should be created.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="TagSource">
+            <xs:annotation>
+              <xs:documentation>
+                Any branch or commit SHA from which the tag should be created.
+                It is ignored if the tag already exists. Otherwise, name of the default branch (usually master) is used.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Name">
+            <xs:annotation>
+              <xs:documentation>A name of the release. If not specified, the tag name is used.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Body">
+            <xs:annotation>
+              <xs:documentation>Release notes as a text string.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="IsDraft">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether to create a draft (unpublished) release, or a published one.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="IsPrerelease">
+            <xs:annotation>
+              <xs:documentation>A value indicating whether to identify the release as a prerelease, or as a full release.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

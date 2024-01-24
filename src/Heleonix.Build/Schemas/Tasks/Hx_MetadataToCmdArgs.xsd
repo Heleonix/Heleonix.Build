@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Hx_MetadataToCmdArgs" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>
+        Stringifies metadata to be used as command line arguments.
+        Example:
+        &lt;_Key_One&gt;one&lt;/_Key_One&gt;
+        &lt;__Key_Two&gt;two&lt;/__Key_Two&gt;
+        Becomes: -Key.One=one --Key.Two=two
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="Item">
+            <xs:annotation>
+              <xs:documentation>An MSBuild item with metadata to stringify. Leading '_' are replaced with '-'.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MetadataSeparator">
+            <xs:annotation>
+              <xs:documentation>The separator string to separate metadata key/value pairs.  Default is " ".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="KeyValueSeparator">
+            <xs:annotation>
+              <xs:documentation>The separator string to separate key and value of every metadata. Default is "=".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="DottedKeys">
+            <xs:annotation>
+              <xs:documentation>
+                A value indicating whether metadata keys like "Key_Name" should be changed to the "Key.Name" or not.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Result">
+            <xs:annotation>
+              <xs:documentation>The stringified metadata [Output].</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

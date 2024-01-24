@@ -1,0 +1,13 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="Hx_ChangeLog_GitHubCommit.targets"/>
+  <Import Project="Hx_DocFX_Git.targets"/>
+  <Import Project="Hx_ExtentReport.targets"/>
+  <Import Project="Hx_NetBuild.targets"/>
+  <Import Project="Hx_NetNugetPush.targets"/>
+  <Import Project="Hx_NetTest.targets"/>
+  <Import Project="Hx_NetValidate.targets"/>
+  <Import Project="Hx_OnError.targets"/>
+  <Import Project="Hx_Release_GitHub.targets"/>
+  <Import Project="Hx_ReportGenerator.targets"/>
+  <Import Project="Hx_TrxReport.targets"/>
+</Project>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:include schemaLocation="./Hx_DirectoryClean.xsd"/>
+  <xs:include schemaLocation="./Hx_FileCopy.xsd"/>
+  <xs:include schemaLocation="./Hx_FileRazorGenerate.xsd"/>
+  <xs:include schemaLocation="./Hx_FileRead.xsd"/>
+  <xs:include schemaLocation="./Hx_FileSystemSearch.xsd"/>
+  <xs:include schemaLocation="./Hx_FileUpdate.xsd"/>
+  <xs:include schemaLocation="./Hx_FileValidate.xsd"/>
+  <xs:include schemaLocation="./Hx_GitHubCommitChangeLog.xsd"/>
+  <xs:include schemaLocation="./Hx_GitHubRelease.xsd"/>
+  <xs:include schemaLocation="./Hx_GitParseRepoUrl.xsd"/>
+  <xs:include schemaLocation="./Hx_MetadataToCmdArgs.xsd"/>
+  <xs:include schemaLocation="./Hx_NetFindProjects.xsd"/>
+  <xs:include schemaLocation="./Hx_NetFindSln.xsd"/>
+  <xs:include schemaLocation="./Hx_NetSetupTool.xsd"/>
+</xs:schema>

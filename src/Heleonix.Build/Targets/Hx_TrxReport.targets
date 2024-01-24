@@ -1,0 +1,30 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_TrxReport_ArtifactsDir>$(Hx_Run_ArtifactsDir)/TrxReport</Hx_TrxReport_ArtifactsDir>
+  </PropertyGroup>
+
+  <Target Name="Hx_TrxReport">
+    <Message Text="> RUNNING Hx_TrxReport ..." Importance="high"/>
+
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
+    <RemoveDir Directories="$(Hx_TrxReport_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_TrxReport_ArtifactsDir)"/>
+
+    <ItemGroup>
+      <Hx_TrxReport_TestResultFiles
+        Condition="'@(Hx_TrxReport_TestResultFiles)' == ''"
+        Include="$(Hx_Run_ArtifactsDir)/*Test/**/*.trx"/>
+    </ItemGroup>
+
+    <Message Text="> 2/2: Generating report" Importance="high"/>
+    <Hx_TrxReport
+      ReportUnitExe="$(Hx_Sys_ReportUnitExe)"
+      TestResultFile="$(Hx_TrxReport_TestResultFile)"
+      ReportFile="$(Hx_TrxReport_ArtifactsDir)/ReportUnit.html"
+      WorkingDir="$(Hx_WS_Dir)"/>
+
+    <Message Text="> DONE Hx_TrxReport" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Hx_FileCopy" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Copies files from sources into destinations.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="Files" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Files to copy.
+                Metadata: 'WithSubDirsFrom' - if defined, copies a file into sub folders starting from the end of the defined root path.
+                It is used to keep folders hierarchy.
+                Example:
+                Files: C:\Files\SubDir1\SubDir2\SubDir3\file.txt
+                WithSubDirsFrom: C:\Files\SubDir1
+                DestinationDirs: D:\Destination
+                CopiedFiles: file is copied into D:\Destination\SubDir2\SubDir3\file.txt.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="DestinationDirs" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Destination directories to copy files to.
+                If number of destinations equals to number of files, then files are copied into those directories.
+                If destination is a single directory, then files are copied into that directory.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Overwrite">
+            <xs:annotation>
+              <xs:documentation>Determines whether to overwrite destination file or ignore.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CopiedFiles">
+            <xs:annotation>
+              <xs:documentation>A list of successfully copied files [Output].</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
