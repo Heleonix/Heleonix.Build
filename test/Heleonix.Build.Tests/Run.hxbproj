@@ -1,0 +1,11 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_WS_RepositoryAPIUrl>http://localhost:12345</Hx_WS_RepositoryAPIUrl>
+    <Hx_WS_RepositoryUrl>https://fake.git_hub.com/Heleonix/NetSimulator.git</Hx_WS_RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <Hx_NetTest_SourcePathRegExps
+      Include="(%3F&lt;=[&gt;&quot;&quot;]).+\\([^\\]+)\\src\\"
+      Replacement="https://raw.githubusercontent.com/Heleonix/$1/master/src/"/>
+  </ItemGroup>
+</Project>

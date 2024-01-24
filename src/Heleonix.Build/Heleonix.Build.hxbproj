@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Tasks-->
+  <Import Project="Tasks/Tasks.tasks"/>
+
+  <!--Run-->
+  <Import Condition="Exists('$(Hx_Run_BuildProjFile)')" Project="$(Hx_Run_BuildProjFile)"/>
+
+  <PropertyGroup>
+    <Hx_WS_Dir Condition="'$(Hx_WS_Dir)' == ''">$(MSBuildStartupDirectory)</Hx_WS_Dir>
+    <Hx_WS_BuildProjFile Condition="'$(Hx_WS_BuildProjFile)' == ''">$(Hx_WS_Dir)/*.hxbproj</Hx_WS_BuildProjFile>
+  </PropertyGroup>
+
+  <!--Workspace-->
+  <Import Condition="Exists('$(Hx_WS_BuildProjFile)')" Project="$(Hx_WS_BuildProjFile)"/>
+
+  <PropertyGroup>
+    <!--GoCD-->
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GO_MATERIAL_URL)</Hx_WS_RepositoryUrl>
+    <!--Jenkins-->
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GIT_URL)</Hx_WS_RepositoryUrl>
+    <!--TeamCity-->
+    <!--<Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">???</Hx_WS_RepositoryUrl>-->
+    <!--GitLab-->
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(CI_REPOSITORY_URL)</Hx_WS_RepositoryUrl>
+    <!--GitHub-->
+    <Hx_WS_RepositoryUrl Condition="'$(Hx_WS_RepositoryUrl)' == ''">$(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY).git</Hx_WS_RepositoryUrl>
+    <Hx_WS_RepositoryAPIUrl Condition="'$(Hx_WS_RepositoryAPIUrl)' == ''">https://api.github.com</Hx_WS_RepositoryAPIUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Hx_Run_ArtifactsDir Condition="'$(Hx_Run_ArtifactsDir)' == ''">$(Hx_WS_Dir)/Hx_Artifacts</Hx_Run_ArtifactsDir>
+    <Hx_Run_Configuration Condition="'$(Hx_Run_Configuration)' == ''">Release</Hx_Run_Configuration>
+    <!--GoCD-->
+    <Hx_Run_Number Condition="'$(Hx_Run_Number)' == ''">$(GO_PIPELINE_COUNTER)</Hx_Run_Number>
+    <!--Jenkins, TeamCity-->
+    <Hx_Run_Number Condition="'$(Hx_Run_Number)' == ''">$(BUILD_NUMBER)</Hx_Run_Number>
+    <!--Github-->
+    <Hx_Run_Number Condition="'$(Hx_Run_Number)' == ''">$(GITHUB_RUN_NUMBER)</Hx_Run_Number>
+    <!--GitLab-->
+    <Hx_Run_Number Condition="'$(Hx_Run_Number)' == ''">$(CI_PIPELINE_ID)</Hx_Run_Number>
+    <!--Default-->
+    <Hx_Run_Number Condition="'$(Hx_Run_Number)' == ''">0</Hx_Run_Number>
+  </PropertyGroup>
+
+  <!--Targets-->
+  <Import Project="Targets/Targets.targets"/>
+
+  <Target Name="Hx_Initialize">
+    <Message Text="> RUNNING Hx_Initialize ..." Importance="high"/>
+
+    <Message Text="> 1/1: Validation of global properties" Importance="high"/>
+
+    <Error Condition="!Exists('$(Hx_WS_Dir)')" Text="'$Hx_WS_Dir' is not found."/>
+
+    <Message Text="$Hx_Sys_DotnetExe: $(Hx_Sys_DotnetExe)" Importance="high"/>
+
+    <Message Text="$Hx_WS_Dir: $(Hx_WS_Dir)" Importance="high"/>
+    <Message Text="$Hx_WS_BuildProjFile: $(Hx_WS_BuildProjFile)" Importance="high"/>
+    <Message Text="$Hx_WS_RepositoryAPIUrl: $(Hx_WS_RepositoryAPIUrl)" Importance="high"/>
+    <Message Text="$Hx_WS_RepositoryUrl: $(Hx_WS_RepositoryUrl)" Importance="high"/>
+
+    <Message Text="$Hx_Run_Configuration: $(Hx_Run_Configuration)" Importance="high"/>
+    <Message Text="$Hx_Run_Number: $(Hx_Run_Number)" Importance="high"/>
+    <Message Text="$Hx_Run_ArtifactsDir: $(Hx_Run_ArtifactsDir)" Importance="high"/>
+    <Message Text="$Hx_Run_BuildProjFile: $(Hx_Run_BuildProjFile)" Importance="high"/>
+
+    <Message Text="> DONE Hx_Initialize" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+
+</Project>

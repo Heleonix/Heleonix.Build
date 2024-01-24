@@ -1,0 +1,70 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_NetNugetPush_ArtifactsDir>$(Hx_Run_ArtifactsDir)/NetNugetPush</Hx_NetNugetPush_ArtifactsDir>
+  </PropertyGroup>
+
+  <Target Name="Hx_NetNugetPush">
+    <Message Text="> RUNNING Hx_NetNugetPush ..." Importance="high"/>
+
+    <Message Text="> 1/4: Creating the artifacts directory" Importance="high"/>
+    <RemoveDir Directories="$(Hx_NetNugetPush_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_NetNugetPush_ArtifactsDir)"/>
+
+    <Message Text="> 2/4: Searching packages or packing the solution in NetBuild artifacts directory, if packages are not found" Importance="high"/>
+    <Hx_FileSystemSearch
+      Condition="'@(Hx_NetNugetPush_PackageFiles)' == ''"
+      StartDir="$(Hx_NetBuild_ArtifactsDir)"
+      PathRegExp=".+/bin/$(Hx_Run_Configuration)/[^/]+\.s?nupkg$"
+      Types="Files">
+      <Output TaskParameter="FoundFiles" ItemName="Hx_NetNugetPush_PackageFiles"/>
+    </Hx_FileSystemSearch>
+
+    <Hx_NetFindSln Condition="'@(Hx_NetNugetPush_PackageFiles)' == ''" StartDir="$(Hx_NetBuild_ArtifactsDir)">
+      <Output TaskParameter="SlnFile" PropertyName="_Hx_NetNugetPush_SlnFile"/>
+    </Hx_NetFindSln>
+
+    <PropertyGroup Condition="'$(Hx_NetNugetPush_Version)' == '' and Exists('$(Hx_ChangeLog_ArtifactsDir)/semver.txt')">
+      <Hx_NetNugetPush_Version>$([System.IO.File]::ReadAllText('$(Hx_ChangeLog_ArtifactsDir)/semver.txt').Trim())</Hx_NetNugetPush_Version>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Hx_NetNugetPush_ReleaseNotesFile)' == '' and Exists('$(Hx_ChangeLog_ArtifactsDir)/ReleaseNotes.txt')">
+      <Hx_NetNugetPush_ReleaseNotesFile>$(Hx_ChangeLog_ArtifactsDir)/ReleaseNotes.txt</Hx_NetNugetPush_ReleaseNotesFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(_Hx_NetNugetPush_SlnFile)' != ''">
+      <_Hx_NetNugetPush_VersionProps Condition="'$(Hx_NetNugetPush_Version)' != ''">Version=$(Hx_NetNugetPush_Version)</_Hx_NetNugetPush_VersionProps>
+      <_Hx_NetNugetPush_ReleaseNotesProps Condition="'$(Hx_NetNugetPush_ReleaseNotesFile)' != ''">PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NetNugetPush_ReleaseNotesFile)').Trim())&quot;</_Hx_NetNugetPush_ReleaseNotesProps>
+    </PropertyGroup>
+
+    <MSBuild
+      Condition="'$(_Hx_NetNugetPush_SlnFile)' != ''"
+      Projects="$(_Hx_NetNugetPush_SlnFile)"
+      Targets="Pack"
+      Properties="Configuration=$(Hx_Run_Configuration);NoBuild=true;$(_Hx_NetNugetPush_VersionProps);$(_Hx_NetNugetPush_ReleaseNotesProps)"
+      />
+
+    <Hx_FileSystemSearch
+      Condition="'$(_Hx_NetNugetPush_SlnFile)' != ''"
+      StartDir="$(Hx_NetBuild_ArtifactsDir)"
+      PathRegExp=".+/bin/$(Hx_Run_Configuration)/[^/]+\.s?nupkg$"
+      Types="Files">
+      <Output TaskParameter="FoundFiles" ItemName="Hx_NetNugetPush_PackageFiles"/>
+    </Hx_FileSystemSearch>
+
+    <Message Text="> 3/4: Publishing packages" Importance="high"/>
+    <PropertyGroup>
+      <_Hx_NetNugetPush_ApiKeyArg Condition="'$(Hx_NetNugetPush_APIKey)' != ''">--api-key $(Hx_NetNugetPush_APIKey)</_Hx_NetNugetPush_ApiKeyArg>
+    </PropertyGroup>
+    <Exec
+      Command="&quot;$(Hx_Sys_DotnetExe)&quot; nuget push &quot;%(Hx_NetNugetPush_PackageFiles.FullPath)&quot; $(_Hx_NetNugetPush_ApiKeyArg) --source &quot;$(Hx_NetNugetPush_SourceURL)&quot;"
+      WorkingDirectory="$(Hx_WS_Dir)"
+      EchoOff="true"/>
+
+    <Message Text="> 4/4: Copying packages to the artifacts directory" Importance="high"/>
+    <Copy SourceFiles="@(Hx_NetNugetPush_PackageFiles)" DestinationFolder="$(Hx_NetNugetPush_ArtifactsDir)"/>
+
+    <Message Text="> DONE Hx_NetNugetPush" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

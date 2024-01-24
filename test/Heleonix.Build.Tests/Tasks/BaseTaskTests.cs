@@ -6,7 +6,7 @@
 namespace Heleonix.Build.Tests.Tasks;
 
 /// <summary>
-/// Tests the <see cref="FileUpdate"/>.
+/// Tests the <see cref="Hx_FileUpdate"/>.
 /// </summary>
 [ComponentTest(Type = typeof(BaseTask))]
 public static class BaseTaskTests

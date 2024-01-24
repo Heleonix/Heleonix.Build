@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Example custom task with single required parameter
+<xs:element name="MyTask" substitutionGroup="msb:Task">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MyParameter" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+-->
+
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003"
+           elementFormDefault="qualified"
+           targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include
+    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
+
+  <xs:element name="Hx_NetSetupTool" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>
+        Sets up the tool (a .NET tool or a dependency package) to be used by the Heleonix.Build framework.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="Name">
+            <xs:annotation>
+              <xs:documentation>
+                The name of the .NET tool to be used or the name of the dependency package.
+                Example of a .NET tool Name: 'hxbuild', 'docfx'. Example of a dependency package Name: 'NunitXml.TestLogger'.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="DotnetExe">
+            <xs:annotation>
+              <xs:documentation>
+                The path to the dotnet.exe executable to use for installation commands.
+                Use $Hx_Sys_DotnetExe in your targets.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="PackageName">
+            <xs:annotation>
+              <xs:documentation>
+                The name of the package to install.
+                For the tools used by the Heleonix.Build it is ignored, because the PackageName is hard-coded.
+                For your custom tools it needs to be specified. If IsPackage=true, it is ignored, because the Name is used.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Version">
+            <xs:annotation>
+              <xs:documentation>
+                The version of the tool to be installed, i.e. '1.0.0', '6.0.1'.
+                If not specified, the latest version is installed.
+                For the tools used by the Heleonix.Build, it is ignored, because the specific version is hard-coded.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="IsPackage">
+            <xs:annotation>
+              <xs:documentation>
+                For dependency packages set it to 'true'. For .NET tools set it to 'false'. Default is 'false'.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ToolPath">
+            <xs:annotation>
+              <xs:documentation>
+                The path to the .NET tool executable, or the path to the dependency package folder [Output].
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

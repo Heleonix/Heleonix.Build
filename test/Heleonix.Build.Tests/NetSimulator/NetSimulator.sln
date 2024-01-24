@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSimulator", "NetSimulator\NetSimulator.csproj", "{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{86666126-26CC-48EE-A647-28E94D1AE95A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSimulator.Tests", "NetSimulator.Tests\NetSimulator.Tests.csproj", "{F43D7D4F-D798-4FEE-BBB7-3060D985A105}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A3674ABC-7370-429D-8AE6-9AA33F4DE8F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSimulator", "src\NetSimulator\NetSimulator.csproj", "{DFA38765-0C13-4A2F-A3B7-A8BDE190E7B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSimulator.Tests", "test\NetSimulator.Tests\NetSimulator.Tests.csproj", "{F43D7D4F-D798-4FEE-BBB7-3060D985A105}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E6D3A436-F1A7-4818-A001-035AE969BA71}"
 	ProjectSection(SolutionItems) = preProject
