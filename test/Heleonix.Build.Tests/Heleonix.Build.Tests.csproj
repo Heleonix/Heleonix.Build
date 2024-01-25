@@ -52,7 +52,7 @@
   <Target Name="Hx_InstallTool" AfterTargets="Build">
     <RemoveDir Directories="$(OutDir)/.store" />
     <Delete Files="$(OutDir)/hxbuild.exe" />
-    <Exec Command="dotnet tool install Heleonix.Build --version 1.0.0 --add-source ../../src/Heleonix.Build/bin/$(Configuration) --tool-path $(OutDir)" StandardErrorImportance="high" StandardOutputImportance="high" />
+    <Exec Command="dotnet tool install Heleonix.Build --version $(Version) --add-source ../../src/Heleonix.Build/bin/$(Configuration) --tool-path $(OutDir)" StandardErrorImportance="high" StandardOutputImportance="high" />
   </Target>
   <Target Name="Hx_RemoveTool" AfterTargets="Clean">
     <RemoveDir Directories="$(OutDir)/.store" />

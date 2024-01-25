@@ -55,12 +55,6 @@ public class NetSimulatorHelper
         this.SourceDirs.Select(dir => Path.Combine(dir, "NetSimulator.dll"));
 
     /// <summary>
-    /// Gets the path to the Nuget package file.
-    /// </summary>
-    public string NupkgFile =>
-        Path.Combine(this.SourceProjectDir, "bin", PathHelper.Configuration, "NetSimulator.1.0.0.nupkg");
-
-    /// <summary>
     /// Gets the test project directory.
     /// </summary>
     public string TestProjectDir => Path.Combine(this.SolutionDir, "test", "NetSimulator.Tests");
