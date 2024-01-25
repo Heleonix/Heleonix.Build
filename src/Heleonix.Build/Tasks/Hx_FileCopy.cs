@@ -20,9 +20,9 @@ public class Hx_FileCopy : BaseTask
     /// starting from the end of the defined root path. It is used to keep folders hierarchy.
     /// </remarks>
     /// <example>
-    /// File path: C:\Files\SubDir1\SubDir2\SubDir3\file.txt
-    /// WithSubDirsFrom: C:\Files\SubDir1
-    /// Destination: D:\Destination
+    /// File path: C:\Files\SubDir1\SubDir2\SubDir3\file.txt <br/>
+    /// WithSubDirsFrom: C:\Files\SubDir1 <br/>
+    /// Destination: D:\Destination <br/>
     /// Result: file is copied into D:\Destination\SubDir2\SubDir3\file.txt.
     /// </example>
     [Required]
