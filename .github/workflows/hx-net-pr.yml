@@ -1,0 +1,24 @@
+on:
+  pull_request
+
+jobs:
+  Checks:
+    runs-on: 'windows-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Heleonix.Build
+        run: nuget install Heleonix.Build -version ${{ vars.Hx_Ver }} -outputdirectory ../hxb
+      - name: Validate
+        run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_NetValidate
+      - name: ChangeLog
+        run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_ChangeLog_GitHubCommit
+        env:
+            Hx_ChangeLog_GitHubCommit_Token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_NetBuild
+      - name: Test
+        run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_OpenCover
+        env:
+            Hx_OpenCover_FilePathReplacement: ${{ vars.Hx_OpenCover_FilePathReplacement }}
+            Hx_OpenCover_FilePathRegExp: ${{ vars.Hx_OpenCover_FilePathRegExp }}
