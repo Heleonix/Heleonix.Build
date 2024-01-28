@@ -5,8 +5,6 @@
 
 namespace Heleonix.Build.Tasks;
 
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections;
 using System.IO;
 using System.Reflection;
 
@@ -154,8 +152,6 @@ public class Hx_NetSetupTool : BaseTask
             this.Log.LogMessage(MessageImportance.High, args);
 
             this.Log.LogError(result.Error);
-
-            this.Log.LogMessage(MessageImportance.High, result.Output);
         }
 
         if (!this.IsPackage)
@@ -184,9 +180,7 @@ public class Hx_NetSetupTool : BaseTask
     {
         var dirs = Directory.Exists(packagePath) ? Directory.GetDirectories(packagePath) : Array.Empty<string>();
 
-        if (dirs.Length > 0)
-        {
-            Array.Sort(dirs, StringComparer.OrdinalIgnoreCase);
+        Array.Sort(dirs, StringComparer.OrdinalIgnoreCase);
 
         return dirs.LastOrDefault();
     }
