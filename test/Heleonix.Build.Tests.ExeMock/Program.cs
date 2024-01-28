@@ -1,4 +1,9 @@
-﻿if(args.Any(a => a.Contains("ERROR")))
+﻿// <copyright file="Program.cs" company="Heleonix - Hennadii Lutsyshyn">
+// Copyright (c) Heleonix - Hennadii Lutsyshyn. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the repository root for full license information.
+// </copyright>
+
+if (args.Any(a => a.Contains("ERROR")))
 {
     Console.Error.Write("ERROR details");
 

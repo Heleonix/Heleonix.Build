@@ -1,5 +1,7 @@
 name: CI/CD
 
+permissions:
+  contents: write
 on:
   push:
     branches: [ "master" ]
@@ -19,7 +21,7 @@ jobs:
       - name: ChangeLog
         run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_ChangeLog_GitHubCommit
         env:
-          Hx_ChangeLog_GitHubCommit_Token: ${{ secrets.GH_PAT }}
+          Hx_ChangeLog_GitHubCommit_Token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_NetBuild
       - name: Test
@@ -35,7 +37,7 @@ jobs:
       - name: Release
         run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_Release_GitHub
         env:
-          Hx_Release_GitHub_Token: ${{ secrets.GH_PAT }}
+          Hx_Release_GitHub_Token: ${{ secrets.GITHUB_TOKEN }}
       - name: Docs
         run: dotnet msbuild ../hxb/${{ vars.Hx_Main }} -p:Hx_In_Targets=Hx_DocFX_Git
         env:
