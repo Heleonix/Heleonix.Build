@@ -20,7 +20,7 @@ public class Hx_NetFindProjects : BaseTask
     /// Projects files found in the specified solution file [Output].
     /// </summary>
     [Output]
-    public ITaskItem[] ProjectFiles { get; set; }
+    public string[] ProjectFiles { get; set; }
 
     /// <summary>
     /// Executes the implementation of the task.
@@ -33,6 +33,6 @@ public class Hx_NetFindProjects : BaseTask
             slnContent,
             "(?<=Project.+=\\s*\".+\"\\s*,\\s*\")(.+proj)(?=\"\\s*,\\s*\".+\"\\s*EndProject)");
 
-        this.ProjectFiles = matches.Select(m => new TaskItem(Path.Combine(slnDir, m.Value))).ToArray();
+        this.ProjectFiles = matches.Select(m => Path.Combine(slnDir, m.Value)).ToArray();
     }
 }

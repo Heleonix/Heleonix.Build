@@ -19,6 +19,11 @@ public class TestBuildEngine : IBuildEngine
     public List<string> ErrorMessages { get; } = new List<string>();
 
     /// <summary>
+    /// Gets logged messages.
+    /// </summary>
+    public List<string> Messages { get; } = new List<string>();
+
+    /// <summary>
     /// Gets a value indicating whether the ContinueOnError flag was set to true
     /// for this particular task in the project file.
     /// </summary>
@@ -66,7 +71,10 @@ public class TestBuildEngine : IBuildEngine
     /// <param name="e">The event data.</param>
     public void LogMessageEvent(BuildMessageEventArgs e)
     {
-        // Dummy implementation.
+        if (!string.IsNullOrEmpty(e.Message))
+        {
+            this.Messages.Add(e.Message);
+        }
     }
 
     /// <summary>

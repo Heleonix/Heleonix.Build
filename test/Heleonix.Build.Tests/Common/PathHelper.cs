@@ -49,6 +49,11 @@ public static class PathHelper
     public static string SnkPairFile { get; } = Path.Combine(CurrentDir, "SnkPair.snk");
 
     /// <summary>
+    /// Gets the path to the ExeMoc file at runtime.
+    /// </summary>
+    public static string ExeMockFile { get; } = Path.Combine(CurrentDir, "Heleonix.Build.Tests.ExeMock.exe");
+
+    /// <summary>
     /// Gets the random file name in current directory.
     /// </summary>
     /// <returns>The random file name in current directory.</returns>

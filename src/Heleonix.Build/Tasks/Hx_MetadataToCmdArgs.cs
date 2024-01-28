@@ -63,7 +63,7 @@ public class Hx_MetadataToCmdArgs : BaseTask
 
         foreach (DictionaryEntry pair in metadata)
         {
-            var key = Regex.Replace(Regex.Replace(pair.Key.ToString(), "^_", "-"), "^_", "-");
+            var key = Regex.Replace(Regex.Replace(pair.Key.ToString(), "^__", "--"), "^_", "-");
 
             key = this.DottedKeys ? key.Replace("_", ".") : key;
 
