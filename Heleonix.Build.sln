@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\hx-net-nuget.yml = .github\workflows\hx-net-nuget.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heleonix.Build.Tests.ExeMock", "test\Heleonix.Build.Tests.ExeMock\Heleonix.Build.Tests.ExeMock.csproj", "{3D5694BD-41EC-4E7B-8775-2757EA4059CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{F4CE21CC-39D4-43C0-81F2-BFED6436DC5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4CE21CC-39D4-43C0-81F2-BFED6436DC5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4CE21CC-39D4-43C0-81F2-BFED6436DC5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D5694BD-41EC-4E7B-8775-2757EA4059CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D5694BD-41EC-4E7B-8775-2757EA4059CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D5694BD-41EC-4E7B-8775-2757EA4059CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D5694BD-41EC-4E7B-8775-2757EA4059CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{44202B1B-5C68-40CE-B2C2-1FEB9AEC48E3} = {86666126-26CC-48EE-A647-28E94D1AE95A}
 		{F4CE21CC-39D4-43C0-81F2-BFED6436DC5C} = {A3674ABC-7370-429D-8AE6-9AA33F4DE8F9}
 		{34F2A7E3-FDE8-4425-BD9C-323F304F8EEE} = {3499A7EA-88BC-48DF-8E9B-1EB80C052AD0}
+		{3D5694BD-41EC-4E7B-8775-2757EA4059CA} = {A3674ABC-7370-429D-8AE6-9AA33F4DE8F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DADF4FE8-717D-467C-948E-0F170CDA33E6}

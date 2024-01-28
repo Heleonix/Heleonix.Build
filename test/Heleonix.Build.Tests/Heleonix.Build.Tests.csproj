@@ -47,6 +47,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Heleonix.Build\Heleonix.Build.csproj" />
+    <ProjectReference Include="..\Heleonix.Build.Tests.ExeMock\Heleonix.Build.Tests.ExeMock.csproj" />
   </ItemGroup>
 
   <Target Name="Hx_InstallTool" AfterTargets="Build">

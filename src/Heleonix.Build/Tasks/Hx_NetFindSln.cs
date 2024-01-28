@@ -27,6 +27,6 @@ public class Hx_NetFindSln : BaseTask
     /// </summary>
     protected override void ExecuteInternal()
     {
-        this.SlnFile = Directory.GetFiles(this.StartDir, "*.sln").Single();
+        this.SlnFile = Directory.GetFiles(this.StartDir, "*.sln").SingleOrDefault();
     }
 }

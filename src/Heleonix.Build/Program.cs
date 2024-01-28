@@ -27,8 +27,8 @@ public static class Program
                 || "-h".Equals(args[0], StringComparison.OrdinalIgnoreCase)))
         {
             Console.WriteLine("Description:");
-            Console.WriteLine("  The MSBuild-based build framework to use in CI/CD systems" +
-                              "  Version: " + Assembly.GetExecutingAssembly().GetName().Version);
+            Console.WriteLine("  The MSBuild-based build framework to use in CI/CD systems");
+            Console.WriteLine("  Version: {0}", Assembly.GetExecutingAssembly().GetName().Version);
             Console.WriteLine("  More: https://heleonix.github.io/docs/api/Heleonix.Build/intro.html");
             Console.WriteLine();
             Console.WriteLine("Options:");
@@ -54,7 +54,8 @@ public static class Program
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
 
-                    Console.Error.WriteLine("The dotnet executable path is not defined for the specified argument '-exe'.");
+                    Console.Error.WriteLine(
+                        "The dotnet executable path is not defined for the specified argument '--exe'.");
 
                     return 1;
                 }
