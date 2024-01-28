@@ -1,7 +1,6 @@
-name: CI/CD
-
 permissions:
   contents: write
+
 on:
   push:
     branches: [ "master" ]
@@ -9,7 +8,7 @@ on:
       - 'src/**'
 
 jobs:
-  ci_cd:
+  Deployment:
     runs-on: 'windows-latest'
     steps:
       - name: Checkout
