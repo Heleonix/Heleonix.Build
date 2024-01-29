@@ -1,0 +1,11 @@
+name: ".NET NuGet"
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'src/**'
+
+jobs:
+  Deployment:
+    uses: Heleonix/workflows/.github/workflows/net-nuget.yml@main
