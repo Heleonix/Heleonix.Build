@@ -12,3 +12,4 @@ on:
 jobs:
   Deployment:
     uses: Heleonix/workflows/.github/workflows/net-nuget.yml@main
+    secrets: inherit
