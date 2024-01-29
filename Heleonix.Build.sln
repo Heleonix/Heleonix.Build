@@ -24,8 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{3499
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{34F2A7E3-FDE8-4425-BD9C-323F304F8EEE}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\net-nuget.yml = .github\workflows\net-nuget.yml
-		.github\workflows\net-pr.yml = .github\workflows\net-pr.yml
+		.github\workflows\pr-net.yml = .github\workflows\pr-net.yml
+		.github\workflows\release-net-nuget.yml = .github\workflows\release-net-nuget.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heleonix.Build.Tests.ExeMock", "test\Heleonix.Build.Tests.ExeMock\Heleonix.Build.Tests.ExeMock.csproj", "{3D5694BD-41EC-4E7B-8775-2757EA4059CA}"

@@ -1,8 +1,0 @@
-name: ".NET PR"
-
-on:
-  pull_request:
-
-jobs:
-  Checks:
-    uses: Heleonix/workflows/.github/workflows/net-pr.yml@main
