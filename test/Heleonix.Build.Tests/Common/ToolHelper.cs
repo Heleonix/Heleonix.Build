@@ -36,10 +36,10 @@ public static class ToolHelper
 
         var result = ExeHelper.Execute(PathHelper.HxBuildExe, args, true, workspace);
 
-        TestExecutionContext.CurrentContext.OutWriter.WriteLine(result.Output);
-
         if (result.ExitCode != 0)
         {
+            TestExecutionContext.CurrentContext.OutWriter.WriteLine(result.Output);
+
             return false;
         }
 
