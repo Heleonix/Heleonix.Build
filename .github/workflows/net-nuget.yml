@@ -1,5 +1,8 @@
 name: ".NET NuGet"
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ "master" ]
