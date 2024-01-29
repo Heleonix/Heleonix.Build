@@ -3,5 +3,11 @@
     <ItemGroup>
       <Hx_OpenCover_ExcludeDirs Include="$(Hx_WS_Dir)/Hx_Artifacts/Hx_NetBuild/test/Heleonix.Build.Tests/bin/Release/net7.0/Heleonix.Build/**"/>
     </ItemGroup>
+    <PropertyGroup>
+      <Hx_OpenCover_MinClassCoverage>80</Hx_OpenCover_MinClassCoverage>
+      <Hx_OpenCover_MinMethodCoverage>80</Hx_OpenCover_MinMethodCoverage>
+      <Hx_OpenCover_MinBranchCoverage>80</Hx_OpenCover_MinBranchCoverage>
+      <Hx_OpenCover_MinLineCoverage>80</Hx_OpenCover_MinLineCoverage>
+    </PropertyGroup>
   </Target>
 </Project>
