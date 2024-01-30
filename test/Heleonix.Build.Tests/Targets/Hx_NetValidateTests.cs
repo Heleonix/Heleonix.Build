@@ -35,7 +35,7 @@ public static class Hx_NetValidateTests
             simulator.Clear();
         });
 
-        When("target is executed", () =>
+        When("Hx_NetValidate target is executed", () =>
         {
             Should("succeed", () =>
             {

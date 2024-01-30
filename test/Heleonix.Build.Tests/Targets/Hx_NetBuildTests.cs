@@ -51,7 +51,7 @@ public static class Hx_NetBuildTests
             simulator.Clear();
         });
 
-        When("target is executed", () =>
+        When("Hx_NetBuild target is executed", () =>
         {
             Should("succeed", () =>
             {

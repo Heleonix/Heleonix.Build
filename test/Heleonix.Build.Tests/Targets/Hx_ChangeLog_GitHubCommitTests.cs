@@ -70,7 +70,7 @@ public static class Hx_ChangeLog_GitHubCommitTests
             simulator.Clear();
         });
 
-        When("target is executed", () =>
+        When("Hx_ChangeLog_GitHubCommit target is executed", () =>
         {
             Should("succeed", () =>
             {

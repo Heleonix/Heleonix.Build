@@ -85,6 +85,7 @@ public static class Program
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.RedirectStandardOutput = true;
 
@@ -107,12 +108,16 @@ public static class Program
         Console.ForegroundColor = ConsoleColor.Red;
 
         Console.Error.WriteLine(e.Data);
+
+        Console.Error.Flush();
+
+        Console.ResetColor();
     }
 
     private static void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
     {
-        Console.ResetColor();
-
         Console.Out.WriteLine(e.Data);
+
+        Console.Out.Flush();
     }
 }

@@ -67,7 +67,7 @@ public static class Hx_Release_GitHubTests
             simulator.Clear();
         });
 
-        When("target is executed", () =>
+        When("Hx_Release_GitHub target is executed", () =>
         {
             Should("succeed", () =>
             {

@@ -38,7 +38,7 @@ public static class Hx_NetTestTests
                 succeeded = ToolHelper.RunTestTarget("Hx_NetTest", simulator.SolutionDir, properties);
             });
 
-            When("target is executed", () =>
+            When("Hx_NetTest target is executed", () =>
             {
                 Should("succeed", () =>
                 {
