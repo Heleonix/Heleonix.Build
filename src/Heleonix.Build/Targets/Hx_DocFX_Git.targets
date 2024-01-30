@@ -31,12 +31,6 @@
 
     <Message Text="> 2/4: Downloading a documentation project from '$(Hx_DocFX_RepositoryUrl)' and branch '$(Hx_DocFX_Git_BranchName)' into the $(Hx_DocFX_ArtifactsDir)" Importance="high"/>
     <Exec
-      Condition="'$(Hx_DocFX_Git_Token)' != '' and $(Hx_DocFX_RepositoryUrl.StartsWith('https://'))"
-      Command="&quot;$(_Hx_DocFX_Git_GitExe)&quot; clone &quot;$(Hx_DocFX_RepositoryUrl.Replace('https://','https://$(Hx_DocFX_Git_Token)@'))&quot; --branch $(Hx_DocFX_Git_BranchName) --single-branch ."
-      WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"
-      EchoOff="true"/>
-    <Exec
-      Condition="'$(Hx_DocFX_Git_Token)' == '' or !$(Hx_DocFX_RepositoryUrl.StartsWith('https://'))"
       Command="&quot;$(_Hx_DocFX_Git_GitExe)&quot; clone &quot;$(Hx_DocFX_RepositoryUrl)&quot; --branch $(Hx_DocFX_Git_BranchName) --single-branch ."
       WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
 
@@ -71,7 +65,8 @@
     <Exec
       Condition="'$(_Hx_DocFX_Git_ChangesCount)' != '0' and ('$(Hx_DocFX_Git_Token)' == '' or !$(Hx_DocFX_RepositoryUrl.StartsWith('https://')))"
       Command="&quot;$(_Hx_DocFX_Git_GitExe)&quot; push &quot;$(Hx_DocFX_RepositoryUrl&quot;"
-      WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"/>
+      WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"
+      EchoOff="true"/>
     <Message
       Condition="'$(_Hx_DocFX_Git_ChangesCount)' == '0'"
       Text="The documentation is up to date. Nothing to upload."
