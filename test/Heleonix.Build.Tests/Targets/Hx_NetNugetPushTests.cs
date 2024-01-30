@@ -56,7 +56,7 @@ public static class Hx_NetNugetPushTests
                 Directory.Delete(sourceDir, true);
             });
 
-            When("target is executed", () =>
+            When("Hx_NetNugetPush target is executed", () =>
             {
                 Should("succeed", () =>
                 {

@@ -43,7 +43,7 @@ public static class Hx_ExtentReportTests
             simulator.Clear();
         });
 
-        When("target is executed", () =>
+        When("Hx_ExtentReport target is executed", () =>
         {
             Should("succeed", () =>
             {

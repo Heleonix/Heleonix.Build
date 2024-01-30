@@ -13,7 +13,6 @@
     <PackageProjectUrl>https://github.com/Heleonix/Heleonix.Build</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/Heleonix/documentation/master/images/heleonix-logos/Heleonix-logo-128x128.jpg</PackageIconUrl>
 
-    <IsTool>false</IsTool>
     <IncludeSymbols>false</IncludeSymbols>
     <IncludeSource>false</IncludeSource>
     <NoPackageAnalysis>true</NoPackageAnalysis>

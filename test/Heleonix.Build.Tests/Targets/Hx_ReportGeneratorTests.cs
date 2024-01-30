@@ -41,7 +41,7 @@ public static class Hx_ReportGeneratorTests
             simulator.Clear();
         });
 
-        When("target is executed", () =>
+        When("Hx_ReportGenerator target is executed", () =>
         {
             Should("succeed", () =>
             {
