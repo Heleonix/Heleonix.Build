@@ -11,8 +11,9 @@ using System.Reflection;
 using System.Text;
 
 /// <summary>
-/// Thr entry class of the tool.
+/// The entry class of the tool.
 /// </summary>
+/// <exclude/>
 public static class Program
 {
     /// <summary>
@@ -82,42 +83,23 @@ public static class Program
         {
             process.StartInfo.FileName = dotnetExePath;
             process.StartInfo.Arguments = $"msbuild \"{mainProjFile}\" -noLogo -t:Hx_Initialize {argsBuilder}";
+            process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.RedirectStandardOutput = true;
 
-            process.OutputDataReceived += Process_OutputDataReceived;
-            process.ErrorDataReceived += Process_ErrorDataReceived;
-
             process.Start();
 
-            process.BeginErrorReadLine();
-            process.BeginOutputReadLine();
+            var pout = new StreamPipe(process.StandardOutput, Console.Out);
+            var perr = new StreamPipe(process.StandardError, Console.Error);
+
+            pout.Connect();
+            perr.Connect();
 
             process.WaitForExit();
 
             return process.ExitCode;
         }
-    }
-
-    private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-
-        Console.Error.WriteLine(e.Data);
-
-        Console.Error.Flush();
-
-        Console.ResetColor();
-    }
-
-    private static void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
-    {
-        Console.Out.WriteLine(e.Data);
-
-        Console.Out.Flush();
     }
 }

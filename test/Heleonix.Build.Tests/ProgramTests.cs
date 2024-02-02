@@ -75,7 +75,7 @@ public static class ProgramTests
         {
             args = new string[] { "--exe" };
 
-            Should("retun the error code: 1", () =>
+            Should("fail", () =>
             {
                 Assert.That(returnValue, Is.EqualTo(1));
                 Assert.That(
@@ -99,7 +99,7 @@ public static class ProgramTests
         {
             args = new string[] { "-p:Hx_WS_RepositoryUrl=https://example.com" };
 
-            Should("run the provided dotnet executable with passed command-line arguments", () =>
+            Should("run the default dotnet executable with passed command-line arguments", () =>
             {
                 Assert.That(returnValue, Is.Zero);
                 Assert.That(outptut, Contains.Substring("https://example.com"));

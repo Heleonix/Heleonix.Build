@@ -24,7 +24,7 @@
       <Hx_NetTest_RunSettingsFile Condition="'$(Hx_NetTest_RunSettingsFile)' == ''">@(_Hx_NetTest_RunSettingsFile)</Hx_NetTest_RunSettingsFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Hx_NetTest_VerifyCoverage)' == 'true' and '$(Hx_NetTest_Collect)' == '' and '$(Hx_NetTest_RunSettingsFile)' == ''">
-      <Hx_NetTest_Collect>XPlat Code Coverage</Hx_NetTest_Collect>
+      <Hx_NetTest_Collect>XPlat Code Coverage;ExcludeByAttribute=Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</Hx_NetTest_Collect>
     </PropertyGroup>
     <PropertyGroup>
       <Hx_NetTest_SourcePathRegExpOptions Condition="'$(Hx_NetTest_SourcePathRegExpOptions)' == ''">MultiLine</Hx_NetTest_SourcePathRegExpOptions>
