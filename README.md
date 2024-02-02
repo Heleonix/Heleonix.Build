@@ -1,6 +1,6 @@
 # Heleonix.Build
 
-[![CI/CD](https://github.com/Heleonix/Heleonix.Build/actions/workflows/net-nuget.yml/badge.svg?event=push)](https://github.com/Heleonix/Heleonix.Build/actions/workflows/net-nuget.yml)
+[![Release: .NET / NuGet](https://github.com/Heleonix/Heleonix.Build/actions/workflows/release-net-nuget.yml/badge.svg)](https://github.com/Heleonix/Heleonix.Build/actions/workflows/release-net-nuget.yml)
 
 The MSBuild-based build framework for applications on CI and CD systems.
 
