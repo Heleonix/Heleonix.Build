@@ -160,15 +160,6 @@ namespace Heleonix.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of regular expressions {0} does not match number of replacements {1}..
-        /// </summary>
-        internal static string FileUpdate_NumberOfRegExpsAndReplacementsMismatch {
-            get {
-                return ResourceManager.GetString("FileUpdate_NumberOfRegExpsAndReplacementsMismatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Updating file &apos;{0}&apos;..
         /// </summary>
         internal static string FileUpdate_UpdatingFile {
@@ -264,15 +255,6 @@ namespace Heleonix.Build.Properties {
         internal static string TaskFailed {
             get {
                 return ResourceManager.GetString("TaskFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} failed. Exit code: {1}..
-        /// </summary>
-        internal static string TaskFailedWithExitCode {
-            get {
-                return ResourceManager.GetString("TaskFailedWithExitCode", resourceCulture);
             }
         }
     }

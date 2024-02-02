@@ -138,9 +138,6 @@
   <data name="TaskFailed" xml:space="preserve">
     <value>Task failed: '{0}'.</value>
   </data>
-  <data name="TaskFailedWithExitCode" xml:space="preserve">
-    <value>{0} failed. Exit code: {1}.</value>
-  </data>
   <data name="FileCopy_FileNotFound" xml:space="preserve">
     <value>The file to copy '{0}' not found.</value>
   </data>
@@ -182,9 +179,6 @@
   </data>
   <data name="FileRazorGenerate_TemplateNotFound" xml:space="preserve">
     <value>The template file '{0}' not found.</value>
-  </data>
-  <data name="FileUpdate_NumberOfRegExpsAndReplacementsMismatch" xml:space="preserve">
-    <value>Number of regular expressions {0} does not match number of replacements {1}.</value>
   </data>
   <data name="NetSetupTool_InstallationFailed" xml:space="preserve">
     <value>Installation of the {0} tool, package {1}, version {2} failed with exit code {3}.</value>
