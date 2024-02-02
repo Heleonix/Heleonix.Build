@@ -9,19 +9,20 @@
 
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/Heleonix/Heleonix.Build</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/Heleonix/Heleonix.Build/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Heleonix/Heleonix.Build</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/Heleonix/documentation/master/images/heleonix-logos/Heleonix-logo-128x128.jpg</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/Heleonix/docs/master/images/heleonix-logos/Heleonix-logo-128x128.jpg</PackageIconUrl>
 
     <IncludeSymbols>false</IncludeSymbols>
     <IncludeSource>false</IncludeSource>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <ContentTargetFolders>.\</ContentTargetFolders>
     <BuildOutputTargetFolder>.\</BuildOutputTargetFolder>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
     <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
