@@ -95,7 +95,11 @@ public class Hx_GitHubCommitChangeLog : BaseTask
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {this.Token}");
         client.DefaultRequestHeaders.Add("User-Agent", this.UserAgent);
 
-        var release = client.GetFromJsonAsync<JsonElement>($"{this.GitHubRepositoryApiUrl}/releases/latest");
+        var response = client.GetAsync($"{this.GitHubRepositoryApiUrl}/releases/latest");
+
+        response.Wait(3 * 60 * 1000);
+
+        var release = response.Result.Content.ReadFromJsonAsync<JsonElement>();
 
         release.Wait(3 * 60 * 1000);
 

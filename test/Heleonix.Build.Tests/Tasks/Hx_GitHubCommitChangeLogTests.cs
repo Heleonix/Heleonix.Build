@@ -227,22 +227,23 @@ public static class Hx_GitHubCommitChangeLogTests
             {
                 (
                     "http://localhost:12345/repos/heleonix/heleonix.build/releases/latest/",
-                    request => (@"{}", HttpStatusCode.OK)),
+                    request => (@"{}", HttpStatusCode.NotFound)),
                 (
                     "http://localhost:12345/repos/heleonix/heleonix.build/commits/",
-                    request => (@"[]", HttpStatusCode.OK)),
+                    request => (@"[{""commit"":{""message"":""fix(ID-1): Fix 1.""}}]", HttpStatusCode.OK)),
             };
 
             Should("succeed", () =>
             {
                 Assert.That(succeeded, Is.True);
                 Assert.That(task.Version, Is.EqualTo("1.0.0"));
-                Assert.That(task.Changes.Length, Is.EqualTo(2));
+                Assert.That(task.Changes.Length, Is.EqualTo(3));
 
-                Assert.That(task.Changes[0].ItemSpec, Is.EqualTo("1.0.0"));
-                Assert.That(task.Changes[0].GetMetadata("Version"), Is.EqualTo("1.0.0"));
-                Assert.That(task.Changes[1].ItemSpec, Is.EqualTo("0.0.0"));
-                Assert.That(task.Changes[1].GetMetadata("PreviousVersion"), Is.EqualTo("0.0.0"));
+                Assert.That(task.Changes[0].ItemSpec, Is.EqualTo("fix(ID-1): Fix 1."));
+                Assert.That(task.Changes[1].ItemSpec, Is.EqualTo("1.0.0"));
+                Assert.That(task.Changes[1].GetMetadata("Version"), Is.EqualTo("1.0.0"));
+                Assert.That(task.Changes[2].ItemSpec, Is.EqualTo("0.0.0"));
+                Assert.That(task.Changes[2].GetMetadata("PreviousVersion"), Is.EqualTo("0.0.0"));
             });
         });
     }

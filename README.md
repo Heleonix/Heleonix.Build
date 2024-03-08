@@ -10,17 +10,15 @@ https://www.nuget.org/packages/Heleonix.Build
 
 ## The main idea
 
-This framework is developed to simplify writing scripts to build applications on CI/CD systems like GoCD, Jenkins, TeamCity etc.
+This framework is developed to simplify creation of scripts to build applications on CI/CD systems like GoCD, Jenkins, TeamCity etc.
 
-The framework provides parameterized targets such as Hx_NetBuild, Hx_Coverlet, Hx_NetTest, Hx_Validate etc., which represent separate steps in CI pipelines.
+The framework provides parameterized MSBuild targets, such as Hx_NetBuild, Hx_Coverlet, Hx_NetTest, Hx_Validate etc., which represent separate steps in CI pipelines.
 
-Each company designs some custom standards in organization of source code, so this build framework supports detailed customization.
-Basically it follows "configurable conventions" approach.
-It means, that source code file patterns, folders organization is configured on CI/CD servers and is passed into the build framework,
-so all projects in your company just follow those conventions and are successfully recognized and built on CI servers.
+Since every company has some custom standards of source code arrangement, this build framework supports solid customization.
+Basically it follows the "configurable conventions" approach.
 
-Default values of target parameters follow well-known standards in source code organization.
-So, if you follow standards as well, you even do not neeed to write custom build scripts, like "Build.props", "MySuperProjectBuild.targets", "bla-bla.props" etc.
+Default values of properties of MSBuild targets follow well-known pracices of arrangement of source code.
+So, if you follow standards as well, you do not even neeed to write custom build scripts, like "Build.props", "MyProjectBuild.targets", "bla-bla.props" etc.
 
 ## Writing custom scripts
 
@@ -96,6 +94,3 @@ then their properties and items are not defined.
 Use slash `/` in paths in MSBuild scripts, not backslash `\`, because MSBuild replaces them on *nix OSs anyway
 
 Use slash `/` in path regular expressions in Heleonix.Build tasks.
-
-### ToDo
-- describe Hx_Int_ targets in xsd schemas
