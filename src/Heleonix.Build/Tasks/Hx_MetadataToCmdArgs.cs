@@ -8,48 +8,19 @@ namespace Heleonix.Build.Tasks;
 using System.Collections;
 using System.Text;
 
-/// <summary>
-/// Stringifies metadata to be used as command line arguments.
-/// </summary>
-/// <example>
-/// <![CDATA[
-/// Metadata:
-/// <_Key_One>one</_Key_One>
-/// <__Key_Two>two</__Key_Two>
-/// Becomes: -Key.One=one --Key.Two=two
-/// ]]>
-/// </example>
 public class Hx_MetadataToCmdArgs : BaseTask
 {
-    /// <summary>
-    /// An MSBuild item with metadata to stringify. Leading '_' are replaced with '-'.
-    /// </summary>
     public ITaskItem Item { get; set; }
 
-    /// <summary>
-    /// The separator string to separate metadata key/value pairs. Default is " ".
-    /// </summary>
     public string MetadataSeparator { get; set; } = " ";
 
-    /// <summary>
-    /// The separator string to separate key and value of every metadata. Default is "=".
-    /// </summary>
     public string KeyValueSeparator { get; set; } = "=";
 
-    /// <summary>
-    /// A value indicating whether metadata keys like "Key_Name" should be changed to the "Key.Name" or not.
-    /// </summary>
     public bool DottedKeys { get; set; }
 
-    /// <summary>
-    /// The stringified metadata.
-    /// </summary>
     [Output]
     public string Result { get; set; }
 
-    /// <summary>
-    /// Reads a file with specified regular expression and content.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         if (this.Item == null)

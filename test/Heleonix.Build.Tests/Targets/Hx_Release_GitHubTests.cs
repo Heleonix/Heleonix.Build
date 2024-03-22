@@ -7,16 +7,10 @@ namespace Heleonix.Build.Tests.Targets;
 
 using System.Net;
 
-/// <summary>
-/// Tests the GitHubReleaseNet target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_Release_GitHubTests))]
 [NonParallelizable]
 public static class Hx_Release_GitHubTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_Release_GitHubTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_Release_GitHubTests))]
     public static void Execute()
     {

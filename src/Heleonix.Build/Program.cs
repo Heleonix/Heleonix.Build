@@ -10,17 +10,8 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 
-/// <summary>
-/// The entry class of the tool.
-/// </summary>
-/// <exclude/>
 public static class Program
 {
-    /// <summary>
-    /// The entry point of the tool.
-    /// </summary>
-    /// <param name="args">The command line arguments.</param>
-    /// <returns>An exit code.</returns>
     public static int Main(string[] args)
     {
         if (args.Length == 1

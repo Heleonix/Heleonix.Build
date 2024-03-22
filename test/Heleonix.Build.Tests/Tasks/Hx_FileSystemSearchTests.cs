@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_FileSystemSearch"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_FileSystemSearch))]
 public static class Hx_FileSystemSearchTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_FileSystemSearch.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_FileSystemSearch.Execute))]
     public static void Execute()
     {

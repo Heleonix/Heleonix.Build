@@ -4,9 +4,6 @@
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:include schemaLocation="./Hx_DirectoryClean.xsd"/>
   <xs:include schemaLocation="./Hx_FileCopy.xsd"/>
   <xs:include schemaLocation="./Hx_FileRazorGenerate.xsd"/>

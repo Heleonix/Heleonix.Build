@@ -7,16 +7,8 @@ namespace NetSimulator.Tests
 {
     using NUnit.Framework;
 
-    /// <summary>
-    /// Tests the <see cref="Tokenizer"/>.
-    /// </summary>
     public static class TokenizerTests
     {
-        /// <summary>
-        /// Tests the <see cref="Tokenizer.Split"/>.
-        /// </summary>
-        /// <param name="source">A source string to split.</param>
-        /// <returns>Splitted strings.</returns>
         [TestCase("1,2,3", ExpectedResult = new[] { "1", "2", "3" })]
         public static string[] Split(string source) => Tokenizer.Split(source, ',');
     }

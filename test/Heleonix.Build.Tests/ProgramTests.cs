@@ -5,16 +5,10 @@
 
 namespace Heleonix.Build.Tests;
 
-/// <summary>
-/// Tests the <see cref="Program"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Program))]
 
 public static class ProgramTests
 {
-    /// <summary>
-    /// Tests the <see cref="Program.Main"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Program.Main))]
 
     public static void MainTests()

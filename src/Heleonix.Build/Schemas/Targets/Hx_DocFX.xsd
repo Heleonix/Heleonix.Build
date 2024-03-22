@@ -30,12 +30,9 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_DocFX_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the DocFX artifacts directory.</xs:documentation>
+      <xs:documentation>A path to the DocFX artifacts directory. Default is '$Hx_Run_ArtifactsDir/DocFX'.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_DocFX_RepositoryUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
@@ -46,7 +43,7 @@ Example custom property that allows string content only
   <xs:element name="Hx_DocFX_Message" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
-        The commit message to commit and upload the generated documentation back to the repository url.
+        The commit message to commit and upload the generated documentation back to the $Hx_DocFX_RepositoryUrl.
         Default is 'Automatic update of documentation.'.
       </xs:documentation>
     </xs:annotation>

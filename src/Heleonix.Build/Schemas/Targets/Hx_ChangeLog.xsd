@@ -30,26 +30,28 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_ChangeLog_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the ChangeLog artifacts directory.</xs:documentation>
+      <xs:documentation>
+        A path to the ChangeLog artifacts directory. Default is '$Hx_Run_ArtifactsDir/ChangeLog'.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
 
   <xs:element name="Hx_ChangeLog_TemplateFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>
-        The list of template files to generates change logs from.
-        Default are 'ReleaseNotes.md.cshtml' and 'ReleaseNotes.txt.cshtml' from the Heleonix.Build.
+        The list of Razor *.cshtml template files to generates change logs with using the Hx_FileRazorGenerate task.
+        Default are two templates: 'ReleaseNotes.md.cshtml' and 'ReleaseNotes.txt.cshtml' from the Heleonix.Build.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_ChangeLog_CustomChanges" type="msb:GenericItemType" substitutionGroup="msb:Item">
     <xs:annotation>
-      <xs:documentation>The list of custom changes with custom metadata to generate change logs with.</xs:documentation>
+      <xs:documentation>
+        The list of custom changes with custom metadata to be passed into the Razor *.cshtml templates via the 'Data'
+        input property of the Hx_FileRazorGenerate task to generate change logs.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
 </xs:schema>

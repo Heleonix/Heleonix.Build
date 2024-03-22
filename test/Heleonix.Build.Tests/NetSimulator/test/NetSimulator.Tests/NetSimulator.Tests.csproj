@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net472;net46</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 

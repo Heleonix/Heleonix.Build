@@ -8,15 +8,9 @@ namespace Heleonix.Build.Tests.Targets;
 using System.Diagnostics;
 using System.Reflection;
 
-/// <summary>
-/// Tests the BuildNet target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_NetBuildTests))]
 public static class Hx_NetBuildTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_NetBuildTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_NetBuildTests))]
     public static void Execute()
     {

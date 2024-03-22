@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_FileValidate"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_FileValidate))]
 public static class Hx_FileValidateTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_FileValidate.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_FileValidate.Execute))]
     public static void Execute()
     {

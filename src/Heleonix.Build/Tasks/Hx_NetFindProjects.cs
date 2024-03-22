@@ -5,26 +5,14 @@
 
 namespace Heleonix.Build.Tasks;
 
-/// <summary>
-/// Finds .NET projects files in a given solution files.
-/// </summary>
 public class Hx_NetFindProjects : BaseTask
 {
-    /// <summary>
-    /// The path to the solution file to search projects files in.
-    /// </summary>
     [Required]
     public string SlnFile { get; set; }
 
-    /// <summary>
-    /// Projects files found in the specified solution file [Output].
-    /// </summary>
     [Output]
     public string[] ProjectFiles { get; set; }
 
-    /// <summary>
-    /// Executes the implementation of the task.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         var slnContent = File.ReadAllText(this.SlnFile);

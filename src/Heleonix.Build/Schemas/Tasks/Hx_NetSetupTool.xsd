@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_NetSetupTool" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>
@@ -33,14 +30,14 @@ Example custom task with single required parameter
             <xs:annotation>
               <xs:documentation>
                 The name of the .NET tool to be used or the name of the dependency package.
-                Example of a .NET tool Name: 'hxbuild', 'docfx'. Example of a dependency package Name: 'NunitXml.TestLogger'.
+                Example of a .NET tool Name: 'hxbuild', 'docfx'. Example of a dependency package name: 'NunitXml.TestLogger'.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="DotnetExe">
             <xs:annotation>
               <xs:documentation>
-                The path to the dotnet.exe executable to use for installation commands.
+                The path to the 'dotnet.exe' executable to use for installation commands.
                 Use $Hx_Sys_DotnetExe in your targets.
               </xs:documentation>
             </xs:annotation>
@@ -49,8 +46,9 @@ Example custom task with single required parameter
             <xs:annotation>
               <xs:documentation>
                 The name of the package to install.
-                For the tools used by the Heleonix.Build it is ignored, because the PackageName is hard-coded.
-                For your custom tools it needs to be specified. If IsPackage=true, it is ignored, because the Name is used.
+                For the tools used by the Heleonix.Build it is ignored, because the 'PackageName' is hard-coded.
+                For your custom tools it needs to be specified.
+                If 'IsPackage' is 'true', it is ignored, because the 'Name' is used instead.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
@@ -59,7 +57,7 @@ Example custom task with single required parameter
               <xs:documentation>
                 The version of the tool to be installed, i.e. '1.0.0', '6.0.1'.
                 If not specified, the latest version is installed.
-                For the tools used by the Heleonix.Build, it is ignored, because the specific version is hard-coded.
+                For the tools used by the Heleonix.Build, it is ignored, because the specific versions are hard-coded.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
@@ -73,7 +71,7 @@ Example custom task with single required parameter
           <xs:attribute name="ToolPath">
             <xs:annotation>
               <xs:documentation>
-                The path to the .NET tool executable, or the path to the dependency package folder [Output].
+                The path to the installed .NET tool executable or to the installed dependency package folder [Output].
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

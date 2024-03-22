@@ -7,25 +7,13 @@ namespace Heleonix.Build.Tasks;
 
 using System.Text.RegularExpressions;
 
-/// <summary>
-/// Validates that contents of specified files corresponds to specified regex patterns.
-/// </summary>
 public class Hx_FileValidate : BaseTask
 {
-    /// <summary>
-    /// The file paths with regex patterns in custom metadata to validate.
-    /// </summary>
     [Required]
     public ITaskItem[] Files { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression options. Default value is "IgnoreCase".
-    /// </summary>
     public string RegExpOptions { get; set; } = "IgnoreCase";
 
-    /// <summary>
-    /// Reads a file with specified regular expression and content.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         var regExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.RegExpOptions, true);

@@ -5,16 +5,10 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_MetadataToCmdArgs"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_MetadataToCmdArgs))]
 
 public static class Hx_MetadataToCmdArgsTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_MetadataToCmdArgs.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_MetadataToCmdArgs.Execute))]
     public static void Execute()
     {

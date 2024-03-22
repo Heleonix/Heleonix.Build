@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Targets;
 
-/// <summary>
-/// Tests the ReportGenerator target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_ExtentReportTests))]
 public static class Hx_ExtentReportTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_ExtentReportTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_ExtentReportTests))]
     public static void Execute()
     {

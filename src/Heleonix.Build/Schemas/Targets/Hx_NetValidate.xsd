@@ -30,12 +30,9 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_NetValidate_RegExpOptions" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>Regular expression options to use when executing validation for each Hx_NetValidate_Files.</xs:documentation>
+      <xs:documentation>Regular expression options to use when executing validation for each @Hx_NetValidate_Files.</xs:documentation>
     </xs:annotation>
   </xs:element>
 

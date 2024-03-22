@@ -10,16 +10,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-/// <summary>
-/// Provides functionality for working with requests, responses, emulated services etc.
-/// </summary>
 public static class HttpHelper
 {
-    /// <summary>
-    /// Launches an http server.
-    /// </summary>
-    /// <param name="mocks">An array of mocks to emulate responses for each url.</param>
-    /// <returns>A task to manage launched server.</returns>
     public static HttpListener LaunchHttpServer(params (
         string Url,
         Func<HttpListenerRequest, (string Content, HttpStatusCode StatusCode)>)[] mocks)

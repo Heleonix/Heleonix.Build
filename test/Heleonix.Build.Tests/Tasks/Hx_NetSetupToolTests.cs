@@ -5,16 +5,10 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_NetSetupTool"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_NetSetupTool))]
 
 public static class Hx_NetSetupToolTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_NetSetupTool.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_NetSetupTool.Execute))]
     public static void Execute()
     {

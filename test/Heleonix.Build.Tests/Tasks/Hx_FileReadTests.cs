@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_FileRead"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_FileRead))]
 public static class Hx_FileReadTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_FileRead.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_FileRead.Execute))]
     public static void Execute()
     {

@@ -10,7 +10,6 @@ using Microsoft.Build.Utilities;
 /// <summary>
 /// The <c>base</c> task.
 /// </summary>
-/// <exclude/>
 public abstract class BaseTask : Task
 {
     /// <summary>

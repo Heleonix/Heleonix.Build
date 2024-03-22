@@ -7,16 +7,10 @@ namespace Heleonix.Build.Tests.Tasks;
 
 using System.Net;
 
-/// <summary>
-/// Tests the <see cref="Hx_GitHubRelease"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_GitHubRelease))]
 [NonParallelizable]
 public static class Hx_GitHubReleaseTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_GitHubRelease.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_GitHubRelease.Execute))]
     public static void Execute()
     {

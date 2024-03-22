@@ -8,51 +8,23 @@ namespace Heleonix.Build.Tasks;
 using System.IO;
 using System.Reflection;
 
-/// <summary>
-/// Sets up the tool (a .NET tool or a dependency package) to be used by the Heleonix.Build framework.
-/// </summary>
 public class Hx_NetSetupTool : BaseTask
 {
-    /// <summary>
-    /// The name of the .NET tool to be used or the name of the dependency package.
-    /// Example of a .NET tool Name: 'hxbuild', 'docfx'. Example of a dependency package Name: 'NunitXml.TestLogger'.
-    /// </summary>
     [Required]
     public string Name { get; set; }
 
-    /// <summary>
-    /// The path to the dotnet.exe executable to use for installation commands. Use $Hx_Sys_DotnetExe in your targets.
-    /// </summary>
     [Required]
     public string DotnetExe { get; set; }
 
-    /// <summary>
-    /// The name of the package to install.
-    /// For the tools used by the Heleonix.Build it is ignored, because the PackageName is hard-coded.
-    /// For your custom tools it needs to be specified. If IsPackage=true, it is ignored, because the Name is used.
-    /// </summary>
     public string PackageName { get; set; }
 
-    /// <summary>
-    /// The version of the tool to be installed, i.e. '1.0.0', '6.0.1'. If not specified, the latest version is installed.
-    /// For the tools used by the Heleonix.Build, it is ignored, because the specific version is hard-coded.
-    /// </summary>
     public string Version { get; set; }
 
-    /// <summary>
-    /// For dependency packages set it to 'true'. For .NET tools set it to 'false'. Default is 'false'.
-    /// </summary>
     public bool IsPackage { get; set; } = false;
 
-    /// <summary>
-    /// The path to the .NET tool executable, or the path to the dependency package folder [Output].
-    /// </summary>
     [Output]
     public string ToolPath { get; set; }
 
-    /// <summary>
-    /// Executes the implementation of the task.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         var toolsDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Tools");
@@ -171,11 +143,6 @@ public class Hx_NetSetupTool : BaseTask
         this.ToolPath = Path.Combine(toolsDir, this.PackageName, this.Version);
     }
 
-    /// <summary>
-    /// Gets the path to the latest version folder of a given package path.
-    /// </summary>
-    /// <param name="packagePath">The package path to find a subfolder with the latest version.</param>
-    /// <returns>The path to the latest version folder of a given package path.</returns>
     private static string GetLatestVersionPath(string packagePath)
     {
         var dirs = Directory.Exists(packagePath) ? Directory.GetDirectories(packagePath) : Array.Empty<string>();

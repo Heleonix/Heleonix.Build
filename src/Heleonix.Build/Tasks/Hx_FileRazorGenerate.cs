@@ -9,43 +9,16 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using RazorEngineCore;
 
-/// <summary>
-/// Generates a file using the passed Razor template file and passed list of data items.
-/// </summary>
-/// <example>
-/// <![CDATA[
-/// @using System
-/// @using Microsoft.Build.Framework
-/// @inherits RazorEngineCore.RazorEngineTemplateBase<ITaskItem[]>
-/// @DateTime.UtcNow.ToShortDateString()
-/// @foreach (var item in Model)
-/// {
-///     <text>- </text> @item.GetMetadata("description")
-///     @:
-/// }
-/// ]]></example>
 public class Hx_FileRazorGenerate : BaseTask
 {
-    /// <summary>
-    /// The path to the Razor template file.
-    /// </summary>
     [Required]
     public string TemplateFile { get; set; }
 
-    /// <summary>
-    /// The path to the generated file.
-    /// </summary>
     [Required]
     public string GeneratedFile { get; set; }
 
-    /// <summary>
-    /// Data items to be passed to the template file with any metadata.
-    /// </summary>
     public ITaskItem[] Data { get; set; }
 
-    /// <summary>
-    /// Executes the task.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         if (!File.Exists(this.TemplateFile))
@@ -66,12 +39,6 @@ public class Hx_FileRazorGenerate : BaseTask
         File.WriteAllText(this.GeneratedFile, result);
     }
 
-    /// <summary>
-    /// Resolves assemblies known to this assembly.
-    /// </summary>
-    /// <param name="sender">An object which sent the event.</param>
-    /// <param name="args">Event arguments to get the name of the missing assembly to resolve.</param>
-    /// <returns>A resolved assembly or <c>null</c> otherwise.</returns>
     [ExcludeFromCodeCoverage]
     private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {

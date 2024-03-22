@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_FileUpdate"/>.
-/// </summary>
 [ComponentTest(Type = typeof(BaseTask))]
 public static class BaseTaskTests
 {
-    /// <summary>
-    /// Tests the <see cref="BaseTask.Execute"/>.
-    /// </summary>
     [MemberTest(Name = nameof(BaseTask.Execute))]
     public static void Execute()
     {
@@ -62,28 +56,16 @@ public static class BaseTaskTests
         });
     }
 
-    /// <summary>
-    /// Inherits the <see cref="BaseTask"/> for testing.
-    /// </summary>
     private class FailedBaseTask : BaseTask
     {
-        /// <summary>
-        /// Throws the <see cref="NotImplementedException"/>.
-        /// </summary>
         protected override void ExecuteInternal()
         {
             throw new NotImplementedException();
         }
     }
 
-    /// <summary>
-    /// Inherits the <see cref="BaseTask"/> for testing.
-    /// </summary>
     private class SuccessBaseTask : BaseTask
     {
-        /// <summary>
-        /// Does nothing.
-        /// </summary>
         protected override void ExecuteInternal()
         {
         }

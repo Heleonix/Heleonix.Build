@@ -8,16 +8,10 @@ namespace Heleonix.Build.Tests.Tasks;
 using System.Net;
 using System.Text.Json.Nodes;
 
-/// <summary>
-/// Tests the <see cref="Hx_GitHubCommitChangeLog"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_GitHubCommitChangeLog))]
 [NonParallelizable]
 public static class Hx_GitHubCommitChangeLogTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_GitHubCommitChangeLog.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_GitHubCommitChangeLog.Execute))]
     public static void Execute()
     {

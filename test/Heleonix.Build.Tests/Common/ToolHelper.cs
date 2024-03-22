@@ -7,18 +7,8 @@ namespace Heleonix.Build.Tests.Common;
 
 using NUnit.Framework.Internal;
 
-/// <summary>
-/// Provides functionality to work with MSBuild.
-/// </summary>
 public static class ToolHelper
 {
-    /// <summary>
-    /// Runs a test target.
-    /// </summary>
-    /// <param name="target">A target to run.</param>
-    /// <param name="workspace">A workspace to run the target in.</param>
-    /// <param name="properties">Properties of the target to override or define.</param>
-    /// <returns><c>true</c> in case of success, otherwise <c>false</c>.</returns>
     public static bool RunTestTarget(string target, string workspace, IDictionary<string, string> properties)
     {
         var args = ArgsBuilder.By("-", ":")

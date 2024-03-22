@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_FileCopy"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_FileCopy))]
 public static class Hx_FileCopyTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_FileCopy.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_FileCopy.Execute))]
     public static void Execute()
     {

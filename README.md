@@ -2,95 +2,51 @@
 
 [![Release: .NET / NuGet](https://github.com/Heleonix/Heleonix.Build/actions/workflows/release-net-nuget.yml/badge.svg)](https://github.com/Heleonix/Heleonix.Build/actions/workflows/release-net-nuget.yml)
 
-The MSBuild-based build framework for applications on CI and CD systems.
+The MSBuild-based build framework for applications on CI/CD systems.
 
 ## Install
 
 https://www.nuget.org/packages/Heleonix.Build
 
-## The main idea
+## The idea
 
-This framework is developed to simplify creation of scripts to build applications on CI/CD systems like GoCD, Jenkins, TeamCity etc.
+This framework is aiming to simplify implementation of different CI/CD stages for applications on CI/CD systems,
+like GoCD, Jenkins, TeamCity etc.
 
-The framework provides parameterized MSBuild targets, such as Hx_NetBuild, Hx_Coverlet, Hx_NetTest, Hx_Validate etc., which represent separate steps in CI pipelines.
+The build framework consists of parameterized MSBuild [Targets](https://heleonix.github.io/docs/Heleonix.Build/api/Targets/index.html),
+such as [Hx_NetBuild](https://heleonix.github.io/docs/Heleonix.Build/api/Targets/Hx_NetBuild.html),
+[Hx_NetTest](https://heleonix.github.io/docs/Heleonix.Build/api/Targets/Hx_NetTest.html),
+[Hx_NetValidate](https://heleonix.github.io/docs/Heleonix.Build/api/Targets/Hx_NetValidate.html) etc.,
+which usually represent separate steps in CI pipelines.
 
-Since every company has some custom standards of source code arrangement, this build framework supports solid customization.
-Basically it follows the "configurable conventions" approach.
+The build framework also provides set of reusable [Tasks](https://heleonix.github.io/docs/Heleonix.Build/api/Tasks/index.html).
 
-Default values of properties of MSBuild targets follow well-known pracices of arrangement of source code.
-So, if you follow standards as well, you do not even neeed to write custom build scripts, like "Build.props", "MyProjectBuild.targets", "bla-bla.props" etc.
+Usually source code is organized by following some well-known or custom standards, that's why this build framework
+supports solid customization. Basically it follows the "configurable conventions" approach.
 
-## Writing custom scripts
+Default values of properties and items of [Targets](https://heleonix.github.io/docs/Heleonix.Build/api/Targets/index.html) follow well-known practices of arrangement of source code.
+So, if you follow well-known standards too, you do not even neeed to write custom build scripts.
 
-### Naming Conventions:
+## More details
 
-#### Global Property Name:
-`<Ns><_Sys | _WS | _Run>_<PropertyName>[Dir(s) | File(s) | Url(s) | <Ext>]`
+- [Usage](https://heleonix.github.io/docs/Heleonix.Build/usage.html)
+- [Extensibility](https://heleonix.github.io/docs/Heleonix.Build/extensibility.md)
+- [API](https://heleonix.github.io/docs/Heleonix.Build/api/Heleonix.Build.html)
 
-Global properties are defined out of targets, so they can be overriden in your custom *.hxbproj files out of targets or from the command line.
+## Contribution Guideline
 
-#### Target Name:
-`<Ns>_<TargetName>[_Variation]`
-Artifacts directory for all variations is the same
-`Ns_Int_*` supposed to be used within the framework and your custom targets internally, but not by CI/CD.
+1. [Create a fork](https://github.com/Heleonix/Heleonix.Build/fork) from the main repository
+2. Implement whatever is needed
+3. [Create a Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
+   Make sure the assigned [Checks](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) pass successfully.
+   You can watch the progress in the [PR: .NET](https://github.com/Heleonix/Heleonix.Build/actions/workflows/pr-net.yml) GitHub workflows
+4. [Request review](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/requesting-a-pull-request-review) from the code owner
+5. Once approved, merge your Pull Request via [Squash and merge](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits)
 
-#### Target's Parameter Name:
-`<TargetName>_<ParameterName>[Dir(s) | File(s) | <Ext>]`
+   > [!IMPORTANT]  
+   > While merging, enter a [Conventional Commits](https://www.conventionalcommits.org/) commit message.
+   > This commit message will be used in automatically generated [Github Release Notes](https://github.com/Heleonix/Heleonix.Build/releases)
+   > and [NuGet Release Notes](https://www.nuget.org/packages/Heleonix.Build/#releasenotes-body-tab)
 
-If a parameter is a single item, then it should be an MSBuild property.
-If a parameter is multiple items (the name ending with (s)), then it should be an MSBuild item.
-
-#### Target's Private Parameter Name:
-`_<TargetName>_<ParameterName>[Dir(s) | File(s) | <Ext>]`
-
-#### Target's artifacts:
-The properties `Ns_TargetName_ArtifactsDir` defining paths to artifacts directories are defined out of targets, as the global properties,
-because targets can depend on each other via artifacts. I.e. Hx_ChangeLog_ArtifactsDir is used by Hx_NetBuild, Hx_NetNugetPush etc.
-
-Targets can depend on each other only via artifacts, because if every target is executed in a separate dotnet.exe run,
-then their properties and items are not defined.
-
-#### Target template
-
-```xml
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Ns_TargetName_ArtifactsDir>$(Hx_Run_ArtifactsDir)/TargetName</Ns_TargetName_ArtifactsDir>
-  </PropertyGroup>
-
-  <Target Name="Ns_TargetName">
-    <Message Text="> RUNNING Ns_TargetName ..." Importance="high"/>
-
-    <Hx_NetSetupTool DotnetExe="$(Hx_Sys_DotnetExe)" Name="NameOfFile">
-      <Output TaskParameter="ToolPath" PropertyName="_Ns_TargetName_NameOfFileExe"/>
-    </Hx_NetSetupTool>
-
-    <!--Validation of required parameters-->
-
-    <!--Target's property groups, setting default vaues-->
-
-    <!--Target's item groups, setting default values-->
-
-    <Message Text="> 1/3: Doing step one" Importance="high"/>
-    <!--tasks, targets etc.-->
-    <!--tasks, targets etc.-->
-
-    <Message Text="> 2/3: Doing step two" Importance="high"/>
-    <!--tasks, targets etc.-->
-    <!--tasks, targets etc.-->
-
-    <Message Text="> 3/3: Doing step three" Importance="high"/>
-    <!--tasks, targets etc.-->
-    <!--tasks, targets etc.-->
-
-    <Message Text="> DONE Ns_TargetName" Importance="high"/>
-
-    <OnError ExecuteTargets="Hx_OnError"/>
-  </Target>
-</Project>
-```
-
-### Notes
-Use slash `/` in paths in MSBuild scripts, not backslash `\`, because MSBuild replaces them on *nix OSs anyway
-
-Use slash `/` in path regular expressions in Heleonix.Build tasks.
+5. Monitor the [Release: .NET / NuGet](https://github.com/Heleonix/Heleonix.Build/actions/workflows/release-net-nuget.yml) GitHub workflow to make sure your changes are delivered successfully
+5. In case of any issues, please contact [heleonix.sln@gmail.com](mailto:heleonix.sln@gmail.com)
