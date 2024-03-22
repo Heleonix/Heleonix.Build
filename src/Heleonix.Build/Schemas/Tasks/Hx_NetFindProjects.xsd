@@ -17,12 +17,9 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_NetFindProjects" substitutionGroup="msb:Task">
     <xs:annotation>
-      <xs:documentation>Finds .NET projects files in a given solution files.</xs:documentation>
+      <xs:documentation>Finds .NET projects files in a given solution file.</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:complexContent>

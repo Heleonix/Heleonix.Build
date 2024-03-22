@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_GitHubCommitChangeLog" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>
@@ -36,7 +33,7 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="Token" use="required">
             <xs:annotation>
-              <xs:documentation>A personal access token to authorize to the GitHub API.</xs:documentation>
+              <xs:documentation>A GitHub access token to authorize to the GitHub API.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="UserAgent" use="required">
@@ -47,7 +44,7 @@ Example custom task with single required parameter
           <xs:attribute name="VersionTagRegExp" use="required">
             <xs:annotation>
               <xs:documentation>
-                A regular expression to extract a version from a tag name of the latest release in format '11.22.33'.
+                A regular expression to extract a version from a tag name of the latest release.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
@@ -73,7 +70,7 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="RegExpOptions">
             <xs:annotation>
-              <xs:documentation>The .NET regular expression options for regexp patterns. Default is "None".</xs:documentation>
+              <xs:documentation>The .NET regular expression options for regexp patterns. Default is 'None'.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Version">
@@ -84,8 +81,8 @@ Example custom task with single required parameter
           <xs:attribute name="Changes">
             <xs:annotation>
               <xs:documentation>
-                the list of changes with metadata as captured groups names and values.
-                The 'Version' and 'PreviousVersion' metadata specify the new calculated and previous versions [Output].
+                The list of changes with metadata as captured groups names and values.
+                The 'Version' and 'PreviousVersion' metadata specify the new calculated and previous release versions [Output].
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

@@ -30,19 +30,16 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_Release_GitHub_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A personal access token to authorize to the GitHub Releases API.</xs:documentation>
+      <xs:documentation>A GitHub access token to authorize to the GitHub Releases API.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_Release_GitHub_TagName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
         A name of the tag to create and/or from which the release should be created.
-        Default is a version retrieved from the $Hx_ChangeLog_ArtifactsDir/semver.txt.
+        Default is a version retrieved from the '$Hx_ChangeLog_ArtifactsDir/semver.txt'.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
@@ -50,7 +47,7 @@ Example custom property that allows string content only
     <xs:annotation>
       <xs:documentation>
         A file with release notes for a release to be created.
-        Default is $Hx_ChangeLog_ArtifactsDir/ReleaseNotes.md.
+        Default is '$Hx_ChangeLog_ArtifactsDir/ReleaseNotes.md'.
       </xs:documentation>
     </xs:annotation>
   </xs:element>

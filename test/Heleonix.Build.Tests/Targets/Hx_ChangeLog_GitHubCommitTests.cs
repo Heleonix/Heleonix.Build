@@ -7,16 +7,10 @@ namespace Heleonix.Build.Tests.Targets;
 
 using System.Net;
 
-/// <summary>
-/// Tests the BuildNet target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_ChangeLog_GitHubCommitTests))]
 [NonParallelizable]
 public static class Hx_ChangeLog_GitHubCommitTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_ChangeLog_GitHubCommitTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_ChangeLog_GitHubCommitTests))]
     public static void Execute()
     {

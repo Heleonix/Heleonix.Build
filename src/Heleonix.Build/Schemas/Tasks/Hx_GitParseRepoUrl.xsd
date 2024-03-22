@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_GitParseRepoUrl" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Extracts owner and repository name from the repository url.</xs:documentation>
@@ -30,7 +27,7 @@ Example custom task with single required parameter
           <xs:attribute name="RepositoryUrl">
             <xs:annotation>
               <xs:documentation>
-                A reporsitory url to parse, like https://github.com/Heleonix/Heleonix.Build.git or git @github.com:Heleonix/Heleonix.Build.git.
+                A reporsitory url to parse, like https://github.com/Heleonix/Heleonix.Build.git or git@github.com:Heleonix/Heleonix.Build.git.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

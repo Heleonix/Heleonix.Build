@@ -7,85 +7,32 @@ namespace Heleonix.Build.Tasks;
 
 using System.Text.RegularExpressions;
 
-/// <summary>
-/// Searches items in the file system.
-/// </summary>
 public class Hx_FileSystemSearch : BaseTask
 {
-    /// <summary>
-    /// The directory to start from, including that directory.
-    /// </summary>
     [Required]
     public string StartDir { get; set; }
 
-    /// <summary>
-    /// The search direction.
-    /// </summary>
-    /// <remarks>
-    /// Possible values:
-    /// <list type="bullet">
-    /// <item><term>Up</term></item>
-    /// <item><term>Down</term></item>
-    /// </list>
-    /// Default is "Down".
-    /// </remarks>
     public string Direction { get; set; }
 
-    /// <summary>
-    /// The types of items to search.
-    /// </summary>
-    /// <remarks>
-    /// Possible values:
-    /// <list type="bullet">
-    /// <item><term>Files</term></item>
-    /// <item><term>Directories</term></item>
-    /// <item><term>All</term></item>
-    /// </list>
-    /// Default is "All".
-    /// </remarks>
     public string Types { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression to include found paths. Use only / for path separators.
-    /// </summary>
     public string PathRegExp { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression options to include found paths. Default is "IgnoreCase".
-    /// </summary>
     public string PathRegExpOptions { get; set; } = "IgnoreCase";
 
-    /// <summary>
-    /// The .NET regular expression to include by content.
-    /// </summary>
     public string ContentRegExp { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression options to include by content. Default is "IgnoreCase".
-    /// </summary>
     public string ContentRegExpOptions { get; set; } = "IgnoreCase";
 
-    /// <summary>
-    /// The found files [Output].
-    /// </summary>
     [Output]
     public string[] FoundFiles { get; set; }
 
-    /// <summary>
-    /// The found directories [Output].
-    /// </summary>
     [Output]
     public string[] FoundDirs { get; set; }
 
-    /// <summary>
-    /// All the found items [Output].
-    /// </summary>
     [Output]
     public string[] FoundItems { get; set; }
 
-    /// <summary>
-    /// Searches items in the file system.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         if (!Directory.Exists(this.StartDir))
@@ -137,16 +84,6 @@ public class Hx_FileSystemSearch : BaseTask
         this.FoundItems = foundItems.ToArray();
     }
 
-    /// <summary>
-    /// Searches items in the specified directory.
-    /// </summary>
-    /// <param name="currentDir">The current directory path.</param>
-    /// <param name="startAt">A position in the <paramref name="currentDir"/> to apply the <paramref name="pathRegExp"/> from.</param>
-    /// <param name="pathRegExp">The .NET regular expression to include found paths.</param>
-    /// <param name="contentRegExp">The .NET regular expression to include by content.</param>
-    /// <param name="foundFiles">The found files.</param>
-    /// <param name="foundDirs">The found directories.</param>
-    /// <param name="foundItems">All the found items.</param>
     private void Search(
         string currentDir,
         int startAt,

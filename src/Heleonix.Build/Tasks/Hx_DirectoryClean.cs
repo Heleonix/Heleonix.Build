@@ -5,26 +5,14 @@
 
 namespace Heleonix.Build.Tasks;
 
-/// <summary>
-/// Deletes contents of a directory, but not the directory itself.
-/// </summary>
 public class Hx_DirectoryClean : BaseTask
 {
-    /// <summary>
-    /// Directories to clean.
-    /// </summary>
     [Required]
     public string[] Dirs { get; set; }
 
-    /// <summary>
-    /// The cleaned directories paths [Output].
-    /// </summary>
     [Output]
     public string[] CleanedDirs { get; set; }
 
-    /// <summary>
-    /// Deletes contents of a directory, but not the directory itself.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         var cleanedDirectoriesItems = new List<string>();

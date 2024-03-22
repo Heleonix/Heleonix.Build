@@ -30,15 +30,13 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
   <xs:include schemaLocation="./Targets/Targets.xsd"/>
   <xs:include schemaLocation="./Tasks/Tasks.xsd"/>
 
   <xs:element name="Hx_Sys_DotnetExe" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
-        A path to the dotnet.exe to be used by the relevant targets. It is passed in from the --exe CLI parameter.
+        A path to the 'dotnet.exe' to be used by the relevant targets. It is passed in from the '--exe' CLI parameter.
         Default is 'dotnet.exe', considering it is globally available.
       </xs:documentation>
     </xs:annotation>
@@ -46,43 +44,62 @@ Example custom property that allows string content only
 
   <xs:element name="Hx_WS_Dir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A current folder, where build is executed. Usually, it's a folder where a repository was checked out.</xs:documentation>
+      <xs:documentation>
+        A current working folder, where 'hxbuild' is executed. Usually, it's a folder where a repository was checked out.
+        Default value is the $MSBuildStartupDirectory.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_WS_BuildProjFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>The build project file defining workspace-specific overrides.</xs:documentation>
+      <xs:documentation>
+        The MSBuild project file defining workspace-specific overrides.
+        This file is imported after the $Hx_Run_BuildProjFile and overrides evaluation-phase definitions of properties and items.
+        Default is '$Hx_WS_Dir/*.hxbproj'.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_WS_RepositoryUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A url of the repository. Depends on the VCS. For example: https://github.com/Heleonix/Heleonix.Build.git.</xs:documentation>
+      <xs:documentation>
+        A url of the repository. Depends on the VCS. For example: https://github.com/Heleonix/Heleonix.Build.git.
+        Default tries to get it from:
+        $GO_MATERIAL_URL, $GIT_URL, $CI_REPOSITORY_URL, '$(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY).git'.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_WS_RepositoryAPIUrl" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A url of the repository API. Depends on the VCS. Default: https://api.github.com</xs:documentation>
+      <xs:documentation>A url of the repository API. Depends on the VCS. Default is https://api.github.com</xs:documentation>
     </xs:annotation>
   </xs:element>
 
   <xs:element name="Hx_Run_BuildProjFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A file to override everything up to solution-specific definitions.</xs:documentation>
+      <xs:documentation>
+        The MSBuild project file defining run-specific overrides. This file is imported before the $Hx_WS_BuildProjFile.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_Run_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the root artifacts directory, where targets produce their artifacts.</xs:documentation>
+      <xs:documentation>
+        A path to the root artifacts directory, where targets produce their artifacts.
+        Default is '$Hx_WS_Dir/Hx_Artifacts'.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_Run_Configuration" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A configuration, i.e. "Release", "Debug" etc.</xs:documentation>
+      <xs:documentation>A configuration, i.e. 'Release', 'Debug' etc. Default is 'Release'.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_Run_Number" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A unique numeric value of the incremental build from your CI/CD system (GitHub Actions, GitLab CI/CD, Jenkins, TeamCity, GoCD etc.).</xs:documentation>
+      <xs:documentation>
+        A numeric value of the incremental build from your CI/CD system.
+        Default tries to take it from $GO_PIPELINE_COUNTER, $BUILD_NUMBER, $GITHUB_RUN_NUMBER, $CI_PIPELINE_ID or '0' otherwise.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
 </xs:schema>

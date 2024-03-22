@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_FileUpdate" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Updates a file with specified regular expressions and replacements.</xs:documentation>
@@ -29,7 +26,7 @@ Example custom task with single required parameter
         <xs:extension base="msb:TaskType">
           <xs:attribute name="File" use="required">
             <xs:annotation>
-              <xs:documentation>The file path.</xs:documentation>
+              <xs:documentation>The path to the file to update.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="RegExps" use="required">
@@ -41,7 +38,7 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="RegExpOptions">
             <xs:annotation>
-              <xs:documentation>The .NET regular expression options. Default is "None".</xs:documentation>
+              <xs:documentation>The .NET regular expression options. Default is 'None'.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>

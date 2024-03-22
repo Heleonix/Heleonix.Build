@@ -7,14 +7,8 @@ namespace NetSimulator
 {
     using NUnit.Framework;
 
-    /// <summary>
-    /// Tests the <see cref="FullyCoveredType"/>.
-    /// </summary>
     public static class FullyCoveredTypeTests
     {
-        /// <summary>
-        /// Tests the <see cref="FullyCoveredType.PlusOne"/>.
-        /// </summary>
         [Test]
 #pragma warning disable S2699 // Tests should include assertions
         public static void PlusOne()

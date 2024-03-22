@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_MetadataToCmdArgs" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>
@@ -40,18 +37,18 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="MetadataSeparator">
             <xs:annotation>
-              <xs:documentation>The separator string to separate metadata key/value pairs.  Default is " ".</xs:documentation>
+              <xs:documentation>The separator string to separate metadata key/value pairs.  Default is ' '.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="KeyValueSeparator">
             <xs:annotation>
-              <xs:documentation>The separator string to separate key and value of every metadata. Default is "=".</xs:documentation>
+              <xs:documentation>The separator string to separate key and value of every metadata. Default is '='.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="DottedKeys">
             <xs:annotation>
               <xs:documentation>
-                A value indicating whether metadata keys like "Key_Name" should be changed to the "Key.Name" or not.
+                A value indicating whether metadata keys like 'Key_Name' should be changed to the 'Key.Name' or not.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

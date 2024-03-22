@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Targets;
 
-/// <summary>
-/// Tests the NetTest target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_NetTestTests))]
 public static class Hx_NetTestTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_NetTestTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_NetTestTests))]
     public static void Execute()
     {

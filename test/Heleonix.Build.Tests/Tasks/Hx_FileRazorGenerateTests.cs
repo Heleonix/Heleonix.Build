@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_FileRazorGenerate"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_FileRazorGenerate))]
 public static class Hx_FileRazorGenerateTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_FileRazorGenerate.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_FileRazorGenerate.Execute))]
     public static void Execute()
     {

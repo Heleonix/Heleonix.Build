@@ -5,37 +5,19 @@
 
 namespace Heleonix.Build.Tasks;
 
-/// <summary>
-/// Gets content from file by specified regular expression.
-/// </summary>
 public class Hx_FileRead : BaseTask
 {
-    /// <summary>
-    /// The file path.
-    /// </summary>
     [Required]
     public string File { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression to find content.
-    /// </summary>
     [Required]
     public string RegExp { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression options. Default is 'None'.
-    /// </summary>
     public string RegExpOptions { get; set; } = "None";
 
-    /// <summary>
-    /// The found matches. The Itemspec contains the File, the 'Match' metadata contains the matched value [Output].
-    /// </summary>
     [Output]
     public ITaskItem[] Matches { get; set; }
 
-    /// <summary>
-    /// Reads a file with specified regular expression and content.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         if (!System.IO.File.Exists(this.File))

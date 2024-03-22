@@ -30,12 +30,11 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_NetTest_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the artifacts directory to store results in.</xs:documentation>
+      <xs:documentation>
+        A path to the artifacts directory to store results in. Default is '$Hx_Run_ArtifactsDir/NetTest'.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_NetTest_Logger" type="msb:StringPropertyType" substitutionGroup="msb:Property">
@@ -56,7 +55,7 @@ Example custom property that allows string content only
   <xs:element name="Hx_NetTest_RunSettingsFile" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
-        The .runsettings file to use for running the tests.
+        The *.runsettings file to use for running the tests.
         The $Hx_NetBuild_ArtifactsDir is discovered to find a *.runsettings file if the file is not specified.
       </xs:documentation>
     </xs:annotation>
@@ -84,15 +83,14 @@ Example custom property that allows string content only
     <xs:annotation>
       <xs:documentation>
         Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], diag[nostic].
-        The default is 'minimal'.
+        Default is 'minimal'.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_NetTest_SourcePathRegExpOptions" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
-        The .NET regular expression options to apply to the $Hx_NetTest_SourcePathRegExp.
-        Default is 'Multiline'.
+        The .NET regular expression options to apply to the $Hx_NetTest_SourcePathRegExp. Default is 'Multiline'.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
@@ -121,7 +119,7 @@ Example custom property that allows string content only
     <xs:annotation>
       <xs:documentation>
         Inputs to run tests: .dll or .exe files containing tests, test projects .*proj or .sln.
-        Default is a .sln file found in the $Hx_NetBuild_ArtifactsDir.
+        Default is a '$Hx_NetBuild_ArtifactsDir/*.sln'.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
@@ -137,7 +135,7 @@ Example custom property that allows string content only
   <xs:element name="Hx_NetTest_SourcePathRegExps" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>
-        .NET regular expressions to find source code paths in generated files with results to replace.
+        .NET regular expressions to find source code paths in generated files with results and replace.
         Found paths are replaced with stable accessible paths, i.e. raw repository links etc.
         Specify stable accessible paths in the 'Replacement' metadata.</xs:documentation>
     </xs:annotation>

@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Targets;
 
-/// <summary>
-/// Tests the GitHubReleaseNet target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_NetValidateTests))]
 public static class Hx_NetValidateTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_NetValidateTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_NetValidateTests))]
     public static void Execute()
     {

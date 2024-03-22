@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_FileSystemSearch" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Searches items in the file system.</xs:documentation>
@@ -34,12 +31,12 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="Direction">
             <xs:annotation>
-              <xs:documentation>The search direction: Up, Down.</xs:documentation>
+              <xs:documentation>The search direction: 'Up', 'Down'. Default is 'Down'.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Types">
             <xs:annotation>
-              <xs:documentation>Types of items to search: Files, Directories, All.</xs:documentation>
+              <xs:documentation>Types of items to search: 'Files', 'Directories', 'All'. Default is 'All'.</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
               <xs:restriction base="xs:string">
@@ -52,23 +49,23 @@ Example custom task with single required parameter
           <xs:attribute name="PathRegExp">
             <xs:annotation>
               <xs:documentation>
-                The .NET regular expression to include found paths. Use only / for path separators.
+                The .NET regular expression to include found paths. Use only '/' for path separators.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="PathRegExpOptions">
             <xs:annotation>
-              <xs:documentation>The .NET regular expression options to include found paths. Default is "IgnoreCase".</xs:documentation>
+              <xs:documentation>The .NET regular expression options to include found paths. Default is 'IgnoreCase'.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ContentRegExp">
             <xs:annotation>
-              <xs:documentation>The .NET regular expression to include by content.</xs:documentation>
+              <xs:documentation>The .NET regular expression to search items by content.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ContentRegExpOptions">
             <xs:annotation>
-              <xs:documentation>The .NET regular expression options to include by content. Default is "IgnoreCase".</xs:documentation>
+              <xs:documentation>The .NET regular expression options to search items by content. Default is 'IgnoreCase'.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="FoundFiles">
@@ -83,7 +80,7 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="FoundItems">
             <xs:annotation>
-              <xs:documentation>All the found items [Output].</xs:documentation>
+              <xs:documentation>All the found items (files and/or directories, depending on the 'Types') [Output].</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>

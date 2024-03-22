@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_FileCopy" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Copies files from sources into destinations.</xs:documentation>
@@ -34,10 +31,10 @@ Example custom task with single required parameter
                 Metadata: 'WithSubDirsFrom' - if defined, copies a file into sub folders starting from the end of the defined root path.
                 It is used to keep folders hierarchy.
                 Example:
-                Files: C:\Files\SubDir1\SubDir2\SubDir3\file.txt
-                WithSubDirsFrom: C:\Files\SubDir1
-                DestinationDirs: D:\Destination
-                CopiedFiles: file is copied into D:\Destination\SubDir2\SubDir3\file.txt.
+                Files: 'C:\Files\SubDir1\SubDir2\SubDir3\file.txt'
+                WithSubDirsFrom: 'C:\Files\SubDir1'
+                DestinationDirs: 'D:\Destination'
+                CopiedFiles: file is copied into the 'D:\Destination\SubDir2\SubDir3\file.txt'.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

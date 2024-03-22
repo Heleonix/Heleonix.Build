@@ -5,16 +5,10 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_GitParseRepoUrl"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_GitParseRepoUrl))]
 
 public static class Hx_GitParseRepoUrlTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_GitParseRepoUrl.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_GitParseRepoUrl.Execute))]
     public static void Execute()
     {

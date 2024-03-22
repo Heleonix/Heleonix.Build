@@ -30,12 +30,9 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_ReportGenerator_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>A path to the ReportGenerator artifacts directory.</xs:documentation>
+      <xs:documentation>A path to the ReportGenerator artifacts directory. Default is '$Hx_Run_ArtifactsDir/ReportGenerator'.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_ReportGenerator_ReportTypes" type="msb:StringPropertyType" substitutionGroup="msb:Property">
@@ -43,13 +40,13 @@ Example custom property that allows string content only
       <xs:documentation>
         The report types to generate, separated by semicolon.
         See https://github.com/danielpalme/ReportGenerator?tab=readme-ov-file#supported-input-and-output-file-formats.
-        Default is Badges;Html.
+        Default is 'Badges;Html'.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="Hx_ReportGenerator_Verbosity" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
-      <xs:documentation>The verbosity: Error, Info, Verbose. Default is 'Info'.</xs:documentation>
+      <xs:documentation>The verbosity: 'Error', 'Info', 'Verbose'. 'Default' is 'Info'.</xs:documentation>
     </xs:annotation>
   </xs:element>
 

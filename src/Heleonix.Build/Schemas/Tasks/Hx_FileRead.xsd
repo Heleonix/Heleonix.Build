@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_FileRead" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Gets content from file by specified regular expression.</xs:documentation>
@@ -29,7 +26,7 @@ Example custom task with single required parameter
         <xs:extension base="msb:TaskType">
           <xs:attribute name="File" use="required">
             <xs:annotation>
-              <xs:documentation>The file path.</xs:documentation>
+              <xs:documentation>The path to the file to read content from.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="RegExp" use="required">
@@ -46,7 +43,7 @@ Example custom task with single required parameter
             <xs:annotation>
               <xs:documentation>
                 Found matches.
-                The Itemspec contains the File, the 'Match' metadata contains the matched value [Output].
+                The Itemspec is the path to the specified 'File', the 'Match' metadata contains the matched value [Output].
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

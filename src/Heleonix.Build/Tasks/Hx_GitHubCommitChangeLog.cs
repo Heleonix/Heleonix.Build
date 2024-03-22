@@ -10,79 +10,40 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using static System.Globalization.NumberFormatInfo;
 
-/// <summary>
-/// Collects changes from commits since the latest release on GitHub using the GitHub API, and the new version.
-/// </summary>
 public class Hx_GitHubCommitChangeLog : BaseTask
 {
-    /// <summary>
-    /// The url of the GitHub API for the repository.
-    /// </summary>
     [Required]
     public string GitHubRepositoryApiUrl { get; set; }
 
-    /// <summary>
-    /// A personal access token to authorize to the GitHub API.
-    /// </summary>
     [Required]
     public string Token { get; set; }
 
-    /// <summary>
-    /// The User-Agent request header.
-    /// </summary>
     [Required]
     public string UserAgent { get; set; }
 
-    /// <summary>
-    /// A regular expression to extract a version from a tag name of the latest release in format '11.22.33'.
-    /// </summary>
     [Required]
     public string VersionTagRegExp { get; set; }
 
-    /// <summary>
-    /// A regular expression to identify a major change.
-    /// </summary>
     [Required]
     public string MajorChangeRegExp { get; set; }
 
-    /// <summary>
-    /// A regular expression to identify a minor change.
-    /// </summary>
     [Required]
     public string MinorChangeRegExp { get; set; }
 
-    /// <summary>
-    /// A regular expression to identify a patch change.
-    /// </summary>
     [Required]
     public string PatchChangeRegExp { get; set; }
 
-    /// <summary>
-    /// A regular expression to capture a change for the change log.
-    /// </summary>
     [Required]
     public string ChangeLogRegExp { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression options for regexp patterns. Default is "None".
-    /// </summary>
     public string RegExpOptions { get; set; } = "None";
 
-    /// <summary>
-    /// The calculated version based on the change conventions [Output].
-    /// </summary>
     [Output]
     public string Version { get; set; }
 
-    /// <summary>
-    /// The list of changes with metadata as captured groups names and values. The 'Version' and 'PreviousVersion' metadata specify the new calculated and previous versions [Output].
-    /// </summary>
     [Output]
     public ITaskItem[] Changes { get; set; }
 
-    /// <summary>
-    /// Executes the task.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         this.Log.LogMessage(MessageImportance.High, Resources.GitHubCommitChangeLog_GettingLatestRelease);

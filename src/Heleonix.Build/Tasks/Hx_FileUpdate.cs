@@ -7,31 +7,16 @@ namespace Heleonix.Build.Tasks;
 
 using System.Text.RegularExpressions;
 
-/// <summary>
-/// Updates a file with specified regular expressions and replacements.
-/// </summary>
 public class Hx_FileUpdate : BaseTask
 {
-    /// <summary>
-    /// The file path.
-    /// </summary>
     [Required]
     public string File { get; set; }
 
-    /// <summary>
-    /// The .NET regular expressions to find content to replace with values taken from the 'Replacement' metadata.
-    /// </summary>
     [Required]
     public ITaskItem[] RegExps { get; set; }
 
-    /// <summary>
-    /// The .NET regular expression options. Default is "None".
-    /// </summary>
     public string RegExpOptions { get; set; } = "None";
 
-    /// <summary>
-    /// Updates a file with specified regular expression and content.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         if (!System.IO.File.Exists(this.File))

@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_DirectoryClean"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_DirectoryClean))]
 public static class Hx_DirectoryCleanTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_DirectoryClean.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_DirectoryClean.Execute))]
     public static void Execute()
     {

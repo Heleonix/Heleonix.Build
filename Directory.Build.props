@@ -9,7 +9,7 @@
 
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/Heleonix/Heleonix.Build</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Heleonix/Heleonix.Build</PackageProjectUrl>
+    <PackageProjectUrl>https://heleonix.github.io/docs/Heleonix.Build/</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/Heleonix/docs/master/images/heleonix-logos/Heleonix-logo-128x128.jpg</PackageIconUrl>
 
     <IncludeSymbols>false</IncludeSymbols>
@@ -30,7 +30,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <NoWarn>SA0001</NoWarn>
     <NeutralLanguage>en-US</NeutralLanguage>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
   </PropertyGroup>

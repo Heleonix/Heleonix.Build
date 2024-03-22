@@ -5,15 +5,9 @@
 
 namespace Heleonix.Build.Tests.Targets;
 
-/// <summary>
-/// Tests the NugetDeploy target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_NetNugetPushTests))]
 public static class Hx_NetNugetPushTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_NetNugetPushTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_NetNugetPushTests))]
     public static void Execute()
     {

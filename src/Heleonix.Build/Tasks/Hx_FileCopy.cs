@@ -5,53 +5,21 @@
 
 namespace Heleonix.Build.Tasks;
 
-/// <summary>
-/// Copies files from sources into destinations.
-/// </summary>
 public class Hx_FileCopy : BaseTask
 {
     private const string WithSubDirsFromKey = "WithSubDirsFrom";
 
-    /// <summary>
-    /// The files to copy.
-    /// </summary>
-    /// <remarks>
-    /// Metadata: 'WithSubDirsFrom' - if defined, copies a file into sub folders
-    /// starting from the end of the defined root path. It is used to keep folders hierarchy.
-    /// </remarks>
-    /// <example>
-    /// File path: C:\Files\SubDir1\SubDir2\SubDir3\file.txt <br/>
-    /// WithSubDirsFrom: C:\Files\SubDir1 <br/>
-    /// Destination: D:\Destination <br/>
-    /// Result: file is copied into D:\Destination\SubDir2\SubDir3\file.txt.
-    /// </example>
     [Required]
     public ITaskItem[] Files { get; set; }
 
-    /// <summary>
-    /// The destinations to copy files to.
-    /// </summary>
-    /// <remarks>
-    /// If number of destinations equals to number of files, then files are copied into those directories.
-    /// If destination is a single directory, then files are copied into that directory.
-    /// </remarks>
     [Required]
     public string[] DestinationDirs { get; set; }
 
-    /// <summary>
-    /// A value indicating whether to overwrite destination file or ignore.
-    /// </summary>
     public bool Overwrite { get; set; }
 
-    /// <summary>
-    /// A list of successfully copied files [Output].
-    /// </summary>
     [Output]
     public string[] CopiedFiles { get; set; }
 
-    /// <summary>
-    /// Updates a file with specified regular expression and content.
-    /// </summary>
     protected override void ExecuteInternal()
     {
         var copiedFiles = new List<string>();

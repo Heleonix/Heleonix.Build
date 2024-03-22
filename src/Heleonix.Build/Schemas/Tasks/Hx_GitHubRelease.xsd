@@ -17,9 +17,6 @@ Example custom task with single required parameter
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include
-    schemaLocation="C:/Program Files/Microsoft Visual Studio/2022/Community/Xml/Schemas/1033/MSBuild/Microsoft.Build.Commontypes.xsd" />
-
   <xs:element name="Hx_GitHubRelease" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Creates a release on GitHub using the GitHub API.</xs:documentation>
@@ -34,7 +31,7 @@ Example custom task with single required parameter
           </xs:attribute>
           <xs:attribute name="Token" use="required">
             <xs:annotation>
-              <xs:documentation>A personal access token to authorize to the GitHub API.</xs:documentation>
+              <xs:documentation>A GitHub access token to authorize to the GitHub API.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="UserAgent" use="required">
@@ -51,7 +48,7 @@ Example custom task with single required parameter
             <xs:annotation>
               <xs:documentation>
                 Any branch or commit SHA from which the tag should be created.
-                It is ignored if the tag already exists. Otherwise, name of the default branch (usually master) is used.
+                It is ignored if the tag already exists. Otherwise, name of the repository's default branch is used.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

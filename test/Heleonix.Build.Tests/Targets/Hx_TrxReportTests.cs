@@ -7,15 +7,9 @@
 /*
 namespace Heleonix.Build.Tests.Targets;
 
-/// <summary>
-/// Tests the Hx_TrxReport target.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_TrxReportTests))]
 public static class Hx_TrxReportTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_TrxReportTests"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_TrxReportTests))]
     public static void Execute()
     {

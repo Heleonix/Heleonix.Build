@@ -5,16 +5,10 @@
 
 namespace Heleonix.Build.Tests.Tasks;
 
-/// <summary>
-/// Tests the <see cref="Hx_NetFindProjects"/>.
-/// </summary>
 [ComponentTest(Type = typeof(Hx_NetFindProjects))]
 
 public static class Hx_NetFindProjectsTests
 {
-    /// <summary>
-    /// Tests the <see cref="Hx_NetFindProjects.ExecuteInternal"/>.
-    /// </summary>
     [MemberTest(Name = nameof(Hx_NetFindProjects.Execute))]
     public static void Execute()
     {
