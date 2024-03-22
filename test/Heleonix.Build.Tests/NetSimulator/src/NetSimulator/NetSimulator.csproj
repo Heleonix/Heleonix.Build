@@ -3,7 +3,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 
