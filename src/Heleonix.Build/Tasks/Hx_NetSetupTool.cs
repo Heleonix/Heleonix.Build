@@ -45,7 +45,7 @@ public class Hx_NetSetupTool : BaseTask
         if ("docfx".Equals(this.Name, StringComparison.OrdinalIgnoreCase))
         {
             this.PackageName = "docfx";
-            this.Version = "2.74.1";
+            this.Version = "2.75.2";
         }
 
         if ("extent".Equals(this.Name, StringComparison.OrdinalIgnoreCase))
