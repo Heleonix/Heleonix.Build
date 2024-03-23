@@ -81,7 +81,7 @@ public static class Hx_NetSetupToolTests
                             buildEngine.Messages,
                             Contains.Item(
                                 "tool install docfx" +
-                                " --version 2.74.1 --tool-path " + Path.Combine(PathHelper.CurrentDir, "Tools")));
+                                " --version 2.75.2 --tool-path " + Path.Combine(PathHelper.CurrentDir, "Tools")));
                         Assert.That(
                             task.ToolPath,
                             Is.EqualTo(Path.Combine(PathHelper.CurrentDir, "Tools", "docfx.exe")));
