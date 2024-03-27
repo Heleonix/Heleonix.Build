@@ -12,8 +12,6 @@
     <PackageProjectUrl>https://heleonix.github.io/docs/Heleonix.Build/</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/Heleonix/docs/master/images/heleonix-logos/Heleonix-logo-128x128.jpg</PackageIconUrl>
 
-    <IncludeSymbols>false</IncludeSymbols>
-    <IncludeSource>false</IncludeSource>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <ContentTargetFolders>.\</ContentTargetFolders>
     <BuildOutputTargetFolder>.\</BuildOutputTargetFolder>
