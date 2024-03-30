@@ -43,7 +43,7 @@ So, if you follow well-known standards too, you do not even neeed to write custo
 4. [Request review](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/requesting-a-pull-request-review) from the code owner
 5. Once approved, merge your Pull Request via [Squash and merge](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits)
 
-   > [!IMPORTANT]  
+   > **IMPORTANT**  
    > While merging, enter a [Conventional Commits](https://www.conventionalcommits.org/) commit message.
    > This commit message will be used in automatically generated [Github Release Notes](https://github.com/Heleonix/Heleonix.Build/releases)
    > and [NuGet Release Notes](https://www.nuget.org/packages/Heleonix.Build/#releasenotes-body-tab)

@@ -30,6 +30,15 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_ExtentReport" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        The target generates test reports using https://www.extentreports.com.
+        Under the hood this target uses the https://www.nuget.org/packages/extent package.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_ExtentReport_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>

@@ -12,23 +12,20 @@
     <PackageProjectUrl>https://heleonix.github.io/docs/Heleonix.Build/</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/Heleonix/docs/master/images/heleonix-logos/Heleonix-logo-128x128.jpg</PackageIconUrl>
 
-    <NoPackageAnalysis>true</NoPackageAnalysis>
-    <ContentTargetFolders>.\</ContentTargetFolders>
-    <BuildOutputTargetFolder>.\</BuildOutputTargetFolder>
+    <NoWarn>NU5048;SA0001</NoWarn>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="/" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>SA0001</NoWarn>
     <NeutralLanguage>en-US</NeutralLanguage>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
   </PropertyGroup>

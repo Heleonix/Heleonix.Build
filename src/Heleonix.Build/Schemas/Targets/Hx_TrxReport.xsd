@@ -30,6 +30,14 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_TrxReport" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        This target is not implemented yet, but the idea is to generate HTML test reports from the *.trx files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_TrxReport_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the TrxReport artifacts directory. Default is '$Hx_Run_ArtifactsDir/TrxReport'</xs:documentation>

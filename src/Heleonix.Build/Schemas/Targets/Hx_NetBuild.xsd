@@ -30,6 +30,19 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_NetBuild" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        The target performs building of the specified solution file.
+        It deletes specified extra files, deletes speified extra folders, cleans specified extra folders,
+        runs the 'Restore' and then 'Clean' MSBuild targets, runs 'Restore' and then 'Build' MSBuild targets.
+        Afterwards, the target copies .sln, 'bin' and 'obj' folders, *.props, *.*proj and custom artifacts files
+        to the artifacts directory, which then can be uploaded to artifacts storage and then re-used by other targets,
+        i.e. 'Hx_NetTest', 'Hx_NetNugetPush' etc.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_NetBuild_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>

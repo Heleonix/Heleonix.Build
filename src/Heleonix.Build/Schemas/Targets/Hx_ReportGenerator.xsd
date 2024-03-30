@@ -30,6 +30,14 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_ReportGenerator" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        This target runs https://www.nuget.org/packages/dotnet-reportgenerator-globaltool against coverage results files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_ReportGenerator_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A path to the ReportGenerator artifacts directory. Default is '$Hx_Run_ArtifactsDir/ReportGenerator'.</xs:documentation>

@@ -65,7 +65,7 @@ public static class Hx_DirectoryCleanTests
 
                     foreach (var dir in directories)
                     {
-                        Assert.That(task.CleanedDirs.Any(item => item == dir));
+                        Assert.That(Array.Exists(task.CleanedDirs, item => item == dir));
                         Assert.That(Directory.GetFiles(dir), Has.Length.Zero);
                         Assert.That(Directory.GetDirectories(dir), Has.Length.Zero);
                     }

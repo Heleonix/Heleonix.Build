@@ -30,6 +30,16 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_NetValidate" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        This target verifies that every file satisfies all the regular expressions specified in its metadata.
+        This is useful to verify that projects reference specific packages,
+        or projects contain specific MSBuild properties, or any custom file contains required content.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_NetValidate_RegExpOptions" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>Regular expression options to use when executing validation for each @Hx_NetValidate_Files.</xs:documentation>
@@ -39,7 +49,7 @@ Example custom property that allows string content only
   <xs:element name="Hx_NetValidate_Files" type="msb:GenericItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>
-        The list of files with regular expressions defined as metadata to validate.
+        The list of files with regular expressions defined as metadata (metadata keys can be named in a free form) to validate.
         Defaults are project files, which must have the following packages:
         codecracker.CSharp, Microsoft.CodeAnalysis.NetAnalyzers, SecurityCodeScan.VS2019, SonarAnalyzer.CSharp, StyleCop.Analyzers.
       </xs:documentation>

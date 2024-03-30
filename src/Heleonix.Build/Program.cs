@@ -54,7 +54,9 @@ public static class Program
 
                 dotnetExePath = args[i + 1];
 
+#pragma warning disable S127 // "for" loop stop conditions should be invariant
                 i += 1;
+#pragma warning restore S127 // "for" loop stop conditions should be invariant
             }
             else
             {
