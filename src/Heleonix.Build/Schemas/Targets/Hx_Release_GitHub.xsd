@@ -30,6 +30,14 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_Release_GitHub" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        Creates a release on GitHub using GitHub API. For example: https://github.com/Heleonix/Heleonix.Build/releases.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_Release_GitHub_Token" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>A GitHub access token to authorize to the GitHub Releases API.</xs:documentation>

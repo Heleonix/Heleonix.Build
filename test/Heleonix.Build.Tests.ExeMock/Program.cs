@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the repository root for full license information.
 // </copyright>
 
-if (args.Any(a => a.Contains("ERROR")))
+if (Array.Exists(args, a => a.Contains("ERROR")))
 {
     Console.Error.Write("ERROR details");
 

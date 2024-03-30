@@ -30,6 +30,22 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_NetTest" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        Runs the 'dotnet test' command against the specified test files. By default, runs 'XPlat Code Coverage'
+        with NUnit test logger https://www.nuget.org/packages/NunitXml.TestLogger.
+        The target internally converts the generated test coverage into XMLSummary using the 'ReportGenerator' tool,
+        and verifies the specified thresholds of source code coverage.
+        This target also replaces source code paths using the specified regular expressions
+        in generated *.info, *.xml, *.json files with persistent paths,
+        i.e. paths of source code files on the particular build agent with corresponding GitHub urls,
+        so generated test or coverage reports become portable. Such solution is flexible to support different
+        formats of test or coverage files and different persistent paths, like GitHub, GitLab, SVN etc.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_NetTest_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>

@@ -30,6 +30,20 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_ChangeLog" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        The virtual target for variations of real targets to generate change logs from different sources
+        and in different ways to be further used in versioning of builds, generation of release notes etc.
+        Variations of this target should generate at least the 'semver.txt' containing the new semantic version
+        in the format 'Major.Minor.Patch' of the product to be released based on discovered changes,
+        and generate two files: 'ReleaseNotes.md' and 'ReleaseNotes.txt' containing textual descriptions
+        of discovered changes, which can be used by other targets, i.e. by the 'Hx_NetBuild' while building a solution
+        with enabled NuGet package generation, or by the 'Hx_Release_GitHub' while creating a release on GitHub etc.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_ChangeLog_ArtifactsDir" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
@@ -41,7 +55,7 @@ Example custom property that allows string content only
   <xs:element name="Hx_ChangeLog_TemplateFiles" type="msb:SimpleItemType" substitutionGroup="msb:Item">
     <xs:annotation>
       <xs:documentation>
-        The list of Razor *.cshtml template files to generates change logs with using the Hx_FileRazorGenerate task.
+        The list of Razor *.cshtml template files to generate change logs using the Hx_FileRazorGenerate task.
         Default are two templates: 'ReleaseNotes.md.cshtml' and 'ReleaseNotes.txt.cshtml' from the Heleonix.Build.
       </xs:documentation>
     </xs:annotation>

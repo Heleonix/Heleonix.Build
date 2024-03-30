@@ -30,6 +30,17 @@ Example custom property that allows string content only
            elementFormDefault="qualified"
            targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Hx_DocFX_Git" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        The target to generate documentation created as a Docfx project.
+        The target checks out a branch from a git repository containing a Docfx project, runs the 'docfx metadata' command,
+        then runs the 'docfx build', then commits generated changes with the specified $Hx_DocFX_Message and pushes
+        changes back to the remote repository.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="Hx_DocFX_Git_BranchName" type="msb:StringPropertyType" substitutionGroup="msb:Property">
     <xs:annotation>
       <xs:documentation>
