@@ -46,6 +46,10 @@ public class Hx_FileSystemSearch : BaseTask
             return;
         }
 
+        // Replace D:\Dev\Repo/Hx_Artifacts with D:\Dev\Repo\Hx_Artifacts i.e. on Windows.
+        //                    ^                             ^
+        this.StartDir = this.StartDir.Replace('/', Path.DirectorySeparatorChar);
+
         var pathRegExpOptions = (RegexOptions)Enum.Parse(typeof(RegexOptions), this.PathRegExpOptions);
         var pathRegExp = string.IsNullOrEmpty(this.PathRegExp)
             ? null

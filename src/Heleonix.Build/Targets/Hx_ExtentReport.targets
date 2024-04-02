@@ -14,7 +14,7 @@
       Condition="'$(Hx_ExtentReport_TestResultsDir)' == ''"
       StartDir="$(Hx_Run_ArtifactsDir)"
       Types="Directories"
-      PathRegExp="^.*/.*Test$">
+      PathRegExp="^/[^/]*Test$">
       <Output TaskParameter="FoundDirs" PropertyName="Hx_ExtentReport_TestResultsDir"/>
     </Hx_FileSystemSearch>
     <PropertyGroup>
