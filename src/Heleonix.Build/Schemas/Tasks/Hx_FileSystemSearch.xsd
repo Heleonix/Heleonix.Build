@@ -50,6 +50,10 @@ Example custom task with single required parameter
             <xs:annotation>
               <xs:documentation>
                 The .NET regular expression to include found paths. Use only '/' for path separators.
+                If 'Direction' is 'Down', then this regular expression is evaluated against the path starting from
+                the 'StartDir.
+                I.e. if 'StartDir' is 'D:/Dev/Repo' and the checked folder is 'D:/Dev/Repo/sub/folder',
+                then the regular expression is executed against '/sub/folder', so the 'StartDir' is trimmed.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
