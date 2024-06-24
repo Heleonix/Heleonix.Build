@@ -30,7 +30,7 @@ So, if you follow well-known standards too, you do not even neeed to write custo
 ## More details
 
 - [Usage](https://heleonix.github.io/docs/Heleonix.Build/usage.html)
-- [Extensibility](https://heleonix.github.io/docs/Heleonix.Build/extensibility.md)
+- [Extensibility](https://heleonix.github.io/docs/Heleonix.Build/extensibility.html)
 - [API](https://heleonix.github.io/docs/Heleonix.Build/api/Heleonix.Build.html)
 
 ## Contribution Guideline

@@ -54,6 +54,12 @@ public class Hx_NetSetupTool : BaseTask
             this.Version = "0.0.3";
         }
 
+        if ("hxreport".Equals(this.Name, StringComparison.OrdinalIgnoreCase))
+        {
+            this.PackageName = "Heleonix.Testing.Reporting";
+            this.Version = "1.0.2";
+        }
+
         if ("NunitXml.TestLogger".Equals(this.Name, StringComparison.OrdinalIgnoreCase))
         {
             this.IsPackage = true;

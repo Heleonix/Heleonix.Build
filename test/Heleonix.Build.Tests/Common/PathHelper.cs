@@ -20,6 +20,8 @@ public static class PathHelper
 
     public static string NUnitTestResultFile { get; } = Path.Combine(CurrentDir, "NUnitTestResult.xml");
 
+    public static string TrxTestResultFile { get; } = Path.Combine(CurrentDir, "TrxTestResult.trx");
+
     public static string RunBuildProj { get; } = Path.Combine(CurrentDir, "Run.hxbproj");
 
     public static string SnkPairFile { get; } = Path.Combine(CurrentDir, "SnkPair.snk");

@@ -1,0 +1,51 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Hx_HxReport_ArtifactsDir>$(Hx_Run_ArtifactsDir)/HxReport</Hx_HxReport_ArtifactsDir>
+  </PropertyGroup>
+
+  <Target Name="Hx_HxReport">
+    <Message Text="> RUNNING Hx_HxReport ..." Importance="high"/>
+
+    <Hx_NetSetupTool DotnetExe="$(Hx_Sys_DotnetExe)" Name="hxreport">
+      <Output TaskParameter="ToolPath" PropertyName="_Hx_HxReport_HxReportExe"/>
+    </Hx_NetSetupTool>
+
+    <ItemGroup>
+      <Hx_HxReport_TestResultFiles
+        Condition="'@(Hx_HxReport_TestResultFiles)' == ''"
+        Include="$(Hx_Run_ArtifactsDir)/*Test/**/*.trx"/>
+    </ItemGroup>
+    <PropertyGroup>
+      <Hx_HxReport_Formats Condition="'$(Hx_HxReport_Formats)' == ''">Html</Hx_HxReport_Formats>
+      <Hx_HxReport_Merge Condition="'$(Hx_HxReport_Merge)' == ''">true</Hx_HxReport_Merge>
+      <Hx_HxReport_Verbosity Condition="'$(Hx_HxReport_Verbosity)' == ''">Information</Hx_HxReport_Verbosity>
+    </PropertyGroup>
+    <Hx_MetadataToCmdArgs Condition="'@(Hx_HxReport_Style)' != ''" Item="@(Hx_HxReport_Style)">
+      <Output TaskParameter="Result" PropertyName="_Hx_HxReport_StyleArg"/>
+    </Hx_MetadataToCmdArgs>
+    <Hx_MetadataToCmdArgs Condition="'@(Hx_HxReport_Content)' != ''" Item="@(Hx_HxReport_Content)" DottedKeys="true">
+      <Output TaskParameter="Result" PropertyName="_Hx_HxReport_ContentArg"/>
+    </Hx_MetadataToCmdArgs>
+
+    <Message Text="> 1/2: Creating the artifacts directory" Importance="high"/>
+    <RemoveDir Directories="$(Hx_HxReport_ArtifactsDir)"/>
+    <MakeDir Directories="$(Hx_HxReport_ArtifactsDir)"/>
+
+    <Message Text="> 2/2: Generating report" Importance="high"/>
+    <PropertyGroup>
+      <_Hx_HxReport_Arg>--input @(Hx_HxReport_TestResultFiles->'&quot;%(Identity)&quot;', ' ')</_Hx_HxReport_Arg>
+      <_Hx_HxReport_Arg Condition="'$(Hx_HxReport_Merge)' == 'true'">$(_Hx_HxReport_Arg) --output &quot;$(Hx_HxReport_ArtifactsDir)/Report.ext&quot;</_Hx_HxReport_Arg>
+      <_Hx_HxReport_Arg Condition="'$(Hx_HxReport_Merge)' != 'true'">$(_Hx_HxReport_Arg) --output &quot;$(Hx_HxReport_ArtifactsDir)&quot;</_Hx_HxReport_Arg>
+      <_Hx_HxReport_Arg Condition="'$(Hx_HxReport_Merge)' == 'true'">$(_Hx_HxReport_Arg) --merge</_Hx_HxReport_Arg>
+      <_Hx_HxReport_Arg Condition="'$(_Hx_HxReport_StyleArg)' != ''">$(_Hx_HxReport_Arg) --style $(_Hx_HxReport_StyleArg)</_Hx_HxReport_Arg>
+      <_Hx_HxReport_Arg Condition="'$(_Hx_HxReport_ContentArg)' != ''">$(_Hx_HxReport_Arg) --content $(_Hx_HxReport_ContentArg)</_Hx_HxReport_Arg>
+      <_Hx_HxReport_Arg>$(_Hx_HxReport_Arg) --format $(Hx_HxReport_Formats.Replace(';', ' '))</_Hx_HxReport_Arg>
+      <_Hx_HxReport_Arg>$(_Hx_HxReport_Arg) --verbosity $(Hx_HxReport_Verbosity)</_Hx_HxReport_Arg>
+    </PropertyGroup>
+    <Exec Command="&quot;$(_Hx_HxReport_HxReportExe)&quot; $(_Hx_HxReport_Arg)" />
+
+    <Message Text="> DONE Hx_HxReport" Importance="high"/>
+
+    <OnError ExecuteTargets="Hx_OnError"/>
+  </Target>
+</Project>

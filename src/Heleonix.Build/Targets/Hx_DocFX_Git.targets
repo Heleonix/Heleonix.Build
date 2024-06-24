@@ -64,7 +64,7 @@
       EchoOff="true"/>
     <Exec
       Condition="'$(_Hx_DocFX_Git_ChangesCount)' != '0' and ('$(Hx_DocFX_Git_Token)' == '' or !$(Hx_DocFX_RepositoryUrl.StartsWith('https://')))"
-      Command="&quot;$(_Hx_DocFX_Git_GitExe)&quot; push &quot;$(Hx_DocFX_RepositoryUrl&quot;"
+      Command="&quot;$(_Hx_DocFX_Git_GitExe)&quot; push &quot;$(Hx_DocFX_RepositoryUrl)&quot;"
       WorkingDirectory="$(Hx_DocFX_ArtifactsDir)"
       EchoOff="true"/>
     <Message

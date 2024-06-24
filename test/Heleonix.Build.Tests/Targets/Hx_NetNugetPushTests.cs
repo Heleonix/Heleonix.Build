@@ -24,7 +24,7 @@ public static class Hx_NetNugetPushTests
             File.WriteAllText(Path.Combine(simulator.GetArtifactsDir("Hx_ChangeLog"), "semver.txt"), "1.2.3\r\n");
             File.WriteAllText(
                 Path.Combine(simulator.GetArtifactsDir("Hx_ChangeLog"), "ReleaseNotes.txt"),
-                "-release note 1; -release note 2");
+                "-release note 1;\r\n\"- release note 2;\"\r\n-release note 3");
 
             ToolHelper.RunTestTarget("Hx_NetBuild", simulator.SolutionDir, null);
 
