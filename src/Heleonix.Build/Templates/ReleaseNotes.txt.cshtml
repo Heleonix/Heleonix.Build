@@ -12,44 +12,40 @@
         d.GetMetadata("type") != "fix");
 }
 @Model.Single(d => !string.IsNullOrEmpty(d.GetMetadata("Version"))).ItemSpec (@DateTime.UtcNow.ToShortDateString())
-
 @if (breaking.Count() > 0)
 {
-    <text>Breaking Changes</text>
     @:
+    <text>Breaking Changes</text>@:
     foreach (var change in breaking)
     {
         <text>- </text> @change.GetMetadata("description").Trim()
         @:
     }
 }
-
 @if (features.Count() > 0)
 {
-    <text>New Features</text>
     @:
+    <text>New Features</text>@:
     foreach (var change in features)
     {
         <text>- </text> @change.GetMetadata("description").Trim()
         @:
     }
 }
-
 @if (fixes.Count() > 0)
 {
-    <text>Bug Fixes</text>
     @:
+    <text>Bug Fixes</text>@:
     foreach (var change in fixes)
     {
         <text>- </text> @change.GetMetadata("description").Trim()
         @:
     }
 }
-
 @if (others.Count() > 0)
 {
-    <text>Other Changes</text>
     @:
+    <text>Other Changes</text>@:
     foreach (var change in others)
     {
         <text>- </text> @change.GetMetadata("description").Trim()

@@ -9,5 +9,5 @@
   <Import Project="Hx_OnError.targets"/>
   <Import Project="Hx_Release_GitHub.targets"/>
   <Import Project="Hx_ReportGenerator.targets"/>
-  <Import Project="Hx_TrxReport.targets"/>
+  <Import Project="Hx_HxReport.targets"/>
 </Project>

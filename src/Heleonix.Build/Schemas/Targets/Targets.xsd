@@ -15,5 +15,5 @@
   <xs:include schemaLocation="./Hx_NetValidate.xsd"/>
   <xs:include schemaLocation="./Hx_Release_GitHub.xsd"/>
   <xs:include schemaLocation="./Hx_ReportGenerator.xsd"/>
-  <xs:include schemaLocation="./Hx_TrxReport.xsd"/>
+  <xs:include schemaLocation="./Hx_HxReport.xsd"/>
 </xs:schema>

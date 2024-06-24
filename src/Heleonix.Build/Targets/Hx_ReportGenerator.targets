@@ -12,6 +12,7 @@
 
     <PropertyGroup>
       <Hx_ReportGenerator_ReportTypes Condition="'$(Hx_ReportGenerator_ReportTypes)' == ''">Badges;Html</Hx_ReportGenerator_ReportTypes>
+      <Hx_ReportGenerator_Verbosity Condition="'$(Hx_ReportGenerator_Verbosity)' == ''">Info</Hx_ReportGenerator_Verbosity>
     </PropertyGroup>
 
     <ItemGroup>

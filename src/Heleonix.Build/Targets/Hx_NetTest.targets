@@ -31,6 +31,7 @@
       <Hx_NetTest_MinLineCoverage Condition="'$(Hx_NetTest_MinLineCoverage)' == ''">100</Hx_NetTest_MinLineCoverage>
       <Hx_NetTest_MinBranchCoverage Condition="'$(Hx_NetTest_MinBranchCoverage)' == ''">100</Hx_NetTest_MinBranchCoverage>
       <Hx_NetTest_MinMethodCoverage Condition="'$(Hx_NetTest_MinMethodCoverage)' == ''">100</Hx_NetTest_MinMethodCoverage>
+      <Hx_NetTest_Verbosity Condition="'$(Hx_NetTest_Verbosity)' == ''">minimal</Hx_NetTest_Verbosity>
     </PropertyGroup>
 
     <Hx_NetFindSln Condition="'@(Hx_NetTest_TestFiles)' == ''" StartDir="$(Hx_NetBuild_ArtifactsDir)">
@@ -52,7 +53,7 @@
       <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_AdapterDir)' != ''">$(_Hx_NetTest_Arg) --test-adapter-path &quot;$(Hx_NetTest_AdapterDir)&quot;</_Hx_NetTest_Arg>
       <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_Collect)' != ''">$(_Hx_NetTest_Arg) --collect &quot;$(Hx_NetTest_Collect)&quot;</_Hx_NetTest_Arg>
       <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_DiagFile)' != ''">$(_Hx_NetTest_Arg) --diag &quot;$(Hx_NetTest_DiagFile)&quot;</_Hx_NetTest_Arg>
-      <_Hx_NetTest_Arg Condition="'$(Hx_NetTest_Verbosity)' != ''">$(_Hx_NetTest_Arg) --verbosity $(Hx_NetTest_Verbosity)</_Hx_NetTest_Arg>
+      <_Hx_NetTest_Arg>$(_Hx_NetTest_Arg) --verbosity $(Hx_NetTest_Verbosity)</_Hx_NetTest_Arg>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Hx_NetTest_Logger)' == ''">
       <Hx_NetTest_Logger>nunit;LogFileName=NUnitTestResults.xml</Hx_NetTest_Logger>

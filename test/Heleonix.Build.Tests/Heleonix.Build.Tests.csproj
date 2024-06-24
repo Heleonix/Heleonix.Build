@@ -19,6 +19,9 @@
     <None Include="NUnitTestResult.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TrxTestResult.trx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Coverlet.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

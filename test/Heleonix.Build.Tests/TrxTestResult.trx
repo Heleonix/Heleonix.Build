@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a625a1f3-59aa-4373-b535-8e8ca29418da" name="henna@HWOARANG-LAPTOP 2024-05-24 16:36:30" runUser="HWOARANG-LAPTOP\henna" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2024-05-24T16:36:30.2435977+03:00" queuing="2024-05-24T16:36:30.2435982+03:00" start="2024-05-24T16:36:27.9943568+03:00" finish="2024-05-24T16:36:30.2803925+03:00" />
+  <TestSettings name="default" id="7cdc6ed2-10ed-464a-a088-e74e27cf904a">
+    <Deployment runDeploymentRoot="henna_HWOARANG-LAPTOP_2024-05-24_16_36_30" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="9c01cf39-1272-4890-af50-b2620204db80" testId="ddeb8b57-749b-7566-d9c1-bccdfd19c6ab" testName="FailedTest1" computerName="HWOARANG-LAPTOP" duration="00:00:00.0964280" startTime="2024-05-24T16:36:29.6587185+03:00" endTime="2024-05-24T16:36:29.7549072+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c01cf39-1272-4890-af50-b2620204db80">
+      <Output>
+        <StdOut>FailedTests&#xD;
+    FailedTest1&#xD;
+        When the method is called&#xD;
+            ✗ Should fail</StdOut>
+        <ErrorInfo>
+          <StackTrace>   at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.&lt;&gt;c.&lt;FailedTest1&gt;b__0_1() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 24&#xD;
+   at Heleonix.Testing.NUnit.Internal.TestHost.Execute(SpecNode node)&#xD;
+   at Heleonix.Testing.NUnit.Aaa.AaaSpec.Should(String description, Action action)&#xD;
+   at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.&lt;&gt;c.&lt;FailedTest1&gt;b__0_0() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 22&#xD;
+   at Heleonix.Testing.NUnit.Internal.TestHost.Execute(SpecNode node)&#xD;
+   at Heleonix.Testing.NUnit.Aaa.AaaSpec.When(String description, Action action)&#xD;
+   at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.FailedTest1() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 20&#xD;
+
+1)    at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.&lt;&gt;c.&lt;FailedTest1&gt;b__0_1() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 24&#xD;
+   at Heleonix.Testing.NUnit.Internal.TestHost.Execute(SpecNode node)&#xD;
+   at Heleonix.Testing.NUnit.Aaa.AaaSpec.Should(String description, Action action)&#xD;
+   at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.&lt;&gt;c.&lt;FailedTest1&gt;b__0_0() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 22&#xD;
+   at Heleonix.Testing.NUnit.Internal.TestHost.Execute(SpecNode node)&#xD;
+   at Heleonix.Testing.NUnit.Aaa.AaaSpec.When(String description, Action action)&#xD;
+   at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.FailedTest1() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 20&#xD;
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a179efff-2aeb-4333-b29d-d7209fc9c3af" testId="5f9379eb-a934-4e7f-98e1-2714e345f319" testName="SuccessfulTest1" computerName="HWOARANG-LAPTOP" duration="00:00:00.0035950" startTime="2024-05-24T16:36:29.7908246+03:00" endTime="2024-05-24T16:36:29.7944196+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a179efff-2aeb-4333-b29d-d7209fc9c3af">
+      <Output>
+        <StdOut>SuccessfulTests&#xD;
+    SuccessfulTest1&#xD;
+        When the method is called&#xD;
+            ✓ Should succeed</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d58433a5-b2f9-428b-9951-2ae700db89a3" testId="0ad9a133-e722-a774-3b3c-5b81f9be2bc7" testName="WarningTest1" computerName="HWOARANG-LAPTOP" duration="00:00:00.0010290" startTime="2024-05-24T16:36:29.7950339+03:00" endTime="2024-05-24T16:36:29.7960624+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d58433a5-b2f9-428b-9951-2ae700db89a3">
+      <Output>
+        <StdOut>Warning message.</StdOut>
+        <ErrorInfo>
+          <Message>Warning message.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="faee32d3-4710-4cc0-835a-10dedcc233a9" testId="6be18b92-df45-8f9d-bb06-ee4d15d1b4de" testName="SuccessfulTest2" computerName="HWOARANG-LAPTOP" duration="00:00:00.0001740" startTime="2024-05-24T16:36:29.7944846+03:00" endTime="2024-05-24T16:36:29.7946588+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="faee32d3-4710-4cc0-835a-10dedcc233a9" />
+    <UnitTestResult executionId="1d5cbf75-3f69-4c39-9ce5-fe0fd520adda" testId="278674ca-798b-af3c-a768-b81cb4e1027f" testName="FailedTest2" computerName="HWOARANG-LAPTOP" duration="00:00:00.0057260" startTime="2024-05-24T16:36:29.7783016+03:00" endTime="2024-05-24T16:36:29.7840279+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1d5cbf75-3f69-4c39-9ce5-fe0fd520adda">
+      <Output>
+        <ErrorInfo>
+          <Message>Error message.</Message>
+          <StackTrace>   at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.FailedTest2() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 35&#xD;
+
+1)    at Heleonix.Testing.Reporting.Tests.Samples.FailedTests.FailedTest2() in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\Samples\FailedTests.cs:line 35&#xD;
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="FailedTest2" storage="d:\dev\projects\heleonix\heleonix.testing.reporting\test\heleonix.testing.reporting.tests\bin\debug\net6.0\heleonix.testing.reporting.tests.dll" id="278674ca-798b-af3c-a768-b81cb4e1027f">
+      <Execution id="1d5cbf75-3f69-4c39-9ce5-fe0fd520adda" />
+      <TestMethod codeBase="D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\bin\Debug\net6.0\Heleonix.Testing.Reporting.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="Heleonix.Testing.Reporting.Tests.Samples.FailedTests" name="FailedTest2" />
+    </UnitTest>
+    <UnitTest name="SuccessfulTest2" storage="d:\dev\projects\heleonix\heleonix.testing.reporting\test\heleonix.testing.reporting.tests\bin\debug\net6.0\heleonix.testing.reporting.tests.dll" id="6be18b92-df45-8f9d-bb06-ee4d15d1b4de">
+      <Execution id="faee32d3-4710-4cc0-835a-10dedcc233a9" />
+      <TestMethod codeBase="D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\bin\Debug\net6.0\Heleonix.Testing.Reporting.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="Heleonix.Testing.Reporting.Tests.Samples.SuccessfulTests" name="SuccessfulTest2" />
+    </UnitTest>
+    <UnitTest name="WarningTest1" storage="d:\dev\projects\heleonix\heleonix.testing.reporting\test\heleonix.testing.reporting.tests\bin\debug\net6.0\heleonix.testing.reporting.tests.dll" id="0ad9a133-e722-a774-3b3c-5b81f9be2bc7">
+      <Execution id="d58433a5-b2f9-428b-9951-2ae700db89a3" />
+      <TestMethod codeBase="D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\bin\Debug\net6.0\Heleonix.Testing.Reporting.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="Heleonix.Testing.Reporting.Tests.Samples.WarningTests" name="WarningTest1" />
+    </UnitTest>
+    <UnitTest name="SuccessfulTest1" storage="d:\dev\projects\heleonix\heleonix.testing.reporting\test\heleonix.testing.reporting.tests\bin\debug\net6.0\heleonix.testing.reporting.tests.dll" id="5f9379eb-a934-4e7f-98e1-2714e345f319">
+      <Execution id="a179efff-2aeb-4333-b29d-d7209fc9c3af" />
+      <TestMethod codeBase="D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\bin\Debug\net6.0\Heleonix.Testing.Reporting.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="Heleonix.Testing.Reporting.Tests.Samples.SuccessfulTests" name="SuccessfulTest1" />
+    </UnitTest>
+    <UnitTest name="FailedTest1" storage="d:\dev\projects\heleonix\heleonix.testing.reporting\test\heleonix.testing.reporting.tests\bin\debug\net6.0\heleonix.testing.reporting.tests.dll" id="ddeb8b57-749b-7566-d9c1-bccdfd19c6ab">
+      <Execution id="9c01cf39-1272-4890-af50-b2620204db80" />
+      <TestMethod codeBase="D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\bin\Debug\net6.0\Heleonix.Testing.Reporting.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="Heleonix.Testing.Reporting.Tests.Samples.FailedTests" name="FailedTest1" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="ddeb8b57-749b-7566-d9c1-bccdfd19c6ab" executionId="9c01cf39-1272-4890-af50-b2620204db80" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5f9379eb-a934-4e7f-98e1-2714e345f319" executionId="a179efff-2aeb-4333-b29d-d7209fc9c3af" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0ad9a133-e722-a774-3b3c-5b81f9be2bc7" executionId="d58433a5-b2f9-428b-9951-2ae700db89a3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6be18b92-df45-8f9d-bb06-ee4d15d1b4de" executionId="faee32d3-4710-4cc0-835a-10dedcc233a9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="278674ca-798b-af3c-a768-b81cb4e1027f" executionId="1d5cbf75-3f69-4c39-9ce5-fe0fd520adda" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="5" executed="4" passed="2" failed="2" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 4.4.0.0: Test execution started&#xD;
+Running selected tests in D:\Dev\Projects\Heleonix\Heleonix.Testing.Reporting\test\Heleonix.Testing.Reporting.Tests\bin\Debug\net6.0\Heleonix.Testing.Reporting.Tests.dll&#xD;
+   NUnit3TestExecutor discovered 5 of 5 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+WarningTest1: Warning message.&#xD;
+NUnit Adapter 4.4.0.0: Test execution complete&#xD;
+Test 'WarningTest1' was skipped in the test run.&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="HWOARANG-LAPTOP" outcome="Warning" timestamp="2024-05-24T16:36:29.7852315+03:00">
+        <Text>FailedTests&#xD;
+    FailedTest1&#xD;
+        When the method is called&#xD;
+            ✗ Should fail&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="HWOARANG-LAPTOP" outcome="Warning" timestamp="2024-05-24T16:36:29.7964963+03:00">
+        <Text>SuccessfulTests&#xD;
+    SuccessfulTest1&#xD;
+        When the method is called&#xD;
+            ✓ Should succeed&#xD;
+</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

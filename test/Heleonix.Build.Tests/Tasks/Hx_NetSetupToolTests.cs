@@ -106,6 +106,24 @@ public static class Hx_NetSetupToolTests
                     });
                 });
 
+                And("hxreport is requested", () =>
+                {
+                    name = "hxreport";
+
+                    Should("succeed", () =>
+                    {
+                        Assert.That(succeeded);
+                        Assert.That(
+                            buildEngine.Messages,
+                            Contains.Item(
+                                "tool install Heleonix.Testing.Reporting" +
+                                " --version 1.0.2 --tool-path " + Path.Combine(PathHelper.CurrentDir, "Tools")));
+                        Assert.That(
+                            task.ToolPath,
+                            Is.EqualTo(Path.Combine(PathHelper.CurrentDir, "Tools", "hxreport.exe")));
+                    });
+                });
+
                 And("NunitXml.TestLogger is requested", () =>
                 {
                     name = "NunitXml.TestLogger";

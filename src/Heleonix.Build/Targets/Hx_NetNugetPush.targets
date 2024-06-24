@@ -33,7 +33,7 @@
 
     <PropertyGroup Condition="'$(_Hx_NetNugetPush_SlnFile)' != ''">
       <_Hx_NetNugetPush_VersionProps Condition="'$(Hx_NetNugetPush_Version)' != ''">Version=$(Hx_NetNugetPush_Version)</_Hx_NetNugetPush_VersionProps>
-      <_Hx_NetNugetPush_ReleaseNotesProps Condition="'$(Hx_NetNugetPush_ReleaseNotesFile)' != ''">PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NetNugetPush_ReleaseNotesFile)').Trim())&quot;</_Hx_NetNugetPush_ReleaseNotesProps>
+      <_Hx_NetNugetPush_ReleaseNotesProps Condition="'$(Hx_NetNugetPush_ReleaseNotesFile)' != ''">PackageReleaseNotes=$([System.IO.File]::ReadAllText('$(Hx_NetNugetPush_ReleaseNotesFile)').Trim())</_Hx_NetNugetPush_ReleaseNotesProps>
     </PropertyGroup>
 
     <MSBuild
