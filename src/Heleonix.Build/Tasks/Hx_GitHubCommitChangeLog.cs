@@ -5,6 +5,7 @@
 
 namespace Heleonix.Build.Tasks;
 
+using System.Globalization;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -114,6 +115,8 @@ public class Hx_GitHubCommitChangeLog : BaseTask
         RegexOptions regExpOptions,
         string tagSource)
     {
+        var createdAtDateTime = createdAt != null ? DateTime.Parse(createdAt, DateTimeFormatInfo.InvariantInfo) : DateTime.MinValue;
+
         var previousVersion = $"{latestVersion.Major}.{latestVersion.Minor}.{latestVersion.Patch}";
 
         var pageNumber = 1;
@@ -141,6 +144,16 @@ public class Hx_GitHubCommitChangeLog : BaseTask
 
             foreach (var c in commitPage.Result)
             {
+                // Skip parent commits. Parent commits have date-time earlier than the latest release.
+                var dateTime = DateTime.Parse(
+                    c["commit"]["committer"]["date"].GetValue<string>(),
+                    DateTimeFormatInfo.InvariantInfo);
+
+                if (dateTime < createdAtDateTime)
+                {
+                    continue;
+                }
+
                 var rawMessage = c["commit"]["message"].GetValue<string>();
 
                 if (!wasPatchIncreased && patchChangeRegExp.IsMatch(rawMessage))

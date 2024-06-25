@@ -25,20 +25,20 @@ public static class Hx_ChangeLog_GitHubCommitTests
             simulator = new NetSimulatorHelper();
 
             commits =
-                @"[{""commit"":{""message"":""fix(ID-1): Fix 1.""}}," +
-                @"{""commit"":{""message"":""feat(ID-2): Feat 2.""}}," +
-                @"{""commit"":{""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
-                @"{""commit"":{""message"":""fix(ID-4): Fix 4.""}}," +
-                @"{""commit"":{""message"":""feat(ID-5): Feat 5.""}}," +
-                @"{""commit"":{""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
-                @"{""commit"":{""message"":""perf(ID-4): Perf 7.""}}," +
-                @"{""commit"":{""message"":""Free commit to be ignored.""}}]";
+                @"[{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""fix(ID-1): Fix 1.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-2): Feat 2.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""fix(ID-4): Fix 4.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-5): Feat 5.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""perf(ID-4): Perf 7.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}]";
 
             var responses = new (string, Func<HttpListenerRequest, (string, HttpStatusCode)>)[]
             {
                 (
                     "http://localhost:12345/repos/Heleonix/NetSimulator/releases/latest/",
-                    request => (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-02-27T19:35:32Z""}", HttpStatusCode.OK)),
+                    request => (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-01-01T11:00:00Z""}", HttpStatusCode.OK)),
                 (
                     "http://localhost:12345/repos/Heleonix/NetSimulator/commits/",
                     request => (commits, HttpStatusCode.OK)),

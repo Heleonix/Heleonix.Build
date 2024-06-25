@@ -56,7 +56,7 @@ public static class Hx_GitHubCommitChangeLogTests
             {
                 (
                     "http://localhost:12345/repos/heleonix/heleonix.build/releases/latest/",
-                    request => (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-02-27T19:35:32Z""}", HttpStatusCode.OK)),
+                    request => (@"{""tag_name"":""v1.2.3"",""target_commitish"":""master"",""created_at"":""2023-01-01T11:00:00Z""}", HttpStatusCode.OK)),
                 (
                     "http://localhost:12345/repos/heleonix/heleonix.build/commits/",
                     (HttpListenerRequest request) =>
@@ -66,121 +66,121 @@ public static class Hx_GitHubCommitChangeLogTests
                             requestsCount += 1;
 
                             return (
-                            @"[{""commit"":{""message"":""fix(ID-1): Fix 1.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-2): Feat 2.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
-                            @"{""commit"":{""message"":""fix(ID-4): Fix 4.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-5): Feat 5.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
-                            @"{""commit"":{""message"":""perf(ID-4): Fix 4.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}]", HttpStatusCode.OK);
+                            @"[{""commit"":{""committer"":{""date"":""2022-11-01T11:00:00Z""},""message"":""fix(ID-1): Fix 1.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-2): Feat 2.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""fix(ID-4): Fix 4.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-5): Feat 5.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""perf(ID-4): Fix 4.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}]", HttpStatusCode.OK);
                         }
                         else
                         {
                             requestsCount += 1;
 
                             return (
-                            @"[{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}," +
-                            @"{""commit"":{""message"":""Free commit to be ignored.""}}]", HttpStatusCode.OK);
+                            @"[{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}," +
+                            @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""Free commit to be ignored.""}}]", HttpStatusCode.OK);
                         }
                     }),
             };
@@ -189,29 +189,29 @@ public static class Hx_GitHubCommitChangeLogTests
             {
                 Assert.That(succeeded, Is.True);
                 Assert.That(task.Version, Is.EqualTo("2.0.0"));
-                Assert.That(task.Changes.Length, Is.EqualTo(9));
+                Assert.That(task.Changes.Length, Is.EqualTo(8));
 
-                const string commits = @"[{""commit"":{""message"":""fix(ID-1): Fix 1.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-2): Feat 2.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
-                            @"{""commit"":{""message"":""fix(ID-4): Fix 4.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-5): Feat 5.""}}," +
-                            @"{""commit"":{""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
-                            @"{""commit"":{""message"":""perf(ID-4): Fix 4.""}}]";
+                const string commits =
+                @"[{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-2): Feat 2.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-3)!: Breaking Feat 3.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""fix(ID-4): Fix 4.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-5): Feat 5.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""feat(ID-6)!: Feat 6.\r\n\r\nBREAKING-CHANGE: Breaking 6.""}}," +
+                @"{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""perf(ID-4): Fix 4.""}}]";
 
                 var commitsJson = JsonArray.Parse(commits);
 
-                for (var i = 0; i < 7; i++)
+                for (var i = 0; i < 6; i++)
                 {
                     Assert.That(
                         commitsJson[i]["commit"]["message"].ToString(),
                         Is.EqualTo(task.Changes[i].ItemSpec));
                 }
 
-                Assert.That(task.Changes[7].ItemSpec, Is.EqualTo("2.0.0"));
-                Assert.That(task.Changes[7].GetMetadata("Version"), Is.EqualTo("2.0.0"));
-                Assert.That(task.Changes[8].ItemSpec, Is.EqualTo("1.2.3"));
-                Assert.That(task.Changes[8].GetMetadata("PreviousVersion"), Is.EqualTo("1.2.3"));
+                Assert.That(task.Changes[6].ItemSpec, Is.EqualTo("2.0.0"));
+                Assert.That(task.Changes[6].GetMetadata("Version"), Is.EqualTo("2.0.0"));
+                Assert.That(task.Changes[7].ItemSpec, Is.EqualTo("1.2.3"));
+                Assert.That(task.Changes[7].GetMetadata("PreviousVersion"), Is.EqualTo("1.2.3"));
             });
         });
 
@@ -224,7 +224,7 @@ public static class Hx_GitHubCommitChangeLogTests
                     request => (@"{}", HttpStatusCode.NotFound)),
                 (
                     "http://localhost:12345/repos/heleonix/heleonix.build/commits/",
-                    request => (@"[{""commit"":{""message"":""fix(ID-1): Fix 1.""}}]", HttpStatusCode.OK)),
+                    request => (@"[{""commit"":{""committer"":{""date"":""2023-02-01T11:00:00Z""},""message"":""fix(ID-1): Fix 1.""}}]", HttpStatusCode.OK)),
             };
 
             Should("succeed", () =>
