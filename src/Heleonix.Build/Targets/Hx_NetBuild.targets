@@ -57,7 +57,7 @@
       <_Hx_NetBuild_SigningProps Condition="Exists('$(Hx_NetBuild_SnkFile)')">SignAssembly=true;AssemblyOriginatorKeyFile=$(Hx_NetBuild_SnkFile)</_Hx_NetBuild_SigningProps>
       <_Hx_NetBuild_VersionProps Condition="'$(Hx_NetBuild_Version)' != ''">Version=$(Hx_NetBuild_Version)</_Hx_NetBuild_VersionProps>
       <_Hx_NetBuild_AssemblyVersionProps Condition="'$(Hx_NetBuild_AssemblyVersion)' != ''">AssemblyVersion=$(Hx_NetBuild_AssemblyVersion)</_Hx_NetBuild_AssemblyVersionProps>
-      <_Hx_NetBuild_ReleaseNotes Condition="'$(Hx_NetBuild_ReleaseNotesFile)' != ''">PackageReleaseNotes=&quot;$([System.IO.File]::ReadAllText('$(Hx_NetBuild_ReleaseNotesFile)').Trim())&quot;</_Hx_NetBuild_ReleaseNotes>
+      <_Hx_NetBuild_ReleaseNotes Condition="'$(Hx_NetBuild_ReleaseNotesFile)' != ''">PackageReleaseNotes=$([System.IO.File]::ReadAllText('$(Hx_NetBuild_ReleaseNotesFile)').Trim())</_Hx_NetBuild_ReleaseNotes>
     </PropertyGroup>
     <MSBuild
       Projects="$(Hx_NetBuild_SlnFile)"

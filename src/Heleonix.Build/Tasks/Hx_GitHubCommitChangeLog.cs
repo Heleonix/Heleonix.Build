@@ -110,12 +110,12 @@ public class Hx_GitHubCommitChangeLog : BaseTask
 
     private void CollectChanges(
         HttpClient client,
-        string createdAt,
+        string since,
         (int Major, int Minor, int Patch) latestVersion,
         RegexOptions regExpOptions,
         string tagSource)
     {
-        var createdAtDateTime = createdAt != null ? DateTime.Parse(createdAt, DateTimeFormatInfo.InvariantInfo) : DateTime.MinValue;
+        var sinceDateTime = since != null ? DateTime.Parse(since, DateTimeFormatInfo.InvariantInfo) : DateTime.MinValue;
 
         var previousVersion = $"{latestVersion.Major}.{latestVersion.Minor}.{latestVersion.Patch}";
 
@@ -138,7 +138,7 @@ public class Hx_GitHubCommitChangeLog : BaseTask
         {
             commitPage = client.GetFromJsonAsync<JsonArray>(
                 $"{this.GitHubRepositoryApiUrl}/commits?sha={tagSource}&per_page={100}&page={pageNumber}"
-                + (createdAt != null ? $"&since={createdAt}" : string.Empty));
+                + (since != null ? $"&since={since}" : string.Empty));
 
             commitPage.Wait(3 * 60 * 1000);
 
@@ -149,7 +149,7 @@ public class Hx_GitHubCommitChangeLog : BaseTask
                     c["commit"]["committer"]["date"].GetValue<string>(),
                     DateTimeFormatInfo.InvariantInfo);
 
-                if (dateTime < createdAtDateTime)
+                if (dateTime <= sinceDateTime)
                 {
                     continue;
                 }
